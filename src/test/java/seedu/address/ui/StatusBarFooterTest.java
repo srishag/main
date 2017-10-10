@@ -1,7 +1,10 @@
-package seedu.address.ui;
+package guitests;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.EventsUtil.postNow;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 
@@ -10,66 +13,57 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.util.Date;
 
-import org.junit.AfterClass;
+import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import guitests.guihandles.StatusBarFooterHandle;
-import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.model.AddressBook;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.testutil.PersonUtil;
+import seedu.address.ui.StatusBarFooter;
 
-public class StatusBarFooterTest extends GuiUnitTest {
+/**
+ * TODO: Remove this class when we have system tests.
+ */
+public class StatusBarFooterTest extends AddressBookGuiTest {
 
-    private static final String STUB_SAVE_LOCATION = "Stub";
-    private static final String RELATIVE_PATH = "./";
+    private Clock originalClock;
+    private Clock injectedClock;
 
-    private static final AddressBookChangedEvent EVENT_STUB = new AddressBookChangedEvent(new AddressBook());
-
-    private static final Clock originalClock = StatusBarFooter.getClock();
-    private static final Clock injectedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
-
-    private StatusBarFooterHandle statusBarFooterHandle;
-
-    @BeforeClass
-    public static void setUpBeforeClass() {
-        // inject fixed clock
+    @Before
+    public void injectFixedClock() {
+        originalClock = StatusBarFooter.getClock();
+        injectedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
         StatusBarFooter.setClock(injectedClock);
     }
 
-    @AfterClass
-    public static void tearDownAfterClass() {
-        // restore original clock
+    @After
+    public void restoreOriginalClock() {
         StatusBarFooter.setClock(originalClock);
     }
 
-    @Before
-    public void setUp() {
-        StatusBarFooter statusBarFooter = new StatusBarFooter(STUB_SAVE_LOCATION);
-        uiPartRule.setUiPart(statusBarFooter);
-
-        statusBarFooterHandle = new StatusBarFooterHandle(statusBarFooter.getRoot());
+    @Test
+    public void syncStatus_initialValue() {
+        assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
     }
 
     @Test
-    public void display() {
-        // initial state
-        assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION, SYNC_STATUS_INITIAL);
-
-        // after address book is updated
-        postNow(EVENT_STUB);
-        assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION,
-                String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()));
+    public void syncStatus_mutatingCommandSucceeds_syncStatusUpdated() {
+        String timestamp = new Date(injectedClock.millis()).toString();
+        String expected = String.format(SYNC_STATUS_UPDATED, timestamp);
+        assertTrue(runCommand(PersonUtil.getAddCommand(HOON))); // mutating command succeeds
+        assertEquals(expected, getStatusBarFooter().getSyncStatus());
     }
 
-    /**
-     * Asserts that the save location matches that of {@code expectedSaveLocation}, and the
-     * sync status matches that of {@code expectedSyncStatus}.
-     */
-    private void assertStatusBarContent(String expectedSaveLocation, String expectedSyncStatus) {
-        assertEquals(expectedSaveLocation, statusBarFooterHandle.getSaveLocation());
-        assertEquals(expectedSyncStatus, statusBarFooterHandle.getSyncStatus());
-        guiRobot.pauseForHuman();
+    @Test
+    public void syncStatus_nonMutatingCommandSucceeds_syncStatusRemainsUnchanged() {
+        assertTrue(runCommand(ListCommand.COMMAND_WORD)); // non-mutating command succeeds
+        assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
+    }
+
+    @Test
+    public void syncStatus_commandFails_syncStatusRemainsUnchanged() {
+        assertFalse(runCommand("invalid command")); // invalid command fails
+        assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
     }
 
 }
