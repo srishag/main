@@ -8,7 +8,6 @@ import org.controlsfx.control.StatusBar;
 
 import com.google.common.eventbus.Subscribe;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
@@ -39,13 +38,15 @@ public class StatusBarFooter extends UiPart<Region> {
     @FXML
     private StatusBar syncStatus;
     @FXML
+    private StatusBar totalPersons;
+    @FXML
     private StatusBar saveLocationStatus;
 
-
-    public StatusBarFooter(String saveLocation) {
+    public StatusBarFooter(String saveLocation, int totalPersons) {
         super(FXML);
         setSyncStatus(SYNC_STATUS_INITIAL);
         setSaveLocation("./" + saveLocation);
+        setTotalPersons(totalPersons);
         registerAsAnEventHandler(this);
     }
 
@@ -64,11 +65,15 @@ public class StatusBarFooter extends UiPart<Region> {
     }
 
     private void setSaveLocation(String location) {
-        Platform.runLater(() -> this.saveLocationStatus.setText(location));
+        this.saveLocationStatus.setText(location);
     }
 
     private void setSyncStatus(String status) {
-        Platform.runLater(() -> this.syncStatus.setText(status));
+        this.syncStatus.setText(status);
+    }
+
+    private void setTotalPersons(int totalPersons) {
+        this.totalPersons.setText(totalPersons + " person(s) total");
     }
 
     @Subscribe
@@ -77,5 +82,6 @@ public class StatusBarFooter extends UiPart<Region> {
         String lastUpdated = new Date(now).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
+        setTotalPersons(abce.data.getPersonList().size());
     }
 }
