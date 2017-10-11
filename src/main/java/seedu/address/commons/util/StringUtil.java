@@ -34,7 +34,7 @@ public class StringUtil {
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
         for (String wordInSentence: wordsInPreppedSentence) {
-            if (wordInSentence.equals(preppedWord)) {
+            if (wordInSentence.toLowerCase().equals(preppedWord.toLowerCase())) {
                 return true;
             }
         }
