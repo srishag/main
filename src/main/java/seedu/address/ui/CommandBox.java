@@ -49,7 +49,7 @@ public class CommandBox extends UiPart<Region> {
         String str = keyEvent.getText();
 
         // Allows the removal of characters in findword
-        if((keyEvent.getCode() == KeyCode.BACK_SPACE) && (findWord.length()>0)){
+        if((keyEvent.getCode() == KeyCode.BACK_SPACE) && (findWord.length()>1)){
             findWord = findWord.substring(0, findWord.length() - 1);
             if(findWord.length() < 7){
                 try {
@@ -81,22 +81,22 @@ public class CommandBox extends UiPart<Region> {
 
             // Starts the build up of the word "find"
             case F:
-                if (!((findWord.length() >4)&&(this.findWord.substring(0,4).equals("find")))){
+                if (!((findWord.length() >4)&&(this.findWord.substring(0,5).equals("Sfind")))){
                     this.findWord += "f";
                 }
                 break;
             case I:
-                if (!((findWord.length() >4)&&(this.findWord.substring(0,4).equals("find")))) {
+                if (!((findWord.length() >4)&&(this.findWord.substring(0,5).equals("Sfind")))) {
                     this.findWord += "i";
                 }
                 break;
             case N:
-                if (!((findWord.length() >4)&&(this.findWord.substring(0,4).equals("find")))) {
+                if (!((findWord.length() >4)&&(this.findWord.substring(0,5).equals("Sfind")))) {
                     this.findWord += "n";
                 }
                 break;
             case D:
-                if (!((findWord.length() >4)&&(this.findWord.substring(0,4).equals("find")))) {
+                if (!((findWord.length() >4)&&(this.findWord.substring(0,5).equals("Sfind")))) {
                     this.findWord += "d";
                 }
                 break;
@@ -148,7 +148,7 @@ public class CommandBox extends UiPart<Region> {
         try {
             CommandResult commandResult = logic.execute(commandTextField.getText());
             //Prevents any unwanted build up in the findWord during unrelated text command
-            findWord = "";
+            findWord = "S";
             initHistory();
             historySnapshot.next();
             // process result of the command
