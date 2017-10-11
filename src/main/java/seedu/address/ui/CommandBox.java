@@ -27,7 +27,7 @@ public class CommandBox extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
-    private String findWord = "";
+    private String findWord = "S";
 
     @FXML
     private TextField commandTextField;
@@ -51,7 +51,7 @@ public class CommandBox extends UiPart<Region> {
         // Allows the removal of characters in findword
         if((keyEvent.getCode() == KeyCode.BACK_SPACE) && (findWord.length()>0)){
             findWord = findWord.substring(0, findWord.length() - 1);
-            if(findWord.length() < 6){
+            if(findWord.length() < 7){
                 try {
                     CommandResult commandResult = logic.execute("list");
                 } catch (CommandException | ParseException e) {
@@ -59,7 +59,7 @@ public class CommandBox extends UiPart<Region> {
             }
         }
         //Starts the function of loading up the search results with each character typed
-        if ((findWord.length() >3)&&(this.findWord.substring(0,4).equals("find"))){
+        if ((findWord.length() >4)&&(this.findWord.substring(0,5).equals("Sfind"))){
             this.findWord += str;
             try {
                 CommandResult commandResult = logic.execute(findWord);
@@ -81,22 +81,22 @@ public class CommandBox extends UiPart<Region> {
 
             // Starts the build up of the word "find"
             case F:
-                if (!((findWord.length() >3)&&(this.findWord.substring(0,4).equals("find")))){
+                if (!((findWord.length() >4)&&(this.findWord.substring(0,4).equals("find")))){
                     this.findWord += "f";
                 }
                 break;
             case I:
-                if (!((findWord.length() >3)&&(this.findWord.substring(0,4).equals("find")))) {
+                if (!((findWord.length() >4)&&(this.findWord.substring(0,4).equals("find")))) {
                     this.findWord += "i";
                 }
                 break;
             case N:
-                if (!((findWord.length() >3)&&(this.findWord.substring(0,4).equals("find")))) {
+                if (!((findWord.length() >4)&&(this.findWord.substring(0,4).equals("find")))) {
                     this.findWord += "n";
                 }
                 break;
             case D:
-                if (!((findWord.length() >3)&&(this.findWord.substring(0,4).equals("find")))) {
+                if (!((findWord.length() >4)&&(this.findWord.substring(0,4).equals("find")))) {
                     this.findWord += "d";
                 }
                 break;
