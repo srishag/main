@@ -11,11 +11,11 @@ public class FindPersonsWithTagsCommand extends Command{
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " classmates colleagues";
 
+    private final PersonContainsTagsPredicate predicate;
+
     public FindPersonsWithTagsCommand(PersonContainsTagsPredicate predicate) {
         this.predicate = predicate;
     }
-
-    private final PersonContainsTagsPredicate predicate;
 
     @Override
     public CommandResult execute() {
