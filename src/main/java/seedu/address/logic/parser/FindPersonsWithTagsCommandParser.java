@@ -2,8 +2,11 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.util.Arrays;
+
 import seedu.address.logic.commands.FindPersonsWithTagsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.PersonContainsTagsPredicate;
 
 public class FindPersonsWithTagsCommandParser {
 
@@ -17,6 +20,6 @@ public class FindPersonsWithTagsCommandParser {
 
         String[] tagKeywords = trimmedArgs.split("\\s+");
 
-        return new FindPersonsWithTagsCommand();
+        return new FindPersonsWithTagsCommand(new PersonContainsTagsPredicate(Arrays.asList(tagKeywords)));
     }
 }
