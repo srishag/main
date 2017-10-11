@@ -2,7 +2,9 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import seedu.address.logic.commands.FindPersonsWithTagsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -19,7 +21,22 @@ public class FindPersonsWithTagsCommandParser {
         }
 
         String[] tagKeywords = trimmedArgs.split("\\s+");
+        ArrayList<String> tagKeywordsImproved = getImprovedList(tagKeywords);
 
-        return new FindPersonsWithTagsCommand(new PersonContainsTagsPredicate(Arrays.asList(tagKeywords)));
+        return new FindPersonsWithTagsCommand(new PersonContainsTagsPredicate(tagKeywordsImproved));
+    }
+
+    private ArrayList<String> getImprovedList(String[] originalKeywords){
+        ArrayList<String> improvedListOfKeywords = new ArrayList<String>();
+        for(String originalKeyword : originalKeywords){
+            improvedListOfKeywords.add(originalKeyword);
+            if(originalKeyword.endsWith("s")){
+                improvedListOfKeywords.add(originalKeyword.substring(0, originalKeyword.length()-1));
+            }
+            else{
+                improvedListOfKeywords.add(originalKeyword.concat("s"));
+            }
+        }
+        return improvedListOfKeywords;
     }
 }
