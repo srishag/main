@@ -46,6 +46,17 @@ public class Person implements ReadOnlyPerson {
                 source.getTags());
     }
 
+    public boolean hasTheseTags(String... tagNames){
+        for(String tagName : tagNames){
+            for(Tag tag : this.getTags()){
+                if(tag.getTagName().equals(tagName)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public void setName(Name name) {
         this.name.set(requireNonNull(name));
     }
