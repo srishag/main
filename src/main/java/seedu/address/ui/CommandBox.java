@@ -26,9 +26,11 @@ public class CommandBox extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+    private String findWord = "";
 
     @FXML
     private TextField commandTextField;
+
 
     public CommandBox(Logic logic) {
         super(FXML);
@@ -43,23 +45,52 @@ public class CommandBox extends UiPart<Region> {
      */
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
-        switch (keyEvent.getCode()) {
-        case UP:
-            // As up and down buttons will alter the position of the caret,
-            // consuming it causes the caret's position to remain unchanged
-            keyEvent.consume();
-
-            navigateToPreviousInput();
-            break;
-        case DOWN:
-            keyEvent.consume();
-            navigateToNextInput();
-            break;
-        default:
-            // let JavaFx handle the keypress
+        String str = keyEvent.getText();
+        //Starts the function of loading up the search results with each character typed
+        if ((findWord.length() >3)&&(this.findWord.substring(0,4).equals("find"))){
+            this.findWord += str;
+            try {
+                CommandResult commandResult = logic.execute(findWord);
+            } catch (CommandException | ParseException e) {
+            }
         }
-    }
+        switch (keyEvent.getCode()) {
+            case UP:
+                // As up and down buttons will alter the position of the caret,
+                // consuming it causes the caret's position to remain unchanged
+                keyEvent.consume();
 
+                navigateToPreviousInput();
+                break;
+            case DOWN:
+                keyEvent.consume();
+                navigateToNextInput();
+                break;
+
+            // Starts the build up of the word "find"
+            case F:
+                this.findWord += "f";
+                break;
+            case I:
+                this.findWord += "i";
+                break;
+            case N:
+                this.findWord += "n";
+                break;
+            case D:
+                this.findWord += "d";
+                break;
+            // Allows the removal of characters in findword
+            case BACK_SPACE:
+                int FindLength = findWord.length();
+                if(FindLength > 0)
+                    findWord = findWord.substring(0,FindLength-1);
+                break;
+            default:
+                // let JavaFx handle the keypress
+        }
+
+    }
     /**
      * Updates the text field with the previous input in {@code historySnapshot},
      * if there exists a previous input in {@code historySnapshot}
@@ -102,6 +133,8 @@ public class CommandBox extends UiPart<Region> {
     private void handleCommandInputChanged() {
         try {
             CommandResult commandResult = logic.execute(commandTextField.getText());
+            //Prevents any unwanted build up in the findWord during unrelated text command
+            findWord = "";
             initHistory();
             historySnapshot.next();
             // process result of the command
