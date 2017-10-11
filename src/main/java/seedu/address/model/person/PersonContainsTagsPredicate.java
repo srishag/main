@@ -1,10 +1,13 @@
 package seedu.address.model.person;
 
 import java.util.List;
+import java.util.Set;
+import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.tag.Tag;
 
-public class PersonContainsTagsPredicate {
+public class PersonContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
 
     public PersonContainsTagsPredicate(List<String> keywords) {
@@ -13,8 +16,15 @@ public class PersonContainsTagsPredicate {
 
     @Override
     public boolean test(ReadOnlyPerson person) {
+        Set<Tag> personTags = person.getTags();
+        String tempAllTagNames = "";
+        for(Tag tag: personTags){
+            tempAllTagNames = tempAllTagNames + tag.getTagName() + " ";
+        }
+        final String allTagNames = tempAllTagNames;
+
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getT
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(allTagNames, keyword));
     }
 
     @Override
