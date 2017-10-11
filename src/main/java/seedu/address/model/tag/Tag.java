@@ -29,7 +29,7 @@ public class Tag {
         this.tagName = trimmedName;
     }
 
-    public String getTagName(){
+    public String getTagName() {
         return this.tagName;
     }
 

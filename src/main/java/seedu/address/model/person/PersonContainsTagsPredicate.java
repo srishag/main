@@ -7,6 +7,9 @@ import java.util.function.Predicate;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.tag.Tag;
 
+/**
+ * Tests that a Person has a tag with a tag name matches any of the keywords given.
+ */
 public class PersonContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
 
@@ -18,7 +21,7 @@ public class PersonContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
     public boolean test(ReadOnlyPerson person) {
         Set<Tag> personTags = person.getTags();
         String tempAllTagNames = "";
-        for(Tag tag: personTags){
+        for (Tag tag: personTags) {
             tempAllTagNames = tempAllTagNames + tag.getTagName() + " ";
         }
         final String allTagNames = tempAllTagNames;
