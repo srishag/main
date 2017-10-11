@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
@@ -46,6 +47,17 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
         String str = keyEvent.getText();
+
+        // Allows the removal of characters in findword
+        if((keyEvent.getCode() == KeyCode.BACK_SPACE) && (findWord.length()>0)){
+            findWord = findWord.substring(0, findWord.length() - 1);
+            if(findWord.length() < 6){
+                try {
+                    CommandResult commandResult = logic.execute("list");
+                } catch (CommandException | ParseException e) {
+                }
+            }
+        }
         //Starts the function of loading up the search results with each character typed
         if ((findWord.length() >3)&&(this.findWord.substring(0,4).equals("find"))){
             this.findWord += str;
@@ -69,22 +81,24 @@ public class CommandBox extends UiPart<Region> {
 
             // Starts the build up of the word "find"
             case F:
-                this.findWord += "f";
+                if (!((findWord.length() >3)&&(this.findWord.substring(0,4).equals("find")))){
+                    this.findWord += "f";
+                }
                 break;
             case I:
-                this.findWord += "i";
+                if (!((findWord.length() >3)&&(this.findWord.substring(0,4).equals("find")))) {
+                    this.findWord += "i";
+                }
                 break;
             case N:
-                this.findWord += "n";
+                if (!((findWord.length() >3)&&(this.findWord.substring(0,4).equals("find")))) {
+                    this.findWord += "n";
+                }
                 break;
             case D:
-                this.findWord += "d";
-                break;
-            // Allows the removal of characters in findword
-            case BACK_SPACE:
-                int FindLength = findWord.length();
-                if(FindLength > 0)
-                    findWord = findWord.substring(0,FindLength-1);
+                if (!((findWord.length() >3)&&(this.findWord.substring(0,4).equals("find")))) {
+                    this.findWord += "d";
+                }
                 break;
             default:
                 // let JavaFx handle the keypress
