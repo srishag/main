@@ -27,7 +27,8 @@ public class CommandBox extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
-    private String findWord = "S";
+    private String findWordCommand = "Sfind";
+    private String alphabetNames = "";
 
     @FXML
     private TextField commandTextField;
@@ -46,23 +47,29 @@ public class CommandBox extends UiPart<Region> {
      */
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
+        String text = commandTextField.getText();
         String str = keyEvent.getText();
 
-        // Allows the removal of characters in findword
-        if((keyEvent.getCode() == KeyCode.BACK_SPACE) && (findWord.length()>1)){
-            findWord = findWord.substring(0, findWord.length() - 1);
-            if(findWord.length() < 7){
-                try {
-                    CommandResult commandResult = logic.execute("list");
-                } catch (CommandException | ParseException e) {
+        // Allows the removal of characters in alphabetNames
+        if((keyEvent.getCode() == KeyCode.BACK_SPACE) && (alphabetNames.length()>0)) {
+            if (alphabetNames.length() == 1) {
+                alphabetNames = "";
+            }
+            else {
+                alphabetNames = alphabetNames.substring(0, alphabetNames.length() - 1);
+                if (alphabetNames.length() == 1) {
+                    try {
+                        CommandResult commandResult = logic.execute("list");
+                    } catch (CommandException | ParseException e) {
+                    }
                 }
             }
         }
-        //Starts the function of loading up the search results with each character typed
-        if ((findWord.length() >4)&&(this.findWord.substring(0,5).equals("Sfind"))){
-            this.findWord += str;
+        //Starts the function of loading up the search results with each character typed if command find is entered
+        if ((text.length()>3) && (text.substring(0,4).equals("find"))){
+            this.alphabetNames += str;
             try {
-                CommandResult commandResult = logic.execute(findWord);
+                CommandResult commandResult = logic.execute(findWordCommand + alphabetNames);
             } catch (CommandException | ParseException e) {
             }
         }
@@ -76,29 +83,8 @@ public class CommandBox extends UiPart<Region> {
                 break;
             case DOWN:
                 keyEvent.consume();
-                navigateToNextInput();
-                break;
 
-            // Starts the build up of the word "find"
-            case F:
-                if (!((findWord.length() >4)&&(this.findWord.substring(0,5).equals("Sfind")))){
-                    this.findWord += "f";
-                }
-                break;
-            case I:
-                if (!((findWord.length() >4)&&(this.findWord.substring(0,5).equals("Sfind")))) {
-                    this.findWord += "i";
-                }
-                break;
-            case N:
-                if (!((findWord.length() >4)&&(this.findWord.substring(0,5).equals("Sfind")))) {
-                    this.findWord += "n";
-                }
-                break;
-            case D:
-                if (!((findWord.length() >4)&&(this.findWord.substring(0,5).equals("Sfind")))) {
-                    this.findWord += "d";
-                }
+                navigateToNextInput();
                 break;
             default:
                 // let JavaFx handle the keypress
@@ -148,7 +134,6 @@ public class CommandBox extends UiPart<Region> {
         try {
             CommandResult commandResult = logic.execute(commandTextField.getText());
             //Prevents any unwanted build up in the findWord during unrelated text command
-            findWord = "S";
             initHistory();
             historySnapshot.next();
             // process result of the command
