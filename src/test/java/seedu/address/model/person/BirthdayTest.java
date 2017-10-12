@@ -20,6 +20,6 @@ public class BirthdayTest {
         assertFalse(Birthday.isValidBirthday("15.09.1993")); // fullstops within digits
 
         // valid birthdays
-        assertTrue(Birthday.isValidBirthday("121199")); // exactly 8 digits
+        assertTrue(Birthday.isValidBirthday("12111999")); // exactly 8 digits
     }
 }
