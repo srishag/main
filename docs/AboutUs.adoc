@@ -18,3 +18,11 @@ image::srishti.jpg[width="150", align="left"]
 Role: Developer
 
 '''
+
+=== Tan Wei Jie
+image::pokkakiyo.jpg[width="150", align="left"]
+{empty} [https://github.com/pokkakiyo[github]]
+
+Role: Documentation, code quality, in charge of Model.
+
+'''
