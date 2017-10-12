@@ -3,7 +3,8 @@ package seedu.address.logic.commands;
 import seedu.address.model.person.NameContainsAlphabetsPredicate;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the characters.
+ * Finds and lists all persons in address book whose name contains any of the characters.\
+ * This function works without having the user to hit the "Enter Key"
  * Keyword matching is case insensitive.
  */
 public class FindAlphabetCommand extends Command {
@@ -23,7 +24,7 @@ public class FindAlphabetCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+        return new CommandResult(getMessageForAlphabetListSummary(model.getFilteredPersonList().size()));
     }
 
 }

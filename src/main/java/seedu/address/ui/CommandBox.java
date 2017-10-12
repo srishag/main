@@ -47,6 +47,7 @@ public class CommandBox extends UiPart<Region> {
      */
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
+        raise(new NewResultAvailableEvent(""));
         String text = commandTextField.getText();
         String str = keyEvent.getText();
 
@@ -70,6 +71,7 @@ public class CommandBox extends UiPart<Region> {
             this.alphabetNames += str;
             try {
                 CommandResult commandResult = logic.execute(findWordCommand + alphabetNames);
+                raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
             } catch (CommandException | ParseException e) {
             }
         }
@@ -131,9 +133,10 @@ public class CommandBox extends UiPart<Region> {
      */
     @FXML
     private void handleCommandInputChanged() {
+        //Prevents the build up og the alphabetNames variable during find function by refreshing it every run
+        this.alphabetNames = "";
         try {
             CommandResult commandResult = logic.execute(commandTextField.getText());
-            //Prevents any unwanted build up in the findWord during unrelated text command
             initHistory();
             historySnapshot.next();
             // process result of the command
