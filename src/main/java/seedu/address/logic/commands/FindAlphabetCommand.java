@@ -26,5 +26,10 @@ public class FindAlphabetCommand extends Command {
         model.updateFilteredPersonList(predicate);
         return new CommandResult(getMessageForAlphabetListSummary(model.getFilteredPersonList().size()));
     }
-
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof FindAlphabetCommand // instanceof handles nulls
+                && this.predicate.equals(((FindAlphabetCommand) other).predicate)); // state check
+    }
 }
