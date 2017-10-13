@@ -2,6 +2,7 @@ package seedu.address.commons.util;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -59,8 +60,8 @@ public class StringUtil {
         String preppedSentence = sentence;
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
         for (String wordInSentence: wordsInPreppedSentence) {
-            if (wordInSentence.toLowerCase().contains(preppedWord.toLowerCase()) &&
-                    (wordInSentence.toLowerCase().indexOf(preppedWord.toLowerCase()) == 0)) {
+            if (wordInSentence.toLowerCase().contains(preppedWord.toLowerCase())
+                    && (wordInSentence.toLowerCase().indexOf(preppedWord.toLowerCase()) == 0)) {
                 return true;
             }
         }

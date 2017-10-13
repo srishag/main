@@ -33,8 +33,7 @@ public abstract class Command {
     public static String getMessageForAlphabetListSummary(int displaySize) {
         if (displaySize > 0) {
             return String.format(Messages.MESSAGE_ALPHABET_LISTED_OVERVIEW, displaySize);
-        }
-        else {
+        } else {
             return Messages.MESSAGE_NO_ALPHABET_LISTED_OVERVIEW;
         }
     }

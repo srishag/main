@@ -81,7 +81,7 @@ public class CommandBox extends UiPart<Region> {
             navigateToPreviousInput();
             break;
         case DOWN:
-             keyEvent.consume();
+            keyEvent.consume();
 
             navigateToNextInput();
             break;
