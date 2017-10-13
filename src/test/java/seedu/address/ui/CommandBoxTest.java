@@ -57,6 +57,10 @@ public class CommandBoxTest extends GuiUnitTest {
         assertBehaviorForFailedCommand();
         assertBehaviorForFailedCommand();
     }
+    @Test
+    public void commandBox_handleKeyRelease(){
+
+    }
 
     @Test
     public void commandBox_handleKeyPress() {

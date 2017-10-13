@@ -28,7 +28,6 @@ public class CommandBox extends UiPart<Region> {
     private final Logic logic;
     private ListElementPointer historySnapshot;
     private String findWordCommand = "Sfind ";
-    private String alphabetNames = "";
 
     @FXML
     private TextField commandTextField;
@@ -46,36 +45,29 @@ public class CommandBox extends UiPart<Region> {
      * Handles the key press event, {@code keyEvent}.
      */
     @FXML
-    private void handleKeyPress(KeyEvent keyEvent) {
-        raise(new NewResultAvailableEvent(""));
-        String text = commandTextField.getText();
-        String str = keyEvent.getText();
-
-        // Allows the removal of characters in alphabetNames
-        if((keyEvent.getCode() == KeyCode.BACK_SPACE) && (alphabetNames.length()>0)) {
-            if (alphabetNames.length() == 1) {
-                alphabetNames = "";
-            }
-            else {
-                alphabetNames = alphabetNames.substring(0, alphabetNames.length() - 1);
-                if (alphabetNames.length() == 1) {
-                    try {
-                        logic.execute("list");
-                    } catch (CommandException | ParseException e) {
-                    }
-                }
-            }
-        }
+    private void handleKeyRelease() {
+        String commandText = commandTextField.getText();
+        int textLength = commandTextField.getLength();
         //Starts the generation search results with each character typed if command find is entered
-        if ((text.length()>4) && (text.substring(0,5).equals("find "))){
-            this.alphabetNames += str;
+        if ((textLength > 5) && (commandText.substring(0, 5).equals("find "))) {
+
             try {
-                CommandResult commandResult = logic.execute(findWordCommand + alphabetNames);
+                CommandResult commandResult = logic.execute(findWordCommand + commandText.substring(5));
                 raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
             } catch (CommandException | ParseException e) {
             }
         }
+        if ((textLength == 5) && (commandText.substring(0, 5).equals("find "))){
+            try {
+                raise(new NewResultAvailableEvent(""));
+                logic.execute("list");
+            } catch(CommandException | ParseException e){
+            }
+        }
+    }
 
+    @FXML
+    private void handleKeyPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
             case UP:
                 // As up and down buttons will alter the position of the caret,
@@ -135,7 +127,6 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleCommandInputChanged() {
         //Prevents the build up og the alphabetNames variable during find function by refreshing it every run
-        this.alphabetNames = "";
         try {
             CommandResult commandResult = logic.execute(commandTextField.getText());
             initHistory();
