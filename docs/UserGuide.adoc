@@ -117,7 +117,8 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 Finds persons who have tags matching any of the given keywords. +
 Format: `findtags KEYWORD [MORE_KEYWORDS]` +
 
-* You can substitute the command `findtags` with `findtag` or `ft`.
+[TIP]
+You can substitute the command `findtags` with `findtag` or `ft`.
 
 ****
 * The search is case insensitive.
@@ -273,6 +274,8 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Find by tags* : `findtags KEYWORD[MORE_KEYWORDS]` +
+e.g. `findtags friends`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
