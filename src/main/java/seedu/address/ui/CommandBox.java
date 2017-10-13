@@ -27,7 +27,7 @@ public class CommandBox extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
-    private String findWordCommand = "Sfind";
+    private String findWordCommand = "Sfind ";
     private String alphabetNames = "";
 
     @FXML
@@ -60,14 +60,14 @@ public class CommandBox extends UiPart<Region> {
                 alphabetNames = alphabetNames.substring(0, alphabetNames.length() - 1);
                 if (alphabetNames.length() == 1) {
                     try {
-                        CommandResult commandResult = logic.execute("list");
+                        logic.execute("list");
                     } catch (CommandException | ParseException e) {
                     }
                 }
             }
         }
-        //Starts the function of loading up the search results with each character typed if command find is entered
-        if ((text.length()>3) && (text.substring(0,4).equals("find"))){
+        //Starts the generation search results with each character typed if command find is entered
+        if ((text.length()>4) && (text.substring(0,5).equals("find "))){
             this.alphabetNames += str;
             try {
                 CommandResult commandResult = logic.execute(findWordCommand + alphabetNames);
@@ -75,6 +75,7 @@ public class CommandBox extends UiPart<Region> {
             } catch (CommandException | ParseException e) {
             }
         }
+
         switch (keyEvent.getCode()) {
             case UP:
                 // As up and down buttons will alter the position of the caret,
