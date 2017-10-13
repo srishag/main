@@ -10,7 +10,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T11-B4/main/tree/master
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -120,7 +120,7 @@ Each of the four components
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (see the class diagram given below) defines its API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
 _Figure 2.1.2 : Class Diagram of the Logic Component_
@@ -675,6 +675,7 @@ Now we have the `Remark` class, we need to actually use it inside link:{repoURL}
 . Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
 
 ===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
+
 We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
 
 **Main:**
@@ -723,15 +724,71 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
+|`* * *` |new user |import existing contacts |add contacts quickly when starting to use the App or reinstalling the App
+
+|`* * *` |frequent user |backup existing contacts as I add/remove them |restore a previous version of my contacts if I make a big mistake
+
 |`* * *` |user |add a new person |
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |sort persons by arrange the names in my contacts by Alphabetical order |locate a person easily
+
+|`* * *` |forgetful user |have prompts for right command syntax when I enter the wrong one |use the app more conveniently
+
+|`* * *` |user |arrange the names in my contacts according to first name |locate a person easily
+
+|`* * *` |user |arrange the names in my contacts according to last name |locate a person easily
+
+|`* * *` |user |favourite a contact |have favorites appear at the top of search results
+
+|`* * *` |user |update information for any of my contacts |not have to delete and add a contact just to change his details
+
+|`* * *` |user |share a contact with other people|
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |forgetful user |view my contacts' profile picture(s) |have a picture to attach to the contact
+
+|`* *` |user |alternate between using the alias and the name of my contacts |have a nickname to attach to the person
+
+|`* *` |user |view frequently contacted/searched for people at the top of the list |
+
+|`* *` |lazy user |delete multiple users at a time |
+
+|`* *` |power user |call a selected contact within 1 command after selecting the contact|
+
+|`* *` |power user |message a selected contact within 1 command after selecting the contact|
+
+|`* *` |power user |attach multiple notes to each contact|
+
+|`* *` |user with many contacts|notified when I have 2 contacts with the same name to add an alias or tag |do not get confused by 2 contacts with the same name
+
+|`* *` |user with many contacts|add multiple tags to each contact |easily group them
+
+|`* *` |user |search results to be displayed and updated every time i key in an alphabet |search for contacts without having to finish typing in the whole name
+
+|`*` |user |arrange the names in my contacts according to their address in alphabetical order  |locate a person easily
+
+|`*` |user |view the number of contacts that I have |
+
+|`*` |user |merge contacts |
+
+|`*` |user |select relevant information and export to a list |
+
+|`*` |user |access to more buttons | have more convenience using the App
+
+|`*` |user |see the address of a selected contact on Google Maps within 1 command |
+
+|`*` |user |link my contacts to their social media account |
+
+|`*` |user with many contacts |have tabs for different category of contacts |easily see who is in which group
+
+|`*` |user |customize the background colour of the application |personalize the App.
+
+
 |=======================================================================
 
 {More to be added}
@@ -769,12 +826,90 @@ Use case resumes at step 2.
 
 {More to be added}
 
+[discrete]
+=== Use case: Sort contacts alphabetically
+
+*MSS*
+
+1. User requests to sort contacts alphabetically
+2. AddressBook sorts contacts alphabetically according to their names
+3. AddressBook shows contact list to user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+[none]
+** 1a1. AddressBook shows “empty list of contacts” to user
++
+Use case ends.
+
+[discrete]
+=== Use case:  Adding a tag to a person
+
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows list of persons
+3. User requests to add a specific tag to a person in the list
+4. AddressBook confirms the details of the instruction with the user
+5. User confirms command
+6. AddressBook adds tag to this person
++
+Use case ends
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+[none]
+** 1a1. AddressBook shows “empty list of contacts” to user
++
+Use case ends.
+
+[none]
+* 3a. User enters an invalid person on the list (out of bound of list)
++
+[none]
+** 3a1. AddressBook shows “invalid person, choose correct person (starting index to ending index)” and
+displays list again in background
++
+Use case resumes at step 3.
+
+[none]
+* 3b. User enters unsupported character for tag
++
+[none]
+** 3b1. AddressBook shows “invalid tag name, only valid characters (display valid characters)”.
++
+Use case resumes at step 3.
+
+[none]
+* 4a. User cancels command
++
+[none]
+** 4a1. AddressBook shows “command cancelled”.
++
+Use case ends.
+
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Any command should not take longer than 1 second to execute
+.  App should be able to hold at least 5000 contacts
+.  Should support integration with Google contacts
+.  Should support integration with Google Map for proximity services
+.  App should support importing and exporting of contacts in Microsoft Excel Format
+.  Support multiple instances of the app on a single device
+.  Support integration with telecommunication apps such as, but not limited to, WhatsApp, Line etc.
+.  Support integration with social media services and apps
 
 {More to be added}
 
