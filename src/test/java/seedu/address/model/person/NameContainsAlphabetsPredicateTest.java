@@ -19,13 +19,15 @@ public class NameContainsAlphabetsPredicateTest {
         List<String> secondPredicateAlphabetList = Arrays.asList("first", "second");
 
         NameContainsAlphabetsPredicate firstPredicate = new NameContainsAlphabetsPredicate(firstPredicateAlphabetList);
-        NameContainsAlphabetsPredicate secondPredicate = new NameContainsAlphabetsPredicate(secondPredicateAlphabetList);
+        NameContainsAlphabetsPredicate secondPredicate =
+                new NameContainsAlphabetsPredicate(secondPredicateAlphabetList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        NameContainsAlphabetsPredicate firstPredicateCopy = new NameContainsAlphabetsPredicate(firstPredicateAlphabetList);
+        NameContainsAlphabetsPredicate firstPredicateCopy =
+                new NameContainsAlphabetsPredicate(firstPredicateAlphabetList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false

@@ -18,7 +18,6 @@ import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -66,7 +65,7 @@ public class FindAlphabetCommandTest {
     }
     //Test when user inputs partial names
     @Test
-    public void executeMultipleAlphabetsMultiplePersonsFound(){
+    public void executeMultipleAlphabetsMultiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_ALPHABET_LISTED_OVERVIEW, 2);
         FindAlphabetCommand command = prepareCommand("Ku");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, FIONA));
@@ -94,7 +93,8 @@ public class FindAlphabetCommandTest {
      *     - the command feedback is equal to {@code expectedMessage}<br>
      *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
      */
-    private void assertCommandSuccess(FindAlphabetCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) {
+    private void assertCommandSuccess(FindAlphabetCommand command, String expectedMessage,
+                                      List<ReadOnlyPerson> expectedList) {
         CommandResult commandResult = command.execute();
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);
