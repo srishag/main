@@ -28,7 +28,7 @@ Role: Documentation, code quality, in charge of Model.
 '''
 
 === Phua Jun Jie
-image::phuajunjie.png[width="150", align="left"]
+image::PhuaJunJie.png[width="150", align="left"]
 {empty} [https://github.com/phuajunjie[github]]
 
 Role: Developer
