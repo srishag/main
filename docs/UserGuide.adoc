@@ -117,7 +117,7 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 Finds persons who have tags matching any of the given keywords. +
 Format: `findtags KEYWORD [MORE_KEYWORDS]` +
 
-* User can substitute the command `findtags` with `findtag` or `ft`.
+* You can substitute the command `findtags` with `findtag` or `ft`.
 
 ****
 * The search is case insensitive.
@@ -134,6 +134,13 @@ Format: `findtags KEYWORD [MORE_KEYWORDS]` +
 * Persons with at least one tag matching the keywords will be returned.
 ** `friends` will return a contact who has `friends` tags and more.
 ****
+
+Examples:
+
+* `findtags friends` +
+Returns any person having tags `friends`.
+* `findtags friends colleagues schoolmates` +
+Returns any person having any of the tags `friends`, `colleagues`, and/or `schoolmates`.
 
 === Deleting a person : `delete`
 
