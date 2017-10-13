@@ -21,6 +21,8 @@ endif::[]
 ** A more sophisticated GUI that includes a list  panel and an in-built Browser.
 ** More test cases, including automated GUI testing.
 ** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
+** Able to search through tags and improved Find Functionality
+** Google Contacts Sync
 
 == Site Map
 
