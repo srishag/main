@@ -59,21 +59,21 @@ public class FindAlphabetCommandTest {
     }
     //Test when no input by user
     @Test
-    public void execute_zeroAlphabets_noPersonFound() {
+    public void executeZeroAlphabetsNoPersonFound() {
         String expectedMessage = String.format(MESSAGE_NO_ALPHABET_LISTED_OVERVIEW);
         FindAlphabetCommand command = prepareCommand(" ");
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
     //Test when user inputs partial names
     @Test
-    public void execute_multipleAlphabets_multiplePersonsFound(){
+    public void executeMultipleAlphabetsMultiplePersonsFound(){
         String expectedMessage = String.format(MESSAGE_ALPHABET_LISTED_OVERVIEW, 2);
         FindAlphabetCommand command = prepareCommand("Ku");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, FIONA));
     }
     //Test when user inputs full names
     @Test
-    public void execute_multipleKeywords_multiplePersonsFound() {
+    public void executeMultipleKeywordsMultiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_ALPHABET_LISTED_OVERVIEW, 3);
         FindAlphabetCommand command = prepareCommand("Kurz Elle Kunz");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
@@ -95,7 +95,6 @@ public class FindAlphabetCommandTest {
      *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
      */
     private void assertCommandSuccess(FindAlphabetCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) {
-        AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         CommandResult commandResult = command.execute();
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);

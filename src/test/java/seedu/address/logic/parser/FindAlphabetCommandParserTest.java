@@ -2,7 +2,6 @@ package seedu.address.logic.parser;
 
 import org.junit.Test;
 import seedu.address.logic.commands.FindAlphabetCommand;
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.model.person.NameContainsAlphabetsPredicate;
 
 import java.util.Arrays;

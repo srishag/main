@@ -39,7 +39,7 @@ public class NameContainsAlphabetsPredicateTest {
     }
 
     @Test
-    public void test_nameContainsAlphabets_returnsTrue() {
+    public void testNameContainsAlphabetsReturnsTrue() {
         // One Alphabet
         NameContainsAlphabetsPredicate predicate = new NameContainsAlphabetsPredicate(Collections.singletonList("A"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice").build()));
@@ -62,7 +62,7 @@ public class NameContainsAlphabetsPredicateTest {
     }
 
     @Test
-    public void test_nameDoesNotContainAlphabets_returnsFalse() {
+    public void testNameDoesNotContainAlphabetsReturnsFalse() {
         // Zero Keywords
         NameContainsAlphabetsPredicate predicate = new NameContainsAlphabetsPredicate(Collections.emptyList());
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").build()));
