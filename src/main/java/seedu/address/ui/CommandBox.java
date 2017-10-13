@@ -41,7 +41,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Handles the key press event, {@code keyEvent}.
+     * Handles the key release event, {@code keyEvent}.
      */
     @FXML
     private void handleKeyRelease() {
@@ -49,41 +49,45 @@ public class CommandBox extends UiPart<Region> {
         int textLength = commandTextField.getLength();
         //Starts the generation search results with each character typed if command find is entered
         if ((textLength > 5) && (commandText.substring(0, 5).equals("find "))) {
-
             try {
                 CommandResult commandResult = logic.execute(findWordCommand + commandText.substring(5));
                 raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
             } catch (CommandException | ParseException e) {
+                logger.info("No smart searches");
             }
         }
-        if ((textLength == 5) && (commandText.substring(0, 5).equals("find "))){
+
+        if ((textLength == 5) && (commandText.substring(0, 5).equals("find "))) {
             try {
                 raise(new NewResultAvailableEvent(""));
                 logic.execute("list");
-            } catch(CommandException | ParseException e){
+            } catch (CommandException | ParseException e) {
+                logger.info("No List from smart search");
             }
         }
     }
 
+    /**
+     * Handles the key press event, {@code keyEvent}.
+     */
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-            case UP:
-                // As up and down buttons will alter the position of the caret,
-                // consuming it causes the caret's position to remain unchanged
-                keyEvent.consume();
+        case UP:
+            // As up and down buttons will alter the position of the caret,
+            // consuming it causes the caret's position to remain unchanged
+            keyEvent.consume();
 
-                navigateToPreviousInput();
-                break;
-            case DOWN:
-                keyEvent.consume();
+            navigateToPreviousInput();
+            break;
+        case DOWN:
+             keyEvent.consume();
 
-                navigateToNextInput();
-                break;
-            default:
-                // let JavaFx handle the keypress
+            navigateToNextInput();
+            break;
+        default:
+            // let JavaFx handle the keypress
         }
-
     }
     /**
      * Updates the text field with the previous input in {@code historySnapshot},

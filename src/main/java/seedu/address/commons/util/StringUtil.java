@@ -2,7 +2,6 @@ package seedu.address.commons.util;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -40,6 +39,18 @@ public class StringUtil {
         }
         return false;
     }
+
+    /**
+     * Returns true if the {@code sentence} contains the {@code word}.
+     *   Ignores case, but only a partial word match is required.
+     *   <br>examples:<pre>
+     *       containsWordIgnoreCase("ABc def", "ab") == true
+     *       containsWordIgnoreCase("ABc def", "D") == true
+     *       containsWordIgnoreCase("ABc def", "Ac") == false //not a full word match
+     *       </pre>
+     * @param sentence cannot be null
+     * @param word cannot be null, cannot be empty, must be a single word
+     */
     public static boolean containsAlphabetIgnoreCase(String sentence, String word) {
         requireNonNull(sentence);
         requireNonNull(word);
@@ -48,7 +59,8 @@ public class StringUtil {
         String preppedSentence = sentence;
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
         for (String wordInSentence: wordsInPreppedSentence) {
-            if (wordInSentence.toLowerCase().contains(preppedWord.toLowerCase())&&(wordInSentence.toLowerCase().indexOf(preppedWord.toLowerCase())==0)) {
+            if (wordInSentence.toLowerCase().contains(preppedWord.toLowerCase()) &&
+                    (wordInSentence.toLowerCase().indexOf(preppedWord.toLowerCase()) == 0)) {
                 return true;
             }
         }
