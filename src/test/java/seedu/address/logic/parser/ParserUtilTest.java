@@ -184,7 +184,7 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseBirthday_validValue_returnsPhone() throws Exception {
+    public void parseBirthday_validValue_returnsBirthday() throws Exception {
         Birthday expectedBirthday = new Birthday(VALID_BIRTHDAY);
         Optional<Birthday> actualBirthday = ParserUtil.parseBirthday(Optional.of(VALID_BIRTHDAY));
 
