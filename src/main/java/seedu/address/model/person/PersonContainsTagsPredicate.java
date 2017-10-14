@@ -30,8 +30,8 @@ public class PersonContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
 
         final List<String> keywordsToInclude = new ArrayList<String>();
         final List<String> keywordsToExclude = new ArrayList<String>();
-        for (String eachKeyword : keywords){
-            if (eachKeyword.startsWith("-")){
+        for (String eachKeyword : keywords) {
+            if (eachKeyword.startsWith("-")) {
                 keywordsToExclude.add(eachKeyword.substring(1));
             } else {
                 keywordsToInclude.add(eachKeyword);
