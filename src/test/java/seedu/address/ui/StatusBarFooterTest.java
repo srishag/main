@@ -23,6 +23,7 @@ public class StatusBarFooterTest extends GuiUnitTest {
 
     private static final String STUB_SAVE_LOCATION = "Stub";
     private static final String RELATIVE_PATH = "./";
+    private static final int STUB_INITIAL_TOTAL_PERSONS = 0;
 
     private static final AddressBookChangedEvent EVENT_STUB = new AddressBookChangedEvent(new AddressBook());
 
@@ -45,7 +46,7 @@ public class StatusBarFooterTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        StatusBarFooter statusBarFooter = new StatusBarFooter(STUB_SAVE_LOCATION, 0);
+        StatusBarFooter statusBarFooter = new StatusBarFooter(STUB_SAVE_LOCATION, STUB_INITIAL_TOTAL_PERSONS);
         uiPartRule.setUiPart(statusBarFooter);
 
         statusBarFooterHandle = new StatusBarFooterHandle(statusBarFooter.getRoot());
