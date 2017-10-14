@@ -112,6 +112,43 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Locating persons by tag name: `findtags`
+
+Finds persons who have tags matching any of the given keywords. +
+Format: `findtags KEYWORD [MORE_KEYWORDS]` +
+
+[TIP]
+You can substitute the command `findtags` with `findtag` or `ft`.
+
+****
+* The search is case insensitive.
+** `FrIeNdS` will match `friends`
+* The order of the keywords does not matter.
+** `classmates roommates` will match `roommates classmates`.
+* Only full words will be matched.
+** `col` will not match `colleagues`.
+* Will attempt to be more lenient with singular and plural tense.
+** `friend` will return contacts with either tag `friend` or `friends`.
+** `colleagues` will return contacts with either tag `colleague` or `colleagues`.
+*** However, this may not always be correct for words where plural and singular differs not only by a single letter 's'.
+*** Searching by tag `glass` will attempt to find contacts with tags `glass` and `glassS` instead of `glasses`.
+* Persons with at least one tag matching the keywords will be returned.
+** `friends` will return a contact who has `friends` tags and more.
+****
+
+Examples:
+
+* `findtags friends` +
+Returns any person having tags `friends`.
+* `findtags friends colleagues schoolmates` +
+Returns any person having any of the tags `friends`, `colleagues`, and/or `schoolmates`.
+
+=== List tags : `listtags` +
+`coming in v2.0`
+
+Lists all existing tags in the App +
+Format: `listtags` +
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
@@ -243,6 +280,8 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Find by tags* : `findtags KEYWORD[MORE_KEYWORDS]` +
+e.g. `findtags friends`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
@@ -250,4 +289,8 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+
+== Coming in v2.0
+-PhuaJunJie : EasyFind, multiple deletes, importing contacts from google.
+
 

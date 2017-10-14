@@ -19,3 +19,19 @@ Role: Developer
 
 '''
 
+=== Tan Wei Jie
+image::pokkakiyo.jpg[width="150", align="left"]
+{empty} [https://github.com/pokkakiyo[github]]
+
+Role: Documentation, code quality, in charge of Model.
+
+'''
+
+=== Phua Jun Jie
+image::PhuaJunJie.png[width="150", align="left"]
+{empty} [https://github.com/phuajunjie[github]]
+
+Role: Developer
+
+'''
+

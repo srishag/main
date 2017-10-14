@@ -896,6 +896,26 @@ Use case resumes at step 3.
 +
 Use case ends.
 
+[discrete]
+=== Use case: finding by tags
+
+*MSS*
+
+1. User requests to find contacts with a certain tag name
+2. App displays all contacts with such tags
++
+Use case ends
+
+[discrete]
+=== Use case: displaying list of tags
+
+*MSS*
+
+1. User reuqests to list all tags
+2. App displays all existing tags
++
+Use case ends
+
 [appendix]
 == Non Functional Requirements
 
