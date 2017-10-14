@@ -1,7 +1,5 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +12,8 @@ import seedu.address.model.tag.Tag;
  */
 public class ListTagsCommand extends Command {
     public static final String COMMAND_WORD = "listtags";
+    public static final String COMMAND_WORD_ALIAS1 = "lt";
+    public static final String COMMAND_WORD_ALIAS2 = "ltags";
 
     public static final String MESSAGE_SUCCESS = "You have the following tags: ";
 
@@ -27,14 +27,14 @@ public class ListTagsCommand extends Command {
         listOfAllTags = new ArrayList<Tag>();
         namesInListOfAllTags = "";
 
-      for (ReadOnlyPerson p : model.getAddressBook().getPersonList()){
-          for (Tag tag : p.getTags()){
-              if (!listOfAllTags.contains(tag)) {
-                  listOfAllTags.add(tag);
-                  namesInListOfAllTags = namesInListOfAllTags + " " + tag.getTagName();
-              }
-          }
-      }
+        for (ReadOnlyPerson p : model.getAddressBook().getPersonList()) {
+            for (Tag tag : p.getTags()) {
+                if (!listOfAllTags.contains(tag)) {
+                    listOfAllTags.add(tag);
+                    namesInListOfAllTags = namesInListOfAllTags + " " + tag.getTagName();
+                }
+            }
+        }
 
         return new CommandResult(MESSAGE_SUCCESS + namesInListOfAllTags);
     }

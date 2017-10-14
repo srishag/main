@@ -77,6 +77,8 @@ public class AddressBookParser {
             return new ListCommand();
 
         case ListTagsCommand.COMMAND_WORD:
+        case ListTagsCommand.COMMAND_WORD_ALIAS1:
+        case ListTagsCommand.COMMAND_WORD_ALIAS2:
             return new ListTagsCommand();
 
         case HistoryCommand.COMMAND_WORD:
