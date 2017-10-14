@@ -26,14 +26,6 @@ public class ListTagsCommand extends Command {
 
         listOfAllTags = new ArrayList<Tag>();
         namesInListOfAllTags = "";
-      /*
-        for (Tag tag : model.getAddressBook().getTagList()) {
-            if (!listOfAllTags.contains(tag)) {
-                listOfAllTags.add(tag);
-                namesInListOfAllTags = namesInListOfAllTags + " " + tag.getTagName();
-            }
-        }
-        */
 
       for (ReadOnlyPerson p : model.getAddressBook().getPersonList()){
           for (Tag tag : p.getTags()){
