@@ -26,6 +26,14 @@ allprojects {
     targetCompatibility = JavaVersion.VERSION_1_8
 
     repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compile 'com.google.apis:google-api-services-oauth2:v1-rev136-1.23.0'
+        compile 'com.google.apis:google-api-services-people:v1-rev153-1.23.0'
+    }
+    repositories {
         jcenter()
         mavenCentral()
         maven { url "https://repo.eclipse.org/content/repositories/egit-releases/" }
