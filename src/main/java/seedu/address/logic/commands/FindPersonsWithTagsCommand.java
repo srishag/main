@@ -29,5 +29,10 @@ public class FindPersonsWithTagsCommand extends Command {
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 
-
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof FindPersonsWithTagsCommand // instanceof handles nulls
+                && this.predicate.equals(((FindPersonsWithTagsCommand) other).predicate)); // state check
+    }
 }
