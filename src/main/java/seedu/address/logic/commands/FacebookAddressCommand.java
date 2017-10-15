@@ -3,9 +3,16 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FACEBOOKADDRESS;
 
+import java.util.List;
+
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.FacebookAddress;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * Changes the FacebookAddress of a contact
@@ -23,6 +30,8 @@ public class FacebookAddressCommand extends UndoableCommand {
             + PREFIX_FACEBOOKADDRESS + "https://www.facebook.com/(Profile ID)/ .";
 
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Facebook Address: %2$s";
+
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index index;
     private final FacebookAddress facebookAddress;
@@ -55,7 +64,40 @@ public class FacebookAddressCommand extends UndoableCommand {
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        throw new CommandException(String.format(MESSAGE_ARGUMENTS, index.getOneBased(), facebookAddress));
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
+        Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
+                personToEdit.getAddress(), facebookAddress, personToEdit.getTags());
+
+        try {
+            model.updatePerson(personToEdit, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+        //model.updateFilteredListToShowAll();
+
+        return new CommandResult(generateSuccessMessage(editedPerson));
+    }
+
+    /**
+     * Generates the success message for completion of a Facebook address update command
+     */
+    private String generateSuccessMessage(Person editedPerson) {
+        String successMessage;
+        if (facebookAddress.value.isEmpty()){
+            successMessage = "Facebook address of " + editedPerson.getName().fullName + " removed.";
+        } else {
+            successMessage = "Facebook address of " + editedPerson.getName().fullName + " updated to "
+                    + facebookAddress.value;
+        }
+        return successMessage;
     }
 
 }
