@@ -6,6 +6,7 @@ import seedu.address.commons.GoogleContactsBuilder;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.LoadLoginEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -42,7 +43,7 @@ public class ImportCommand extends Command {
         try {
             connections = builder.getPersonlist();
         } catch (IOException E){
-            EventsCenter.getInstance().post(new ExitAppRequestEvent());
+            EventsCenter.getInstance().post(new NewResultAvailableEvent("Authentication Failed. Please login again."));
         }
 
 

@@ -11,6 +11,7 @@ import com.google.api.services.people.v1.model.ListConnectionsResponse;
 import com.google.api.services.people.v1.model.Person;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.GetRedirectURLEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -50,10 +51,15 @@ public class GoogleAuthenticator {
 
     //This method obtains the token from the redirect URL after successful login
     public String getToken(){
-        GetRedirectURLEvent event = new GetRedirectURLEvent();
-        EventsCenter.getInstance().post(event);
-        String URL  = event.getReDirectURL();
-        String token = URL.substring(URL.indexOf("token=") + 6, URL.indexOf("&"));
+        String token = "";
+        try {
+            GetRedirectURLEvent event = new GetRedirectURLEvent();
+            EventsCenter.getInstance().post(event);
+            String URL = event.getReDirectURL();
+            token = URL.substring(URL.indexOf("token=") + 6, URL.indexOf("&"));
+        } catch (StringIndexOutOfBoundsException e){
+            EventsCenter.getInstance().post(new NewResultAvailableEvent("Authentication Failed. Please login again."));
+        }
         return token;
     }
 
