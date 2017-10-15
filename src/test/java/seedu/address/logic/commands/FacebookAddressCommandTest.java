@@ -18,6 +18,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.FacebookAddress;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for RemarkCommand.
@@ -37,11 +38,11 @@ public class FacebookAddressCommandTest {
     @Test
     public void equals() {
         final FacebookAddressCommand standardCommand =
-                new FacebookAddressCommand(INDEX_FIRST_PERSON, VALID_FACEBOOKADDRESS_AMY);
+                new FacebookAddressCommand(INDEX_FIRST_PERSON, new FacebookAddress(VALID_FACEBOOKADDRESS_AMY));
 
         // same values -> returns true
         FacebookAddressCommand commandWithSameValues =
-                new FacebookAddressCommand(INDEX_FIRST_PERSON, VALID_FACEBOOKADDRESS_AMY);
+                new FacebookAddressCommand(INDEX_FIRST_PERSON, new FacebookAddress(VALID_FACEBOOKADDRESS_AMY));
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -54,17 +55,20 @@ public class FacebookAddressCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new FacebookAddressCommand(INDEX_SECOND_PERSON, VALID_FACEBOOKADDRESS_AMY)));
+        assertFalse(standardCommand.equals(new FacebookAddressCommand(
+                INDEX_SECOND_PERSON, new FacebookAddress(VALID_FACEBOOKADDRESS_AMY))));
 
         // different facebook address -> returns false
-        assertFalse(standardCommand.equals(new FacebookAddressCommand(INDEX_FIRST_PERSON, VALID_FACEBOOKADDRESS_BOB)));
+        assertFalse(standardCommand.equals(new FacebookAddressCommand(
+                INDEX_FIRST_PERSON, new FacebookAddress(VALID_FACEBOOKADDRESS_BOB))));
     }
 
     /**
      * Returns an {@code RemarkCommand}.
      */
     private FacebookAddressCommand prepareCommand(Index index, String facebookAddress) {
-        FacebookAddressCommand facebookAddressCommand = new FacebookAddressCommand(index, facebookAddress);
+        FacebookAddressCommand facebookAddressCommand = new FacebookAddressCommand(
+                index, new FacebookAddress(facebookAddress));
         facebookAddressCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return facebookAddressCommand;
     }

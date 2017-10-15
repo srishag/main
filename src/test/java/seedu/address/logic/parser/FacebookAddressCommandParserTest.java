@@ -10,13 +10,14 @@ import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.FacebookAddressCommand;
+import seedu.address.model.person.FacebookAddress;
 
 public class FacebookAddressCommandParserTest {
     private FacebookAddressCommandParser parser = new FacebookAddressCommandParser();
 
     @Test
     public void parse_indexSpecified_failure() throws Exception {
-        final String facebookAddress = "https://www.facebook.com/someaddress/";
+        final FacebookAddress facebookAddress = new FacebookAddress("https://www.facebook.com/someaddress/");
 
         // has facebook address
         Index targetIndex = INDEX_FIRST_PERSON;
@@ -26,7 +27,7 @@ public class FacebookAddressCommandParserTest {
 
         // no facebook address
         userInput = targetIndex.getOneBased() + " " + PREFIX_FACEBOOKADDRESS.toString();
-        expectedCommand = new FacebookAddressCommand(INDEX_FIRST_PERSON, "");
+        expectedCommand = new FacebookAddressCommand(INDEX_FIRST_PERSON, new FacebookAddress(""));
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 

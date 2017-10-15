@@ -8,6 +8,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.FacebookAddressCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.FacebookAddress;
 
 /**
  * Parses input arguments and creates a new FacebookAddressCommand object
@@ -34,7 +35,7 @@ public class FacebookAddressCommandParser implements Parser<FacebookAddressComma
 
         String facebookAddressString = argMultimap.getValue(PREFIX_FACEBOOKADDRESS).orElse("");
 
-        return new FacebookAddressCommand(index, facebookAddressString);
+        return new FacebookAddressCommand(index, new FacebookAddress(facebookAddressString));
     }
 }
 

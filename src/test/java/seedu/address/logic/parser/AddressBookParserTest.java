@@ -31,6 +31,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.FacebookAddress;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -65,10 +66,10 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_facebookAddress() throws Exception {
-        final String facebookAddress = "https://www.facebook.com/somecontact/";
+        final FacebookAddress facebookAddress = new FacebookAddress("https://www.facebook.com/somecontact/");
         FacebookAddressCommand command = (FacebookAddressCommand) parser.parseCommand(
                 FacebookAddressCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
-                        + " " + PREFIX_FACEBOOKADDRESS + " " + facebookAddress);
+                        + " " + PREFIX_FACEBOOKADDRESS + " " + facebookAddress.value);
         assertEquals(new FacebookAddressCommand(INDEX_FIRST_PERSON, facebookAddress), command);
     }
 

@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_FACEBOOKADDRESS;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.FacebookAddress;
 
 /**
  * Changes the FacebookAddress of a contact
@@ -24,14 +25,14 @@ public class FacebookAddressCommand extends UndoableCommand {
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Facebook Address: %2$s";
 
     private final Index index;
-    private final String facebookAddressString;
+    private final FacebookAddress facebookAddress;
 
-    public FacebookAddressCommand(Index index, String facebookAddressString) {
+    public FacebookAddressCommand(Index index, FacebookAddress facebookAddress) {
         requireNonNull(index);
-        requireNonNull(facebookAddressString);
+        requireNonNull(facebookAddress);
 
         this.index = index;
-        this.facebookAddressString = facebookAddressString;
+        this.facebookAddress = facebookAddress;
     }
 
     @Override
@@ -49,12 +50,12 @@ public class FacebookAddressCommand extends UndoableCommand {
         // state check
         FacebookAddressCommand e = (FacebookAddressCommand) other;
         return index.equals(e.index)
-                && facebookAddressString.equals(e.facebookAddressString);
+                && facebookAddress.equals(e.facebookAddress);
     }
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        throw new CommandException(String.format(MESSAGE_ARGUMENTS, index.getOneBased(), facebookAddressString));
+        throw new CommandException(String.format(MESSAGE_ARGUMENTS, index.getOneBased(), facebookAddress));
     }
 
 }
