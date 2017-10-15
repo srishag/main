@@ -62,7 +62,7 @@ public class AddressBookParser {
             return new DeleteCommandParser().parse(arguments);
 
         case FacebookAddressCommand.COMMAND_WORD:
-            return new FacebookAddressCommand(); //to be changed
+            return new FacebookAddressCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();

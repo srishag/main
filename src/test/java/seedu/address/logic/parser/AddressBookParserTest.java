@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FACEBOOKADDRESS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -64,9 +65,11 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_facebookAddress() throws Exception {
+        final String facebookAddress = "https://www.facebook.com/somecontact/";
         FacebookAddressCommand command = (FacebookAddressCommand) parser.parseCommand(
-                FacebookAddressCommand.COMMAND_WORD);
-        assertTrue(command instanceof FacebookAddressCommand);
+                FacebookAddressCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
+                        + " " + PREFIX_FACEBOOKADDRESS + " " + facebookAddress);
+        assertEquals(new FacebookAddressCommand(INDEX_FIRST_PERSON, facebookAddress), command);
     }
 
     @Test
