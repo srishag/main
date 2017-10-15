@@ -4,6 +4,7 @@ import com.google.api.services.people.v1.model.Person;
 import seedu.address.commons.GoogleAuthenticator;
 import seedu.address.commons.GoogleContactsBuilder;
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.LoadLoginEvent;
@@ -30,8 +31,9 @@ public class ImportCommand extends Command {
             + "process\n"
             + "Parameters: KEYWORD\n"
             + "Example: " + COMMAND_WORD;
+    private String CommandMessage = "";
 
-    private final GoogleAuthenticator googleAuthenticator = new GoogleAuthenticator();
+    private int contactsNotImported = 0;
 
     @Override
     public CommandResult execute() {
@@ -53,9 +55,16 @@ public class ImportCommand extends Command {
                         "p/" + person.getPhoneNumbers().get(0).getValue().replace(" ","") + " " +
                         "e/" + person.getEmailAddresses().get(0).getValue() + " " +
                         "a/" + person.getAddresses().get(0).getStreetAddress());
-            } catch (CommandException | ParseException e) { } }
+            } catch (CommandException | ParseException | NullPointerException e) {
+                this.contactsNotImported += 1;
+            }
+            this.CommandMessage = String.format(Messages.MESSAGE_IMPORT_CONTACT,connections.size()-contactsNotImported,contactsNotImported);
+        }
+        else{
+            this.CommandMessage = "No Contacts Found!";
+        }
 
 
-        return new CommandResult(connections.get(1).getAddresses().get(0).getStreetAddress());
+        return new CommandResult(CommandMessage);
     }
 }
