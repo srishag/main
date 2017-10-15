@@ -34,6 +34,10 @@ public class GoogleAuthenticator {
                 GoogleAuth.newAuthorizationUrl().setRedirectUri(redirectUrl).setScopes(Arrays.asList(scope_1, scope_2, scope_3)).build();
     }
 
+    public String getAuthorizationUrl(){
+        return authorizationUrl;
+    }
+
 
     //Obtain authorization code from browser URL. Returns null if no authorization code is received
     public String getAuthorizationCode(String URL){

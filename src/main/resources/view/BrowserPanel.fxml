@@ -4,5 +4,5 @@
 <?import javafx.scene.web.WebView?>
 
 <StackPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-  <WebView fx:id="browser" onMouseEntered="#setUP" onMouseMoved="#checkURL" onMousePressed="#checkURL" onMouseReleased="#checkURL" />
+  <WebView fx:id="browser" />
 </StackPane>
