@@ -1,6 +1,5 @@
 package seedu.address.commons;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
 import com.google.api.client.googleapis.auth.oauth2.GoogleBrowserClientRequestUrl;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
@@ -11,7 +10,7 @@ import com.google.api.services.people.v1.PeopleService;
 import com.google.api.services.people.v1.model.ListConnectionsResponse;
 import com.google.api.services.people.v1.model.Person;
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.TestEvent;
+import seedu.address.commons.events.ui.GetRedirectURLEvent;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -51,7 +50,7 @@ public class GoogleAuthenticator {
 
     //This method obtains the token from the redirect URL
     public String getToken(){
-        TestEvent event = new TestEvent();
+        GetRedirectURLEvent event = new GetRedirectURLEvent();
         EventsCenter.getInstance().post(event);
         String URL  = event.getReDirectURL();
         String token = URL.substring(URL.indexOf("token=") + 6, URL.indexOf("&"));
