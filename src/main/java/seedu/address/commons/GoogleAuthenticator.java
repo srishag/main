@@ -41,14 +41,14 @@ public class GoogleAuthenticator {
     }
 
 
-    //Getter for Authorization URL for Login
+    //Getter for Authorization URL for user login
     public String getAuthorizationUrl(){
         return authorizationUrl;
     }
 
 
 
-    //This method obtains the token from the redirect URL
+    //This method obtains the token from the redirect URL after successful login
     public String getToken(){
         GetRedirectURLEvent event = new GetRedirectURLEvent();
         EventsCenter.getInstance().post(event);
@@ -58,7 +58,7 @@ public class GoogleAuthenticator {
     }
 
 
-    //Obtain credentials from token
+    //Obtain google credentials from token
     public GoogleCredential getCredential(String token) throws IOException{
 
         GoogleTokenResponse Token = new GoogleTokenResponse();
@@ -74,7 +74,7 @@ public class GoogleAuthenticator {
     }
 
 
-    //Build PeopleService
+    //Build PeopleService using google credentials
     public PeopleService BuildPeopleService(GoogleCredential credential){
         PeopleService peopleService =
                 new PeopleService.Builder(transport, jsonFactory, credential).build();
@@ -82,11 +82,11 @@ public class GoogleAuthenticator {
     }
 
 
-    //Gets the list of Contacts from google
+    //Obtain the list of Contacts from google
     public List<Person> getConnections(PeopleService peopleService)  throws IOException{
         ListConnectionsResponse response = new ListConnectionsResponse();
         response = peopleService.people().connections().list("people/me")
-                .setPersonFields("names,emailAddresses,phoneNumbers")
+                .setPersonFields("names,emailAddresses,phoneNumbers,addresses")
                 .execute();
         List<Person> connections = response.getConnections();
 
