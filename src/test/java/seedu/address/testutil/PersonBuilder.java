@@ -98,6 +98,13 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code FacebookAddress} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withFacebookAddress(String facebookAddress) {
+        this.person.setFacebookAddress(new FacebookAddress(facebookAddress));
+        return this;
+    }
+    /**
      * Sets the {@code Email} of the {@code Person} that we are building.
      */
     public PersonBuilder withEmail(String email) {
