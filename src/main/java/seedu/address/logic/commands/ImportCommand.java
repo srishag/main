@@ -32,6 +32,7 @@ public class ImportCommand extends Command {
             + "Parameters: KEYWORD\n"
             + "Example: " + COMMAND_WORD;
     private String CommandMessage = "";
+    private String ErrorMessage;
 
     private int contactsNotImported = 0;
 
@@ -40,12 +41,13 @@ public class ImportCommand extends Command {
 
         GoogleContactsBuilder builder = new GoogleContactsBuilder();
         Logic logic = new LogicManager(model);
-        List<Person> connections = new ArrayList<>();
+        List<Person> connections = null;
 
         try {
             connections = builder.getPersonlist();
         } catch (IOException E){
-            EventsCenter.getInstance().post(new NewResultAvailableEvent("Authentication Failed. Please login again."));
+            ErrorMessage = "Authentication Failed. Please login again.";
+
         }
 
 
@@ -60,10 +62,13 @@ public class ImportCommand extends Command {
             }
             this.CommandMessage = String.format(Messages.MESSAGE_IMPORT_CONTACT,connections.size()-contactsNotImported,contactsNotImported);
         }
+
         else{
             this.CommandMessage = "No Contacts Found!";
         }
-
+        if(ErrorMessage!=null){
+            CommandMessage = ErrorMessage;
+        }
 
         return new CommandResult(CommandMessage);
     }
