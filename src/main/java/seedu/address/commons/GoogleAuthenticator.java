@@ -1,61 +1,69 @@
 package seedu.address.commons;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
+import com.google.api.client.googleapis.auth.oauth2.GoogleBrowserClientRequestUrl;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.services.people.v1.PeopleService;
+import com.google.api.services.people.v1.model.ListConnectionsResponse;
+import com.google.api.services.people.v1.model.Person;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.TestEvent;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
+
 
 public class GoogleAuthenticator {
 
     HttpTransport transport = new NetHttpTransport();
     JacksonFactory jsonFactory = new JacksonFactory();
-    String clientId = "357781332625-n95uh41ub5ovd3qlvca75r28kjepiuhb.apps.googleusercontent.com";
-    String clientSecret = "B-Ogvf73gshNLn7hV1nkGnae";
+
+    String clientId = "650819214900-b3m4dv6igjlf9q3nq9eqsbmspask57kp.apps.googleusercontent.com";
+    String clientSecret = "ttunyBEmZMrK_a9MH_qc1kus";
     String redirectUrl = "https://contacts.google.com";
 
     String scope_1 = "https://www.googleapis.com/auth/contacts.readonly";
     String scope_2 = "https://www.googleapis.com/auth/plus.login";
     String scope_3 = "https://www.googleapis.com/auth/user.phonenumbers.read";
 
+
     String authorizationUrl;
 
 
     //Constructor
     public GoogleAuthenticator(){
-        GoogleAuthorizationCodeFlow GoogleAuth = new GoogleAuthorizationCodeFlow(transport, jsonFactory, clientId,
-                clientSecret, Arrays.asList(scope_1, scope_2, scope_3));
-        this.authorizationUrl =
-                GoogleAuth.newAuthorizationUrl().setRedirectUri(redirectUrl).setScopes(Arrays.asList(scope_1, scope_2, scope_3)).build();
+        this.authorizationUrl = new GoogleBrowserClientRequestUrl(clientId,redirectUrl,
+                Arrays.asList(scope_1,scope_2,scope_3)).build();
     }
 
+
+    //Getter for Authorization URL for Login
     public String getAuthorizationUrl(){
         return authorizationUrl;
     }
 
 
-    //Obtain authorization code from browser URL. Returns null if no authorization code is received
-    public String getAuthorizationCode(String URL){
-        String code = "";
-        if(URL.contains("code=")){
-            int index = URL.indexOf("code=");
-            code = URL.substring(index + 5,code.length()-1);
-        }
 
-        return code;
+    //This method obtains the token from the redirect URL
+    public String getToken(){
+        TestEvent event = new TestEvent();
+        EventsCenter.getInstance().post(event);
+        String URL  = event.getReDirectURL();
+        String token = URL.substring(URL.indexOf("token=") + 6, URL.indexOf("&"));
+        return token;
     }
 
 
-    //Obtain credentials from authorization code
-    public GoogleCredential getAuthorizationToken(String code) throws IOException{
+    //Obtain credentials from token
+    public GoogleCredential getCredential(String token) throws IOException{
 
-        GoogleTokenResponse Token = new GoogleAuthorizationCodeTokenRequest(transport, jsonFactory, clientId,
-                clientSecret, code, redirectUrl).execute();
+        GoogleTokenResponse Token = new GoogleTokenResponse();
+         Token.setAccessToken(token);
 
         GoogleCredential credential = new GoogleCredential.Builder()
                 .setTransport(transport)
@@ -64,5 +72,25 @@ public class GoogleAuthenticator {
                 .build()
                 .setFromTokenResponse(Token);
         return credential;
+    }
+
+
+    //Build PeopleService
+    public PeopleService BuildPeopleService(GoogleCredential credential){
+        PeopleService peopleService =
+                new PeopleService.Builder(transport, jsonFactory, credential).build();
+        return peopleService;
+    }
+
+
+    //Gets the list of Contacts from google
+    public List<Person> getConnections(PeopleService peopleService)  throws IOException{
+        ListConnectionsResponse response = new ListConnectionsResponse();
+        response = peopleService.people().connections().list("people/me")
+                .setPersonFields("names,emailAddresses,phoneNumbers")
+                .execute();
+        List<Person> connections = response.getConnections();
+
+        return connections;
     }
 }
