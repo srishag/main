@@ -218,6 +218,41 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+// tag::findbytags[]
+=== Finding contacts by tags
+
+~INTRODUCTION~ //TODO
+
+==== Implementation of Parser
+Firstly, when the user enters the command and the relevant arguments, AddressbookParser will call this command's parser (FindPersonsWithTagsCommandParser), which will then parse the arguments and eventually return the proper FindPersonsWithTagsCommand.
+
+Within the command parser (FindPersonWithTagsCommandParser), the parser first checks if the arguments are empty.
+
+[NOTE]
+If the arguments are empty, the ParseException error will be thrown.
+
+If the arguments are valid (non-empty), they are split and stored in a String array "tagKeywords".
+
+Each keyword is then passed into the parser's private method, getImprovedList(), to retrieve a more comprehensive list of tags.
+
+The method getImprovedList() is merely a crude way of improving convenience for the user associated with singular/plural grammar when spelling tags.
+What the method does is merely getting new tags and adding these tags to the list in addition to the original tags.
+
+[NOTE]
+The added tags are formed by appending the letter 's' to tags which do not end with the letter 's', and removing the letter 's' from tags that do end with the letter 's'.
+
+The method does not account for words where the singular and plural forms do not defer by just a single letter 's', such as "family", and "families". It is therefore recommended that future developers improve this method by implementing a proper dictionary/library for this method.
+
+The parser then returns the FindPersonWithTagsCommand with the proper predicate (details in later section), created with the improved tag list, to be executed.
+
+==== Implementation of Command
+Secondly, after the parser returns the command, assuming that no exceptions are thrown so far, the command is executed.
+
+
+
+// end::findbytags[]
+
+
 // tag::undoredo[]
 === Undo/Redo mechanism
 
