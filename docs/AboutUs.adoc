@@ -19,8 +19,6 @@ Role: Developer
 
 '''
 
-<<<<<<< HEAD
-=======
 === Tan Wei Jie
 image::pokkakiyo.jpg[width="150", align="left"]
 {empty} [https://github.com/pokkakiyo[github]]
@@ -36,7 +34,4 @@ image::PhuaJunJie.png[width="150", align="left"]
 Role: Developer
 
 '''
-<<<<<<< HEAD
->>>>>>> upstream/master
-=======
->>>>>>> upstream/master
+
