@@ -56,7 +56,8 @@ public class ImportCommand extends Command {
                 try{ logic.execute("add " + "n/" + person.getNames().get(0).getDisplayName() + " " +
                         "p/" + person.getPhoneNumbers().get(0).getValue().replace(" ","") + " " +
                         "e/" + person.getEmailAddresses().get(0).getValue() + " " +
-                        "a/" + person.getAddresses().get(0).getStreetAddress());
+                        "a/" + person.getAddresses().get(0).getStreetAddress() + " " +
+                        "t/" + "GoogleContact");
             } catch (CommandException | ParseException | NullPointerException e) {
                 this.contactsNotImported += 1;
             }
