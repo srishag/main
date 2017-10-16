@@ -294,4 +294,7 @@ e.g.`select 2`
 =======
 == Coming in v2.0
 -PhuaJunJie : EasyFind, multiple deletes, importing contacts from google.
+<<<<<<< HEAD
+>>>>>>> upstream/master
+=======
 >>>>>>> upstream/master
