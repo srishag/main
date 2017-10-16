@@ -1,7 +1,7 @@
 package seedu.address.commons.core;
 
-import java.util.Objects;
 import java.util.logging.Level;
+import java.util.Objects;
 
 /**
  * Config values used by the app
