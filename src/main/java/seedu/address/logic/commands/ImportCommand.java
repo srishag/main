@@ -72,6 +72,6 @@ public class ImportCommand extends Command {
             CommandMessage = ErrorMessage;
         }
 
-        return new CommandResult();
+        return new CommandResult(CommandMessage);
     }
 }
