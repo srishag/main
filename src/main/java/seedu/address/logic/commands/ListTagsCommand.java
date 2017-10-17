@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -17,25 +18,58 @@ public class ListTagsCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "You have the following tags: ";
 
-    private static List<Tag> listOfAllTags;
-    private static String namesInListOfAllTags;
-
 
     @Override
     public CommandResult execute() throws CommandException {
+        return new CommandResult(MESSAGE_SUCCESS + getListOfAllTagsInString());
+    }
 
-        listOfAllTags = new ArrayList<Tag>();
-        namesInListOfAllTags = "";
+    private String getListOfAllTagsInString() {
+
+        ArrayList<Tag> listOfAllTags = getAllTagsWithNoDuplicates();
+
+        ArrayList<String> listOfAllTagNames = getAllTagNamesWithNoDuplicates(listOfAllTags);
+
+        sortListOfAllTagNamesAlphabetically(listOfAllTagNames);
+
+        String tagNamesInListOfAllTags = getSortedTagNamesAsString(listOfAllTagNames);
+
+
+        return tagNamesInListOfAllTags;
+    }
+
+    private String getSortedTagNamesAsString(ArrayList<String> listOfAllTagNames) {
+        String tagNamesInListOfAllTags = "";
+        for (String tagName : listOfAllTagNames) {
+            tagNamesInListOfAllTags = tagNamesInListOfAllTags + "[" + tagName + "]" + " ";
+        }
+
+        return tagNamesInListOfAllTags;
+    }
+
+    private void sortListOfAllTagNamesAlphabetically(ArrayList<String> listOfAllTagNames) {
+        Collections.sort(listOfAllTagNames);
+    }
+
+    private ArrayList<String> getAllTagNamesWithNoDuplicates(ArrayList<Tag> listOfAllTags) {
+        ArrayList<String> listOfAllTagNames = new ArrayList<String>();
+
+        for (Tag tag : listOfAllTags) {
+            listOfAllTagNames.add(tag.getTagName());
+        }
+        return listOfAllTagNames;
+    }
+
+    private ArrayList<Tag> getAllTagsWithNoDuplicates() {
+        ArrayList<Tag> listOfAllTags = new ArrayList<Tag>();
 
         for (ReadOnlyPerson p : model.getAddressBook().getPersonList()) {
             for (Tag tag : p.getTags()) {
                 if (!listOfAllTags.contains(tag)) {
                     listOfAllTags.add(tag);
-                    namesInListOfAllTags = namesInListOfAllTags + " " + tag.getTagName();
                 }
             }
         }
-
-        return new CommandResult(MESSAGE_SUCCESS + namesInListOfAllTags);
+        return listOfAllTags;
     }
 }
