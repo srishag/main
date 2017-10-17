@@ -100,6 +100,6 @@ public class ParserUtil {
      */
     public static Optional<FacebookAddress> parseFacebookAddress (Optional<String> facebookAddress) throws IllegalValueException {
         requireNonNull(facebookAddress);
-        return facebookAddress.isPresent() ? Optional.of(new FacebookAddress((facebookAddress.get()))) : Optional.empty();
+        return facebookAddress.isPresent() ? Optional.of(new FacebookAddress(facebookAddress.get())) : Optional.of(new FacebookAddress(""));
     }
 }

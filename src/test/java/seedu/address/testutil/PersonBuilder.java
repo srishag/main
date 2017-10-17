@@ -22,7 +22,7 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
-    public static final String DEFAULT_FACEBOOK_ADDRESS = "https://www.facebook.com/iKBCkeyboards/";
+    public static final String DEFAULT_FACEBOOK_ADDRESS = "https://www.facebook.com/default_address_for_testing/";
     public static final String DEFAULT_TAGS = "friends";
 
     private Person person;
