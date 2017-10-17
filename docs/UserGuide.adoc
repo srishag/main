@@ -143,6 +143,12 @@ Returns any person having tags `friends`.
 * `findtags friends colleagues schoolmates` +
 Returns any person having any of the tags `friends`, `colleagues`, and/or `schoolmates`.
 
+=== List tags : `listtags` +
+`coming in v2.0`
+
+Lists all existing tags in the App +
+Format: `listtags` +
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
