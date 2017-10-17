@@ -120,7 +120,6 @@ public class ListTagsCommandTest {
 
         assertCommandSuccess(listTagsCommandForNoTags, modelWithNoTags, expectedMessageForNoTags, modelWithNoTags);
 
-
     }
 
 }
