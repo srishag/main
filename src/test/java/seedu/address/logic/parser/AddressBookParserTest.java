@@ -101,7 +101,7 @@ public class AddressBookParserTest {
         List<String> keywords = Arrays.asList("friend", "colleague");
         List<String> expectedPredicateKeywords = Arrays.asList("friend", "friends", "colleague", "colleagues");
         FindPersonsWithTagsCommand command = (FindPersonsWithTagsCommand) parser.parseCommand(
-                FindPersonsWithTagsCommand.COMMAND_WORD_ALIAS1 + " "
+                FindPersonsWithTagsCommand.COMMAND_ALIAS1 + " "
                         + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindPersonsWithTagsCommand(
                 new PersonContainsTagsPredicate(expectedPredicateKeywords)), command);
@@ -112,7 +112,7 @@ public class AddressBookParserTest {
         List<String> keywords = Arrays.asList("friend", "colleague");
         List<String> expectedPredicateKeywords = Arrays.asList("friend", "friends", "colleague", "colleagues");
         FindPersonsWithTagsCommand command = (FindPersonsWithTagsCommand) parser.parseCommand(
-                FindPersonsWithTagsCommand.COMMAND_WORD_ALIAS2 + " "
+                FindPersonsWithTagsCommand.COMMAND_ALIAS2 + " "
                         + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindPersonsWithTagsCommand(
                 new PersonContainsTagsPredicate(expectedPredicateKeywords)), command);

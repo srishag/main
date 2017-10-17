@@ -74,8 +74,8 @@ public class AddressBookParser {
             return new FindCommandParser().parse(arguments);
 
         case FindPersonsWithTagsCommand.COMMAND_WORD:
-        case FindPersonsWithTagsCommand.COMMAND_WORD_ALIAS1:
-        case FindPersonsWithTagsCommand.COMMAND_WORD_ALIAS2:
+        case FindPersonsWithTagsCommand.COMMAND_ALIAS1:
+        case FindPersonsWithTagsCommand.COMMAND_ALIAS2:
             return new FindPersonsWithTagsCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
