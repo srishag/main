@@ -27,9 +27,11 @@ import seedu.address.model.tag.Tag;
 public class ListTagsCommandTest {
     private Model model;
     private Model expectedModel;
+    private Model modelWithNoTags;
     private ListTagsCommand listTagsCommand;
     private List<Tag> listOfAllTags;
     private String expectedMessage;
+    private String expectedMessageForNoTags;
 
 
     @Before
@@ -42,20 +44,21 @@ public class ListTagsCommandTest {
         listTagsCommand.setData(model, new CommandHistory(), new UndoRedoStack());
 
         //creating the expected message for all tags in typical addressbook
-        expectedMessage = listTagsCommand.MESSAGE_SUCCESS;
+        StringBuilder expectedMessageInStringBuilder = new StringBuilder(listTagsCommand.MESSAGE_SUCCESS);
         for (ReadOnlyPerson p : model.getAddressBook().getPersonList()) {
             for (Tag tag : p.getTags()) {
                 if (!listOfAllTags.contains(tag)) {
                     listOfAllTags.add(tag);
-                    expectedMessage = expectedMessage + " " + tag.getTagName();
+                    expectedMessageInStringBuilder.append("[").append(tag.getTagName()).append("] ");
                 }
             }
         }
+        expectedMessage = expectedMessageInStringBuilder.toString().trim();
 
     }
 
     @Test
-    public void execute_showsCorrectTagList() {
+    public void execute_showsCorrectTagListWhenThereAreContactsWithTags() {
         assertCommandSuccess(listTagsCommand, model, expectedMessage, expectedModel);
     }
 
@@ -63,7 +66,7 @@ public class ListTagsCommandTest {
     public void execute_addNewPersonWithNewTag_showsCorrectTagList() throws DuplicatePersonException {
         model.addPerson(CORNIE);
         expectedModel.addPerson(CORNIE);
-        String newExpectedMessage = expectedMessage + " " + VALID_TAG_UNIQUETAG;
+        String newExpectedMessage = expectedMessage + " [" + VALID_TAG_UNIQUETAG + "]";
 
         assertCommandSuccess(listTagsCommand, model, newExpectedMessage, expectedModel);
     }
@@ -73,7 +76,7 @@ public class ListTagsCommandTest {
             PersonNotFoundException, DuplicatePersonException {
         model.addPerson(CORNIE);
         expectedModel.addPerson(CORNIE);
-        String newExpectedMessage = expectedMessage + " " + VALID_TAG_UNIQUETAG;
+        String newExpectedMessage = expectedMessage + " [" + VALID_TAG_UNIQUETAG + "]";
 
         assertCommandSuccess(listTagsCommand, model, newExpectedMessage, expectedModel);
 
@@ -89,14 +92,14 @@ public class ListTagsCommandTest {
             PersonNotFoundException, DuplicatePersonException {
         model.addPerson(CORNIE);
         expectedModel.addPerson(CORNIE);
-        String newExpectedMessage = expectedMessage + " " + VALID_TAG_UNIQUETAG;
+        String newExpectedMessage = expectedMessage + " [" + VALID_TAG_UNIQUETAG + "]";
 
         assertCommandSuccess(listTagsCommand, model, newExpectedMessage, expectedModel);
 
         //editing unique tag to another unique tag
         model.updatePerson(CORNIE, CORNIE_NEW_UNIQUE_TAG);
         expectedModel.updatePerson(CORNIE, CORNIE_NEW_UNIQUE_TAG);
-        String newExpectedMessage2 = expectedMessage + " " + VALID_TAG_UNIQUETAG2;
+        String newExpectedMessage2 = expectedMessage + " [" + VALID_TAG_UNIQUETAG2 + "]";
 
         assertCommandSuccess(listTagsCommand, model, newExpectedMessage2, expectedModel);
 
@@ -105,6 +108,18 @@ public class ListTagsCommandTest {
         expectedModel.updatePerson(CORNIE_NEW_UNIQUE_TAG, CORNIE_NEW_NON_UNIQUE_TAG);
 
         assertCommandSuccess(listTagsCommand, model, expectedMessage, expectedModel);
+
+    }
+
+    @Test
+    public void execute_noTagsShowsEmptyTagList() throws DuplicatePersonException {
+        modelWithNoTags = new ModelManager();
+        expectedMessageForNoTags = listTagsCommand.MESSAGE_FAILURE;
+        ListTagsCommand listTagsCommandForNoTags = new ListTagsCommand();
+        listTagsCommandForNoTags.setData(modelWithNoTags, new CommandHistory(), new UndoRedoStack());
+
+        assertCommandSuccess(listTagsCommandForNoTags, modelWithNoTags, expectedMessageForNoTags, modelWithNoTags);
+
 
     }
 
