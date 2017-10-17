@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -16,48 +15,28 @@ public class ListTagsCommand extends Command {
     public static final String COMMAND_WORD_ALIAS1 = "lt";
     public static final String COMMAND_WORD_ALIAS2 = "ltags";
 
+    public static final String MESSAGE_FAILURE = "You do not have any tags!";
     public static final String MESSAGE_SUCCESS = "You have the following tags: ";
 
 
     @Override
     public CommandResult execute() throws CommandException {
-        return new CommandResult(MESSAGE_SUCCESS + getListOfAllTagsInString());
+        return new CommandResult(getFeedbackForUser());
     }
 
-    private String getListOfAllTagsInString() {
+    private String getFeedbackForUser() {
+
+        String feedbackForUser;
 
         ArrayList<Tag> listOfAllTags = getAllTagsWithNoDuplicates();
 
-        ArrayList<String> listOfAllTagNames = getAllTagNamesWithNoDuplicates(listOfAllTags);
-
-        sortListOfAllTagNamesAlphabetically(listOfAllTagNames);
-
-        String tagNamesInListOfAllTags = getSortedTagNamesAsString(listOfAllTagNames);
-
-
-        return tagNamesInListOfAllTags;
-    }
-
-    private String getSortedTagNamesAsString(ArrayList<String> listOfAllTagNames) {
-        String tagNamesInListOfAllTags = "";
-        for (String tagName : listOfAllTagNames) {
-            tagNamesInListOfAllTags = tagNamesInListOfAllTags + "[" + tagName + "]" + " ";
+        if (listOfAllTags.isEmpty()) {
+            feedbackForUser = MESSAGE_FAILURE;
+        } else {
+            feedbackForUser = MESSAGE_SUCCESS + getListOfAllTagsInString(listOfAllTags);
         }
 
-        return tagNamesInListOfAllTags;
-    }
-
-    private void sortListOfAllTagNamesAlphabetically(ArrayList<String> listOfAllTagNames) {
-        Collections.sort(listOfAllTagNames);
-    }
-
-    private ArrayList<String> getAllTagNamesWithNoDuplicates(ArrayList<Tag> listOfAllTags) {
-        ArrayList<String> listOfAllTagNames = new ArrayList<String>();
-
-        for (Tag tag : listOfAllTags) {
-            listOfAllTagNames.add(tag.getTagName());
-        }
-        return listOfAllTagNames;
+        return feedbackForUser;
     }
 
     private ArrayList<Tag> getAllTagsWithNoDuplicates() {
@@ -72,4 +51,36 @@ public class ListTagsCommand extends Command {
         }
         return listOfAllTags;
     }
+
+    private String getListOfAllTagsInString(ArrayList<Tag> listOfAllTags) {
+
+        ArrayList<String> listOfAllTagNames = getAllTagNamesWithNoDuplicates(listOfAllTags);
+
+        sortListOfAllTagNamesAlphabetically(listOfAllTagNames);
+
+        return getSortedTagNamesAsString(listOfAllTagNames);
+    }
+
+    private ArrayList<String> getAllTagNamesWithNoDuplicates(ArrayList<Tag> listOfAllTags) {
+        ArrayList<String> listOfAllTagNames = new ArrayList<String>();
+
+        for (Tag tag : listOfAllTags) {
+            listOfAllTagNames.add(tag.getTagName());
+        }
+        return listOfAllTagNames;
+    }
+
+    private void sortListOfAllTagNamesAlphabetically(ArrayList<String> listOfAllTagNames) {
+        Collections.sort(listOfAllTagNames);
+    }
+
+    private String getSortedTagNamesAsString(ArrayList<String> listOfAllTagNames) {
+        StringBuilder tagNamesInListOfAllTags = new StringBuilder("");
+        for (String tagName : listOfAllTagNames) {
+            tagNamesInListOfAllTags.append("[").append(tagName).append("] ");
+        }
+
+        return tagNamesInListOfAllTags.toString().trim();
+    }
+
 }
