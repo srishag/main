@@ -7,11 +7,14 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.swing.text.html.Option;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.FacebookAddress;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -89,5 +92,14 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code Optional<String> facebookAddress} into an {@code Optional<FacebookAddress>} if {@code facebookAddress} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<FacebookAddress> parseFacebookAddress (Optional<String> facebookAddress) throws IllegalValueException {
+        requireNonNull(facebookAddress);
+        return facebookAddress.isPresent() ? Optional.of(new FacebookAddress((facebookAddress.get()))) : Optional.empty();
     }
 }
