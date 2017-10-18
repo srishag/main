@@ -223,7 +223,7 @@ This section describes some noteworthy details on how certain features are imple
 
 The EasyFind mechanism is an Event Driven task, which activates when user tries to search for a contact by updating the search results whenever the user enter a character into the commandbox.
 
-The mechanism is facilitated by a new command `FindAlphabets` will search for contacts matching the sequence of alphabets in the `commandbox`. The command is called every time they user enters or remove a character from the command box while using the command `Find`.
+The mechanism is facilitated by a new command `FindAlphabets` which will search for contacts matching the sequence of alphabets in the `commandbox`. The command is called every time the user enters or remove a character from the command box while using the command `Find`.
 
 The key release event of the command box is constantly searching for the term `find` and when the user inputs the mentioned term into the `commandbox`, the key release event will begin searching for contacts by passing the alphabets entered after the term `find` into `FindAlphabetsCommand`.
 
@@ -248,9 +248,8 @@ image::FindAlphabetsCommand.png[width="800"]
 **Cons:** This might confuse the user as the `FindCommand` and `FindAlphabetsCommand` could generate different results. The contact that the user is searching for may be displayed when a partial name is inputted. However, when the user inputs `enter` before typing in the full name, the displayed contact will be removed by the original `FindCommand` +
 **Alternative 2:** Just replace `FindCommand` with `FindAlphabetsCommand` +
 **Pros:** The results displayed will not change even after the user has pressed `enter`. It can also help the user to speed up the process of searching for contacts as they user does not have to input the full name +
-**Cons:** Removing the find Command will affect other functions of the Addressbook such as the `findtags` function which works better with the original `FindCommand`.
+**Cons:** Removing the find Command may affect other functions of the Addressbook.
 
----
 
 =======
 // tag::findbytags[]
