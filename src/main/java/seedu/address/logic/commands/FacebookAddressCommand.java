@@ -91,7 +91,7 @@ public class FacebookAddressCommand extends UndoableCommand {
      */
     private String generateSuccessMessage(Person editedPerson) {
         String successMessage;
-        if (facebookAddress.value.isEmpty()){
+        if (facebookAddress.value.isEmpty()) {
             successMessage = "Facebook address of " + editedPerson.getName().fullName + " removed.";
         } else {
             successMessage = "Facebook address of " + editedPerson.getName().fullName + " updated to "
