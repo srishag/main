@@ -31,10 +31,10 @@ public class Birthday {
     }
 
     /**
-     * Returns if a given string is a valid person email.
+     * Returns if a given string is a valid person birthday.
      */
     public static boolean isValidBirthday(String test) {
-        return test.matches(BIRTHDAY_VALIDATION_REGEX);
+        return test.matches(BIRTHDAY_VALIDATION_REGEX) || test.equals("");
     }
 
     @Override
