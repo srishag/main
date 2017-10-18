@@ -57,8 +57,8 @@ public class ImportCommand extends Command {
                         "p/" + person.getPhoneNumbers().get(0).getValue().replace(" ","") + " " +
                         "e/" + person.getEmailAddresses().get(0).getValue() + " " +
                         "a/" + person.getAddresses().get(0).getStreetAddress() + " " +
-                        "t/" + "GoogleContact" + person.getResourceName().substring(7));
-                    connections.get(0).getUrls().get(0).getValue();
+                        "t/" + "GoogleContact" + " " +
+                        "c/" + person.getResourceName().substring(8));
             } catch (CommandException | ParseException | NullPointerException e) {
                 this.contactsNotImported += 1;
             }

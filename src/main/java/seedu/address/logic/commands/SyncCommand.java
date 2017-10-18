@@ -36,6 +36,7 @@ public class SyncCommand extends Command {
             + "Example: " + COMMAND_WORD;
     private String editCommand = "edit +";
     private String CommandMessage;
+    private String ErrorMessage;
 
     @Override
     public CommandResult execute() {
@@ -50,58 +51,61 @@ public class SyncCommand extends Command {
         try {
             connections = builder.getPersonlist();
         } catch (IOException E){
-         //   ErrorMessage = "Authentication Failed. Please login again.";
+            ErrorMessage = "Authentication Failed. Please login again.";
 
         }
         ObservableList <ReadOnlyPerson> personlist = model.getAddressBook().getPersonList();
 
-    //   if ((connections != null) && (connections.size() > 0)) {
-    //       for (Person person : connections) {
-    //           editCommand = "edit +";
-    //           needEdit = false;
-    //           for (ReadOnlyPerson contact : personlist) {
-    //               count++;
-    //               editCommand += String.valueOf(count);
-    //               String a = contact.getGoogleID();
-    //               if (person.getResourceName().substring(7).equals(contact.getGoogleID())) {
-    //                   if (!person.getNames().get(0).getDisplayName().equals(contact.getName().fullName)) {
-    //                       editCommand += " n/" + person.getNames().get(0).getDisplayName();
-    //                       needEdit = true;
-    //                   }
-    //                   if (!person.getPhoneNumbers().get(0).getValue().replace(" ", "")
-    //                           .equals(contact.getPhone().value)) {
-    //                       editCommand += " p/" + person.getPhoneNumbers().get(0).getValue().replace(" ", "");
-    //                       needEdit = true;
-    //                   }
-    //                   if (!person.getEmailAddresses().get(0).getValue().equals(contact.getEmail().value)) {
-    //                       editCommand += " e/" + person.getEmailAddresses().get(0).getValue();
-    //                       needEdit = true;
-    //                   }
-    //                   if (!person.getAddresses().get(0).getStreetAddress().equals(contact.getAddress().value)) {
-    //                       editCommand += " a/" +person.getAddresses().get(0).getStreetAddress();
-    //                       needEdit = true;
-    //                   }
-    //                   if (needEdit) {
-    //                       try {
-    //                           logic.execute(editCommand);
-    //                           countEdited++;
-    //                       } catch (CommandException | ParseException | NullPointerException e) {
-    //                       }
-    //                   }
-    //               }
-    //           }
-    //       }
-    //   }
-    //   else{
-    //       this.CommandMessage = "No Contacts Found!";
-    //   }
+      if ((connections != null) && (connections.size() > 0)) {
+          for (Person person : connections) {
+              needEdit = false;
+              count = 0;
+              for (ReadOnlyPerson contact : personlist) {
+                  count++;
+                  editCommand = "edit ";
+                  editCommand += String.valueOf(count);
+                  if (person.getResourceName().substring(8).equals(contact.getGoogleID().value)) {
+                      if (!person.getNames().get(0).getDisplayName().equals(contact.getName().fullName)) {
+                          editCommand += " n/" + person.getNames().get(0).getDisplayName();
+                          needEdit = true;
+                      }
+                      if (!person.getPhoneNumbers().get(0).getValue().replace(" ", "")
+                              .equals(contact.getPhone().value)) {
+                          editCommand += " p/" + person.getPhoneNumbers().get(0).getValue().replace(" ", "");
+                          needEdit = true;
+                      }
+                      if (!person.getEmailAddresses().get(0).getValue().equals(contact.getEmail().value)) {
+                          editCommand += " e/" + person.getEmailAddresses().get(0).getValue();
+                          needEdit = true;
+                      }
+                      if (!person.getAddresses().get(0).getStreetAddress().equals(contact.getAddress().value)) {
+                          editCommand += " a/" +person.getAddresses().get(0).getStreetAddress();
+                          needEdit = true;
+                      }
+                      if (needEdit) {
+                          try {
+                              logic.execute(editCommand);
+                              countEdited++;
+                          } catch (CommandException | ParseException | NullPointerException e) {
+                          }
+                      }
+                  }
+              }
+          }
+      }
+      else{
+          this.CommandMessage = "No Contacts Found!";
+      }
 
-    //   if(countEdited!=0){
-    //       CommandMessage = "Contacts edited : " + String.valueOf(countEdited);
-    //   }
-    //   else{
-    //       CommandMessage = "no contacts edited";
-    //   }
+      if(ErrorMessage != null){
+          CommandMessage = ErrorMessage;
+      }
+      else if(countEdited!=0){
+           CommandMessage = "Contacts updated : " + String.valueOf(countEdited);
+      }
+      else{
+           CommandMessage = "All contacts are up to date";
+      }
 
         return new CommandResult(CommandMessage);
     }
