@@ -66,14 +66,14 @@ public class AddressBookParserTest {
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
     }
 
-    @Test
-    public void parseCommand_facebookAddress() throws Exception {
-        final FacebookAddress facebookAddress = new FacebookAddress("https://www.facebook.com/somecontact/");
-        FacebookAddressCommand command = (FacebookAddressCommand) parser.parseCommand(
-                FacebookAddressCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
-                        + " " + PREFIX_FACEBOOKADDRESS + " " + facebookAddress.value);
-        assertEquals(new FacebookAddressCommand(INDEX_FIRST_PERSON, facebookAddress), command);
-    }
+        //    @Test
+        //    public void parseCommand_facebookAddress() throws Exception {
+        //        final FacebookAddress facebookAddress = new FacebookAddress("https://www.facebook.com/somecontact/");
+        //        FacebookAddressCommand command = (FacebookAddressCommand) parser.parseCommand(
+        //                FacebookAddressCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
+        //                        + " " + PREFIX_FACEBOOKADDRESS + " " + facebookAddress.value);
+        //        assertEquals(new FacebookAddressCommand(INDEX_FIRST_PERSON, facebookAddress), command);
+        //    }
 
     @Test
     public void parseCommand_edit() throws Exception {
