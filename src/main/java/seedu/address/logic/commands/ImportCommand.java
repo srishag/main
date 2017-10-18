@@ -1,19 +1,14 @@
 package seedu.address.logic.commands;
 
 import com.google.api.services.people.v1.model.Person;
-import seedu.address.commons.GoogleAuthenticator;
 import seedu.address.commons.GoogleContactsBuilder;
-import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
-import seedu.address.commons.events.ui.ExitAppRequestEvent;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.commons.events.ui.LoadLoginEvent;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.LogicManager;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.Logic;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.*;
+import seedu.address.model.tag.Tag;
+
 
 import java.io.IOException;
 import java.util.*;
@@ -34,59 +29,101 @@ public class ImportCommand extends Command {
             + "Example: " + COMMAND_WORD;
     private String CommandMessage = "";
     private String ErrorMessage;
+    private String NotImported = "";
 
-    private int contactsNotImported = 0;
+    private int contactsImported = 0;
+    private int errorImports =0;
 
     @Override
     public CommandResult execute() {
 
         GoogleContactsBuilder builder = new GoogleContactsBuilder();
-        Logic logic = new LogicManager(model);
         List<Person> connections = null;
-        boolean contactAlreadyExists;
-
         try {
             connections = builder.getPersonlist();
-        } catch (IOException E){
+        } catch (IOException E) {
             ErrorMessage = "Authentication Failed. Please login again.";
 
         }
+
+        Logic logic = new LogicManager(model);
         List<ReadOnlyPerson> personList = model.getAddressBook().getPersonList();
+        boolean contactAlreadyExists;
 
 
         if ((connections != null) && (connections.size() > 0)) {
             for (Person person : connections) {
-                contactAlreadyExists = false;
-                for (ReadOnlyPerson contact : personList) {
-                    if (person.getResourceName().substring(8).equals(contact.getGoogleID().value)) {
-                        contactAlreadyExists = true;
-                    }
-                }
+                contactAlreadyExists = this.ifContactExists(personList, person);
                 if (!contactAlreadyExists) {
                     try {
-                        logic.execute("add " + "n/" + person.getNames().get(0).getDisplayName() + " " +
-                                "p/" + person.getPhoneNumbers().get(0).getValue().replace(" ", "") + " " +
-                                "e/" + person.getEmailAddresses().get(0).getValue() + " " +
-                                "a/" + person.getAddresses().get(0).getStreetAddress() + " " +
-                                "t/" + "GoogleContact" + " " +
-                                "c/" + person.getResourceName().substring(8));
-                    } catch (CommandException | ParseException | NullPointerException e) {
-                        this.contactsNotImported += 1;
+                        model.addPerson(this.newPerson(person));
+                        contactsImported++;
+                    } catch (IllegalValueException | NullPointerException e) {
+                        NotImported += " " + person.getNames().get(0).getDisplayName() + " /";
+                        errorImports ++;
                     }
                 }
-                else {
-                    this.contactsNotImported += 1;
-                }
             }
-            this.CommandMessage = String.format(Messages.MESSAGE_IMPORT_CONTACT, connections.size() - contactsNotImported, contactsNotImported);
-        }
-        else{
-            this.CommandMessage = "No Contacts Found!";
-        }
-        if(ErrorMessage!=null){
-            CommandMessage = ErrorMessage;
+            CommandMessage = setCommandMessage(ErrorMessage,NotImported,contactsImported,errorImports,connections.size());
         }
 
+
+
+        if(ErrorMessage != null){
+            CommandMessage = ErrorMessage;
+        }
         return new CommandResult(CommandMessage);
     }
+
+
+    /**
+     * Check if a particular google contact already exists in the addressbook
+     * Returns true if already exists. Otherwise, false.
+     */
+   public boolean ifContactExists(List<ReadOnlyPerson> list, Person person){
+        for(ReadOnlyPerson readOnlyPerson : list){
+            if(person.getResourceName().substring(8).equals(readOnlyPerson.getGoogleID().value)){
+                return true;
+            }
+        }
+        return false;
+   }
+    /**
+     * Create a person in addressBook based on the contact in google contact
+     */
+   public seedu.address.model.person.Person newPerson(Person person) throws IllegalValueException, NullPointerException{
+         Name name = new Name(person.getNames().get(0).getDisplayName());
+         Email email = new Email(person.getEmailAddresses().get(0).getValue());
+         Phone phone = new Phone(person.getPhoneNumbers().get(0).getValue().replace(" ", ""));
+         Address address = new Address(person.getAddresses().get(0).getStreetAddress());
+         GoogleID ID = new GoogleID(person.getResourceName().substring(8));
+
+         Tag tag = new Tag("GoogleContact");
+         Set<Tag> Tags = new HashSet<>();
+         Tags.add(tag);
+
+         return new seedu.address.model.person.Person(name,phone,email,address,Tags,ID);
+
+   }
+    /**
+     * Create a detailed message on the status of the import
+     */
+   public String setCommandMessage(String errorMessage, String notimported, int contactsImported, int errorImports, int size) {
+       int existedContacts = size - contactsImported - errorImports;
+       String CommandMessage = new String();
+       if(errorMessage != null){
+           return errorMessage;
+       }
+       else {
+           CommandMessage = String.format(Messages.MESSAGE_IMPORT_CONTACT, contactsImported, size - contactsImported) + "\n";
+           if (size > contactsImported) {
+               CommandMessage += "Contacts already existed : " + String.valueOf(existedContacts)
+                       + "     Contacts not in the correct format : " + String.valueOf(errorImports) + "\n";
+           }
+           if(errorImports > 0){
+               CommandMessage += "Please check the format of the following google contacts : " + notimported;
+           }
+           return CommandMessage;
+       }
+   }
 }
