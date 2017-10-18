@@ -13,7 +13,7 @@ public class GoogleID{
 
     public static final String MESSAGE_GOOGLEID_CONSTRAINTS =
             "GoogleID can only contain numbers, and should be at least 3 digits long";
-    public static final String GOOGLEID_VALIDATION_REGEX = "\\d{3,}";
+    public static final String GOOGLEID_VALIDATION_REGEX = "[^\\s].*";
     public final String value;
 
     /**
