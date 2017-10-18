@@ -251,9 +251,8 @@ image::FindAlphabetsCommand.png[width="800"]
 **Cons:** Removing the find Command will affect other functions of the Addressbook such as the `findtags` function which works better with the original `FindCommand`.
 
 ---
-// end::EasyFind[]
 
-
+=======
 // tag::findbytags[]
 === Finding contacts by tags
 
