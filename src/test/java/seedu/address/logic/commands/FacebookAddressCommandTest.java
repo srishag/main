@@ -21,7 +21,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.FacebookAddress;
 
 /**
- * Contains integration tests (interaction with the Model) and unit tests for RemarkCommand.
+ * Contains integration tests (interaction with the Model) and unit tests for FacebookAddressCommand.
  */
 public class FacebookAddressCommandTest {
 
@@ -64,7 +64,7 @@ public class FacebookAddressCommandTest {
     }
 
     /**
-     * Returns an {@code RemarkCommand}.
+     * Returns a {@code FacebookAddressCommand}.
      */
     private FacebookAddressCommand prepareCommand(Index index, String facebookAddress) {
         FacebookAddressCommand facebookAddressCommand = new FacebookAddressCommand(

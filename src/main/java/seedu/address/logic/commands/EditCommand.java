@@ -101,7 +101,8 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        FacebookAddress updatedFacebookAddress = personToEdit.getFacebookAddress();
+        FacebookAddress updatedFacebookAddress = editPersonDescriptor.getFacebookAddress()
+                .orElse(personToEdit.getFacebookAddress());
         //will allow edit to do FB URL later or just through the command
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
@@ -135,6 +136,7 @@ public class EditCommand extends UndoableCommand {
         private Phone phone;
         private Email email;
         private Address address;
+        private FacebookAddress facebookAddress;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -144,6 +146,7 @@ public class EditCommand extends UndoableCommand {
             this.phone = toCopy.phone;
             this.email = toCopy.email;
             this.address = toCopy.address;
+            this.facebookAddress = toCopy.facebookAddress;
             this.tags = toCopy.tags;
         }
 
@@ -186,6 +189,14 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
+        public void setFacebookAddress(FacebookAddress facebookAddress) {
+            this.facebookAddress = facebookAddress;
+        }
+
+        public Optional<FacebookAddress> getFacebookAddress() {
+            return Optional.ofNullable(facebookAddress);
+        }
+
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
         }
@@ -213,6 +224,7 @@ public class EditCommand extends UndoableCommand {
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
+                    && getFacebookAddress().equals(e.getFacebookAddress())
                     && getTags().equals(e.getTags());
         }
     }
