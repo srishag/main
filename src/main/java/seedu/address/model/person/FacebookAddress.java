@@ -2,6 +2,8 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.net.URL;
+
 /**
  * Represents a person's Facebook address
  * Guarantees: immutable; is always valid
@@ -15,7 +17,37 @@ public class FacebookAddress {
 
     public FacebookAddress(String facebookAddress) {
         requireNonNull(facebookAddress);
-        this.value = facebookAddress;
+
+        this.value = getInUrlFormIfNeeded(facebookAddress);
+    }
+
+    /**
+     * If user's input is not in valid URL format, assume that user input is profile name of contact, and thus
+     * append the necessary URL prefixes
+     * @param facebookAddress
+     * @return
+     */
+    private String getInUrlFormIfNeeded(String facebookAddress) {
+        if (isValidUrl(facebookAddress)) {
+            return facebookAddress;
+        } else {
+            return "https://www.facebook.com/" + facebookAddress;
+        }
+    }
+
+    /**
+     * Checks if a given string is in valid URL format
+     * @param facebookAddress
+     * @return
+     */
+    private boolean isValidUrl(String facebookAddress) {
+        try {
+            URL url = new URL(facebookAddress);
+            url.toURI();
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
     }
 
     @Override
