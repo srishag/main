@@ -42,7 +42,8 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     private void loadPersonPage(ReadOnlyPerson person) {
-        loadPage(person.getFacebookAddress().value);
+        loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
+                + GOOGLE_SEARCH_URL_SUFFIX);
     }
 
     public void loadPage(String url) {
