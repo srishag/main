@@ -13,6 +13,7 @@ import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.Logic;
+import seedu.address.model.person.ReadOnlyPerson;
 
 import java.io.IOException;
 import java.util.*;
@@ -42,6 +43,7 @@ public class ImportCommand extends Command {
         GoogleContactsBuilder builder = new GoogleContactsBuilder();
         Logic logic = new LogicManager(model);
         List<Person> connections = null;
+        boolean contactAlreadyExists;
 
         try {
             connections = builder.getPersonlist();
@@ -49,22 +51,35 @@ public class ImportCommand extends Command {
             ErrorMessage = "Authentication Failed. Please login again.";
 
         }
+        List<ReadOnlyPerson> personList = model.getAddressBook().getPersonList();
 
 
         if ((connections != null) && (connections.size() > 0)) {
-            for (Person person : connections)
-                try{ logic.execute("add " + "n/" + person.getNames().get(0).getDisplayName() + " " +
-                        "p/" + person.getPhoneNumbers().get(0).getValue().replace(" ","") + " " +
-                        "e/" + person.getEmailAddresses().get(0).getValue() + " " +
-                        "a/" + person.getAddresses().get(0).getStreetAddress() + " " +
-                        "t/" + "GoogleContact" + " " +
-                        "c/" + person.getResourceName().substring(8));
-            } catch (CommandException | ParseException | NullPointerException e) {
-                this.contactsNotImported += 1;
+            for (Person person : connections) {
+                contactAlreadyExists = false;
+                for (ReadOnlyPerson contact : personList) {
+                    if (person.getResourceName().substring(8).equals(contact.getGoogleID().value)) {
+                        contactAlreadyExists = true;
+                    }
+                }
+                if (!contactAlreadyExists) {
+                    try {
+                        logic.execute("add " + "n/" + person.getNames().get(0).getDisplayName() + " " +
+                                "p/" + person.getPhoneNumbers().get(0).getValue().replace(" ", "") + " " +
+                                "e/" + person.getEmailAddresses().get(0).getValue() + " " +
+                                "a/" + person.getAddresses().get(0).getStreetAddress() + " " +
+                                "t/" + "GoogleContact" + " " +
+                                "c/" + person.getResourceName().substring(8));
+                    } catch (CommandException | ParseException | NullPointerException e) {
+                        this.contactsNotImported += 1;
+                    }
+                }
+                else {
+                    this.contactsNotImported += 1;
+                }
             }
-            this.CommandMessage = String.format(Messages.MESSAGE_IMPORT_CONTACT,connections.size()-contactsNotImported,contactsNotImported);
+            this.CommandMessage = String.format(Messages.MESSAGE_IMPORT_CONTACT, connections.size() - contactsNotImported, contactsNotImported);
         }
-
         else{
             this.CommandMessage = "No Contacts Found!";
         }

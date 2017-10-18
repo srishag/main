@@ -2,19 +2,11 @@ package seedu.address.logic.commands;
 
 import com.google.api.services.people.v1.model.Person;
 import javafx.collections.ObservableList;
-import seedu.address.commons.GoogleAuthenticator;
 import seedu.address.commons.GoogleContactsBuilder;
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.events.ui.ExitAppRequestEvent;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.commons.events.ui.LoadLoginEvent;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.Logic;
-import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 
 import java.io.IOException;
@@ -35,13 +27,14 @@ public class SyncCommand extends Command {
             + "Parameters: KEYWORD\n"
             + "Example: " + COMMAND_WORD;
     private String editCommand = "edit +";
-    private String CommandMessage;
+    private String CommandMessage = "";
     private String ErrorMessage;
 
     @Override
     public CommandResult execute() {
         int count = 0;
         int countEdited =0;
+        int countError = 0;
         boolean needEdit;
 
         GoogleContactsBuilder builder = new GoogleContactsBuilder();
@@ -87,6 +80,7 @@ public class SyncCommand extends Command {
                               logic.execute(editCommand);
                               countEdited++;
                           } catch (CommandException | ParseException | NullPointerException e) {
+                              countError +=1;
                           }
                       }
                   }
@@ -100,8 +94,12 @@ public class SyncCommand extends Command {
       if(ErrorMessage != null){
           CommandMessage = ErrorMessage;
       }
+
       else if(countEdited!=0){
            CommandMessage = "Contacts updated : " + String.valueOf(countEdited);
+      }
+      else if(countError >0){
+          CommandMessage += " " + String.valueOf(countError) + " contact/s not synced successfully. Please check format.";
       }
       else{
            CommandMessage = "All contacts are up to date";
