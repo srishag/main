@@ -55,53 +55,53 @@ public class SyncCommand extends Command {
         }
         ObservableList <ReadOnlyPerson> personlist = model.getAddressBook().getPersonList();
 
-        if ((connections != null) && (connections.size() > 0)) {
-            for (Person person : connections) {
-                editCommand = "edit +";
-                needEdit = false;
-                for (ReadOnlyPerson contact : personlist) {
-                    count++;
-                    editCommand += String.valueOf(count);
-                    String a = contact.getGoogleID();
-                    if (person.getResourceName().substring(7).equals(contact.getGoogleID())) {
-                        if (!person.getNames().get(0).getDisplayName().equals(contact.getName().fullName)) {
-                            editCommand += " n/" + person.getNames().get(0).getDisplayName();
-                            needEdit = true;
-                        }
-                        if (!person.getPhoneNumbers().get(0).getValue().replace(" ", "")
-                                .equals(contact.getPhone().value)) {
-                            editCommand += " p/" + person.getPhoneNumbers().get(0).getValue().replace(" ", "");
-                            needEdit = true;
-                        }
-                        if (!person.getEmailAddresses().get(0).getValue().equals(contact.getEmail().value)) {
-                            editCommand += " e/" + person.getEmailAddresses().get(0).getValue();
-                            needEdit = true;
-                        }
-                        if (!person.getAddresses().get(0).getStreetAddress().equals(contact.getAddress().value)) {
-                            editCommand += " a/" +person.getAddresses().get(0).getStreetAddress();
-                            needEdit = true;
-                        }
-                        if (needEdit) {
-                            try {
-                                logic.execute(editCommand);
-                                countEdited++;
-                            } catch (CommandException | ParseException | NullPointerException e) {
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        else{
-            this.CommandMessage = "No Contacts Found!";
-        }
+    //   if ((connections != null) && (connections.size() > 0)) {
+    //       for (Person person : connections) {
+    //           editCommand = "edit +";
+    //           needEdit = false;
+    //           for (ReadOnlyPerson contact : personlist) {
+    //               count++;
+    //               editCommand += String.valueOf(count);
+    //               String a = contact.getGoogleID();
+    //               if (person.getResourceName().substring(7).equals(contact.getGoogleID())) {
+    //                   if (!person.getNames().get(0).getDisplayName().equals(contact.getName().fullName)) {
+    //                       editCommand += " n/" + person.getNames().get(0).getDisplayName();
+    //                       needEdit = true;
+    //                   }
+    //                   if (!person.getPhoneNumbers().get(0).getValue().replace(" ", "")
+    //                           .equals(contact.getPhone().value)) {
+    //                       editCommand += " p/" + person.getPhoneNumbers().get(0).getValue().replace(" ", "");
+    //                       needEdit = true;
+    //                   }
+    //                   if (!person.getEmailAddresses().get(0).getValue().equals(contact.getEmail().value)) {
+    //                       editCommand += " e/" + person.getEmailAddresses().get(0).getValue();
+    //                       needEdit = true;
+    //                   }
+    //                   if (!person.getAddresses().get(0).getStreetAddress().equals(contact.getAddress().value)) {
+    //                       editCommand += " a/" +person.getAddresses().get(0).getStreetAddress();
+    //                       needEdit = true;
+    //                   }
+    //                   if (needEdit) {
+    //                       try {
+    //                           logic.execute(editCommand);
+    //                           countEdited++;
+    //                       } catch (CommandException | ParseException | NullPointerException e) {
+    //                       }
+    //                   }
+    //               }
+    //           }
+    //       }
+    //   }
+    //   else{
+    //       this.CommandMessage = "No Contacts Found!";
+    //   }
 
-        if(countEdited!=0){
-            CommandMessage = "Contacts edited : " + String.valueOf(countEdited);
-        }
-        else{
-            CommandMessage = "no contacts edited";
-        }
+    //   if(countEdited!=0){
+    //       CommandMessage = "Contacts edited : " + String.valueOf(countEdited);
+    //   }
+    //   else{
+    //       CommandMessage = "no contacts edited";
+    //   }
 
         return new CommandResult(CommandMessage);
     }

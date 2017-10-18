@@ -12,6 +12,7 @@ public class GoogleContactsBuilder {
 
     private final GoogleAuthenticator googleAuthenticator = new GoogleAuthenticator();
     private List<Person> personlist = new ArrayList<>();
+    private PeopleService peopleService;
 
 
     //Returns a list of persons from the user's google contacts using the GoogleAuthenticator class
@@ -19,8 +20,13 @@ public class GoogleContactsBuilder {
         String token = googleAuthenticator.getToken();
         GoogleCredential credential = googleAuthenticator.getCredential(token);
         PeopleService peopleService = googleAuthenticator.BuildPeopleService(credential);
+        this.peopleService = peopleService;
         personlist = googleAuthenticator.getConnections(peopleService);
 
         return personlist;
+    }
+    //Returns PeopleService for export
+    public PeopleService getPeopleService() {
+        return peopleService;
     }
 }

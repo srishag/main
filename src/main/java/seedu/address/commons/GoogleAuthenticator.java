@@ -30,6 +30,7 @@ public class GoogleAuthenticator {
     String scope_1 = "https://www.googleapis.com/auth/contacts.readonly";
     String scope_2 = "https://www.googleapis.com/auth/plus.login";
     String scope_3 = "https://www.googleapis.com/auth/user.phonenumbers.read";
+    String scope_4 ="https://www.googleapis.com/auth/contacts";
 
 
     String authorizationUrl;
@@ -38,7 +39,7 @@ public class GoogleAuthenticator {
     //Constructor
     public GoogleAuthenticator(){
         this.authorizationUrl = new GoogleBrowserClientRequestUrl(clientId,redirectUrl,
-                Arrays.asList(scope_1,scope_2,scope_3)).build();
+                Arrays.asList(scope_1,scope_2,scope_3,scope_4)).build();
     }
 
 
