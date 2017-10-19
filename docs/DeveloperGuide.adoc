@@ -251,25 +251,38 @@ image::FindAlphabetsCommand.png[width="800"]
 **Cons:** Removing the find Command may affect other functions of the Addressbook.
 
 
-=======
 // tag::findbytags[]
 === Finding contacts by tags
 
 The application allows users to find contacts based on their tags. The figure below helps illustrate this process, and more detailed explanations and elaborations are given in the sub-sections below.
 
 image::FindContactsByTagsLogic.png[width="800"]
+Figure 3.2.1 Interaction for execution of `find by tags` command
+
+==== Brief Overview of Command Procedure
+
+1. User enters the command and arguments, which is parsed by `AddressbookParser`.
+2. `AddressbookParser` deciphers the command by calling `FindPersonsWithTagsCommandParser`.
+3. The latter returns a list of keywords based on the arguments.
+4. These keywords and instantiated within a `PersonContainsTagsPredicate`.
+5. The command, `FindPersonsWithTagsCommand`, is created and returned to the UI, with the above predicate as an attribute.
+6. The command is executed, list is updated, and shows to user the new filtered list.
 
 ==== Implementation of Parser
-To begin, the user enters the command and the relevant arguments, AddressbookParser will call this command's parser, FindPersonsWithTagsCommandParser, which will then parse the arguments and eventually return the proper FindPersonsWithTagsCommand.
 
-Within the command parser, the parser first checks if the arguments are empty.
+As mentioned in 3.2.1, after receiving the command word and arguments, AddressbookParser will call the parser, `FindPersonsWithTagsCommandParser`.
+
+The parser first checks if the arguments are empty.
 
 [WARNING]
 If the arguments are empty, the ParseException error will be thrown.
 
-If the arguments are valid (non-empty), they are split and stored in a String array "tagKeywords".
+If the arguments are valid (non-empty), they are split and stored in a String array `tagKeywords`.
 
-Each keyword is then passed into the parser's private method, getImprovedList(), to retrieve a more comprehensive list of tags.
+[NOTE]
+The condition for splitting is the existence of spaces between argument words, as all tags in the App cannot contain spaces either.
+
+Each keyword is then passed into the parser's private method, `getImprovedList()`, to retrieve a more comprehensive list of tags.
 This method is merely a crude way of improving convenience for the user when spelling tags, and it adds these tags to the list in addition to the original tags.
 
 [NOTE]
@@ -279,16 +292,23 @@ The added tags are formed by appending the letter 's' to tags which do not end w
 This method, however, does not account for words where the singular and plural forms do not defer by just a single letter 's', such as "family", and "families".
 
 [TIP]
-It is therefore recommended that future developers improve this method by implementing a proper dictionary/library for this method, after weighing the costs and the benefits.
+It is therefore suggested that future developers improve this method by implementing a proper dictionary/library for this method, after weighing the costs and the benefits.
 
-The parser then returns the proper FindPersonWithTagsCommand with the proper predicate (details in later section), created with the improved tag list, to be executed.
+The new list of keywords is used for forming the predicate needed for determining the right contact to show to the user.
+
+Finally, after creating the predicate, the command, `FindPersonByTagsCommand` will be instantiated with the predicate as an attribute, and returned to the UI.
+
+The details of which will be provided in the subsections below.
 
 ==== Implementation of Predicate
-The predicate associated with this functionality is called PersonContainsTagsPredicate.
 
-To determine if a contact should be returned, the 'test' method of the predicate is called, which returns a boolean value, true if this contact should be returned, and false otherwise.
+The predicate associated with this functionality is `PersonContainsTagsPredicate`.
 
-Within the test method, all of the person's tags, if any, are appended to a string.
+Every contact in the application is checked by the predicate.
+
+To determine if a contact should be returned, the `test` method of the predicate is called, which returns a boolean value, true if this contact should be returned, and false otherwise.
+
+Within this method, all of the person's tags, if any, are appended to a string.
 
 [NOTE]
 If a contact has tags "friends" and "colleagues", the resulting String is "friends colleagues".
