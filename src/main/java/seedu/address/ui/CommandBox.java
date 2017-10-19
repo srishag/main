@@ -51,7 +51,7 @@ public class CommandBox extends UiPart<Region> {
         if ((textLength > 5) && (commandText.substring(0, 5).equals("find "))) {
             try {
                 CommandResult commandResult = logic.execute(findWordCommand + commandText.substring(5));
-                raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+                raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
             } catch (CommandException | ParseException e) {
                 logger.info("No smart searches");
             }
@@ -59,7 +59,7 @@ public class CommandBox extends UiPart<Region> {
 
         if ((textLength == 5) && (commandText.substring(0, 5).equals("find "))) {
             try {
-                raise(new NewResultAvailableEvent(""));
+                raise(new NewResultAvailableEvent("", true));
                 logic.execute("list");
             } catch (CommandException | ParseException e) {
                 logger.info("No List from smart search");
