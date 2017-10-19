@@ -38,7 +38,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             Optional<String> GoogleIDOptional = argMultimap.getValue(PREFIX_GOOGLEID);
-            GoogleID ID = new GoogleID("not a GoogleContact");
+            GoogleID ID = new GoogleID("not GoogleContact");
             if(GoogleIDOptional.isPresent()) {
                 ID = ParserUtil.parseGoogleID(argMultimap.getValue(PREFIX_GOOGLEID)).get();
             }

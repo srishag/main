@@ -1,10 +1,15 @@
 package seedu.address.logic.commands;
 
-import com.google.api.services.people.v1.model.*;
-import seedu.address.commons.GoogleContactsBuilder;
 
-import seedu.address.logic.LogicManager;
-import seedu.address.logic.Logic;
+import seedu.address.commons.GoogleContactsBuilder;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.GoogleID;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+import com.google.api.services.people.v1.model.*;
 
 import java.io.IOException;
 import java.util.*;
@@ -30,34 +35,54 @@ public class ExportCommand extends Command {
 
     @Override
     public CommandResult execute() {
-
+        List<ReadOnlyPerson> personList = model.getAddressBook().getPersonList();
         GoogleContactsBuilder builder = new GoogleContactsBuilder();
-        Logic logic = new LogicManager(model);
         List<Person> connections = null;
 
         try {
             connections = builder.getPersonlist();
-        } catch (IOException E){
-            ErrorMessage = "Authentication Failed. Please login again.";
+        } catch (IOException E) {
 
+            ErrorMessage = "Authentication Failed. Please login again.";
         }
-        Person createdContact = new Person();
+
+        Person createdContact;
+        for(ReadOnlyPerson contact : personList) {
+            if (contact.getGoogleID().value.equals("not GoogleContact")) {
+                try {
+                    createdContact = createGoogleContact(contact);
+                    createdContact = builder.getPeopleService().people().createContact(createdContact).execute();
+                    model.updatePerson(contact, getNewAddressBookContact(contact, createdContact));
+                } catch (IOException | IllegalValueException | PersonNotFoundException e) {
+                }
+            }
+        }
+        return new CommandResult("haha");
+}
+
+    public Person createGoogleContact(ReadOnlyPerson person)throws IOException{
         Person contactToCreate = new Person();
         List names = new ArrayList();
         List email = new ArrayList();
         List phone = new ArrayList();
         List address = new ArrayList();
 
-        names.add(new Name().setGivenName("John").setFamilyName("Doe"));
-        email.add(new EmailAddress().setValue("haha@hotmail.com"));
-        phone.add(new PhoneNumber().setValue("97848348"));
-        address.add(new Address().setStreetAddress("Blk 480 #15-463"));
-        contactToCreate.setNames(names).setEmailAddresses(email).setPhoneNumbers(phone).setAddresses(address);
-        try{
-             createdContact = builder.getPeopleService().people().createContact(contactToCreate).execute();
-        }catch (IOException e){}
+        names.add(new Name().setGivenName(person.getName().fullName));
+        email.add(new EmailAddress().setValue(person.getEmail().value));
+        phone.add(new PhoneNumber().setValue(person.getPhone().value));
+        address.add(new Address().setStreetAddress(person.getAddress().value));
 
+        return contactToCreate.setNames(names).setEmailAddresses(email).setPhoneNumbers(phone).setAddresses(address);
+    }
 
-        return new CommandResult(createdContact.getNames().get(0).getDisplayName());
+    public ReadOnlyPerson getNewAddressBookContact(ReadOnlyPerson contact, Person createdContact) throws IllegalValueException{
+
+        GoogleID ID = new GoogleID(createdContact.getResourceName().substring(8));
+        Tag tag = new Tag("GoogleContact");
+        Set<Tag> Tags = new HashSet<>();
+        Tags.add(tag);
+
+        return new seedu.address.model.person.Person(contact.getName(), contact.getPhone(),
+                contact.getEmail(), contact.getAddress(), Tags, ID);
     }
 }

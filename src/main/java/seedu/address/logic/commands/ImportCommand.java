@@ -4,8 +4,6 @@ import com.google.api.services.people.v1.model.Person;
 import seedu.address.commons.GoogleContactsBuilder;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.LogicManager;
-import seedu.address.logic.Logic;
 import seedu.address.model.person.*;
 import seedu.address.model.tag.Tag;
 
@@ -37,6 +35,7 @@ public class ImportCommand extends Command {
     @Override
     public CommandResult execute() {
 
+        List<ReadOnlyPerson> personList = model.getAddressBook().getPersonList();
         GoogleContactsBuilder builder = new GoogleContactsBuilder();
         List<Person> connections = null;
         try {
@@ -45,8 +44,6 @@ public class ImportCommand extends Command {
             ErrorMessage = "Authentication Failed. Please login again.";
 
         }
-
-        List<ReadOnlyPerson> personList = model.getAddressBook().getPersonList();
         boolean contactAlreadyExists;
 
 
@@ -91,7 +88,7 @@ public class ImportCommand extends Command {
     /**
      * Creates a person in addressBook based on the contact in google contact
      */
-   public seedu.address.model.person.Person newPerson(Person person) throws IllegalValueException, NullPointerException{
+   public ReadOnlyPerson newPerson(Person person) throws IllegalValueException, NullPointerException{
          Name name = new Name(person.getNames().get(0).getDisplayName());
          Email email = new Email(person.getEmailAddresses().get(0).getValue());
          Phone phone = new Phone(person.getPhoneNumbers().get(0).getValue().replace(" ", ""));

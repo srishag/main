@@ -5,10 +5,6 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.GoogleContactsBuilder;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.LogicManager;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.logic.Logic;
 import seedu.address.model.person.*;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -39,9 +35,10 @@ public class SyncCommand extends Command {
 
     @Override
     public CommandResult execute() {
+
+        ObservableList<ReadOnlyPerson> personlist = model.getAddressBook().getPersonList();
         GoogleContactsBuilder builder = new GoogleContactsBuilder();
         List<Person> connections = null;
-        ObservableList<ReadOnlyPerson> personlist = model.getAddressBook().getPersonList();
 
         try {
             connections = builder.getPersonlist();
@@ -75,7 +72,7 @@ public class SyncCommand extends Command {
     /**
      * Creates a person in addressBook based on the contact in google contact
      */
-    public seedu.address.model.person.Person PersonToCheck(Person person) throws IllegalValueException, NullPointerException {
+    public ReadOnlyPerson PersonToCheck(Person person) throws IllegalValueException, NullPointerException {
 
         Name name = new Name(person.getNames().get(0).getDisplayName());
         Phone phone = new Phone(person.getPhoneNumbers().get(0).getValue().replace(" ", ""));
