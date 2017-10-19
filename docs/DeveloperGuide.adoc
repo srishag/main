@@ -249,9 +249,8 @@ image::FindAlphabetsCommand.png[width="800"]
 **Alternative 2:** Just replace `FindCommand` with `FindAlphabetsCommand` +
 **Pros:** The results displayed will not change even after the user has pressed `enter`. It can also help the user to speed up the process of searching for contacts as they user does not have to input the full name +
 **Cons:** Removing the find Command may affect other functions of the Addressbook.
+// end::EasyFind[]
 
-
-=======
 // tag::findbytags[]
 === Finding contacts by tags
 
