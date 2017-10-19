@@ -32,6 +32,3 @@ image::PhuaJunJie.png[width="150", align="left"]
 {empty} [https://github.com/phuajunjie[github]]
 
 Role: Developer
-
-'''
-
