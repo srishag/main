@@ -11,5 +11,6 @@ public class Messages {
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
     public static final String LOGIN_MESSAGE = "Please Login";
     public static final String MESSAGE_IMPORT_CONTACT = "%1$d contact/s imported!     %2$d contact/s failed to import!";
+    public static final String MESSAGE_SYNC_CONTACT = "%1$d contact/s Synced!     %2$d contact/s failed to Sync!";
 
 }

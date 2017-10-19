@@ -29,10 +29,10 @@ public class ImportCommand extends Command {
             + "Example: " + COMMAND_WORD;
     private String CommandMessage = "";
     private String ErrorMessage;
-    private String NotImported = "";
+    private String NamesNotImported = "";
 
-    private int contactsImported = 0;
-    private int errorImports =0;
+    private int contactsImportedCount = 0;
+    private int errorImportsCount =0;
 
     @Override
     public CommandResult execute() {
@@ -46,7 +46,6 @@ public class ImportCommand extends Command {
 
         }
 
-        Logic logic = new LogicManager(model);
         List<ReadOnlyPerson> personList = model.getAddressBook().getPersonList();
         boolean contactAlreadyExists;
 
@@ -57,14 +56,15 @@ public class ImportCommand extends Command {
                 if (!contactAlreadyExists) {
                     try {
                         model.addPerson(this.newPerson(person));
-                        contactsImported++;
+                        contactsImportedCount++;
                     } catch (IllegalValueException | NullPointerException e) {
-                        NotImported += " " + person.getNames().get(0).getDisplayName() + " /";
-                        errorImports ++;
+                        NamesNotImported += " " + person.getNames().get(0).getDisplayName() + ", ";
+                        errorImportsCount ++;
                     }
                 }
             }
-            CommandMessage = setCommandMessage(ErrorMessage,NotImported,contactsImported,errorImports,connections.size());
+            CommandMessage = setCommandMessage(ErrorMessage,NamesNotImported.substring(0,NamesNotImported.length()-2),
+                    contactsImportedCount,errorImportsCount,connections.size());
         }
 
 
@@ -89,7 +89,7 @@ public class ImportCommand extends Command {
         return false;
    }
     /**
-     * Create a person in addressBook based on the contact in google contact
+     * Creates a person in addressBook based on the contact in google contact
      */
    public seedu.address.model.person.Person newPerson(Person person) throws IllegalValueException, NullPointerException{
          Name name = new Name(person.getNames().get(0).getDisplayName());
@@ -106,24 +106,24 @@ public class ImportCommand extends Command {
 
    }
     /**
-     * Create a detailed message on the status of the import
+     * Creates a detailed message on the status of the import
      */
    public String setCommandMessage(String errorMessage, String notimported, int contactsImported, int errorImports, int size) {
        int existedContacts = size - contactsImported - errorImports;
-       String CommandMessage = new String();
-       if(errorMessage != null){
+       String CommandMessage;
+       // If google contacts is unable to authenticate user, authentication failure message will be returned.
+       if (errorMessage != null) {
            return errorMessage;
        }
-       else {
-           CommandMessage = String.format(Messages.MESSAGE_IMPORT_CONTACT, contactsImported, size - contactsImported) + "\n";
-           if (size > contactsImported) {
-               CommandMessage += "Contacts already existed : " + String.valueOf(existedContacts)
-                       + "     Contacts not in the correct format : " + String.valueOf(errorImports) + "\n";
-           }
-           if(errorImports > 0){
-               CommandMessage += "Please check the format of the following google contacts : " + notimported;
-           }
-           return CommandMessage;
+       CommandMessage = String.format(Messages.MESSAGE_IMPORT_CONTACT, contactsImported, size - contactsImported) + "\n";
+
+       if (size > contactsImported) {
+           CommandMessage += "Contacts already existed : " + String.valueOf(existedContacts)
+                   + "     Contacts not in the correct format : " + String.valueOf(errorImports) + "\n";
        }
+       if (errorImports > 0) {
+           CommandMessage += "Please check the format of the following google contacts : " + notimported;
+       }
+       return CommandMessage;
    }
 }
