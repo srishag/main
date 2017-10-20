@@ -1,8 +1,15 @@
 package seedu.address.model;
 
+import java.io.IOException;
 import java.util.function.Predicate;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
+import com.google.api.services.gmail.Gmail;
+import com.google.api.services.gmail.model.Message;
 import javafx.collections.ObservableList;
+import seedu.address.model.person.Email;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -38,6 +45,17 @@ public interface Model {
             throws DuplicatePersonException, PersonNotFoundException;
 
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
+
+    /** Creates the email to be sent */
+    MimeMessage createEmail(String to, String from, String subject, String bodyText) throws MessagingException;
+
+    /** Sends the email */
+    Message sendMessage(Gmail service, String userId, MimeMessage emailContent)
+            throws MessagingException, IOException;
+
+    /** Creates message using email */
+    Message createMessageWithEmail(MimeMessage emailContent)
+            throws MessagingException, IOException;
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
