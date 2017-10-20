@@ -1,7 +1,9 @@
 package seedu.address.logic.commands;
 
 
+import com.google.api.services.oauth2.Oauth2;
 import seedu.address.commons.GoogleContactsBuilder;
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.GoogleID;
@@ -31,18 +33,17 @@ public class ExportCommand extends Command {
     private String CommandMessage = "";
     private String ErrorMessage;
 
-    private int contactsNotImported = 0;
+    private int contactsExportedCount = 0;
+    private int errorExportCount = 0;
 
     @Override
     public CommandResult execute() {
         List<ReadOnlyPerson> personList = model.getAddressBook().getPersonList();
-        GoogleContactsBuilder builder = new GoogleContactsBuilder();
-        List<Person> connections = null;
+        GoogleContactsBuilder builder= null;
 
         try {
-            connections = builder.getPersonlist();
-        } catch (IOException E) {
-
+            builder = new GoogleContactsBuilder();
+        }catch (IOException e){
             ErrorMessage = "Authentication Failed. Please login again.";
         }
 
@@ -53,13 +54,21 @@ public class ExportCommand extends Command {
                     createdContact = createGoogleContact(contact);
                     createdContact = builder.getPeopleService().people().createContact(createdContact).execute();
                     model.updatePerson(contact, getNewAddressBookContact(contact, createdContact));
-                } catch (IOException | IllegalValueException | PersonNotFoundException e) {
+                    contactsExportedCount++;
+                } catch (IOException | NullPointerException e) {
+                    ErrorMessage = "Authentication Failed. Please login again.";
+                }catch (IllegalValueException | PersonNotFoundException e) {
+                    errorExportCount++;
                 }
             }
         }
-        return new CommandResult("haha");
+        CommandMessage = setCommandMessage(ErrorMessage,contactsExportedCount,errorExportCount);
+        return new CommandResult(CommandMessage);
 }
 
+    /**
+     * Creates a Person to add in google contact
+     */
     public Person createGoogleContact(ReadOnlyPerson person)throws IOException{
         Person contactToCreate = new Person();
         List names = new ArrayList();
@@ -75,6 +84,10 @@ public class ExportCommand extends Command {
         return contactToCreate.setNames(names).setEmailAddresses(email).setPhoneNumbers(phone).setAddresses(address);
     }
 
+    /**
+     * Creates a Person to update in the addressbook.
+     * To update new attributes : google ID and google contact tag
+     */
     public ReadOnlyPerson getNewAddressBookContact(ReadOnlyPerson contact, Person createdContact) throws IllegalValueException{
 
         GoogleID ID = new GoogleID(createdContact.getResourceName().substring(8));
@@ -84,5 +97,24 @@ public class ExportCommand extends Command {
 
         return new seedu.address.model.person.Person(contact.getName(), contact.getPhone(),
                 contact.getEmail(), contact.getAddress(), Tags, ID);
+    }
+    /**
+     * Creates a detailed message on the status of the sync
+     */
+    public String setCommandMessage(String errorMessage, int contactsExportedCount, int errorExportCount) {
+        String CommandMessage;
+        // If google contacts is unable to authenticate user, authentication failure message will be returned.
+        if(errorMessage != null){
+            return errorMessage;
+        }
+
+        CommandMessage = String.format(Messages.MESSAGE_EXPORT_CONTACT, contactsExportedCount);
+        if(errorExportCount == 0){
+            CommandMessage += "All contacts can be now found in google contact";
+        }
+        else{
+            CommandMessage += String.format(Messages.MESSAGE_EXPORT_ERROR,errorExportCount);
+        }
+        return CommandMessage;
     }
 }
