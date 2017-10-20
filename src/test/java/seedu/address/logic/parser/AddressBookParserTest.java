@@ -335,7 +335,7 @@ public class AddressBookParserTest {
 
     @AfterClass
     public static void checkForAnyDuplicateCommandWordOrAlias() {
-        Set<String> set = new HashSet<String>( AllCommandWordsAndAliases.getListOfAllCommandWordsAndAliases());
+        Set<String> set = new HashSet<String>(AllCommandWordsAndAliases.getListOfAllCommandWordsAndAliases());
         assertTrue(set.size() ==  AllCommandWordsAndAliases.getListOfAllCommandWordsAndAliases().size());
     }
 
