@@ -40,15 +40,14 @@ public class SendEmailCommandParser {
             Optional<String> bodyOptional = argMultimap.getValue(PREFIX_EMAIL_BODY);
             String emailBody = new String("");
             if (bodyOptional.isPresent()) {
-                emailBody = ParserUtil.parseEmailBody(argMultimap.getValue(PREFIX_EMAIL_BODY)).get();
+                emailBody = ParserUtil.parseEmailBody(argMultimap.getValue(PREFIX_EMAIL_BODY)).get()
+                        .replaceAll("//", "\n");
             }
             return new SendEmailCommand(index, emailSubject, emailBody);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
     }
-
-    //add method to create new line when "//" is detected
 
     /**
      * Returns true if none of the prefixes contains empty {@code Optional} values in the given
