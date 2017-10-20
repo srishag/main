@@ -35,6 +35,9 @@ public class AddressBookParser {
 
     /**
      * Parses user input into command for execution.
+     * 
+     * Note: the switch-case implementation below should not be changed frivolously as it provides a layer of defence
+     * against having duplicate command words
      *
      * @param userInput full user input string
      * @return the command based on the user input
