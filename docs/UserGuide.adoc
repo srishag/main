@@ -136,6 +136,7 @@ Returns any person having starting alphabets `Betsy`, `Tim`, or `John`
 
 
 === Locating persons by tag name: `findtags`
+`SINCE V1.2`
 
 Finds persons who have tags matching any of the given keywords. +
 Format: `findtags KEYWORD [MORE_KEYWORDS]` +
@@ -166,8 +167,11 @@ Returns any person having tags `friends`.
 * `findtags friends colleagues schoolmates` +
 Returns any person having any of the tags `friends`, `colleagues`, and/or `schoolmates`.
 
+`coming in v1.4`
+implementing tag exclusion functionality to improve quality of life for user
+
 === List tags : `listtags` +
-`coming in v2.0`
+`coming in v1.3`
 
 Lists all existing tags in the App +
 Format: `listtags` +
