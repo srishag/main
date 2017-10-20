@@ -84,9 +84,6 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void getRedirectURLEvent (GetRedirectURLEvent event){
         logger.info((LogsCenter.getEventHandlingLogMessage(event)));
-        //String temp = browser.getEngine().getTitle();
-        //int temp1 = temp.indexOf("&");
-        //event.setRedirectURL(browser.getEngine().getTitle().substring(13, temp1));
         event.setRedirectURL(browser.getEngine().getLocation());
     }
 }
