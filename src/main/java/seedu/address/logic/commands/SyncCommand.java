@@ -37,10 +37,10 @@ public class SyncCommand extends Command {
     public CommandResult execute() {
 
         ObservableList<ReadOnlyPerson> personlist = model.getAddressBook().getPersonList();
-        GoogleContactsBuilder builder = new GoogleContactsBuilder();
         List<Person> connections = null;
 
         try {
+            GoogleContactsBuilder builder = new GoogleContactsBuilder();
             connections = builder.getPersonlist();
         } catch (IOException E) {
             ErrorMessage = "Authentication Failed. Please login again.";
@@ -63,8 +63,7 @@ public class SyncCommand extends Command {
                 }
             }
         }
-        CommandMessage = setCommandMessage(ErrorMessage, NamesNotSynced.substring(0, NamesNotSynced.length()-1),
-                contactsSyncedCount, errorSyncedCount);
+        CommandMessage = setCommandMessage(ErrorMessage, NamesNotSynced, contactsSyncedCount, errorSyncedCount);
 
         return new CommandResult(CommandMessage);
     }
@@ -99,7 +98,8 @@ public class SyncCommand extends Command {
 
         CommandMessage = String.format(Messages.MESSAGE_SYNC_CONTACT, contactsSyncedCount, errorSyncedCount);
         if(errorSyncedCount > 0){
-            CommandMessage += "\n" + "Please check the format of the following google contacts : " + NamesNotSynced;
+            CommandMessage += "\n" + "Please check the format of the following google contacts : " +
+                    NamesNotSynced.substring(0, NamesNotSynced.length()-2);
         }
         return CommandMessage;
     }

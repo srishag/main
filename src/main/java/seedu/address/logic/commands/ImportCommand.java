@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import com.google.api.services.people.v1.model.Person;
+import com.sun.xml.internal.org.jvnet.mimepull.MIMEMessage;
 import seedu.address.commons.GoogleContactsBuilder;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -8,6 +9,7 @@ import seedu.address.model.person.*;
 import seedu.address.model.tag.Tag;
 
 
+import javax.net.ssl.SSLSession;
 import java.io.IOException;
 import java.util.*;
 
@@ -34,18 +36,16 @@ public class ImportCommand extends Command {
 
     @Override
     public CommandResult execute() {
-
         List<ReadOnlyPerson> personList = model.getAddressBook().getPersonList();
-        GoogleContactsBuilder builder = new GoogleContactsBuilder();
         List<Person> connections = null;
-        try {
-            connections = builder.getPersonlist();
-        } catch (IOException E) {
-            ErrorMessage = "Authentication Failed. Please login again.";
-
-        }
         boolean contactAlreadyExists;
 
+        try {
+            GoogleContactsBuilder builder = new GoogleContactsBuilder();
+            connections = builder.getPersonlist();
+        } catch (IOException e) {
+            ErrorMessage = "Authentication Failed. Please login again.";
+        }
 
         if ((connections != null) && (connections.size() > 0)) {
             for (Person person : connections) {

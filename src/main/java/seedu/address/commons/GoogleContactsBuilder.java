@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GoogleContactsBuilder {
+public class GoogleContactsBuilder{
 
     private final GoogleAuthenticator googleAuthenticator = new GoogleAuthenticator();
     private List<Person> personlist = new ArrayList<>();
@@ -16,17 +16,19 @@ public class GoogleContactsBuilder {
 
 
     //Returns a list of persons from the user's google contacts using the GoogleAuthenticator class
-    public List<Person> getPersonlist() throws IOException {
+    public GoogleContactsBuilder() throws IOException {
         String token = googleAuthenticator.getToken();
         GoogleCredential credential = googleAuthenticator.getCredential(token);
         PeopleService peopleService = googleAuthenticator.BuildPeopleService(credential);
         this.peopleService = peopleService;
-        personlist = googleAuthenticator.getConnections(peopleService);
-
-        return personlist;
+        this.personlist = googleAuthenticator.getConnections(peopleService);
     }
+
     //Returns PeopleService for export
     public PeopleService getPeopleService() {
         return peopleService;
     }
+
+    //Returns list of contacts from Google contacts for import/sync
+    public List<Person> getPersonlist(){return personlist;}
 }
