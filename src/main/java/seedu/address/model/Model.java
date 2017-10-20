@@ -46,16 +46,16 @@ public interface Model {
 
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
 
-    /** Creates the email to be sent */
-    MimeMessage createEmail(String to, String from, String subject, String bodyText) throws MessagingException;
+    ///** Creates the email to be sent */
+    //MimeMessage createEmail(String to, String from, String subject, String bodyText) throws MessagingException;
 
-    /** Sends the email */
-    Message sendMessage(Gmail service, String userId, MimeMessage emailContent)
-            throws MessagingException, IOException;
+    ///** Sends the email */
+    //Message sendMessage(Gmail service, String userId, MimeMessage emailContent)
+    //        throws MessagingException, IOException;
 
-    /** Creates message using email */
-    Message createMessageWithEmail(MimeMessage emailContent)
-            throws MessagingException, IOException;
+    ///** Creates message using email */
+    //Message createMessageWithEmail(MimeMessage emailContent)
+    //        throws MessagingException, IOException;
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();

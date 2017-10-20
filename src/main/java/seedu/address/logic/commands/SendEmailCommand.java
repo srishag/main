@@ -16,6 +16,7 @@ import seedu.address.commons.GetGmailService;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.ModelManager;
 import seedu.address.model.person.ReadOnlyPerson;
 
 public class SendEmailCommand extends Command {
@@ -65,9 +66,9 @@ public class SendEmailCommand extends Command {
         String personToSendEmail = lastShownList.get(targetIndex.getZeroBased()).getEmail().toString();
 
         try {
-            MimeMessage emailToBeSent = model.createEmail(personToSendEmail, EMAIL_SENDER, emailSubject, emailBody);
+            MimeMessage emailToBeSent = ModelManager.createEmail(personToSendEmail, EMAIL_SENDER, emailSubject, emailBody);
             Gmail gmailService = new GetGmailService().getGmailService();
-            message = model.sendMessage(gmailService, EMAIL_SENDER, emailToBeSent);
+            message = ModelManager.sendMessage(gmailService, EMAIL_SENDER, emailToBeSent);
         } catch (MessagingException | IOException E) {
             assert false;
         }

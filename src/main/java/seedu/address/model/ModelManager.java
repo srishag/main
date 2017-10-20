@@ -119,7 +119,7 @@ public class ModelManager extends ComponentManager implements Model {
      * @return the MimeMessage to be used to send email
      * @throws MessagingException
      */
-    public MimeMessage createEmail(String to,
+    public static MimeMessage createEmail(String to,
                                           String from,
                                           String subject,
                                           String bodyText)
@@ -148,7 +148,7 @@ public class ModelManager extends ComponentManager implements Model {
      * @throws MessagingException
      * @throws IOException
      */
-    public Message sendMessage(Gmail service,
+    public static Message sendMessage(Gmail service,
                                       String userId,
                                       MimeMessage emailContent)
             throws MessagingException, IOException {
@@ -168,7 +168,7 @@ public class ModelManager extends ComponentManager implements Model {
      * @throws IOException
      * @throws MessagingException
      */
-    public Message createMessageWithEmail(MimeMessage emailContent)
+    public static Message createMessageWithEmail(MimeMessage emailContent)
             throws MessagingException, IOException {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         emailContent.writeTo(buffer);

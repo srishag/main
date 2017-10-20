@@ -30,7 +30,8 @@ public class SendEmailCommandParser {
         }
 
         try {
-            Index index = ParserUtil.parseIndex(args);
+            //parse args to find index entered until PREFIX_EMAIL_SUBJECT
+            Index index = ParserUtil.parseIndex(args.substring(0, args.indexOf("e")));
             Optional<String> subjectOptional = argMultimap.getValue(PREFIX_EMAIL_SUBJECT);
             String emailSubject = new String("");
             if (subjectOptional.isPresent()) {
@@ -43,8 +44,7 @@ public class SendEmailCommandParser {
             }
             return new SendEmailCommand(index, emailSubject, emailBody);
         } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SendEmailCommand.MESSAGE_USAGE));
+            throw new ParseException(ive.getMessage(), ive);
         }
     }
 
