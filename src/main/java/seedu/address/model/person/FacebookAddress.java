@@ -22,8 +22,8 @@ public class FacebookAddress {
     }
 
     /**
-     * If user's input is not in valid URL format, assume that user input is profile name of contact, and thus
-     * append the necessary URL prefixes
+     * If user's input is not in valid URL format, assume that the input is the facebook profile name of the contact,
+     * and thus, append the necessary URL prefixes
      * @param facebookAddress
      * @return
      */
