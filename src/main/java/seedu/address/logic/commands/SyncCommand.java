@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.GoogleContactsBuilder;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.*;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -27,43 +28,57 @@ public class SyncCommand extends Command {
             + "Parameters: KEYWORD\n"
             + "Example: " + COMMAND_WORD;
     private String CommandMessage = "";
-    private String ErrorMessage;
     private String NamesNotSynced = "";
 
     private int contactsSyncedCount = 0;
     private int errorSyncedCount =0;
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException {
 
         ObservableList<ReadOnlyPerson> personlist = model.getAddressBook().getPersonList();
         List<Person> connections = null;
+        boolean checkifexists = false;
 
         try {
             GoogleContactsBuilder builder = new GoogleContactsBuilder();
             connections = builder.getPersonlist();
         } catch (IOException E) {
-            ErrorMessage = "Authentication Failed. Please login again.";
-
+            throw new CommandException("Authentication Failed. Please login again.");
         }
 
-        if ((connections != null) && (connections.size() > 0)) {
-            for (Person person : connections) {
-                for (ReadOnlyPerson contact : personlist) {
-                    if (person.getResourceName().substring(8).equals(contact.getGoogleID().value))
+        if(personlist.isEmpty()){
+            throw new CommandException("No contacts in addressbook to sync");
+        }
+
+        for (ReadOnlyPerson contact : personlist) {
+            checkifexists = false;
+            if ((connections != null) && (connections.size() > 0)) {
+                for (Person person : connections) {
+                    if (person.getResourceName().substring(8).equals(contact.getGoogleID().value)) {
+                        checkifexists = true;
                         try {
                             if (!contact.isSameStateAs(PersonToCheck(person))) {
                                 model.updatePerson(contact, PersonToCheck(person));
                                 contactsSyncedCount++;
                             }
-                        }catch (IllegalValueException | NullPointerException | PersonNotFoundException e) {
+                        } catch (IllegalValueException | NullPointerException | PersonNotFoundException e) {
                             errorSyncedCount++;
                             NamesNotSynced += person.getNames().get(0).getDisplayName() + ", ";
                         }
+                    }
+                }
+            }
+
+            if ((contact.getGoogleID().value != "not GoogleContact") && (checkifexists == false)) {
+                try {
+                    model.updatePerson(contact, RemoveGoogleContactStatus(contact));
+                    contactsSyncedCount++;
+                } catch (IllegalValueException | NullPointerException | PersonNotFoundException e) {
                 }
             }
         }
-        CommandMessage = setCommandMessage(ErrorMessage, NamesNotSynced, contactsSyncedCount, errorSyncedCount);
+        CommandMessage = setCommandMessage(NamesNotSynced, contactsSyncedCount, errorSyncedCount);
 
         return new CommandResult(CommandMessage);
     }
@@ -85,16 +100,27 @@ public class SyncCommand extends Command {
 
         return new seedu.address.model.person.Person(name, phone, email, address, Tags, ID);
     }
+    /**
+     * Creates a new person without its previous google contact status
+     */
+    public ReadOnlyPerson RemoveGoogleContactStatus(ReadOnlyPerson contact)
+            throws IllegalValueException, NullPointerException {
+
+        Name name = new Name(contact.getName().fullName);
+        Phone phone = new Phone(contact.getPhone().value);
+        Email email = new Email(contact.getEmail().value);
+        Address address = new Address(contact.getAddress().value);
+        GoogleID ID = new GoogleID("not GoogleContact");
+        Set<Tag> Tags = new HashSet<>();
+
+        return new seedu.address.model.person.Person(name, phone, email, address, Tags, ID);
+    }
 
     /**
      * Creates a detailed message on the status of the sync
      */
-    public String setCommandMessage(String errorMessage, String NamesNotSynced, int contactsSyncedCount, int errorSyncedCount) {
+    public String setCommandMessage(String NamesNotSynced, int contactsSyncedCount, int errorSyncedCount) {
         String CommandMessage;
-        // If google contacts is unable to authenticate user, authentication failure message will be returned.
-        if(errorMessage != null){
-            return errorMessage;
-        }
 
         CommandMessage = String.format(Messages.MESSAGE_SYNC_CONTACT, contactsSyncedCount, errorSyncedCount);
         if(errorSyncedCount > 0){

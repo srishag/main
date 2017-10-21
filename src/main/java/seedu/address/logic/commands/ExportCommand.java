@@ -5,6 +5,7 @@ import com.google.api.services.oauth2.Oauth2;
 import seedu.address.commons.GoogleContactsBuilder;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.GoogleID;
 import seedu.address.model.person.Phone;
@@ -37,17 +38,22 @@ public class ExportCommand extends Command {
     private int errorExportCount = 0;
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException {
         List<ReadOnlyPerson> personList = model.getAddressBook().getPersonList();
-        GoogleContactsBuilder builder= null;
+        GoogleContactsBuilder builder;
 
         try {
             builder = new GoogleContactsBuilder();
         }catch (IOException e){
-            ErrorMessage = "Authentication Failed. Please login again.";
+            throw new CommandException("Authentication Failed. Please login again.");
         }
 
         Person createdContact;
+
+        if(personList.isEmpty()){
+            throw new CommandException("No contacts in addressbook to export");
+        }
+
         for(ReadOnlyPerson contact : personList) {
             if (contact.getGoogleID().value.equals("not GoogleContact")) {
                 try {
@@ -55,8 +61,8 @@ public class ExportCommand extends Command {
                     createdContact = builder.getPeopleService().people().createContact(createdContact).execute();
                     model.updatePerson(contact, getNewAddressBookContact(contact, createdContact));
                     contactsExportedCount++;
-                } catch (IOException | NullPointerException e) {
-                    ErrorMessage = "Authentication Failed. Please login again.";
+                }catch (IOException | NullPointerException e) {
+                    throw new CommandException("Authentication Failed. Please login again.");
                 }catch (IllegalValueException | PersonNotFoundException e) {
                     errorExportCount++;
                 }
