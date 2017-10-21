@@ -167,8 +167,8 @@ Ensure that the `index` entered is correct, or it may cause unintentional change
 [NOTE]
 `Index` is the #currently displayed# number corresponding to the contact, which may differ if the current displayed list has been filtered.
 
-[TIP]
-Feature to edit tags specifically coming in future updates!
+
+#Feature to edit tags specifically coming in future updates!#
 
 === Locating persons by name: `find`
 `Find` contacts whose names contain any of the given keywords. +
@@ -266,19 +266,17 @@ Lists all existing tags in the App +
 ==== The Command
 Format: `listtags`
 
+[TIP]
+Listing all tags is designed to help you choose which tags to specify when using `findtags`.
 
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
+
+==== The Command
 Format: `delete INDEX`
 
-****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
+==== Examples
 
 * `list` +
 `delete 2` +
@@ -287,25 +285,43 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+[NOTE]
+`INDEX` refers to the number on the contact to be edited in the displayed list.
+#refer to picture below, to be added!#
+
+[TIP]
+If wrong person was deleted, **`undo` immediately without exiting the application!**
+
+==== Common Problems
+1. Not entering the correct `index` +
+Ensure that the `index` entered is correct, or it may cause unintentional changes to another contact. +
+
+[NOTE]
+`Index` is the #currently displayed# number corresponding to the contact, which may differ if the current displayed list has been filtered.
+
+
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
+
+==== The Command
 Format: `select INDEX`
 
-****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
+==== Usage Examples
 * `list` +
 `select 2` +
 Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+
+==== More Information
+Selects the contact and loads the Facebook Profile of the contact specified.
+
+[NOTE]
+If Facebook page of the contact is not stored in the application, the default Facebook homepage will be loaded instead.
+
+==== Common Problems
 
 === Listing entered commands : `history`
 
@@ -375,7 +391,15 @@ Format: `clear`
 === Exiting the program : `exit`
 
 Exits the program. +
+
+==== The Command
 Format: `exit`
+
+[TIP]
+Alternatively, you can exit by clicking on the RED X at the top right of the Application to close (for Windows)
+
+[NOTE]
+#DO NOT# exit the application if you still have errors left to `undo` as command history is deleted when the application closes.
 
 === Saving the data
 
