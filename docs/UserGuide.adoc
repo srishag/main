@@ -422,7 +422,7 @@ There is no need to save manually.
 
 == Transferring of Data to Another Device
 Do you wish to transfer the data stored in Contact'em on one device to another?
-For example, you may wish to use Contact'em on computer B with the data currently stored on computer A.
+For example, you may wish to use Contact'em on device B with the data currently stored on device A.
 Or you may simply want to create a backup. Simply follow the easy steps below to get set.
 
 Option A: Using a storage device (e.g. thumb drive)
@@ -451,7 +451,7 @@ Option B: Directly connecting the 2 devices
 ##to be added ##
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder. Refer to Section 3 above for details.
 
 == Quick-Reference Guide
 
