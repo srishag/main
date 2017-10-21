@@ -93,7 +93,7 @@ public class GoogleAuthenticator {
 
     //Obtain the list of Contacts from google
     public List<Person> getConnections(PeopleService peopleService)  throws IOException{
-        ListConnectionsResponse response = new ListConnectionsResponse();
+        ListConnectionsResponse response;
         response = peopleService.people().connections().list("people/me")
                 .setPersonFields("names,emailAddresses,phoneNumbers,addresses")
                 .execute();
