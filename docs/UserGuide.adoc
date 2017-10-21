@@ -50,67 +50,149 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
+=== Viewing Help : `help`
 
 Format: `help`
 
-=== Adding a person: `add`
+=== Adding a Person: `add`
+`Add` is the most basic functionality of Contact'em, which adds a contact to the address book.
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+==== The Command
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [b/BIRTHDAY] [f/FACEBOOK] [t/TAG]`
 
-[TIP]
-A person can have any number of tags (including 0)
+`add` is the command word, and the other `parameters` (e.g. n/NAME) are details of the contact to be added.
 
-Examples:
+`Prefixes`, e.g. `n/`, `p/`, are required before typing in the required field.
+
+==== Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Betsy road, block 456, #01-02 p/1234567 t/friend`
 
-=== Listing all persons : `list`
+If contact was added in error, or with errors, user can `undo`, `delete`, or `edit` it. +
+To undo, type `undo` (recommended). +
+To edit, refer to section xxx below (recommended for advanced users). +
+To delete, refer to section xxx below (least recommended). +
 
-Shows a list of all persons in the address book. +
+[TIP]
+Parameters in square brackets above, such as Birthday, Facebook and Tag, are optional when first adding a contact
+
+[NOTE]
+A contact can have any number of tags
+
+[TIP]
+The order of parameters entered does not matter
+
+[WARNING]
+However, the command word `add` must be in front
+
+[WARNING]
+Prefixes are necessary before the corressponding fields, e.g. **n/** John will work, but just entering John will not.
+
+==== Common Problems
+
+1. Missing required fields +
+Compulsory fields to be entered are
+`*_name, address, phone number and email address._*`
+
+2. Missing prefixes
+
+3. Duplicate contacts +
+If there is a duplicate contact, Contact'em will not allow the addition
+
+=== Listing All Contacts : `list`
+
+Displays all contacts in the address book.
+
+==== The Command
 Format: `list`
+
+[TIP]
+If you are searching for particular contact(s), it is recommended to use `find` or `findtags` instead, see details at #....#
+
+==== Common Problems
+
+1. No contacts in list +
+Import contacts or start adding them! +
+
+[WARNING]
+If this occured due to an accidental `clear` command, it is recommended to `undo` as soon as possible, #without closing the application as data will be permanently lost after otherwise.#
 
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
+Edits the information of an existing contact. +
+
+==== The Command
+
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
-
-Examples:
+==== Examples
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords. +
+[NOTE]
+`INDEX` refers to the number on the contact to be edited in the displayed list.
+#refer to picture below, to be added!#
+
+[NOTE]
+You can specify any number of fields (in square brackets), but naturally at least one field must be changed for it to be a valid command.
+
+[NOTE]
+Unspecified fields will be unchanged.
+
+[WARNING]
+In this version, editing of tags changes the entire list of tags to the new one, that is, the previous list of tags the person had will be completely wiped if tags are edited.
+Therefore, to add tags, user must include previous tags.
+
+[TIP]
+To remove tags, simply include the field `t/`.
+
+[TIP]
+If user wishes to revert the edit, simply type in the `undo` command **without closing the app**
+
+
+==== Common Problems
+1. Not providing the right prefix/field +
+The field entered must be suitable for the prefix, for example, entering a phone number with the address field prefix `a/` will not pass.
+
+2. Old tags were unintentionally removed +
+Use the `undo` command to revert changes.
+
+3. Not entering the correct `index` +
+Ensure that the `index` entered is correct, or it may cause unintentional changes to another contact. +
+[NOTE]
+`Index` is the #currently displayed# number corresponding to the contact, which may differ if the current displayed list has been filtered.
+
+[TIP]
+Feature to edit tags specifically coming in future updates!
+
+=== Locating persons by name: `find`
+`Find` contacts whose names contain any of the given keywords. +
+
+==== The Command
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
-
-Examples:
-
+==== Examples
 * `find John` +
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+
+[TIP]
+Keywords are not case-sensitive
+
+[TIP]
+Order of keywords does not matter
+
+[NOTE]
+As long as a single word in a contact's name matches any of the keywords, that contact will be displayed
+
+[NOTE]
+Only full words will be matched, for example, finding `Han` will not match `Hans`. To search for a contact without specifying the full word, refer to `EasyFind` in the section below.
 
 ==== EasyFind
 
@@ -138,39 +220,51 @@ Returns any person having starting alphabets `Betsy`, `Tim`, or `John`
 === Locating persons by tag name: `findtags`
 
 Finds persons who have tags matching any of the given keywords. +
+
+==== The Command
 Format: `findtags KEYWORD [MORE_KEYWORDS]` +
+
+==== Examples
+* `findtags friends` +
+Returns any contact tagged `friends`.
+
+* `findtags friends colleagues schoolmates` +
+Returns any person having any of the tags `friends`, `colleagues`, and/or `schoolmates`.
 
 [TIP]
 You can substitute the command `findtags` with `findtag` or `ft`.
 
-****
-* The search is case insensitive.
-** `FrIeNdS` will match `friends`
-* The order of the keywords does not matter.
-** `classmates roommates` will match `roommates classmates`.
-* Only full words will be matched.
-** `col` will not match `colleagues`.
-* Will attempt to be more lenient with singular and plural tense.
-** `friend` will return contacts with either tag `friend` or `friends`.
-** `colleagues` will return contacts with either tag `colleague` or `colleagues`.
-*** However, this may not always be correct for words where plural and singular differs not only by a single letter 's'.
-*** Searching by tag `glass` will attempt to find contacts with tags `glass` and `glassS` instead of `glasses`.
-* Persons with at least one tag matching the keywords will be returned.
-** `friends` will return a contact who has `friends` tags and more.
-****
+[NOTE]
+The search is **not** case-sensitive.
 
-Examples:
+[NOTE]
+The order of the keywords does not matter.
 
-* `findtags friends` +
-Returns any person having tags `friends`.
-* `findtags friends colleagues schoolmates` +
-Returns any person having any of the tags `friends`, `colleagues`, and/or `schoolmates`.
+[NOTE]
+Only full words will be matched. For example, `fri` will **not** match `friends`.
+
+[NOTE]
+Contact with at least one of the specified tag keywords will be displayed
+
+==== Note on singular and plural tenses
+The search will attempt to be more lenient with singular and plural tenses.
+
+For example: +
+
+* `friend` will return contacts with either tag `friend` or `friends`. +
+* `colleagues` will return contacts with either tag `colleague` or `colleagues`.
+
+However, this may not always be correct for words where plural and singular differs not only by a single letter 's'.
+Searching by tag `family` will attempt to find contacts with tags `family` and `familyS` instead of `families`.
+Therefore, the onus is still on the user to specify the spelling of the tags.
 
 === List tags : `listtags` +
-`coming in v2.0`
+`coming in v1.3`
 
 Lists all existing tags in the App +
-Format: `listtags` +
+==== The Command
+Format: `listtags`
+
 
 === Deleting a person : `delete`
 
