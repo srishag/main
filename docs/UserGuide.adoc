@@ -420,12 +420,42 @@ Alternatively, you can exit by clicking on the RED X at the top right of the App
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+== Transferring of Data to Another Device
+Do you wish to transfer the data stored in Contact'em on one device to another?
+For example, you may wish to use Contact'em on computer B with the data currently stored on computer A.
+Or you may simply want to create a backup. Simply follow the easy steps below to get set.
+
+Option A: Using a storage device (e.g. thumb drive)
+
+1. Connect storage device to Device A (old device).
+2. On Device A (old device), open the `Contact'em` directory
+3. In the `Contact'em` directory, open the `data` folder.
+4. Copy the data file `addressbook` from device A to your storage device.
+5. Install Contact'em on Device B (new device).
+6. Connect storage device to Device B.
+7. Open `data` folder in `Device B` (similar to steps 2 and 3 above).
+8. Copy `addressbook` from storage device into `data`.
+9. Done! Contact'em on Device B ready for use!
+
+
+Option B: Directly connecting the 2 devices
+
+1. Install Contact'em on new device.
+2. Connect the 2 devices.
+3. Open the `Contact'em` directory to find the `data` folder on both devices.
+4. Copy the file `addressbook` from the `data` folder of the older device to the newer device.
+5. Done! Contact'em on newer device is ready for use!
+
 == FAQ
+
+##to be added ##
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
-== Command Summary
+== Quick-Reference Guide
+
+**Summary of Commands: **
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
