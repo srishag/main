@@ -262,6 +262,7 @@ Therefore, the onus is still on the user to specify the spelling of the tags.
 `coming in v1.3`
 
 Lists all existing tags in the App +
+
 ==== The Command
 Format: `listtags`
 
