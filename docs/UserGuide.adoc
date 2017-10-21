@@ -351,6 +351,8 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 === Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
+
+==== The Command
 Format: `undo`
 
 [NOTE]
@@ -358,7 +360,7 @@ Format: `undo`
 Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
 ====
 
-Examples:
+==== Usage Examples
 
 * `delete 1` +
 `list` +
@@ -374,12 +376,23 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
+==== Common Problems
+1. Trying to `Undo` commands that cannot be undone, for example trying to undo a `find`. +
+The commands that can be undone are `add`, `delete`, `edit`, `clear`. +
+However, reverting find commands can still be done, by entering the search command with the previous criteria.
+
+2. No commands to undo because application was closed. +
+When the application is closed, the command history is deleted and not stored. Therefore, the application will not be able to know which command to undo. +
+It is therefore recommended to undo any changes needed before closing the application.
+
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
+
+==== The Command
 Format: `redo`
 
-Examples:
+==== Usage Examples
 
 * `delete 1` +
 `undo` (reverses the `delete 1` command) +
@@ -400,7 +413,12 @@ The `redo` command fails as there are no `undo` commands executed previously.
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
+
+==== The Command
 Format: `clear`
+
+==== Notes on Usage
+If `cleared` was used unintentionally, it is recommended to immediate enter undo. DO NOT close the application as data will be irreversibly removed.
 
 === Exiting the program : `exit`
 
@@ -451,7 +469,12 @@ Option B: Directly connecting the 2 devices
 ##to be added ##
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder. Refer to Section 3 above for details.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+Refer to Section 3 above for details.
+
+*Q*: How do I resolve a problem  with _this_ command? +
+*A*: Refer to the `Common Problems` subsection of the corresponding command in the **features** section above (Section 2).
+Alternatively, if the command can be undone, enter `undo` and resolve from there. 
 
 == Quick-Reference Guide
 
