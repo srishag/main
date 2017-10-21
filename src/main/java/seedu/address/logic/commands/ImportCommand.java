@@ -1,8 +1,6 @@
 package seedu.address.logic.commands;
 
-import com.google.api.services.people.v1.model.Membership;
 import com.google.api.services.people.v1.model.Person;
-import com.sun.xml.internal.org.jvnet.mimepull.MIMEMessage;
 import seedu.address.commons.GoogleContactsBuilder;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -10,8 +8,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.*;
 import seedu.address.model.tag.Tag;
 
-
-import javax.net.ssl.SSLSession;
 import java.io.IOException;
 import java.util.*;
 
@@ -29,32 +25,46 @@ public class ImportCommand extends Command{
             + "process\n"
             + "Parameters: KEYWORD\n"
             + "Example: " + COMMAND_WORD;
+
+    private List<Person> GoogleContactsList;
+
+
     private String CommandMessage = "";
     private String NamesNotImported = "";
-
     private int contactsImportedCount = 0;
     private int errorImportsCount =0;
 
-    @Override
-    public CommandResult execute()throws CommandException {
-        List<ReadOnlyPerson> personList = model.getAddressBook().getPersonList();
-        List<Person> connections = null;
-        boolean contactAlreadyExists;
-
+    /**
+     * Constructor for ImportCommand (Gets the Google Contact List after successful authentication)
+     */
+    public ImportCommand() throws CommandException{
         try {
             GoogleContactsBuilder builder = new GoogleContactsBuilder();
-            connections = builder.getPersonlist();
+            this.GoogleContactsList = builder.getPersonlist();
         } catch (IOException e) {
             throw new CommandException("Authentication Failed. Please login again.");
         }
-
-        if(connections == null){
+        if(this.GoogleContactsList == null){
             throw new CommandException("No contacts found in Google Contacts");
         }
+    }
 
-        for (Person person : connections) {
-            contactAlreadyExists = this.ifContactExists(personList, person);
-            if (!contactAlreadyExists) {
+    /**
+     * This constructor exists only for the sake of testing so as to pass through a dummy google contacts list.
+     * Will not be used in the main implementation of the programme
+     */
+    public ImportCommand(List<Person> connections){
+        this.GoogleContactsList = connections;
+    }
+
+
+
+    @Override
+    public CommandResult execute(){
+        List<ReadOnlyPerson> personList = model.getAddressBook().getPersonList();
+
+        for (Person person : GoogleContactsList) {
+            if (!this.ifContactExists(personList, person)) {
                 try {
                     model.addPerson(this.newPerson(person));
                     contactsImportedCount++;
@@ -66,7 +76,7 @@ public class ImportCommand extends Command{
         }
 
         CommandMessage = setCommandMessage(NamesNotImported, contactsImportedCount,errorImportsCount,
-                connections.size());
+                GoogleContactsList.size());
         return new CommandResult(CommandMessage);
     }
 

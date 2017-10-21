@@ -29,32 +29,46 @@ public class SyncCommand extends Command {
             + "Example: " + COMMAND_WORD;
     private String CommandMessage = "";
     private String NamesNotSynced = "";
-
     private int contactsSyncedCount = 0;
     private int errorSyncedCount =0;
+
+    private List<Person> GoogleContactsList;
+
+    /**
+     * Constructor for ImportCommand (Gets the Google Contact List after successful authentication)
+     */
+    public SyncCommand() throws CommandException{
+        try {
+            GoogleContactsBuilder builder = new GoogleContactsBuilder();
+            this.GoogleContactsList = builder.getPersonlist();
+        } catch (IOException e) {
+            throw new CommandException("Authentication Failed. Please login again.");
+        }
+        if(this.GoogleContactsList == null){
+            throw new CommandException("No contacts found in Google Contacts");
+        }
+    }
+
+    /**
+     * This constructor exists only for the sake of testing so as to pass through a dummy google contacts list.
+     * Will not be used in the main implementation of the programme
+     */
+    public SyncCommand(List<Person> connections){
+        this.GoogleContactsList = connections;
+    }
 
     @Override
     public CommandResult execute() throws CommandException {
 
         ObservableList<ReadOnlyPerson> personlist = model.getAddressBook().getPersonList();
-        List<Person> connections = null;
-        boolean checkifexists = false;
-
-        try {
-            GoogleContactsBuilder builder = new GoogleContactsBuilder();
-            connections = builder.getPersonlist();
-        } catch (IOException E) {
-            throw new CommandException("Authentication Failed. Please login again.");
-        }
-
         if(personlist.isEmpty()){
             throw new CommandException("No contacts in addressbook to sync");
         }
 
         for (ReadOnlyPerson contact : personlist) {
-            checkifexists = false;
-            if ((connections != null) && (connections.size() > 0)) {
-                for (Person person : connections) {
+            boolean checkifexists = false;
+            if ((GoogleContactsList != null) && (GoogleContactsList.size() > 0)) {
+                for (Person person : GoogleContactsList) {
                     if (person.getResourceName().substring(8).equals(contact.getGoogleID().value)) {
                         checkifexists = true;
                         try {
