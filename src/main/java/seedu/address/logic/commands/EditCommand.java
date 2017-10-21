@@ -96,7 +96,7 @@ public class EditCommand extends UndoableCommand {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-        GoogleID googleID = personToEdit.getGoogleID();
+        GoogleID googleID = editPersonDescriptor.getID().orElse(personToEdit.getGoogleID());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, googleID);
     }
@@ -129,6 +129,7 @@ public class EditCommand extends UndoableCommand {
         private Email email;
         private Address address;
         private Set<Tag> tags;
+        private GoogleID ID;
 
         public EditPersonDescriptor() {}
 
@@ -138,6 +139,7 @@ public class EditCommand extends UndoableCommand {
             this.email = toCopy.email;
             this.address = toCopy.address;
             this.tags = toCopy.tags;
+            this.ID = toCopy.ID;
         }
 
         /**
@@ -187,6 +189,10 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(tags);
         }
 
+        public void setID (GoogleID ID){this.ID = ID; }
+
+        public Optional<GoogleID> getID(){return Optional.ofNullable(ID);}
+
         @Override
         public boolean equals(Object other) {
             // short circuit if same object
@@ -206,7 +212,8 @@ public class EditCommand extends UndoableCommand {
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
-                    && getTags().equals(e.getTags());
+                    && getTags().equals(e.getTags())
+                    && getID().equals(e.getID());
         }
     }
 }
