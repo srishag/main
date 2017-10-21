@@ -32,7 +32,6 @@ public class ExportCommand extends Command {
             + "Parameters: KEYWORD\n"
             + "Example: " + COMMAND_WORD;
     private String CommandMessage = "";
-    private String ErrorMessage;
 
     private int contactsExportedCount = 0;
     private int errorExportCount = 0;
@@ -68,7 +67,7 @@ public class ExportCommand extends Command {
                 }
             }
         }
-        CommandMessage = setCommandMessage(ErrorMessage,contactsExportedCount,errorExportCount);
+        CommandMessage = setCommandMessage(contactsExportedCount,errorExportCount);
         return new CommandResult(CommandMessage);
 }
 
@@ -107,12 +106,7 @@ public class ExportCommand extends Command {
     /**
      * Creates a detailed message on the status of the sync
      */
-    public String setCommandMessage(String errorMessage, int contactsExportedCount, int errorExportCount) {
-        String CommandMessage;
-        // If google contacts is unable to authenticate user, authentication failure message will be returned.
-        if(errorMessage != null){
-            return errorMessage;
-        }
+    public String setCommandMessage(int contactsExportedCount, int errorExportCount) {
 
         CommandMessage = String.format(Messages.MESSAGE_EXPORT_CONTACT, contactsExportedCount);
         if(errorExportCount == 0){
