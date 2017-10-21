@@ -474,7 +474,7 @@ Refer to Section 3 above for details.
 
 *Q*: How do I resolve a problem  with _this_ command? +
 *A*: Refer to the `Common Problems` subsection of the corresponding command in the **features** section above (Section 2).
-Alternatively, if the command can be undone, enter `undo` and resolve from there. 
+Alternatively, if the command can be undone, enter `undo` and resolve from there.
 
 == Quick-Reference Guide
 
