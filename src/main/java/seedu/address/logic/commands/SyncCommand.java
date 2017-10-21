@@ -35,7 +35,7 @@ public class SyncCommand extends Command {
     private List<Person> GoogleContactsList;
 
     /**
-     * Constructor for ImportCommand (Gets the Google Contact List after successful authentication)
+     * Constructor for SyncCommand (Gets the Google Contact List after successful authentication)
      */
     public SyncCommand() throws CommandException{
         try {

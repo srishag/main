@@ -45,7 +45,6 @@ public class GoogleContactBuilder {
 
     public seedu.address.model.person.Person buildAddressBookPerson(){
         seedu.address.model.person.Person person = null;
-
         try{
         seedu.address.model.person.Name name = new seedu.address.model.person.Name(DEFAULT_NAME);
         Phone phone = new Phone(DEFAULT_PHONE);
