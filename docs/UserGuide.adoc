@@ -67,7 +67,7 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [b/BIRTHDAY] [f/FACEBOOK] [
 `Prefixes`, e.g. `n/`, `p/`, are required before typing in the required field.
 
 After entering the command, the application will also respond with the details of the added contact, for your reference.
-Do refer to section 2.2.3 to see recommended actions if contact was added with errors.
+Do refer to `section 2.2.3` below to see recommended actions if contact was added with errors.
 
 ==== Usage Examples
 
@@ -96,10 +96,13 @@ However, the command word `add` must be in front.
 Prefixes are necessary before the corresponding fields, e.g. **n/** John will work, but just entering John will not.
 
 ==== Contact Added With Error
-If contact was added in error, or with errors, user can `undo`, `delete`, or `edit` it. +
-To undo, enter `undo` (recommended). +
-To edit, refer to `section 2.4` below (recommended for advanced users). +
-To delete, refer to `section 2.8` below (least recommended). +
+If contact was added in error, or with errors, user can `undo`, `edit`, or `delete` it. +
+
+* To undo, enter `undo` (recommended). +
+
+* To edit, refer to `section 2.4` below (recommended for experienced users). +
+
+* To delete, refer to `section 2.8` below (least recommended). +
 
 ==== Common Problems
 
@@ -128,7 +131,7 @@ If you are searching for particular contact(s), it is recommended to use `find` 
 Import contacts or start adding them! +
 
 [WARNING]
-If this occured due to an accidental `clear` command, it is recommended to `undo` as soon as possible, #without closing the application as data will be permanently lost after otherwise.#
+If this occurred due to an accidental `clear` command, it is recommended to `undo` as soon as possible, #without closing the application as data will be permanently lost after otherwise.#
 
 === Editing a person : `edit`
 
@@ -141,10 +144,9 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 ==== Examples
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+Edits the phone number and email address of the 1st person to `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-
+Edits the name of the 2nd person to `Betsy Crower` and clears all existing tags.
 
 [NOTE]
 `INDEX` refers to the number on the contact to be edited in the displayed list.
@@ -190,9 +192,9 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ==== Examples
 * `find John` +
-Returns `john` and `John Doe`
+Returns `john` and `John Doe`.
 * `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+Returns any person having names `Betsy`, `Tim`, or `John`.
 
 [TIP]
 Keywords are not case-sensitive
