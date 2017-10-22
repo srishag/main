@@ -38,9 +38,9 @@ public interface ReadOnlyPerson {
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress())
-                && other.getGoogleID().equals(this.getGoogleID()));
+                && other.getGoogleID().equals(this.getGoogleID()))
                 && other.getBirthday().equals(this.getBirthday())
-                && other.getFacebookAddress().equals(this.getFacebookAddress()));
+                && other.getFacebookAddress().equals(this.getFacebookAddress());
     }
 
     /**

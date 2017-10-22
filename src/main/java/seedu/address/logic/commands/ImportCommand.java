@@ -102,12 +102,14 @@ public class ImportCommand extends Command{
          Phone phone = new Phone(person.getPhoneNumbers().get(0).getValue().replace(" ", ""));
          Address address = new Address(person.getAddresses().get(0).getStreetAddress());
          GoogleID ID = new GoogleID(person.getResourceName().substring(8));
+         Birthday birthday = new Birthday("");
+         FacebookAddress facebookAddress = new FacebookAddress("");
 
          Tag tag = new Tag("GoogleContact");
          Set<Tag> Tags = new HashSet<>();
          Tags.add(tag);
 
-         return new seedu.address.model.person.Person(name,phone,email,address,Tags,ID);
+         return new seedu.address.model.person.Person(name,phone,email,address,birthday,facebookAddress,Tags,ID);
 
    }
     /**

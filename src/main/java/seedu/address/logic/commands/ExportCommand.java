@@ -101,7 +101,7 @@ public class ExportCommand extends Command {
         Tags.add(tag);
 
         return new seedu.address.model.person.Person(contact.getName(), contact.getPhone(),
-                contact.getEmail(), contact.getAddress(), Tags, ID);
+                contact.getEmail(), contact.getAddress(),contact.getBirthday(), contact.getFacebookAddress(), Tags, ID);
     }
     /**
      * Creates a detailed message on the status of the sync

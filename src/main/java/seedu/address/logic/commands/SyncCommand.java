@@ -107,12 +107,14 @@ public class SyncCommand extends Command {
         Email email = new Email(person.getEmailAddresses().get(0).getValue());
         Address address = new Address(person.getAddresses().get(0).getStreetAddress());
         GoogleID ID = new GoogleID(person.getResourceName().substring(8));
+        Birthday birthday = new Birthday("");
+        FacebookAddress facebookAddress = new FacebookAddress("");
 
         Tag tag = new Tag("GoogleContact");
         Set<Tag> Tags = new HashSet<>();
         Tags.add(tag);
 
-        return new seedu.address.model.person.Person(name, phone, email, address, Tags, ID);
+        return new seedu.address.model.person.Person(name, phone, email, address, birthday, facebookAddress, Tags, ID);
     }
     /**
      * Creates a new person without its previous google contact status
@@ -126,8 +128,10 @@ public class SyncCommand extends Command {
         Address address = new Address(contact.getAddress().value);
         GoogleID ID = new GoogleID("not GoogleContact");
         Set<Tag> Tags = new HashSet<>();
+        Birthday birthday = new Birthday("");
+        FacebookAddress facebookAddress = new FacebookAddress("");
 
-        return new seedu.address.model.person.Person(name, phone, email, address, Tags, ID);
+        return new seedu.address.model.person.Person(name, phone, email, address, birthday, facebookAddress, Tags, ID);
     }
 
     /**

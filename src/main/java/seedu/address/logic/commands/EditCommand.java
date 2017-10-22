@@ -113,8 +113,6 @@ public class EditCommand extends UndoableCommand {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         GoogleID googleID = editPersonDescriptor.getID().orElse(personToEdit.getGoogleID());
 
-      return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, googleID);
-
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
                 updatedBirthday, updatedFacebookAddress, updatedTags,googleID);
 
@@ -253,7 +251,7 @@ public class EditCommand extends UndoableCommand {
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
                     && getTags().equals(e.getTags())
-                    && getID().equals(e.getID());
+                    && getID().equals(e.getID())
                     && getBirthday().equals(e.getBirthday())
                     && getFacebookAddress().equals(e.getFacebookAddress())
                     && getTags().equals(e.getTags());
