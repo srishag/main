@@ -1,7 +1,5 @@
 package seedu.address.logic.commands;
 
-import com.google.api.services.people.v1.model.Person;
-
 import java.io.IOException;
 import java.util.Set;
 import java.util.List;
@@ -12,16 +10,18 @@ import seedu.address.commons.GoogleContactsBuilder;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.FacebookAddress;
-import seedu.address.model.person.Birthday;
-import seedu.address.model.person.GoogleID;
+import seedu.address.model.person.GoogleId;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+
+import com.google.api.services.people.v1.model.Person;
 
 /**
  * Syncs all existing google contacts in the addressbook with the contacts in google contacts
@@ -39,7 +39,7 @@ public class SyncCommand extends Command {
     private String commandMessage = "";
     private String namesNotSynced = "";
     private int contactsSyncedCount = 0;
-    private int errorSyncedCount =0;
+    private int errorSyncedCount = 0;
 
     private List<Person> googleContactsList;
 
@@ -53,7 +53,7 @@ public class SyncCommand extends Command {
         } catch (IOException e) {
             throw new CommandException("Authentication Failed. Please login again.");
         }
-        if(this.googleContactsList == null){
+        if (this.googleContactsList == null) {
             throw new CommandException("No contacts found in Google Contacts");
         }
     }
@@ -62,7 +62,7 @@ public class SyncCommand extends Command {
      * This constructor exists only for the sake of testing so as to pass through a dummy google contacts list.
      * Will not be used in the main implementation of the programme
      */
-    public SyncCommand(List<Person> connections){
+    public SyncCommand(List<Person> connections) {
         this.googleContactsList = connections;
     }
 
@@ -81,8 +81,8 @@ public class SyncCommand extends Command {
                     if (person.getResourceName().substring(8).equals(contact.getGoogleId().value)) {
                         checkifexists = true;
                         try {
-                            if (!contact.isSameStateAs(PersonToCheck(person))) {
-                                model.updatePerson(contact, PersonToCheck(person));
+                            if (!contact.isSameStateAs(personToCheck(person))) {
+                                model.updatePerson(contact, personToCheck(person));
                                 contactsSyncedCount++;
                             }
                         } catch (IllegalValueException | NullPointerException | PersonNotFoundException e) {
@@ -95,9 +95,10 @@ public class SyncCommand extends Command {
 
             if ((contact.getGoogleId().value != "not GoogleContact") && (checkifexists == false)) {
                 try {
-                    model.updatePerson(contact, RemoveGoogleContactStatus(contact));
+                    model.updatePerson(contact, removeGoogleContactStatus(contact));
                     contactsSyncedCount++;
                 } catch (IllegalValueException | NullPointerException | PersonNotFoundException e) {
+                    errorSyncedCount++;
                 }
             }
         }
@@ -109,13 +110,13 @@ public class SyncCommand extends Command {
     /**
      * Creates a person in addressBook based on the contact in google contact
      */
-    public ReadOnlyPerson PersonToCheck(Person person) throws IllegalValueException, NullPointerException {
+    public ReadOnlyPerson personToCheck(Person person) throws IllegalValueException, NullPointerException {
 
         Name name = new Name(person.getNames().get(0).getDisplayName());
         Phone phone = new Phone(person.getPhoneNumbers().get(0).getValue().replace(" ", ""));
         Email email = new Email(person.getEmailAddresses().get(0).getValue());
         Address address = new Address(person.getAddresses().get(0).getStreetAddress());
-        GoogleID ID = new GoogleID(person.getResourceName().substring(8));
+        GoogleId id = new GoogleId(person.getResourceName().substring(8));
         Birthday birthday = new Birthday("");
         FacebookAddress facebookAddress = new FacebookAddress("");
 
@@ -123,24 +124,24 @@ public class SyncCommand extends Command {
         Set<Tag> tags = new HashSet<>();
         tags.add(tag);
 
-        return new seedu.address.model.person.Person(name, phone, email, address, birthday, facebookAddress, tags, ID);
+        return new seedu.address.model.person.Person(name, phone, email, address, birthday, facebookAddress, tags, id);
     }
     /**
      * Creates a new person without its previous google contact status
      */
-    public ReadOnlyPerson RemoveGoogleContactStatus(ReadOnlyPerson contact)
+    public ReadOnlyPerson removeGoogleContactStatus(ReadOnlyPerson contact)
             throws IllegalValueException, NullPointerException {
 
         Name name = new Name(contact.getName().fullName);
         Phone phone = new Phone(contact.getPhone().value);
         Email email = new Email(contact.getEmail().value);
         Address address = new Address(contact.getAddress().value);
-        GoogleID ID = new GoogleID("not GoogleContact");
-        Set<Tag> Tags = new HashSet<>();
+        GoogleId id = new GoogleId("not GoogleContact");
+        Set<Tag> tags = new HashSet<>();
         Birthday birthday = new Birthday("");
         FacebookAddress facebookAddress = new FacebookAddress("");
 
-        return new seedu.address.model.person.Person(name, phone, email, address, birthday, facebookAddress, Tags, ID);
+        return new seedu.address.model.person.Person(name, phone, email, address, birthday, facebookAddress, tags, id);
     }
 
     /**
@@ -151,8 +152,8 @@ public class SyncCommand extends Command {
 
         commandMessage = String.format(Messages.MESSAGE_SYNC_CONTACT, contactsSyncedCount, errorSyncedCount);
         if (errorSyncedCount > 0) {
-            commandMessage += "\n" + "Please check the format of the following google contacts : " +
-                    namesNotSynced.substring(0, namesNotSynced.length()-2);
+            commandMessage += "\n" + "Please check the format of the following google contacts : "
+                    + namesNotSynced.substring(0, namesNotSynced.length() - 2);
         }
         return commandMessage;
     }

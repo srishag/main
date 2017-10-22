@@ -1,11 +1,11 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.*;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FACEBOOKADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GOOGLEID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -17,11 +17,11 @@ import java.util.stream.Stream;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.GoogleID;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.FacebookAddress;
+import seedu.address.model.person.GoogleId;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -66,13 +66,13 @@ public class AddCommandParser implements Parser<AddCommand> {
             }
 
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-            Optional<String> GoogleIdOptional = argMultimap.getValue(PREFIX_GOOGLEID);
-            GoogleID Id = new GoogleID("not GoogleContact");
-            if (GoogleIdOptional.isPresent()) {
-                Id = ParserUtil.parseGoogleId(argMultimap.getValue(PREFIX_GOOGLEID)).get();
+            Optional<String> googleIdOptional = argMultimap.getValue(PREFIX_GOOGLEID);
+            GoogleId id = new GoogleId("not GoogleContact");
+            if (googleIdOptional.isPresent()) {
+                id = ParserUtil.parseGoogleId(argMultimap.getValue(PREFIX_GOOGLEID)).get();
             }
 
-            ReadOnlyPerson person = new Person(name, phone, email, address, birthday, facebookAddress, tagList, Id);
+            ReadOnlyPerson person = new Person(name, phone, email, address, birthday, facebookAddress, tagList, id);
 
 
             return new AddCommand(person);

@@ -20,7 +20,7 @@ public class LoadLoginEvent extends BaseEvent {
         return this.getClass().getSimpleName();
     }
 
-    public String getAuthenticationURL() {
+    public String getAuthenticationUrl() {
         return authenticationUrl;
     }
 }

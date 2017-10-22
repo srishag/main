@@ -43,7 +43,7 @@ public class GoogleAuthenticator {
     //Constructor
     public GoogleAuthenticator() {
         this.authorizationUrl = new GoogleBrowserClientRequestUrl(clientId, redirectUrl,
-                Arrays.asList(scope1, scope2, scope3, scope4,scope5)).build();
+                Arrays.asList(scope1, scope2, scope3, scope4, scope5)).build();
     }
 
 

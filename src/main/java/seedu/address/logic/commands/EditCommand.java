@@ -22,10 +22,10 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.FacebookAddress;
+import seedu.address.model.person.GoogleId;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.GoogleID;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -111,7 +111,7 @@ public class EditCommand extends UndoableCommand {
         FacebookAddress updatedFacebookAddress = editPersonDescriptor.getFacebookAddress()
                 .orElse(personToEdit.getFacebookAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-        GoogleID googleId = editPersonDescriptor.getId().orElse(personToEdit.getGoogleId());
+        GoogleId googleId = editPersonDescriptor.getId().orElse(personToEdit.getGoogleId());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
                 updatedBirthday, updatedFacebookAddress, updatedTags, googleId);
@@ -148,7 +148,7 @@ public class EditCommand extends UndoableCommand {
         private Birthday birthday;
         private FacebookAddress facebookAddress;
         private Set<Tag> tags;
-        private GoogleID Id;
+        private GoogleId iD;
 
         public EditPersonDescriptor() {}
 
@@ -160,7 +160,7 @@ public class EditCommand extends UndoableCommand {
             this.birthday = toCopy.birthday;
             this.facebookAddress = toCopy.facebookAddress;
             this.tags = toCopy.tags;
-            this.Id = toCopy.Id;
+            this.iD = toCopy.iD;
         }
 
         /**
@@ -227,12 +227,12 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(tags);
         }
 
-        public void setId (GoogleID Id) {
-            this.Id = Id;
+        public void setId (GoogleId iD) {
+            this.iD = iD;
         }
 
-        public Optional<GoogleID> getId() {
-            return Optional.ofNullable(Id);
+        public Optional<GoogleId> getId() {
+            return Optional.ofNullable(iD);
         }
 
         @Override

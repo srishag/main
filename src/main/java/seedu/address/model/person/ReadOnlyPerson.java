@@ -26,7 +26,7 @@ public interface ReadOnlyPerson {
     FacebookAddress getFacebookAddress();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
-    GoogleID getGoogleId();
+    GoogleId getGoogleId();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

@@ -1,22 +1,25 @@
 package seedu.address.logic.commands;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import seedu.address.commons.GoogleContactsBuilder;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.GoogleID;
+import seedu.address.model.person.GoogleId;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Set;
-import java.util.HashSet;
-
-import com.google.api.services.people.v1.model.*;
-
+import com.google.api.services.people.v1.model.Address;
+import com.google.api.services.people.v1.model.EmailAddress;
+import com.google.api.services.people.v1.model.Name;
+import com.google.api.services.people.v1.model.Person;
+import com.google.api.services.people.v1.model.PhoneNumber;
 
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
@@ -53,7 +56,7 @@ public class ExportCommand extends Command {
             throw new CommandException("No contacts in addressbook to export");
         }
 
-        for(ReadOnlyPerson contact : personList) {
+        for (ReadOnlyPerson contact : personList) {
             if (contact.getGoogleId().value.equals("not GoogleContact")) {
                 try {
                     createdContact = createGoogleContact(contact);
@@ -67,9 +70,9 @@ public class ExportCommand extends Command {
                 }
             }
         }
-        commandMessage = setCommandMessage(contactsExportedCount,errorExportCount);
+        commandMessage = setCommandMessage(contactsExportedCount, errorExportCount);
         return new CommandResult(commandMessage);
-}
+    }
 
     /**
      * Creates a Person to add in google contact
@@ -96,13 +99,14 @@ public class ExportCommand extends Command {
     public ReadOnlyPerson getNewAddressBookContact(ReadOnlyPerson contact, Person createdContact)
             throws IllegalValueException {
 
-        GoogleID Id = new GoogleID(createdContact.getResourceName().substring(8));
+        GoogleId id = new GoogleId(createdContact.getResourceName().substring(8));
         Tag tag = new Tag("GoogleContact");
         Set<Tag> tags = new HashSet<>();
         tags.add(tag);
 
         return new seedu.address.model.person.Person(contact.getName(), contact.getPhone(),
-                contact.getEmail(), contact.getAddress(), contact.getBirthday(), contact.getFacebookAddress(), tags, Id);
+                contact.getEmail(), contact.getAddress(), contact.getBirthday(),
+                contact.getFacebookAddress(), tags, id);
     }
     /**
      * Creates a detailed message on the status of the sync

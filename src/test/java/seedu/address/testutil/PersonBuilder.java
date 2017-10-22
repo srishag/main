@@ -41,9 +41,9 @@ public class PersonBuilder {
             FacebookAddress defaultFacebookAddress = new FacebookAddress(DEFAULT_FACEBOOK_ADDRESS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
 
-            GoogleID defaultGoogleID = new GoogleID(DEFAULT_GOOGLEID);
+            GoogleId defaultGoogleId = new GoogleId(DEFAULT_GOOGLEID);
             this.person = new Person(defaultName, defaultPhone, defaultEmail,
-                    defaultAddress, defaultBirthday, defaultFacebookAddress, defaultTags, defaultGoogleID);
+                    defaultAddress, defaultBirthday, defaultFacebookAddress, defaultTags, defaultGoogleId);
 
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
@@ -130,7 +130,7 @@ public class PersonBuilder {
      */
     public PersonBuilder withGoogleId(String googleId) {
         try {
-            this.person.setId(new GoogleID(googleId));
+            this.person.setId(new GoogleId(googleId));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("GoogleID is expected to be unique.");
           }

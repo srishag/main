@@ -10,11 +10,11 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.person.GoogleID;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.FacebookAddress;
+import seedu.address.model.person.GoogleId;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -86,9 +86,9 @@ public class ParserUtil {
      * Parses a {@code Optional<String> GoogleId} into an {@code Optional<GoogleId>} if {@code GoogleId} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<GoogleID> parseGoogleId (Optional<String> googleId) throws IllegalValueException {
+    public static Optional<GoogleId> parseGoogleId (Optional<String> googleId) throws IllegalValueException {
         requireNonNull(googleId);
-        return googleId.isPresent() ? Optional.of(new GoogleID(googleId.get())) : Optional.empty();
+        return googleId.isPresent() ? Optional.of(new GoogleId(googleId.get())) : Optional.empty();
     }
 
     /**

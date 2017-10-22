@@ -6,9 +6,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person's Google ID in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidGoogleID(String)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidGoogleId(String)}
  */
-public class GoogleID {
+public class GoogleId {
 
 
     public static final String MESSAGE_GOOGLEID_CONSTRAINTS =
@@ -21,9 +21,9 @@ public class GoogleID {
      *
      * @throws IllegalValueException if given phone string is invalid.
      */
-    public GoogleID(String Id) throws IllegalValueException {
-        requireNonNull(Id);
-        String trimmedId = Id.trim();
+    public GoogleId(String id) throws IllegalValueException {
+        requireNonNull(id);
+        String trimmedId = id.trim();
         if (!isValidGoogleId(trimmedId)) {
             throw new IllegalValueException(MESSAGE_GOOGLEID_CONSTRAINTS);
         }
@@ -45,8 +45,8 @@ public class GoogleID {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof GoogleID // instanceof handles nulls
-                && this.value.equals(((GoogleID) other).value)); // state check
+                || (other instanceof GoogleId // instanceof handles nulls
+                && this.value.equals(((GoogleId) other).value)); // state check
     }
 
     @Override

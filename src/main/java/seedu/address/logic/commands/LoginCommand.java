@@ -15,7 +15,8 @@ public class LoginCommand extends Command {
     public static final String COMMAND_WORD = "login";
     public static final String COMMAND_ALIAS = "lg";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Directs the user to google's login page for the authentication"
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Directs the user to google's login page for the authentication"
             + "process\n"
             + "Parameters: KEYWORD\n"
             + "Example: " + COMMAND_WORD;
@@ -24,8 +25,8 @@ public class LoginCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        String authenticationURL = googleAuthenticator.getAuthorizationUrl();
-        EventsCenter.getInstance().post(new LoadLoginEvent(authenticationURL));
+        String authenticationUrl = googleAuthenticator.getAuthorizationUrl();
+        EventsCenter.getInstance().post(new LoadLoginEvent(authenticationUrl));
 
         return new CommandResult(Messages.LOGIN_MESSAGE);
     }

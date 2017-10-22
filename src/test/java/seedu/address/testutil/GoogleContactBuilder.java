@@ -4,7 +4,7 @@ import com.google.api.services.people.v1.model.*;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.FacebookAddress;
-import seedu.address.model.person.GoogleID;
+import seedu.address.model.person.GoogleId;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
@@ -51,14 +51,14 @@ public class GoogleContactBuilder {
         Phone phone = new Phone(DEFAULT_PHONE);
         Email email = new Email(DEFAULT_EMAIL);
         seedu.address.model.person.Address address = new seedu.address.model.person.Address(DEFAULT_ADDRESS);
-        GoogleID ID = new GoogleID(DEFAULT_GOOGLEID.substring(8));
+        GoogleId id = new GoogleId(DEFAULT_GOOGLEID.substring(8));
 
         Tag tag = new Tag("GoogleContact");
         Set<Tag> tags = new HashSet<>();
         tags.add(tag);
         FacebookAddress facebookAddress = new FacebookAddress("");
         seedu.address.model.person.Birthday birthday = new seedu.address.model.person.Birthday("");
-        person = new seedu.address.model.person.Person(name, phone, email, address, birthday, facebookAddress, tags, ID);
+        person = new seedu.address.model.person.Person(name, phone, email, address, birthday, facebookAddress, tags, id);
         } catch (IllegalValueException e){}
 
         return person;

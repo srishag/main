@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import java.net.URL;
 import java.util.logging.Logger;
+
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
@@ -79,7 +80,7 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void loadLoginUrl(LoadLoginEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPage(event.getAuthenticationURL());
+        loadPage(event.getAuthenticationUrl());
     }
     @Subscribe
     private void getRedirectUrlEvent (GetRedirectUrlEvent event) {
