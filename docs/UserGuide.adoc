@@ -50,80 +50,251 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
+=== Viewing Help : `help`
+Lists useful information such as the commands available.
 
+==== The Command
 Format: `help`
 
-=== Adding a person: `add`
+=== Adding a Person: `add`
+The most basic functionality of Contact'em, which adds a contact to the address book.
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+==== The Command
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [b/BIRTHDAY] [f/FACEBOOK] [t/TAG]...`
+
+`add` is the command word, and the other `parameters` (e.g. n/NAME) are details of the contact to be added.
+
+`Prefixes`, e.g. `n/`, `p/`, are required before typing in the required field.
+
+After entering the command, the application will also respond with the details of the added contact, for your reference.
+Do refer to `section 2.2.3` below to see recommended actions if contact was added with errors.
+
+==== Usage Examples
+
+* `add n/John Doe p/98765432 e/johnd@example.com a/John Street, block 123, #01-01` +
+Adds a contact `named John Doe`, with `phone number: 98765432`, `email address: johnd@example.com`, and `address: John Street, block 123, #01-01`.
+
+* `add n/Betsy Crowe e/betsycrowe@example.com a/Betsy road, block 456, #01-02 p/98765432 t/friend`
+
+Adds a contact `named Betsy Crowe`, with `phone number: 98765432`, `email address: betsycrowe@example.com`, and `address: Betsy Road, block 456, #01-02`.
+Also tags contact with `friend`.
+
 
 [TIP]
-A person can have any number of tags (including 0)
+Optional parameters are in square brackets, such as Birthday, Facebook and Tag, are optional when first adding a contact.
 
-Examples:
+[NOTE]
+A contact can be added with any number of tags, including 0.
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+[TIP]
+The order of parameters entered does not matter.
 
-=== Listing all persons : `list`
+[WARNING]
+However, the command word `add` must be in front.
 
-Shows a list of all persons in the address book. +
+[WARNING]
+Prefixes are necessary before the corresponding fields, e.g. **n/** John will work, but just entering John will not.
+
+==== Contact Added With Error
+If contact was added in error, or with errors, user can `undo`, `edit`, or `delete` it. +
+
+* To undo, enter `undo` (recommended). +
+
+* To edit, refer to `section 2.4` below (recommended for experienced users). +
+
+* To delete, refer to `section 2.8` below (least recommended). +
+
+==== Common Problems
+
+1. Missing required fields +
+Compulsory fields to be entered are
+`*_name, address, phone number and email address._*`
+
+2. Missing prefixes
+
+3. Duplicate contacts +
+If there is a duplicate contact, Contact'em will not allow the addition
+
+=== Listing All Contacts : `list`
+
+Displays all contacts in the address book.
+
+==== The Command
 Format: `list`
+
+[TIP]
+If you are searching for particular contact(s), it is recommended to use `find` or `findtags` instead, see details at #....#
+
+==== Common Problems
+
+1. No contacts in list +
+Import contacts or start adding them! +
+
+[WARNING]
+If this occurred due to an accidental `clear` command, it is recommended to `undo` as soon as possible, #without closing the application as data will be permanently lost after otherwise.#
 
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
+Edits the information of an existing contact. +
+
+==== The Command
+
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
-
-Examples:
+==== Examples
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+Edits the phone number and email address of the 1st person to `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+Edits the name of the 2nd person to `Betsy Crower` and clears all existing tags.
+
+[NOTE]
+`INDEX` refers to the number on the contact to be edited in the displayed list.
+#refer to picture below, to be added!#
+
+[NOTE]
+You can specify any number of fields (in square brackets), but naturally at least one field must be changed for it to be a valid command.
+
+[NOTE]
+Unspecified fields will be unchanged.
+
+[WARNING]
+In this version, editing of tags changes the entire list of tags to the new one, that is, the previous list of tags the person had will be completely wiped if tags are edited.
+Therefore, to add tags, user must include previous tags.
+
+[TIP]
+To remove tags, simply include the field `t/`.
+
+[TIP]
+If user wishes to revert the edit, simply type in the `undo` command **without closing the app**
+
+
+==== Common Problems
+1. Not providing the right prefix/field +
+The field entered must be suitable for the prefix, for example, entering a phone number with the address field prefix `a/` will not pass.
+
+2. Old tags were unintentionally removed +
+Use the `undo` command to revert changes.
+
+3. Not entering the correct `index` +
+Ensure that the `index` entered is correct, or it may cause unintentional changes to another contact. +
+[NOTE]
+`Index` is the #currently displayed# number corresponding to the contact, which may differ if the current displayed list has been filtered.
+
+
+#Feature to edit tags specifically coming in future updates!#
 
 === Locating persons by name: `find`
+`Find` contacts whose names contain any of the given keywords. +
 
-Finds persons whose names contain any of the given keywords. +
+==== The Command
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
+==== Examples
+* `find John` +
+Returns `john` and `John Doe`.
+* `find Betsy Tim John` +
+Returns any person having names `Betsy`, `Tim`, or `John`.
+
+[TIP]
+Keywords are not case-sensitive
+
+[TIP]
+Order of keywords does not matter
+
+[NOTE]
+As long as a single word in a contact's name matches any of the keywords, that contact will be displayed
+
+[NOTE]
+Only full words will be matched, for example, finding `Han` will not match `Hans`. To search for a contact without specifying the full word, refer to `EasyFind` in the section below.
+
+==== EasyFind
+
+Auto updates the display when user enters an alphabet with the `find` command.
+Finds persons whose names contain any of the alphabets sequence in the command box constantly having the user to input `enter`.
+
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search will be case insensitibe. e.g. `hans` will match `Hans`
+* The alphabetic sequence must start with the name of the contacts. e.g. `hans` will match `handsome` but not `irhans`
+* Different alphabetic sequences will be separated by a `space`.
+* Persons matching at least one of the alphabetic sequence seperated by spaces will be returned. e.g. `Hans Ma` will return `Hans Gruber`, `May Tan`
+* When the search results displays `no results`, the particular alphabetic sequence will not display any contacts even when the user continues inputing new characters.
 ****
 
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
+ * `find Alex` +
+ Returns `Alex` and `Alexandra`
+ * `find Alexan` +
+ Returns `Alexandra`
 * `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+Returns any person having starting alphabets `Betsy`, `Tim`, or `John`
+
+
+=== Locating persons by tag name: `findtags`
+`SINCE V1.2`
+
+Finds persons who have tags matching any of the given keywords. +
+
+==== The Command
+Format: `findtags KEYWORD [MORE_KEYWORDS]` +
+
+==== Examples
+* `findtags friends` +
+Returns any contact tagged `friends`.
+
+* `findtags friends colleagues schoolmates` +
+Returns any person having any of the tags `friends`, `colleagues`, and/or `schoolmates`.
+
+[TIP]
+You can substitute the command `findtags` with `findtag` or `ft`.
+
+[NOTE]
+The search is **not** case-sensitive.
+
+[NOTE]
+The order of the keywords does not matter.
+
+[NOTE]
+Only full words will be matched. For example, `fri` will **not** match `friends`.
+
+[NOTE]
+Contact with at least one of the specified tag keywords will be displayed
+
+==== Note on singular and plural tenses
+The search will attempt to be more lenient with singular and plural tenses.
+
+For example: +
+
+* `friend` will return contacts with either tag `friend` or `friends`. +
+* `colleagues` will return contacts with either tag `colleague` or `colleagues`.
+
+However, this may not always be correct for words where plural and singular differs not only by a single letter 's'.
+Searching by tag `family` will attempt to find contacts with tags `family` and `familyS` instead of `families`.
+Therefore, the onus is still on the user to specify the spelling of the tags.
+
+`coming in v1.4`
+implementing tag exclusion functionality to improve quality of life for user
+
+=== List tags : `listtags` +
+`coming in v1.3`
+
+Lists all existing tags in the App +
+
+==== The Command
+Format: `listtags`
+
+[TIP]
+Listing all tags is designed to help you choose which tags to specify when using `findtags`.
 
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
+
+==== The Command
 Format: `delete INDEX`
 
-****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
+==== Examples
 
 * `list` +
 `delete 2` +
@@ -132,25 +303,43 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+[NOTE]
+`INDEX` refers to the number on the contact to be edited in the displayed list.
+#refer to picture below, to be added!#
+
+[TIP]
+If wrong person was deleted, **`undo` immediately without exiting the application!**
+
+==== Common Problems
+1. Not entering the correct `index` +
+Ensure that the `index` entered is correct, or it may cause unintentional changes to another contact. +
+
+[NOTE]
+`Index` is the #currently displayed# number corresponding to the contact, which may differ if the current displayed list has been filtered.
+
+
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
+
+==== The Command
 Format: `select INDEX`
 
-****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
+==== Usage Examples
 * `list` +
 `select 2` +
 Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+
+==== More Information
+Selects the contact and loads the Facebook Profile of the contact specified.
+
+[NOTE]
+If Facebook page of the contact is not stored in the application, the default Facebook homepage will be loaded instead.
+
+==== Common Problems
 
 === Listing entered commands : `history`
 
@@ -166,6 +355,8 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 === Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
+
+==== The Command
 Format: `undo`
 
 [NOTE]
@@ -173,7 +364,7 @@ Format: `undo`
 Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
 ====
 
-Examples:
+==== Usage Examples
 
 * `delete 1` +
 `list` +
@@ -189,12 +380,23 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
+==== Common Problems
+1. Trying to `Undo` commands that cannot be undone, for example trying to undo a `find`. +
+The commands that can be undone are `add`, `delete`, `edit`, `clear`. +
+However, reverting find commands can still be done, by entering the search command with the previous criteria.
+
+2. No commands to undo because application was closed. +
+When the application is closed, the command history is deleted and not stored. Therefore, the application will not be able to know which command to undo. +
+It is therefore recommended to undo any changes needed before closing the application.
+
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
+
+==== The Command
 Format: `redo`
 
-Examples:
+==== Usage Examples
 
 * `delete 1` +
 `undo` (reverses the `delete 1` command) +
@@ -215,24 +417,72 @@ The `redo` command fails as there are no `undo` commands executed previously.
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
+
+==== The Command
 Format: `clear`
+
+==== Notes on Usage
+If `cleared` was used unintentionally, it is recommended to immediate enter undo. DO NOT close the application as data will be irreversibly removed.
 
 === Exiting the program : `exit`
 
 Exits the program. +
+
+==== The Command
 Format: `exit`
+
+[TIP]
+Alternatively, you can exit by clicking on the RED X at the top right of the Application to close (for Windows)
+
+[NOTE]
+#DO NOT# exit the application if you still have errors left to `undo` as command history is deleted when the application closes.
 
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+== Transferring of Data to Another Device
+Do you wish to transfer the data stored in Contact'em on one device to another?
+For example, you may wish to use Contact'em on device B with the data currently stored on device A.
+Or you may simply want to create a backup. Simply follow the easy steps below to get set.
+
+Option A: Using a storage device (e.g. thumb drive)
+
+1. Connect storage device to Device A (old device).
+2. On Device A (old device), open the `Contact'em` directory
+3. In the `Contact'em` directory, open the `data` folder.
+4. Copy the data file `addressbook` from device A to your storage device.
+5. Install Contact'em on Device B (new device).
+6. Connect storage device to Device B.
+7. Open `data` folder in `Device B` (similar to steps 2 and 3 above).
+8. Copy `addressbook` from storage device into `data`.
+9. Done! Contact'em on Device B ready for use!
+
+
+Option B: Directly connecting the 2 devices
+
+1. Install Contact'em on new device.
+2. Connect the 2 devices.
+3. Open the `Contact'em` directory to find the `data` folder on both devices.
+4. Copy the file `addressbook` from the `data` folder of the older device to the newer device.
+5. Done! Contact'em on newer device is ready for use!
+
 == FAQ
+
+##to be added ##
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+Refer to Section 3 above for details.
 
-== Command Summary
+*Q*: How do I resolve a problem  with _this_ command? +
+*A*: Refer to the `Common Problems` subsection of the corresponding command in the **features** section above (Section 2).
+Alternatively, if the command can be undone, enter `undo` and resolve from there.
+
+== Quick-Reference Guide
+
+**Summary of Commands: **
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
@@ -243,6 +493,8 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Find by tags* : `findtags KEYWORD[MORE_KEYWORDS]` +
+e.g. `findtags friends`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
@@ -250,3 +502,8 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+
+=======
+== Coming in v2.0
+-PhuaJunJie : EasyFind, multiple deletes, importing contacts from google.
+

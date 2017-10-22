@@ -20,6 +20,10 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    ObjectProperty<Birthday> birthdayProperty();
+    Birthday getBirthday();
+    ObjectProperty<FacebookAddress> facebookAddressProperty();
+    FacebookAddress getFacebookAddress();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
     GoogleID getGoogleID();
@@ -35,6 +39,8 @@ public interface ReadOnlyPerson {
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress())
                 && other.getGoogleID().equals(this.getGoogleID()));
+                && other.getBirthday().equals(this.getBirthday())
+                && other.getFacebookAddress().equals(this.getFacebookAddress()));
     }
 
     /**
@@ -49,6 +55,10 @@ public interface ReadOnlyPerson {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Birthday: ")
+                .append(getBirthday())
+                .append(" Facebook: ")
+                .append(getFacebookAddress())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

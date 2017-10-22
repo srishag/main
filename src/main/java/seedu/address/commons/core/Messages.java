@@ -14,5 +14,6 @@ public class Messages {
     public static final String MESSAGE_SYNC_CONTACT = "%1$d contact/s Synced!     %2$d contact/s failed to Sync!";
     public static final String MESSAGE_EXPORT_CONTACT = "%1$d contact/s exported!     ";
     public static final String MESSAGE_EXPORT_ERROR = "%1$d contact/s failed to export!";
-
+    public static final String MESSAGE_ALPHABET_LISTED_OVERVIEW = "%1$d persons found!";
+    public static final String MESSAGE_NO_ALPHABET_LISTED_OVERVIEW = "no results";
 }

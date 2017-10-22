@@ -8,6 +8,21 @@ import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.*;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FindAlphabetCommand;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindPersonsWithTagsCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -22,6 +37,9 @@ public class AddressBookParser {
 
     /**
      * Parses user input into command for execution.
+     *
+     * Note: the switch-case implementation below should not be changed frivolously as it provides a layer of defence
+     * against having duplicate command words
      *
      * @param userInput full user input string
      * @return the command based on the user input
@@ -61,6 +79,11 @@ public class AddressBookParser {
         case FindCommand.COMMAND_ALIAS:
             return new FindCommandParser().parse(arguments);
 
+        case FindPersonsWithTagsCommand.COMMAND_WORD:
+        case FindPersonsWithTagsCommand.COMMAND_ALIAS1:
+        case FindPersonsWithTagsCommand.COMMAND_ALIAS2:
+            return new FindPersonsWithTagsCommandParser().parse(arguments);
+
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
@@ -96,6 +119,9 @@ public class AddressBookParser {
 
         case SyncCommand.COMMAND_WORD:
             return new SyncCommand();
+            
+        case FindAlphabetCommand.COMMAND_WORD:
+            return new FindAlphabetCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
