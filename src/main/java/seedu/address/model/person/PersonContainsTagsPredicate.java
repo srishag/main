@@ -20,19 +20,13 @@ public class PersonContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        String allTagNames = getStringOfAllTagNamesOfPerson(person);
 
+        String allTagNames = getStringOfAllTagNamesOfPerson(person);
 
         final List<String> keywordsToInclude = new ArrayList<String>();
         final List<String> keywordsToExclude = new ArrayList<String>();
-        for (String eachKeyword : keywords) {
-            if (eachKeyword.startsWith("-")) {
-                keywordsToExclude.add(eachKeyword.substring(1));
-            } else {
-                keywordsToInclude.add(eachKeyword);
-            }
-        }
 
+        separateKeywordsToIncludeAndExclude(keywordsToInclude, keywordsToExclude);
 
         return keywordsToInclude.stream()
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(allTagNames, keyword))
@@ -40,6 +34,22 @@ public class PersonContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
                 .anyMatch((keyword -> StringUtil.containsWordIgnoreCase(allTagNames, keyword))));
     }
 
+    /**
+     * Obtains and updates the appropriate list of keywords to include and exclude
+     * @param keywordsToInclude list of keywords to include for search
+     * @param keywordsToExclude list of keywords to exclude for search
+     */
+    private void separateKeywordsToIncludeAndExclude(List<String> keywordsToInclude, List<String> keywordsToExclude) {
+
+        for (String eachKeyword : keywords) {
+            if (!eachKeyword.startsWith("-")) {
+                keywordsToInclude.add(eachKeyword);
+            } else {
+                keywordsToExclude.add(eachKeyword.substring(1));
+            }
+        }
+
+    }
 
     private String getStringOfAllTagNamesOfPerson(ReadOnlyPerson person) {
         Set<Tag> personTags = getAllTagsOfPerson(person);
