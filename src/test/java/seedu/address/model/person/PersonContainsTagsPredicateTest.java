@@ -76,8 +76,22 @@ public class PersonContainsTagsPredicateTest {
     }
 
     @Test
-    public void test_personHasTagsForExclusion() {
+    public void test_personHasNoTags() {
+        //Person with no tags for inclusion
+        PersonContainsTagsPredicate predicate = new PersonContainsTagsPredicate(Arrays.asList("roommates"));
+        assertFalse(predicate.test(new PersonBuilder().withTags().build()));
 
+        // Person with no tags for exclusion
+        predicate = new PersonContainsTagsPredicate(Arrays.asList("-roommates"));
+        assertTrue(predicate.test(new PersonBuilder().withTags().build()));
+
+        //Person with no tags for both exclusion and inclusion
+        predicate = new PersonContainsTagsPredicate(Arrays.asList("-roommates", "friends"));
+        assertFalse(predicate.test(new PersonBuilder().withTags().build()));
+    }
+
+    @Test
+    public void test_personHasTagsForExclusion() {
         // Has one tag matching tags to exclude
         PersonContainsTagsPredicate predicate = new PersonContainsTagsPredicate(Arrays.asList("-roommates"));
         assertFalse(predicate.test(new PersonBuilder().withTags("roommates").build()));
@@ -103,12 +117,9 @@ public class PersonContainsTagsPredicateTest {
 
     @Test
     public void test_personHasTagsForInclusionAndTagsForExclusion() {
-        // Person with no tags
-        PersonContainsTagsPredicate predicate = new PersonContainsTagsPredicate(Arrays.asList("-roommates"));
-        assertTrue(predicate.test(new PersonBuilder().withTags().build()));
-
         // Person has tags to include but also to exclude
-        predicate = new PersonContainsTagsPredicate(Arrays.asList("friends", "-colleagues"));
+        PersonContainsTagsPredicate predicate =
+                new PersonContainsTagsPredicate(Arrays.asList("friends", "-colleagues"));
         assertFalse(predicate.test(new PersonBuilder().withTags("friends", "colleagues").build()));
 
         // Person has tags to include but also to exclude, in mixed order
