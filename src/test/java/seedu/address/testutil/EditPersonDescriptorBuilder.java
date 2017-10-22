@@ -33,6 +33,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
         descriptor.setBirthday(person.getBirthday());
+        descriptor.setFacebookAddress(person.getFacebookAddress());
         descriptor.setTags(person.getTags());
     }
 
@@ -92,6 +93,18 @@ public class EditPersonDescriptorBuilder {
             ParserUtil.parseBirthday(Optional.of(birthday)).ifPresent(descriptor::setBirthday);
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("birthday is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withFacebookAddress(String facebookAddress) {
+        try {
+            ParserUtil.parseFacebookAddress(Optional.of(facebookAddress)).ifPresent(descriptor::setFacebookAddress);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("facebookAddress is expected to be unique.");
         }
         return this;
     }

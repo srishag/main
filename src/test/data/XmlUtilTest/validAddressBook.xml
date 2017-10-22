@@ -6,6 +6,7 @@
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
         <birthday isPrivate="false">06091971</birthday>
+        <facebookAddress isPrivate="false">https://www.facebook.com/</facebookAddress>
     </persons>
     <persons>
         <name>Ruth Mueller</name>
@@ -13,6 +14,7 @@
         <email isPrivate="false">ruth@example.com</email>
         <address isPrivate="false">81th street</address>
         <birthday isPrivate="false">02121983</birthday>
+        <facebookAddress isPrivate="false"></facebookAddress>
     </persons>
     <persons>
         <name>Heinz Kurz</name>
@@ -20,6 +22,7 @@
         <email isPrivate="false">heinz@example.com</email>
         <address isPrivate="false">wall street</address>
         <birthday isPrivate="false">19041999</birthday>
+        <facebookAddress isPrivate="false"></facebookAddress>
     </persons>
     <persons>
         <name>Cornelia Meier</name>
@@ -27,6 +30,7 @@
         <email isPrivate="false">cornelia@example.com</email>
         <address isPrivate="false">10th street</address>
         <birthday isPrivate="false">02011990</birthday>
+        <facebookAddress isPrivate="false"></facebookAddress>
     </persons>
     <persons>
         <name>Werner Meyer</name>
@@ -34,6 +38,7 @@
         <email isPrivate="false">werner@example.com</email>
         <address isPrivate="false">michegan ave</address>
         <birthday isPrivate="false">29021992</birthday>
+        <facebookAddress isPrivate="false"></facebookAddress>
     </persons>
     <persons>
         <name>Lydia Kunz</name>
@@ -41,6 +46,7 @@
         <email isPrivate="false">lydia@example.com</email>
         <address isPrivate="false">little tokyo</address>
         <birthday isPrivate="false">09021994</birthday>
+        <facebookAddress isPrivate="false"></facebookAddress>
     </persons>
     <persons>
         <name>Anna Best</name>
@@ -48,6 +54,7 @@
         <email isPrivate="false">anna@example.com</email>
         <address isPrivate="false">4th street</address>
         <birthday isPrivate="false">19021990</birthday>
+        <facebookAddress isPrivate="false"></facebookAddress>
     </persons>
     <persons>
         <name>Stefan Meier</name>
@@ -55,6 +62,7 @@
         <email isPrivate="false">stefan@example.com</email>
         <address isPrivate="false">little india</address>
         <birthday isPrivate="false">22021996</birthday>
+        <facebookAddress isPrivate="false"></facebookAddress>
     </persons>
     <persons>
         <name>Martin Mueller</name>
@@ -62,5 +70,6 @@
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">chicago ave</address>
         <birthday isPrivate="false">27061994</birthday>
+        <facebookAddress isPrivate="false"></facebookAddress>
     </persons>
 </addressbook>
