@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -21,8 +22,22 @@ public class PersonContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
     public boolean test(ReadOnlyPerson person) {
         String allTagNames = getStringOfAllTagNamesOfPerson(person);
 
-        return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(allTagNames, keyword));
+
+        final List<String> keywordsToInclude = new ArrayList<String>();
+        final List<String> keywordsToExclude = new ArrayList<String>();
+        for (String eachKeyword : keywords) {
+            if (eachKeyword.startsWith("-")) {
+                keywordsToExclude.add(eachKeyword.substring(1));
+            } else {
+                keywordsToInclude.add(eachKeyword);
+            }
+        }
+
+
+        return keywordsToInclude.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(allTagNames, keyword))
+                && !(keywordsToExclude.stream()
+                .anyMatch((keyword -> StringUtil.containsWordIgnoreCase(allTagNames, keyword))));
     }
 
 
