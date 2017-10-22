@@ -76,25 +76,47 @@ public class PersonContainsTagsPredicateTest {
     }
 
     @Test
-    public void test_personHasTagsForExclusion_returnsFalse() {
+    public void test_personHasTagsForExclusion() {
 
-        //has one tag matching tags to exclude
+        // Has one tag matching tags to exclude
         PersonContainsTagsPredicate predicate = new PersonContainsTagsPredicate(Arrays.asList("-roommates"));
         assertFalse(predicate.test(new PersonBuilder().withTags("roommates").build()));
 
-        //has at least one tag matching tags to exclude
+        // Has at least one tag matching tags to exclude
         predicate = new PersonContainsTagsPredicate(Arrays.asList("-roommates"));
         assertFalse(predicate.test(new PersonBuilder().withTags("roommates", "schoolmates").build()));
 
+        // More keywords to exclude than tags of person
+        predicate = new PersonContainsTagsPredicate(Arrays.asList("-roommates", "-schoolmates"));
+        assertFalse(predicate.test(new PersonBuilder().withTags("roommates").build()));
+
+        // More tags on person than keywords to exclude
+        predicate = new PersonContainsTagsPredicate(Arrays.asList("-roommates", "-schoolmates"));
+        assertFalse(predicate.test(new PersonBuilder().withTags("roommates", "schoolmates", "classmates").build()));
+
+        // Keywords to exclude match phone, email and address, but does not match any tag name
+        predicate = new PersonContainsTagsPredicate(Arrays.asList("-12345", "-alice@email.com", "-Main", "-Street"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("friends").withPhone("12345")
+                .withEmail("alice@email.com").withAddress("Main Street").build()));
 
     }
 
     @Test
-    public void test_personHasTagsForInclusionAndTagsForExclusion_returnsFalse() {
-        PersonContainsTagsPredicate predicate;
-
-        //person with no tags
-        predicate = new PersonContainsTagsPredicate(Arrays.asList("-roommates"));
+    public void test_personHasTagsForInclusionAndTagsForExclusion() {
+        // Person with no tags
+        PersonContainsTagsPredicate predicate = new PersonContainsTagsPredicate(Arrays.asList("-roommates"));
         assertTrue(predicate.test(new PersonBuilder().withTags().build()));
+
+        // Person has tags to include but also to exclude
+        predicate = new PersonContainsTagsPredicate(Arrays.asList("friends", "-colleagues"));
+        assertFalse(predicate.test(new PersonBuilder().withTags("friends", "colleagues").build()));
+
+        // Person has tags to include but also to exclude, in mixed order
+        predicate = new PersonContainsTagsPredicate(Arrays.asList("-colleagues", "friends"));
+        assertFalse(predicate.test(new PersonBuilder().withTags("friends", "colleagues").build()));
+
+        // Person has tags to include but also to exclude, in mixed case
+        predicate = new PersonContainsTagsPredicate(Arrays.asList("fRiENds", "-colLEaguEs"));
+        assertFalse(predicate.test(new PersonBuilder().withTags("friends", "colleagues").build()));
     }
 }
