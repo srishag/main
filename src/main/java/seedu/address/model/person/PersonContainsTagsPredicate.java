@@ -25,8 +25,15 @@ public class PersonContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
 
         final List<String> keywordsToInclude = new ArrayList<String>();
         final List<String> keywordsToExclude = new ArrayList<String>();
-
         separateKeywordsToIncludeAndExclude(keywordsToInclude, keywordsToExclude);
+
+        boolean onlyKeywordsToExcludeAreSpecified =
+                checkIfOnlyKeywordsToExcludeAreSpecified(keywordsToInclude, keywordsToExclude);
+
+        if (onlyKeywordsToExcludeAreSpecified) { //short-circuit if only keywords to exclude are specified
+            return !(keywordsToExclude.stream()
+                    .anyMatch((keyword -> StringUtil.containsWordIgnoreCase(allTagNames, keyword))));
+        }
 
         return keywordsToInclude.stream()
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(allTagNames, keyword))
@@ -35,9 +42,25 @@ public class PersonContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     /**
+     * Checks if there are only keywords to exclude but not keywords to include
+     * @param keywordsToInclude list of keywords to include for finding tags
+     * @param keywordsToExclude list of keywords to explicitly exclude for finding tags
+     * @return true if keywordsToInclude is empty and keywordsToExclude is not empty, false otherwise
+     */
+    private boolean checkIfOnlyKeywordsToExcludeAreSpecified(
+            List<String> keywordsToInclude, List<String> keywordsToExclude) {
+
+        if (keywordsToInclude.isEmpty() && !keywordsToExclude.isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Obtains and updates the appropriate list of keywords to include and exclude
      * @param keywordsToInclude list of keywords to include for search
-     * @param keywordsToExclude list of keywords to exclude for search
+     * @param keywordsToExclude list of keywords to explicitly exclude for search
      */
     private void separateKeywordsToIncludeAndExclude(List<String> keywordsToInclude, List<String> keywordsToExclude) {
 
