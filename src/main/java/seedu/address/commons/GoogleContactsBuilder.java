@@ -1,14 +1,17 @@
 package seedu.address.commons;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
-import com.google.api.services.people.v1.PeopleService;
-import com.google.api.services.people.v1.model.Person;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GoogleContactsBuilder{
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.services.people.v1.PeopleService;
+import com.google.api.services.people.v1.model.Person;
+
+/**
+ * This class builds a list of Person from google contacts
+ */
+public class GoogleContactsBuilder {
 
     private final GoogleAuthenticator googleAuthenticator = new GoogleAuthenticator();
     private List<Person> personlist = new ArrayList<>();
@@ -19,7 +22,7 @@ public class GoogleContactsBuilder{
     public GoogleContactsBuilder() throws IOException {
         String token = googleAuthenticator.getToken();
         GoogleCredential credential = googleAuthenticator.getCredential(token);
-        PeopleService peopleService = googleAuthenticator.BuildPeopleService(credential);
+        PeopleService peopleService = googleAuthenticator.buildPeopleService(credential);
         this.peopleService = peopleService;
         this.personlist = googleAuthenticator.getConnections(peopleService);
     }
@@ -30,5 +33,7 @@ public class GoogleContactsBuilder{
     }
 
     //Returns list of contacts from Google contacts for import/sync
-    public List<Person> getPersonlist(){return personlist;}
+    public List<Person> getPersonlist() {
+        return personlist;
+    }
 }

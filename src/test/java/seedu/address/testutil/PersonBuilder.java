@@ -128,9 +128,9 @@ public class PersonBuilder {
 
      * Sets the {@code GoogleID} of the {@code Person} that we are building.
      */
-    public PersonBuilder withGoogleID(String googleID) {
+    public PersonBuilder withGoogleId(String googleId) {
         try {
-            this.person.setID(new GoogleID(googleID));
+            this.person.setId(new GoogleID(googleId));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("GoogleID is expected to be unique.");
           }

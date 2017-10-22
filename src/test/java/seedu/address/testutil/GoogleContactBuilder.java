@@ -44,7 +44,7 @@ public class GoogleContactBuilder {
                 setAddresses(address).setResourceName(DEFAULT_GOOGLEID);
     }
 
-    public seedu.address.model.person.Person buildAddressBookPerson(){
+    public seedu.address.model.person.Person buildAddressBookPerson() {
         seedu.address.model.person.Person person = null;
         try{
         seedu.address.model.person.Name name = new seedu.address.model.person.Name(DEFAULT_NAME);
@@ -54,11 +54,11 @@ public class GoogleContactBuilder {
         GoogleID ID = new GoogleID(DEFAULT_GOOGLEID.substring(8));
 
         Tag tag = new Tag("GoogleContact");
-        Set<Tag> Tags = new HashSet<>();
-        Tags.add(tag);
+        Set<Tag> tags = new HashSet<>();
+        tags.add(tag);
         FacebookAddress facebookAddress = new FacebookAddress("");
         seedu.address.model.person.Birthday birthday = new seedu.address.model.person.Birthday("");
-        person = new seedu.address.model.person.Person(name, phone, email, address, birthday, facebookAddress, Tags, ID);
+        person = new seedu.address.model.person.Person(name, phone, email, address, birthday, facebookAddress, tags, ID);
         } catch (IllegalValueException e){}
 
         return person;

@@ -8,7 +8,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Represents a Person's Google ID in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidGoogleID(String)}
  */
-public class GoogleID{
+public class GoogleID {
 
 
     public static final String MESSAGE_GOOGLEID_CONSTRAINTS =
@@ -21,19 +21,19 @@ public class GoogleID{
      *
      * @throws IllegalValueException if given phone string is invalid.
      */
-    public GoogleID(String ID) throws IllegalValueException {
-        requireNonNull(ID);
-        String trimmedID = ID.trim();
-        if (!isValidGoogleID(trimmedID)) {
+    public GoogleID(String Id) throws IllegalValueException {
+        requireNonNull(Id);
+        String trimmedId = Id.trim();
+        if (!isValidGoogleId(trimmedId)) {
             throw new IllegalValueException(MESSAGE_GOOGLEID_CONSTRAINTS);
         }
-        this.value = trimmedID;
+        this.value = trimmedId;
     }
 
     /**
      * Returns true if a given string is a valid person Google ID.
      */
-    public static boolean isValidGoogleID(String test) {
+    public static boolean isValidGoogleId(String test) {
         return test.matches(GOOGLEID_VALIDATION_REGEX);
     }
 

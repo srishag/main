@@ -11,7 +11,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.GetRedirectURLEvent;
+import seedu.address.commons.events.ui.GetRedirectUrlEvent;
 import seedu.address.commons.events.ui.LoadLoginEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 
@@ -77,13 +77,13 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void loadLoginURL(LoadLoginEvent event){
+    private void loadLoginUrl(LoadLoginEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPage(event.getAuthenticationURL());
     }
     @Subscribe
-    private void getRedirectURLEvent (GetRedirectURLEvent event){
+    private void getRedirectUrlEvent (GetRedirectUrlEvent event) {
         logger.info((LogsCenter.getEventHandlingLogMessage(event)));
-        event.setRedirectURL(browser.getEngine().getLocation());
+        event.setRedirectUrl(browser.getEngine().getLocation());
     }
 }

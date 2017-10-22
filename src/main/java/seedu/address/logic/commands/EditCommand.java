@@ -18,7 +18,6 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.*;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
@@ -26,6 +25,7 @@ import seedu.address.model.person.FacebookAddress;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.GoogleID;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -111,10 +111,10 @@ public class EditCommand extends UndoableCommand {
         FacebookAddress updatedFacebookAddress = editPersonDescriptor.getFacebookAddress()
                 .orElse(personToEdit.getFacebookAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-        GoogleID googleID = editPersonDescriptor.getID().orElse(personToEdit.getGoogleID());
+        GoogleID googleId = editPersonDescriptor.getId().orElse(personToEdit.getGoogleId());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
-                updatedBirthday, updatedFacebookAddress, updatedTags,googleID);
+                updatedBirthday, updatedFacebookAddress, updatedTags, googleId);
 
     }
 
@@ -148,7 +148,7 @@ public class EditCommand extends UndoableCommand {
         private Birthday birthday;
         private FacebookAddress facebookAddress;
         private Set<Tag> tags;
-        private GoogleID ID;
+        private GoogleID Id;
 
         public EditPersonDescriptor() {}
 
@@ -160,7 +160,7 @@ public class EditCommand extends UndoableCommand {
             this.birthday = toCopy.birthday;
             this.facebookAddress = toCopy.facebookAddress;
             this.tags = toCopy.tags;
-            this.ID = toCopy.ID;
+            this.Id = toCopy.Id;
         }
 
         /**
@@ -227,9 +227,13 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(tags);
         }
 
-        public void setID (GoogleID ID){this.ID = ID; }
+        public void setId (GoogleID Id) {
+            this.Id = Id;
+        }
 
-        public Optional<GoogleID> getID(){return Optional.ofNullable(ID);}
+        public Optional<GoogleID> getId() {
+            return Optional.ofNullable(Id);
+        }
 
         @Override
         public boolean equals(Object other) {
@@ -251,7 +255,7 @@ public class EditCommand extends UndoableCommand {
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
                     && getTags().equals(e.getTags())
-                    && getID().equals(e.getID())
+                    && getId().equals(e.getId())
                     && getBirthday().equals(e.getBirthday())
                     && getFacebookAddress().equals(e.getFacebookAddress())
                     && getTags().equals(e.getTags());

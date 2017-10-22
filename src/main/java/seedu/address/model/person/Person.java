@@ -26,7 +26,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<FacebookAddress> facebookAddress;
 
     private ObjectProperty<UniqueTagList> tags;
-    private ObjectProperty<GoogleID> googleID;
+    private ObjectProperty<GoogleID> googleId;
 
     /**
      * Every field must be present and not null.
@@ -43,7 +43,7 @@ public class Person implements ReadOnlyPerson {
         this.facebookAddress = new SimpleObjectProperty<>(facebookAddress);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-        this.googleID = new SimpleObjectProperty<>(ID);
+        this.googleId = new SimpleObjectProperty<>(ID);
     }
 
     /**
@@ -51,7 +51,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getBirthday(), source.getFacebookAddress(), source.getTags(), source.getGoogleID());
+                source.getBirthday(), source.getFacebookAddress(), source.getTags(), source.getGoogleId());
 
     }
 
@@ -161,14 +161,16 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public GoogleID getGoogleID() {return googleID.get(); }
-
-    public ObjectProperty<GoogleID> IDProperty() {
-        return googleID;
+    public GoogleID getGoogleId() {
+        return googleId.get();
     }
 
-    public void setID(GoogleID googleID){
-        this.googleID.set(requireNonNull(googleID));
+    public ObjectProperty<GoogleID> IdProperty() {
+        return googleId;
+    }
+
+    public void setId(GoogleID googleId) {
+        this.googleId.set(requireNonNull(googleId));
     }
 
     @Override

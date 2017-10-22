@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.*;
+import seedu.address.model.person.GoogleID;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
@@ -66,13 +66,13 @@ public class AddCommandParser implements Parser<AddCommand> {
             }
 
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-            Optional<String> GoogleIDOptional = argMultimap.getValue(PREFIX_GOOGLEID);
-            GoogleID ID = new GoogleID("not GoogleContact");
-            if(GoogleIDOptional.isPresent()) {
-                ID = ParserUtil.parseGoogleID(argMultimap.getValue(PREFIX_GOOGLEID)).get();
+            Optional<String> GoogleIdOptional = argMultimap.getValue(PREFIX_GOOGLEID);
+            GoogleID Id = new GoogleID("not GoogleContact");
+            if (GoogleIdOptional.isPresent()) {
+                Id = ParserUtil.parseGoogleId(argMultimap.getValue(PREFIX_GOOGLEID)).get();
             }
 
-            ReadOnlyPerson person = new Person(name, phone, email, address, birthday, facebookAddress, tagList, ID);
+            ReadOnlyPerson person = new Person(name, phone, email, address, birthday, facebookAddress, tagList, Id);
 
 
             return new AddCommand(person);

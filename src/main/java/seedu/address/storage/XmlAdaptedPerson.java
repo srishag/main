@@ -8,7 +8,7 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.*;
+import seedu.address.model.person.GoogleID;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
@@ -41,7 +41,7 @@ public class XmlAdaptedPerson {
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
     @XmlElement(required = true)
-    private String ID;
+    private String Id;
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -66,7 +66,7 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
-        ID = source.getGoogleID().value;
+        Id = source.getGoogleId().value;
     }
 
     /**
@@ -87,7 +87,7 @@ public class XmlAdaptedPerson {
         final Birthday birthday = new Birthday(this.birthday);
         final FacebookAddress facebookAddress = new FacebookAddress(this.facebookAddress);
         final Set<Tag> tags = new HashSet<>(personTags);
-        final GoogleID ID = new GoogleID(this.ID);
-        return new Person(name, phone, email, address, birthday, facebookAddress, tags, ID);
+        final GoogleID Id = new GoogleID(this.Id);
+        return new Person(name, phone, email, address, birthday, facebookAddress, tags, Id);
     }
 }
