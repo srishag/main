@@ -478,6 +478,33 @@ Alternatively, if the command can be undone, enter `undo` and resolve from there
 
 == Quick-Reference Guide
 
+
+.Summary of Commands
+|===
+|Command |Desecription |Format |Example |Notes
+
+|Add
+|Adds a contact
+|#add# n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...
+|#add# n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+|Compulsory fields are **name, phone number, email address, and address**.
+
+|Clear
+|Removes **ALL** contacts from the addressbook
+|**clear**
+|**clear**
+|Do **NOT** exit the application if you plan on reverting this command with *undo*
+
+|Column 1, row 2
+|Column 2, row 2
+|Column 3, row 2
+
+|Column 1, row 3
+|Column 2, row 3
+|Column 3, row 3
+|===
+
+
 **Summary of Commands: **
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
