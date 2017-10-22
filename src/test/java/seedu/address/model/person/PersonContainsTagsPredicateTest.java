@@ -39,7 +39,7 @@ public class PersonContainsTagsPredicateTest {
     }
 
     @Test
-    public void test_personHasTagsMatchingKeywords_returnsTrue() {
+    public void test_personHasTagsMatchingKeywordsToInclude_returnsTrue() {
         // One keyword
         PersonContainsTagsPredicate predicate =
                 new PersonContainsTagsPredicate(Collections.singletonList("colleagues"));
@@ -60,7 +60,7 @@ public class PersonContainsTagsPredicateTest {
     }
 
     @Test
-    public void test_personDoesNotHaveTagsContainingKeywords_returnsFalse() {
+    public void test_personDoesNotHaveTagsContainingKeywordsToInclude_returnsFalse() {
         // Zero keywords
         PersonContainsTagsPredicate predicate = new PersonContainsTagsPredicate(Collections.emptyList());
         assertFalse(predicate.test(new PersonBuilder().withTags("whateverTag").build()));
@@ -69,10 +69,13 @@ public class PersonContainsTagsPredicateTest {
         predicate = new PersonContainsTagsPredicate(Arrays.asList("roommate"));
         assertFalse(predicate.test(new PersonBuilder().withTags("schoolmate", "classmate").build()));
 
-        // Keywords match phone, email and address, but does not match any tag name
-        predicate = new PersonContainsTagsPredicate(Arrays.asList("12345", "alice@email.com", "Main", "Street"));
+        // Keywords match name, phone, email, address, birthday, facebook address, but does not match any tag name
+        predicate = new PersonContainsTagsPredicate(Arrays.asList("12345", "alice@email.com", "Main",
+                "Street", "Alice", "14051998", "https://www.facebook.com/default_address_for_testing/"));
         assertFalse(predicate.test(new PersonBuilder().withTags("friends").withPhone("12345")
-                .withEmail("alice@email.com").withAddress("Main Street").build()));
+                .withEmail("alice@email.com").withAddress("Main Street")
+                .withName("Alice").withFacebookAddress("https://www.facebook.com/default_address_for_testing/")
+                .withBirthday("14051998").build()));
     }
 
     @Test
@@ -108,11 +111,22 @@ public class PersonContainsTagsPredicateTest {
         predicate = new PersonContainsTagsPredicate(Arrays.asList("-roommates", "-schoolmates"));
         assertFalse(predicate.test(new PersonBuilder().withTags("roommates", "schoolmates", "classmates").build()));
 
-        // Keywords to exclude match phone, email and address, but does not match any tag name
-        predicate = new PersonContainsTagsPredicate(Arrays.asList("-12345", "-alice@email.com", "-Main", "-Street"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("friends").withPhone("12345")
-                .withEmail("alice@email.com").withAddress("Main Street").build()));
+    }
 
+    @Test
+    public void test_personDoesNotHaveTagsForExclusion() {
+        // Does not have matching tags to exclude
+        PersonContainsTagsPredicate predicate = new PersonContainsTagsPredicate(Arrays.asList("-roommates"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("classmates").build()));
+
+        // Keywords to exclude match name, phone, email, address, birthday, and facebook address,
+        // but does not match any tag name
+        predicate = new PersonContainsTagsPredicate(Arrays.asList("-12345", "-alice@email.com", "-Main",
+                "-Street", "-Alice", "-14051998", "-https://www.facebook.com/default_address_for_testing/"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("friends").withPhone("12345")
+                .withEmail("alice@email.com").withAddress("Main Street")
+                .withName("Alice").withFacebookAddress("https://www.facebook.com/default_address_for_testing/")
+                .withBirthday("14051998").build()));
     }
 
     @Test
