@@ -170,10 +170,7 @@ Edits the name of the 2nd person to `Betsy Crower` and clears all existing tags.
 #refer to picture below, to be added!#
 
 [NOTE]
-You can specify any number of fields (in square brackets), but naturally at least one field must be changed for it to be a valid command.
-
-[NOTE]
-Unspecified fields will be unchanged.
+You can specify any number of fields (in square brackets), but naturally at least one field must be changed for it to be a valid command. Unspecified fields will be unchanged.
 
 [WARNING]
 In this version, editing of tags changes the entire list of tags to the new one, that is, the previous list of tags the person had will be completely wiped if tags are edited.
@@ -214,13 +211,13 @@ Returns `john` and `John Doe`.
 Returns any person having names `Betsy`, `Tim`, or `John`.
 
 [TIP]
-Keywords are not case-sensitive
+Keywords are not case-sensitive.
 
 [TIP]
-Order of keywords does not matter
+Order of keywords does not matter.
 
 [NOTE]
-As long as a single word in a contact's name matches any of the keywords, that contact will be displayed
+As long as a single word in a contact's name matches any of the keywords, that contact will be displayed.
 
 [NOTE]
 Only full words will be matched, for example, finding `Han` will not match `Hans`. To search for a contact without specifying the full word, refer to `EasyFind` in the section below.
@@ -276,7 +273,7 @@ The order of the keywords does not matter.
 Only full words will be matched. For example, `fri` will **not** match `friends`.
 
 [NOTE]
-Contact with at least one of the specified tag keywords will be displayed
+Contact with at least one of the specified tag keywords will be displayed.
 
 ==== Note on singular and plural tenses
 The search will attempt to be more lenient with singular and plural tenses.
@@ -440,6 +437,8 @@ Format: `clear`
 
 ==== Notes on Usage
 If `cleared` was used unintentionally, it is recommended to immediate enter undo. DO NOT close the application as data will be irreversibly removed.
+
+##More updates for login to Google account and sending emails using Gmail coming soon!##
 
 === Exiting the program : `exit`
 
