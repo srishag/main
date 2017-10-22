@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103AUG2017-T11-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103T T11-B4 Team`      Since: `Sep 2017`      Licence: `MIT`
 
 == Quick Start
 
@@ -39,7 +39,28 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
-== Features
+== Key Features
+
+=== Convenience
+
+Contact'em provides convenience and ease of use in your daily life.
+
+* Import and export contacts from Google to keep your contacts organised.
+* Send emails to your contacts using your Gmail account.
+* Sync between all your devices.
+
+=== Security
+
+We value your privacy and security and we understand how important security is to all our users.
+
+* We use state-of-the-art Google login credentials to ensure your details are kept safe.
+* We do not save any of your passwords or emails sent to your contacts so you can use the application freely.
+* No contact details are shared with third-party applications without your approval.
+
+== Commands
+
+The listing below shows a summary of all commands currently available to users and how to use them.
+
 
 ====
 *Command Format*
@@ -69,6 +90,18 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [b/BIRTHDAY] [f/FACEBOOK] [
 After entering the command, the application will also respond with the details of the added contact, for your reference.
 Do refer to `section 2.2.3` below to see recommended actions if contact was added with errors.
 
+[TIP]
+Optional parameters are in square brackets, such as Birthday, Facebook and Tag, are optional when first adding a contact.
+
+[TIP]
+Contacts can have any number of tags, including zero.
+
+[TIP]
+The order of parameters entered does not matter. However, the command word `add` must be in front.
+
+[WARNING]
+Prefixes are necessary before the corresponding fields, e.g. **n/** John will work, but just entering John will not.
+
 ==== Usage Examples
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John Street, block 123, #01-01` +
@@ -78,22 +111,6 @@ Adds a contact `named John Doe`, with `phone number: 98765432`, `email address: 
 
 Adds a contact `named Betsy Crowe`, with `phone number: 98765432`, `email address: betsycrowe@example.com`, and `address: Betsy Road, block 456, #01-02`.
 Also tags contact with `friend`.
-
-
-[TIP]
-Optional parameters are in square brackets, such as Birthday, Facebook and Tag, are optional when first adding a contact.
-
-[NOTE]
-A contact can be added with any number of tags, including 0.
-
-[TIP]
-The order of parameters entered does not matter.
-
-[WARNING]
-However, the command word `add` must be in front.
-
-[WARNING]
-Prefixes are necessary before the corresponding fields, e.g. **n/** John will work, but just entering John will not.
 
 ==== Contact Added With Error
 If contact was added in error, or with errors, user can `undo`, `edit`, or `delete` it. +
