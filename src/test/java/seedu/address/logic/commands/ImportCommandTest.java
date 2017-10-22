@@ -23,6 +23,8 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.testutil.TypicalGoogleContactsList;
 
 public class ImportCommandTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     private TypicalGoogleContactsList googleContactList = new TypicalGoogleContactsList();
     private Model model;
@@ -33,9 +35,6 @@ public class ImportCommandTest {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         listperson = new ArrayList<>();
     }
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     /**
      * Checks if Login is authenticated. In this case it is not.
@@ -50,7 +49,7 @@ public class ImportCommandTest {
      * Test for normal importing of a google contact
      */
     @Test
-    public void execute_assert_commandSuccess() throws DuplicatePersonException, CommandException {
+    public void execute_commandSuccess_imported() throws DuplicatePersonException, CommandException {
         listperson.add(googleContactList.freddyGoogle);
         ImportCommand command = prepareCommand(listperson, this.model);
 
@@ -65,7 +64,7 @@ public class ImportCommandTest {
      * Test for invalid importing of a google contact due to invalid attributes
      */
     @Test
-    public void execute_assert_commandFailure_contactInvalidFormat() throws DuplicatePersonException, CommandException {
+    public void execute_commandFailure_contactInvalidFormat() throws DuplicatePersonException, CommandException {
         listperson.add(googleContactList.mayGoogle);
         ImportCommand command = prepareCommand(listperson, this.model);
 
@@ -80,7 +79,7 @@ public class ImportCommandTest {
      * Test for importing a contact that already exists in the addressbook
      */
     @Test
-    public void execute_assert_commandFailure_contactExists() throws DuplicatePersonException, CommandException {
+    public void execute_commandFailure_contactExists() throws DuplicatePersonException, CommandException {
         model.addPerson(googleContactList.freddyAddressBook);
         listperson.add(googleContactList.freddyGoogle);
         ImportCommand command = prepareCommand(listperson, model);

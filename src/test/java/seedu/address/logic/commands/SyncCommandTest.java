@@ -49,7 +49,7 @@ public class SyncCommandTest {
      * Test for normal Syncing of a single google contact
      */
     @Test
-    public void execute_assert_syncSuccess() throws DuplicatePersonException, CommandException {
+    public void execute_syncSuccess() throws DuplicatePersonException, CommandException {
         model.addPerson(googleContactList.freddyAddressBook);
         personList.add(googleContactList.freddySyncGoogle);
         SyncCommand command = prepareCommand(personList, model);
@@ -62,10 +62,10 @@ public class SyncCommandTest {
     }
 
     /**
-     * * Test for invalid Syncing of a google contact due to invalid attributes
-     * */
+     * Test for invalid Syncing of a google contact due to invalid attributes
+     */
     @Test
-     public void execute_assert_syncFailure_contactInvalidFormat()
+    public void execute_syncFailure_contactInvalidFormat()
             throws IllegalValueException, NullPointerException, CommandException {
 
         model.addPerson(googleContactList.mayAddressBook);
@@ -76,13 +76,13 @@ public class SyncCommandTest {
                 + "Please check the format of the following google contacts : May";
 
         assertCommandFailure(command, expectedMessage, model);
-     }
+    }
 
-     /**
-      * Test for syncing a contact that is of no difference than the one in the addressbook
-      */
-     @Test
-     public void execute_assert_commandFailure_contactExists() throws DuplicatePersonException, CommandException {
+    /**
+     * Test for syncing a contact that is of no difference than the one in the addressbook
+     */
+    @Test
+    public void execute_commandFailure_contactExists() throws DuplicatePersonException, CommandException {
         model.addPerson(googleContactList.freddyAddressBook);
         personList.add(googleContactList.freddyGoogle);
         String expectedMessage = "0 contact/s Synced!     0 contact/s failed to Sync!";

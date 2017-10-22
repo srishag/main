@@ -29,7 +29,7 @@ public class GoogleContactBuilder {
     private String googleIdDefault;
 
     /**
-     * Builds Stub Google contact
+     * Constructor
      */
     public GoogleContactBuilder(String name, String phone, String email, String address, String googleId) {
         this.nameDefault = name;
@@ -38,6 +38,10 @@ public class GoogleContactBuilder {
         this.addressDefault = address;
         this.googleIdDefault = googleId;
     }
+
+    /**
+     * Builds Stub Google contact
+     */
     public Person buildGooglePerson() {
         Person contactToCreate = new Person();
 
