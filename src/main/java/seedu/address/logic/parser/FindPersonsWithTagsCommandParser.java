@@ -38,7 +38,7 @@ public class FindPersonsWithTagsCommandParser implements Parser<FindPersonsWithT
     /**
      * Checks if the given String of arguments is empty
      * @param trimmedArgs
-     * @throws ParseException
+     * @throws ParseException if the provided String does not conform to expected format
      */
     private void checkForNonEmptyArguments(String trimmedArgs) throws ParseException {
         if (trimmedArgs.isEmpty()) {
