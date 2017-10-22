@@ -74,4 +74,27 @@ public class PersonContainsTagsPredicateTest {
         assertFalse(predicate.test(new PersonBuilder().withTags("friends").withPhone("12345")
                 .withEmail("alice@email.com").withAddress("Main Street").build()));
     }
+
+    @Test
+    public void test_personHasTagsForExclusion_returnsFalse() {
+
+        //has one tag matching tags to exclude
+        PersonContainsTagsPredicate predicate = new PersonContainsTagsPredicate(Arrays.asList("-roommates"));
+        assertFalse(predicate.test(new PersonBuilder().withTags("roommates").build()));
+
+        //has at least one tag matching tags to exclude
+        predicate = new PersonContainsTagsPredicate(Arrays.asList("-roommates"));
+        assertFalse(predicate.test(new PersonBuilder().withTags("roommates", "schoolmates").build()));
+
+
+    }
+
+    @Test
+    public void test_personHasTagsForInclusionAndTagsForExclusion_returnsFalse() {
+        PersonContainsTagsPredicate predicate;
+
+        //person with no tags
+        predicate = new PersonContainsTagsPredicate(Arrays.asList("-roommates"));
+        assertTrue(predicate.test(new PersonBuilder().withTags().build()));
+    }
 }
