@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.google.api.services.people.v1.model.Person;
+
 import seedu.address.commons.GoogleContactsBuilder;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -18,8 +20,6 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
-
-import com.google.api.services.people.v1.model.Person;
 
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
@@ -130,12 +130,12 @@ public class ImportCommand extends Command {
                 size - contactsImported) + "\n";
 
         if (size > contactsImported) {
-               commandMessage += "Contacts already existed : " + String.valueOf(existedContacts)
-                       + "     Contacts not in the correct format : " + String.valueOf(errorImports) + "\n";
+            commandMessage += "Contacts already existed : " + String.valueOf(existedContacts)
+                    + "     Contacts not in the correct format : " + String.valueOf(errorImports) + "\n";
         }
         if (errorImports > 0) {
-               commandMessage += "Please check the format of the following google contacts : "
-                       + notImported.substring(0, namesNotImported.length() - 2);
+            commandMessage += "Please check the format of the following google contacts : "
+                    + notImported.substring(0, namesNotImported.length() - 2);
         }
         return commandMessage;
     }

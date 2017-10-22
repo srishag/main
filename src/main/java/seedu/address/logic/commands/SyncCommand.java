@@ -1,9 +1,11 @@
 package seedu.address.logic.commands;
 
 import java.io.IOException;
-import java.util.Set;
-import java.util.List;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import com.google.api.services.people.v1.model.Person;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.GoogleContactsBuilder;
@@ -20,8 +22,6 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
-
-import com.google.api.services.people.v1.model.Person;
 
 /**
  * Syncs all existing google contacts in the addressbook with the contacts in google contacts
