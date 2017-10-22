@@ -2,18 +2,24 @@ package seedu.address.testutil;
 
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_CORNIE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_BIRTHDAY_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_BIRTHDAY_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_CORNIE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_FACEBOOKADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_FACEBOOKADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_CORNIE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_CORNIE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_UNIQUETAG;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_UNIQUETAG2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,6 +76,15 @@ public class TypicalPersons {
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
             .withBirthday(VALID_BIRTHDAY_BOB).withFacebookAddress(VALID_FACEBOOKADDRESS_BOB)
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+    public static final ReadOnlyPerson CORNIE = new PersonBuilder().withName(VALID_NAME_CORNIE)
+            .withPhone(VALID_PHONE_CORNIE).withEmail(VALID_EMAIL_CORNIE).withAddress(VALID_ADDRESS_CORNIE)
+            .withTags(VALID_TAG_UNIQUETAG).build();
+    public static final ReadOnlyPerson CORNIE_NEW_UNIQUE_TAG = new PersonBuilder().withName(VALID_NAME_CORNIE)
+            .withPhone(VALID_PHONE_CORNIE).withEmail(VALID_EMAIL_CORNIE).withAddress(VALID_ADDRESS_CORNIE)
+            .withTags(VALID_TAG_UNIQUETAG2).build();
+    public static final ReadOnlyPerson CORNIE_NEW_NON_UNIQUE_TAG = new PersonBuilder().withName(VALID_NAME_CORNIE)
+            .withPhone(VALID_PHONE_CORNIE).withEmail(VALID_EMAIL_CORNIE).withAddress(VALID_ADDRESS_CORNIE)
+            .withTags("owesMoney").build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
