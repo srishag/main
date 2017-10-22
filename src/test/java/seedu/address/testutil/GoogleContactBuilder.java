@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import com.google.api.services.people.v1.model.*;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.FacebookAddress;
 import seedu.address.model.person.GoogleID;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -55,7 +56,9 @@ public class GoogleContactBuilder {
         Tag tag = new Tag("GoogleContact");
         Set<Tag> Tags = new HashSet<>();
         Tags.add(tag);
-        person = new seedu.address.model.person.Person(name, phone, email, address, Tags, ID);
+        FacebookAddress facebookAddress = new FacebookAddress("");
+        seedu.address.model.person.Birthday birthday = new seedu.address.model.person.Birthday("");
+        person = new seedu.address.model.person.Person(name, phone, email, address, birthday, facebookAddress, Tags, ID);
         } catch (IllegalValueException e){}
 
         return person;

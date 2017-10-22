@@ -44,7 +44,7 @@ public class PersonBuilder {
             GoogleID defaultGoogleID = new GoogleID(DEFAULT_GOOGLEID);
             this.person = new Person(defaultName, defaultPhone, defaultEmail,
                     defaultAddress, defaultBirthday, defaultFacebookAddress, defaultTags, defaultGoogleID);
-          
+
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -136,7 +136,8 @@ public class PersonBuilder {
           }
         return this;
     }
-
+    /**
+     *
      * Sets the {@code Birthday} of the {@code Person} that we are building.
      */
     public PersonBuilder withBirthday(String birthday) {

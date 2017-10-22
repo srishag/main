@@ -119,7 +119,7 @@ public class AddressBookParser {
 
         case SyncCommand.COMMAND_WORD:
             return new SyncCommand();
-            
+
         case FindAlphabetCommand.COMMAND_WORD:
             return new FindAlphabetCommandParser().parse(arguments);
 
