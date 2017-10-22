@@ -29,7 +29,7 @@ public class XmlAdaptedPerson {
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
     @XmlElement(required = true)
-    private String googleID;
+    private String ID;
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -52,7 +52,7 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
-        googleID = source.getGoogleID().value;
+        ID = source.getGoogleID().value;
     }
 
     /**
@@ -70,7 +70,7 @@ public class XmlAdaptedPerson {
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final Set<Tag> tags = new HashSet<>(personTags);
-        final GoogleID googleID = new GoogleID(this.googleID);
-        return new Person(name, phone, email, address, tags, googleID);
+        final GoogleID ID = new GoogleID(this.ID);
+        return new Person(name, phone, email, address, tags, ID);
     }
 }
