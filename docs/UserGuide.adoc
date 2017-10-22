@@ -37,7 +37,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to the link:#features[Features] section below for details of each command.
+.  Refer to the _Commands_ section below (Section 3) for more details on each command.
 
 == Key Features
 
@@ -59,11 +59,10 @@ We value your privacy and security and we understand how important security is t
 
 == Commands
 
-The listing below shows a summary of all commands currently available to users and how to use them.
-
+Below are the details of commands currently available and their usage.
 
 ====
-*Command Format*
+*Command Format* ##should we remove this?##
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
@@ -83,15 +82,15 @@ The most basic functionality of Contact'em, which adds a contact to the address 
 ==== The Command
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [b/BIRTHDAY] [f/FACEBOOK] [t/TAG]...`
 
-`add` is the command word, and the other `parameters` (e.g. n/NAME) are details of the contact to be added.
+`add` is the command word, and the other `fields` (e.g. n/NAME) are details of the contact to be added.
 
-`Prefixes`, e.g. `n/`, `p/`, are required before typing in the required field.
+Appropriate `prefixes`, e.g. `n/`, `p/`, are required before typing in the required field.
 
 After entering the command, the application will also respond with the details of the added contact, for your reference.
-Do refer to `section 2.2.3` below to see recommended actions if contact was added with errors.
+Refer to `section 3.2.3` below for recommended actions if contact was added with errors.
 
 [TIP]
-Optional parameters are in square brackets, such as Birthday, Facebook and Tag, are optional when first adding a contact.
+Optional parameters are in square brackets, such as Birthday, Facebook and Tag. These do not need to be specified when first adding a contact.
 
 [TIP]
 Contacts can have any number of tags, including zero.
@@ -105,21 +104,20 @@ Prefixes are necessary before the corresponding fields, e.g. **n/** John will wo
 ==== Usage Examples
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John Street, block 123, #01-01` +
-Adds a contact `named John Doe`, with `phone number: 98765432`, `email address: johnd@example.com`, and `address: John Street, block 123, #01-01`.
+Adds a contact named John Doe, with phone number: 98765432, email address: johnd@example.com, and address: John Street, block 123, #01-01.
 
-* `add n/Betsy Crowe e/betsycrowe@example.com a/Betsy road, block 456, #01-02 p/98765432 t/friend`
-
+* `add n/Betsy Crowe e/betsycrowe@example.com a/Betsy road, block 456, #01-02 p/98765432 t/friend` +
 Adds a contact `named Betsy Crowe`, with `phone number: 98765432`, `email address: betsycrowe@example.com`, and `address: Betsy Road, block 456, #01-02`.
 Also tags contact with `friend`.
 
 ==== Contact Added With Error
-If contact was added in error, or with errors, user can `undo`, `edit`, or `delete` it. +
+If a contact was added in error, or with errors, user can `undo`, `edit`, or `delete` it. +
 
 * To undo, enter `undo` (recommended). +
 
-* To edit, refer to `section 2.4` below (recommended for experienced users). +
+* To edit, refer to `section 3.4` below (recommended for experienced users). +
 
-* To delete, refer to `section 2.8` below (least recommended). +
+* To delete, refer to `section 3.8` below (least recommended). +
 
 ==== Common Problems
 
@@ -127,20 +125,21 @@ If contact was added in error, or with errors, user can `undo`, `edit`, or `dele
 Compulsory fields to be entered are
 `*_name, address, phone number and email address._*`
 
-2. Missing prefixes
+2. Missing/wrong prefixes +
+The right prefixes are needed so the application can decipher the command.
 
 3. Duplicate contacts +
-If there is a duplicate contact, Contact'em will not allow the addition
+If there is a duplicate contact, Contact'em will not allow the addition.
 
 === Listing All Contacts : `list`
 
-Displays all contacts in the address book.
-
-==== The Command
-Format: `list`
+Displays all contacts in the application.
 
 [TIP]
 If you are searching for particular contact(s), it is recommended to use `find` or `findtags` instead, see details at #....#
+
+==== The Command
+Format: `list`
 
 ==== Common Problems
 
@@ -287,19 +286,35 @@ However, this may not always be correct for words where plural and singular diff
 Searching by tag `family` will attempt to find contacts with tags `family` and `familyS` instead of `families`.
 Therefore, the onus is still on the user to specify the spelling of the tags.
 
-`coming in v1.4`
-implementing tag exclusion functionality to improve quality of life for user
+==== Specifying Exclusions
+`SINCE V1.3`
+
+You can now specify tags to be excluded in this command, by simply adding a dash ('-') before keywords specified for exclusion.
+This feature will help you better manage your contacts.
+
+===== Usage examples of exclusions
+Specifying both tags to include and tags to exclude +
+Example 1:
+`findtags` friends #-colleagues# +
+In this case, the application will show only those who are tagged as friends, but are #NOT# tagged as colleagues.
+
+Specifying only tags to exclude +
+Example 2:
+`findtags` #-colleagues# +
+In this case, the application will show **all** contacts who are #NOT# tagged colleagues, regardless of other tags.
+
 
 === List tags : `listtags` +
 `coming in v1.3`
 
 Lists all existing tags in the App +
 
+[TIP]
+Listing all tags is designed to help you choose which tags to specify when using `findtags`.
+
 ==== The Command
 Format: `listtags`
 
-[TIP]
-Listing all tags is designed to help you choose which tags to specify when using `findtags`.
 
 === Deleting a person : `delete`
 
@@ -353,11 +368,25 @@ Selects the contact and loads the Facebook Profile of the contact specified.
 [NOTE]
 If Facebook page of the contact is not stored in the application, the default Facebook homepage will be loaded instead.
 
-==== Common Problems
+This is designed to let you connect with your contact through Facebook Messenger, but of course you can also use it to view his/her profile.
 
-=== Listing entered commands : `history`
+==== Common Problems
+1. Facebook page does not load +
+Ensure that: +
+a) the correct Facebook Address of contact was saved and is not outdated. +
+b) your device is connected to the Internet.
+
+2. Not entering the correct `index` +
+Ensure that the `index` entered is correct, or it may cause unintentional changes to another contact. +
+
+[NOTE]
+`Index` is the #currently displayed# number corresponding to the contact, which may differ if the current displayed list has been filtered.
+
+=== Viewing command history : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
+
+==== The Command
 Format: `history`
 
 [NOTE]
@@ -365,18 +394,26 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
+[NOTE]
+When the application is closed, command history is wiped.
+
+==== Common problems
+1. Command fails to display history from previous usages +
+Command history is not saved on exit, therefore,
+it will only show the command history from when the application was opened.
+
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
 
-==== The Command
-Format: `undo`
-
 [NOTE]
 ====
 Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
 ====
+
+==== The Command
+Format: `undo`
 
 ==== Usage Examples
 
@@ -384,15 +421,16 @@ Undoable commands: those commands that modify the address book's content (`add`,
 `list` +
 `undo` (reverses the `delete 1` command) +
 
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
-
 * `delete 1` +
 `clear` +
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
+
+* `select 1` +
+`list` +
+`undo` +
+The `undo` command fails as there are no undoable commands executed previously. +
+(Select and List are both **not** commands that can be undone)
 
 ==== Common Problems
 1. Trying to `Undo` commands that cannot be undone, for example trying to undo a `find`. +
@@ -436,7 +474,7 @@ Clears all entries from the address book. +
 Format: `clear`
 
 ==== Notes on Usage
-If `cleared` was used unintentionally, it is recommended to immediate enter undo. DO NOT close the application as data will be irreversibly removed.
+If `cleared` was used unintentionally, it is recommended to immediately enter `undo`. **DO NOT** close the application as data will be irreversibly removed.
 
 ##More updates for login to Google account and sending emails using Gmail coming soon!##
 
