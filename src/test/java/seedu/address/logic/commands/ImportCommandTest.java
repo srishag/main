@@ -50,11 +50,11 @@ public class ImportCommandTest {
      */
     @Test
     public void execute_commandSuccess_imported() throws DuplicatePersonException, CommandException {
-        listperson.add(googleContactList.freddyGoogle);
+        listperson.add(googleContactList.FREDDYGOOGLE);
         ImportCommand command = prepareCommand(listperson, this.model);
 
         Model modelstub = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        modelstub.addPerson(googleContactList.freddyAddressBook);
+        modelstub.addPerson(googleContactList.FREEDYADDRESSBOOK);
         String expectedMessage = "1 contact/s imported!     0 contact/s failed to import!" + "\n";
 
         assertCommandSuccess(command, expectedMessage, modelstub);
@@ -65,7 +65,7 @@ public class ImportCommandTest {
      */
     @Test
     public void execute_commandFailure_contactInvalidFormat() throws DuplicatePersonException, CommandException {
-        listperson.add(googleContactList.mayGoogle);
+        listperson.add(googleContactList.MAYGOOGLE);
         ImportCommand command = prepareCommand(listperson, this.model);
 
         String expectedMessage = "0 contact/s imported!     1 contact/s failed to import!" + "\n"
@@ -80,8 +80,8 @@ public class ImportCommandTest {
      */
     @Test
     public void execute_commandFailure_contactExists() throws DuplicatePersonException, CommandException {
-        model.addPerson(googleContactList.freddyAddressBook);
-        listperson.add(googleContactList.freddyGoogle);
+        model.addPerson(googleContactList.FREEDYADDRESSBOOK);
+        listperson.add(googleContactList.FREDDYGOOGLE);
         ImportCommand command = prepareCommand(listperson, model);
 
         String expectedMessage = "0 contact/s imported!     1 contact/s failed to import!" + "\n"

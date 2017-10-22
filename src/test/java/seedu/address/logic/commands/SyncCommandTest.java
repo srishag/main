@@ -24,6 +24,9 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.testutil.TypicalGoogleContactsList;
 
 public class SyncCommandTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     private Model model;
     private List<Person> personList;
     private TypicalGoogleContactsList googleContactList = new TypicalGoogleContactsList();
@@ -33,9 +36,6 @@ public class SyncCommandTest {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         personList = new ArrayList<Person>();
     }
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     /**
      * Checks if Login is authenticated. In this case it is not.
@@ -50,12 +50,12 @@ public class SyncCommandTest {
      */
     @Test
     public void execute_syncSuccess() throws DuplicatePersonException, CommandException {
-        model.addPerson(googleContactList.freddyAddressBook);
-        personList.add(googleContactList.freddySyncGoogle);
+        model.addPerson(googleContactList.FREEDYADDRESSBOOK);
+        personList.add(googleContactList.FREDDYSYNGOOGLE);
         SyncCommand command = prepareCommand(personList, model);
 
         Model modelStub = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        modelStub.addPerson(googleContactList.freddySyncAddressBook);
+        modelStub.addPerson(googleContactList.FREDDYSYNADDRESSBOOK);
         String expectedMessage = "1 contact/s Synced!     0 contact/s failed to Sync!";
 
         assertCommandSuccess(command, expectedMessage, modelStub);
@@ -68,8 +68,8 @@ public class SyncCommandTest {
     public void execute_syncFailure_contactInvalidFormat()
             throws IllegalValueException, NullPointerException, CommandException {
 
-        model.addPerson(googleContactList.mayAddressBook);
-        personList.add(googleContactList.mayGoogle);
+        model.addPerson(googleContactList.MAYADDRESSBOOK);
+        personList.add(googleContactList.MAYGOOGLE);
         SyncCommand command = prepareCommand(personList, model);
 
         String expectedMessage = "0 contact/s Synced!     1 contact/s failed to Sync!" + "\n"
@@ -82,14 +82,14 @@ public class SyncCommandTest {
      * Test for syncing a contact that is of no difference than the one in the addressbook
      */
     @Test
-    public void execute_commandFailure_contactExists() throws DuplicatePersonException, CommandException {
-        model.addPerson(googleContactList.freddyAddressBook);
-        personList.add(googleContactList.freddyGoogle);
+    public void execute_commandFailure_contactSimilar() throws DuplicatePersonException, CommandException {
+        model.addPerson(googleContactList.FREEDYADDRESSBOOK);
+        personList.add(googleContactList.FREDDYGOOGLE);
         String expectedMessage = "0 contact/s Synced!     0 contact/s failed to Sync!";
 
         SyncCommand command = prepareCommand(personList, model);
         assertCommandFailure(command, expectedMessage, model);
-   }
+    }
 
     /**
      * Preparing import command by using a test-only constructor (Using a stub google person list)
