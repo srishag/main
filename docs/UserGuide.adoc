@@ -259,6 +259,18 @@ Returns any contact tagged `friends`.
 * `findtags friends colleagues schoolmates` +
 Returns any person having any of the tags `friends`, `colleagues`, and/or `schoolmates`.
 
+==== Demonstration
+image::findtags-before.png[width="200"]
+_Figure 3.6.3a : Before entering command_
+
+image::findtags-enter-command.png[width="200"]
+_Figure 3.6.3b : Entering command to find all contacted tagged as friends_
+
+image::findtags-after.png[width="200"]
+_Figure 3.6.3c : Application displays all contacts tagged as friends_
+
+The figures above demonstrate an example of how this command is used.
+
 [TIP]
 You can substitute the command `findtags` with `findtag` or `ft`.
 
@@ -441,7 +453,7 @@ However, reverting find commands can still be done, by entering the search comma
 When the application is closed, the command history is deleted and not stored. Therefore, the application will not be able to know which command to undo. +
 It is therefore recommended to undo any changes needed before closing the application.
 
-=== Redoing the previously undone command : `redo`
+=== Reverting last undo command : `redo`
 
 Reverses the most recent `undo` command. +
 
