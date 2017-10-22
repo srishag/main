@@ -1,5 +1,13 @@
 package seedu.address.commons;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.GetRedirectUrlEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
+
 import com.google.api.client.googleapis.auth.oauth2.GoogleBrowserClientRequestUrl;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
@@ -10,13 +18,6 @@ import com.google.api.services.people.v1.PeopleService;
 import com.google.api.services.people.v1.model.ListConnectionsResponse;
 import com.google.api.services.people.v1.model.Person;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.GetRedirectUrlEvent;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
 /**
  * This class contains methods of the google Auth Api. For authentication after login.
