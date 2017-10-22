@@ -30,7 +30,9 @@ public class PersonContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
         boolean onlyKeywordsToExcludeAreSpecified =
                 checkIfOnlyKeywordsToExcludeAreSpecified(keywordsToInclude, keywordsToExclude);
 
-        if (onlyKeywordsToExcludeAreSpecified) { //short-circuit if only keywords to exclude are specified
+        //if only tags to be excluded are specified, return all persons that do not contain the specified tag,
+        //even if the person does not have any tags
+        if (onlyKeywordsToExcludeAreSpecified) {
             return !(keywordsToExclude.stream()
                     .anyMatch((keyword -> StringUtil.containsWordIgnoreCase(allTagNames, keyword))));
         }
