@@ -36,6 +36,9 @@ public class AddressBookParser {
     /**
      * Parses user input into command for execution.
      *
+     * Note: the switch-case implementation below should not be changed frivolously as it provides a layer of defence
+     * against having duplicate command words
+     *
      * @param userInput full user input string
      * @return the command based on the user input
      * @throws ParseException if the user input does not conform the expected format
@@ -75,8 +78,8 @@ public class AddressBookParser {
             return new FindCommandParser().parse(arguments);
 
         case FindPersonsWithTagsCommand.COMMAND_WORD:
-        case FindPersonsWithTagsCommand.COMMAND_WORD_ALIAS1:
-        case FindPersonsWithTagsCommand.COMMAND_WORD_ALIAS2:
+        case FindPersonsWithTagsCommand.COMMAND_ALIAS1:
+        case FindPersonsWithTagsCommand.COMMAND_ALIAS2:
             return new FindPersonsWithTagsCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
