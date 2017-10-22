@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.GetRedirectUrlEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
@@ -18,6 +17,7 @@ import com.google.api.services.people.v1.PeopleService;
 import com.google.api.services.people.v1.model.ListConnectionsResponse;
 import com.google.api.services.people.v1.model.Person;
 
+import seedu.address.commons.core.EventsCenter;
 
 /**
  * This class contains methods of the google Auth Api. For authentication after login.
