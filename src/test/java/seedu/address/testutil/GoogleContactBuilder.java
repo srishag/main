@@ -1,6 +1,16 @@
 package seedu.address.testutil;
 
-import com.google.api.services.people.v1.model.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import com.google.api.services.people.v1.model.Address;
+import com.google.api.services.people.v1.model.EmailAddress;
+import com.google.api.services.people.v1.model.Name;
+import com.google.api.services.people.v1.model.Person;
+import com.google.api.services.people.v1.model.PhoneNumber;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.FacebookAddress;
@@ -8,26 +18,27 @@ import seedu.address.model.person.GoogleId;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
+/**
+ * Builds Stub Google contact and addressbook contacts
+ */
 public class GoogleContactBuilder {
-    public String DEFAULT_NAME ;
-    public String DEFAULT_PHONE;
-    public String DEFAULT_EMAIL;
-    public String DEFAULT_ADDRESS;
-    public String DEFAULT_GOOGLEID;
+    private String nameDefault;
+    private String phoneDefault;
+    private String emailDefault;
+    private String addressDefault;
+    private String googleIdDefault;
 
-    public GoogleContactBuilder(String name, String phone, String email, String address, String googleID){
-        this.DEFAULT_NAME = name;
-        this.DEFAULT_PHONE = phone;
-        this.DEFAULT_EMAIL = email;
-        this.DEFAULT_ADDRESS = address;
-        this.DEFAULT_GOOGLEID = googleID;
+    /**
+     * Builds Stub Google contact
+     */
+    public GoogleContactBuilder(String name, String phone, String email, String address, String googleId) {
+        this.nameDefault = name;
+        this.phoneDefault = phone;
+        this.emailDefault = email;
+        this.addressDefault = address;
+        this.googleIdDefault = googleId;
     }
-    public Person buildGooglePerson(){
+    public Person buildGooglePerson() {
         Person contactToCreate = new Person();
 
         List names = new ArrayList();
@@ -35,32 +46,36 @@ public class GoogleContactBuilder {
         List phone = new ArrayList();
         List address = new ArrayList();
 
-        names.add(new Name().setDisplayName(DEFAULT_NAME));
-        email.add(new EmailAddress().setValue(DEFAULT_EMAIL));
-        phone.add(new PhoneNumber().setValue(DEFAULT_PHONE));
-        address.add(new Address().setStreetAddress(DEFAULT_ADDRESS));
+        names.add(new Name().setDisplayName(nameDefault));
+        email.add(new EmailAddress().setValue(emailDefault));
+        phone.add(new PhoneNumber().setValue(phoneDefault));
+        address.add(new Address().setStreetAddress(addressDefault));
 
-        return contactToCreate.setNames(names).setEmailAddresses(email).setPhoneNumbers(phone).
-                setAddresses(address).setResourceName(DEFAULT_GOOGLEID);
+        return contactToCreate.setNames(names).setEmailAddresses(email).setPhoneNumbers(phone)
+                .setAddresses(address).setResourceName(googleIdDefault);
     }
-
+    /**
+     * Builds Stub Addressbook contact
+     */
     public seedu.address.model.person.Person buildAddressBookPerson() {
-        seedu.address.model.person.Person person = null;
-        try{
-        seedu.address.model.person.Name name = new seedu.address.model.person.Name(DEFAULT_NAME);
-        Phone phone = new Phone(DEFAULT_PHONE);
-        Email email = new Email(DEFAULT_EMAIL);
-        seedu.address.model.person.Address address = new seedu.address.model.person.Address(DEFAULT_ADDRESS);
-        GoogleId id = new GoogleId(DEFAULT_GOOGLEID.substring(8));
+        seedu.address.model.person.Person person;
+        try {
+            seedu.address.model.person.Name name = new seedu.address.model.person.Name(nameDefault);
+            Phone phone = new Phone(phoneDefault);
+            Email email = new Email(emailDefault);
+            seedu.address.model.person.Address address = new seedu.address.model.person.Address(addressDefault);
+            GoogleId id = new GoogleId(googleIdDefault.substring(8));
 
-        Tag tag = new Tag("GoogleContact");
-        Set<Tag> tags = new HashSet<>();
-        tags.add(tag);
-        FacebookAddress facebookAddress = new FacebookAddress("");
-        seedu.address.model.person.Birthday birthday = new seedu.address.model.person.Birthday("");
-        person = new seedu.address.model.person.Person(name, phone, email, address, birthday, facebookAddress, tags, id);
-        } catch (IllegalValueException e){}
-
+            Tag tag = new Tag("GoogleContact");
+            Set<Tag> tags = new HashSet<>();
+            tags.add(tag);
+            FacebookAddress facebookAddress = new FacebookAddress("");
+            seedu.address.model.person.Birthday birthday = new seedu.address.model.person.Birthday("");
+            person = new seedu.address.model.person.Person(name, phone, email, address, birthday, facebookAddress,
+                    tags, id);
+        } catch (IllegalValueException e) {
+            person = null;
+        }
         return person;
     }
 }

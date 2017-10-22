@@ -3,11 +3,11 @@ package seedu.address.testutil;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.*;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.FacebookAddress;
+import seedu.address.model.person.GoogleId;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -133,7 +133,7 @@ public class PersonBuilder {
             this.person.setId(new GoogleId(googleId));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("GoogleID is expected to be unique.");
-          }
+        }
         return this;
     }
     /**
