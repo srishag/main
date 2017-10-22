@@ -19,17 +19,32 @@ public class FindPersonsWithTagsCommandParser implements Parser<FindPersonsWithT
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindPersonsWithTagsCommand parse(String args) throws ParseException {
+
         String trimmedArgs = args.trim();
 
+        checkForNonEmptyArguments(trimmedArgs);
+
+        String[] tagKeywords = getListOfTagKeywords(trimmedArgs);
+
+        ArrayList<String> tagKeywordsImproved = getImprovedList(tagKeywords);
+
+        return new FindPersonsWithTagsCommand(new PersonContainsTagsPredicate(tagKeywordsImproved));
+    }
+
+    private String[] getListOfTagKeywords(String trimmedArgs) {
+        return trimmedArgs.split("\\s+");
+    }
+
+    /**
+     * Checks if the given String of arguments is empty
+     * @param trimmedArgs
+     * @throws ParseException
+     */
+    private void checkForNonEmptyArguments(String trimmedArgs) throws ParseException {
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     FindPersonsWithTagsCommand.MESSAGE_USAGE));
         }
-
-        String[] tagKeywords = trimmedArgs.split("\\s+");
-        ArrayList<String> tagKeywordsImproved = getImprovedList(tagKeywords);
-
-        return new FindPersonsWithTagsCommand(new PersonContainsTagsPredicate(tagKeywordsImproved));
     }
 
     /**
