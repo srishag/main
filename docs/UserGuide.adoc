@@ -483,48 +483,93 @@ Alternatively, if the command can be undone, enter `undo` and resolve from there
 |===
 |Command |Desecription |Format |Example |Notes
 
-|Add
+|Add +
+Command Words: **add**, **a**
 |Adds a contact
-|#add# n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...
-|#add# n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-|Compulsory fields are **name, phone number, email address, and address**.
+|**add** n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...
+|**add** n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+|Compulsory fields are **name, phone number, email address, and address**
 
-|Clear
+|Edit +
+Command Words: **edit**, **e**
+|Edits the details of a contact
+|**edit** INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+|**edit** 2 n/James Lee e/jameslee@example.com
+|Can edit any number of fields (at least 1)
+
+|Delete +
+Command Words: **delete**, **de**
+|Deletes a contact
+|**delete** INDEX
+|**delete** 3
+|Do **NOT** exit the application if you plan on reverting this command with *undo*
+
+|Select +
+Command Words: **select**, **se**
+|Selects a contact in the displayed list
+|**select** INDEX
+|**select** 2
+|Opens the specified Facebook page (if any) of the contact selected as well
+
+|List +
+Command Words: **list**, **li**
+|Lists all stored contacts
+|**list**
+|**list**
+|-
+
+|Find (by name) +
+Command Words: **find**, **fi**
+|Finds contacts whose name matches any keyword(s)
+|**find** KEYWORD [MORE KEYWORDS]
+|**find** john
+|Not case sensitive, but only fully matching words in name will be matched
+
+|Find (by tag names) +
+Command Words: **findtags**, **findtag**, **ft**
+|Finds contacts who have tags matching any keyword(s)
+|**findtags** KEYWORDS [MORE KEYWORDS]
+|**findtags** friends colleagues
+|Not case sensitive, but only fully matching words in name will be matched
+
+|Clear +
+Command Words: **clear**, **cl**
 |Removes **ALL** contacts from the addressbook
 |**clear**
 |**clear**
 |Do **NOT** exit the application if you plan on reverting this command with *undo*
 
-|Column 1, row 2
-|Column 2, row 2
-|Column 3, row 2
+|Undo +
+Command Words: **undo**, **un**
+|Reverts the last command (that can be undone)
+|**undo**
+|**undo**
+|Commands that can be undone are *add*, *edit, *delete* and *clear*
 
-|Column 1, row 3
-|Column 2, row 3
-|Column 3, row 3
+|Redo +
+Command Words: **redo**, **re**
+|Reverts the last **undo** command (that can be undone)
+|**redo**
+|**redo**
+|-
+
+|History +
+Command Words: **history**, **hi**
+|Shows the commands entered since turning on the application
+|**history**
+|**history**
+|-
+
+|Help +
+Command Words: **help**, **h**
+|Shows program usage instructions
+|**help**
+|**help**
+|-
+
 |===
 
 
-**Summary of Commands: **
-
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *Find by tags* : `findtags KEYWORD[MORE_KEYWORDS]` +
-e.g. `findtags friends`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
 
 =======
 == Coming in v2.0
