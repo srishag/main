@@ -66,7 +66,7 @@ public class ImportCommand extends Command {
 
 
     @Override
-    public CommandResult execute() throws CommandException{
+    public CommandResult execute() throws CommandException {
 
         if (this.googleContactsList == null) {
             throw new CommandException("No contacts found in Google Contacts");
