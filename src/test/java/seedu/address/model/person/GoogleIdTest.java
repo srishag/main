@@ -8,7 +8,7 @@ import org.junit.Test;
 public class GoogleIdTest {
 
     @Test
-    public void GoogleIdTest() {
+    public void isValidId() {
         // invalid GoogleId
         assertFalse(GoogleId.isValidGoogleId("")); // empty string
         assertFalse(GoogleId.isValidGoogleId("f2134324")); // alphanumeric

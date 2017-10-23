@@ -1,8 +1,8 @@
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalPersons.FREEDYNOTGOOGLEADDRESSBOOK;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
 import java.util.List;
