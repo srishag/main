@@ -19,6 +19,7 @@ Contact'em is a convenient and easy addressbook application, that allows you to 
 Compared to other similar applications, Contact'em prides itself on its ease-of-use. Never again will you wish the application was easier to use.
 
 == About
+##to be added##
 
 == Key Features
 
