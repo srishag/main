@@ -20,6 +20,23 @@ Compared to other similar applications, Contact'em prides itself on its ease-of-
 
 == About
 
+== Key Features
+
+=== Convenience
+
+Contact'em provides convenience and ease of use in your daily life.
+
+* Import and export contacts from Google to keep your contacts organised.
+* Send emails to your contacts using your Gmail account.
+* Sync between all your devices.
+
+=== Security
+
+We value your privacy and security and we understand how important security is to all our users.
+
+* We use state-of-the-art Google login credentials to ensure your details are kept safe.
+* We do not save any of your passwords or emails sent to your contacts so you can use the application freely.
+* No contact details are shared with third-party applications without your approval.
 
 == Getting Started
 
@@ -46,24 +63,6 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * *`exit`* : exits the app
 
 .  Refer to the _Commands_ section below (Section 3) for more details on each command.
-
-== Key Features
-
-=== Convenience
-
-Contact'em provides convenience and ease of use in your daily life.
-
-* Import and export contacts from Google to keep your contacts organised.
-* Send emails to your contacts using your Gmail account.
-* Sync between all your devices.
-
-=== Security
-
-We value your privacy and security and we understand how important security is to all our users.
-
-* We use state-of-the-art Google login credentials to ensure your details are kept safe.
-* We do not save any of your passwords or emails sent to your contacts so you can use the application freely.
-* No contact details are shared with third-party applications without your approval.
 
 == Using the Application
 
