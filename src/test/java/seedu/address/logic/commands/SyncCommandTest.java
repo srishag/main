@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.FREEDYNOTGOOGLEADDRESSBOOK;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +46,7 @@ public class SyncCommandTest {
         thrown.expect(NullPointerException.class);
         new ImportCommand();
     }
+
     /**
      * Test for normal Syncing of a single google contact
      */
@@ -85,10 +87,27 @@ public class SyncCommandTest {
     public void execute_commandFailure_contactSimilar() throws DuplicatePersonException, CommandException {
         model.addPerson(googleContactList.FREEDYADDRESSBOOK);
         personList.add(googleContactList.FREDDYGOOGLE);
-        String expectedMessage = "0 contact/s Synced!     0 contact/s failed to Sync!";
-
         SyncCommand command = prepareCommand(personList, model);
+
+        String expectedMessage = "0 contact/s Synced!     0 contact/s failed to Sync!";
         assertCommandFailure(command, expectedMessage, model);
+    }
+
+    /**
+     * Test for syncing a contact that is no longer in the addressbook. The contact will lose its google contacts
+     * status
+     */
+    @Test
+    public void execute_commandFailure_contactNoLongerExists() throws DuplicatePersonException, CommandException {
+        model.addPerson(googleContactList.FREEDYADDRESSBOOK);
+        SyncCommand command = prepareCommand(personList, model);
+
+
+        String expectedMessage = "1 contact/s Synced!     0 contact/s failed to Sync!";
+        Model modelStub = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        modelStub.addPerson(FREEDYNOTGOOGLEADDRESSBOOK);
+
+        assertCommandFailure(command, expectedMessage, modelStub);
     }
 
     /**

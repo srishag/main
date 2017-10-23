@@ -53,9 +53,6 @@ public class ImportCommand extends Command {
         } catch (IOException e) {
             throw new CommandException("Authentication Failed. Please login again.");
         }
-        if (this.googleContactsList == null) {
-            throw new CommandException("No contacts found in Google Contacts");
-        }
     }
 
     /**
@@ -69,7 +66,12 @@ public class ImportCommand extends Command {
 
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException{
+
+        if (this.googleContactsList == null) {
+            throw new CommandException("No contacts found in Google Contacts");
+        }
+
         List<ReadOnlyPerson> personList = model.getAddressBook().getPersonList();
 
         for (Person person : googleContactsList) {

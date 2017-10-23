@@ -37,12 +37,20 @@ public class ImportCommandTest {
     }
 
     /**
-     * Checks if Login is authenticated. In this case it is not.
+     * Checks if Login is authenticated. In this case it is not and null exception is thrown.
      */
     @Test
     public void execute_require_login() throws Exception {
         thrown.expect(NullPointerException.class);
         new ImportCommand();
+    }
+    /**
+     * Checks if Google contacts is empty. In this case it is empty and null exception is thrown.
+     */
+    @Test
+    public void execute_empty_googleContacts() throws Exception {
+        thrown.expect(NullPointerException.class);
+        new ImportCommand(listperson).execute();
     }
 
     /**

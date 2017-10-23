@@ -53,9 +53,6 @@ public class SyncCommand extends Command {
         } catch (IOException e) {
             throw new CommandException("Authentication Failed. Please login again.");
         }
-        if (this.googleContactsList == null) {
-            throw new CommandException("No contacts found in Google Contacts");
-        }
     }
 
     /**

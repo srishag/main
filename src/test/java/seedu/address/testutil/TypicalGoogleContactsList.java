@@ -26,5 +26,4 @@ public class TypicalGoogleContactsList {
     public static final seedu.address.model.person.Person FREDDYSYNADDRESSBOOK = new GoogleContactBuilder("Freddy",
             "90000000", "freddy@hotmail.com", "Simei Blk 1 avenue 2",
             "1234567891011121310").buildAddressBookPerson();
-
 }
