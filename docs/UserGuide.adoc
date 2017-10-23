@@ -14,7 +14,14 @@ endif::[]
 
 By: `CS2103T T11-B4 Team`      Since: `Sep 2017`      Licence: `MIT`
 
-== Quick Start
+== Product Overview
+Contact'em is a convenient and easy addressbook application, that allows you to both store and retrieve your contacts easily and quickly.
+Compared to other similar applications, Contact'em prides itself on its ease-of-use. Never again will you wish the application was easier to use.
+
+== About
+
+
+== Getting Started
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -57,12 +64,12 @@ We value your privacy and security and we understand how important security is t
 * We do not save any of your passwords or emails sent to your contacts so you can use the application freely.
 * No contact details are shared with third-party applications without your approval.
 
-== Commands
+== Using the Application
 
 Below are the details of commands currently available and their usage.
 
 ====
-*Command Format* ##should we remove this?##
+*Command Format*
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
@@ -183,13 +190,13 @@ If user wishes to revert the edit, simply type in the `undo` command **without c
 
 
 ==== Common Problems
-1. Not providing the right prefix/field +
+* Not providing the right prefix/field +
 The field entered must be suitable for the prefix, for example, entering a phone number with the address field prefix `a/` will not pass.
 
-2. Old tags were unintentionally removed +
+* Old tags were unintentionally removed +
 Use the `undo` command to revert changes.
 
-3. Not entering the correct `index` +
+* Not entering the correct `index` +
 Ensure that the `index` entered is correct, or it may cause unintentional changes to another contact. +
 [NOTE]
 `Index` is the #currently displayed# number corresponding to the contact, which may differ if the current displayed list has been filtered.
@@ -258,6 +265,18 @@ Returns any contact tagged `friends`.
 
 * `findtags friends colleagues schoolmates` +
 Returns any person having any of the tags `friends`, `colleagues`, and/or `schoolmates`.
+
+==== Demonstration
+image::findtags-before.png[width="200"]
+_Figure 3.6.3a : Before entering command_
+
+image::findtags-enter-command.png[width="200"]
+_Figure 3.6.3b : Entering command to find all contacted tagged as friends_
+
+image::findtags-after.png[width="200"]
+_Figure 3.6.3c : Application displays all contacts tagged as friends_
+
+The figures above demonstrate an example of how this command is used.
 
 [TIP]
 You can substitute the command `findtags` with `findtag` or `ft`.
@@ -340,7 +359,7 @@ Deletes the 1st person in the results of the `find` command.
 If wrong person was deleted, **`undo` immediately without exiting the application!**
 
 ==== Common Problems
-1. Not entering the correct `index` +
+* Not entering the correct `index` +
 Ensure that the `index` entered is correct, or it may cause unintentional changes to another contact. +
 
 [NOTE]
@@ -371,12 +390,12 @@ If Facebook page of the contact is not stored in the application, the default Fa
 This is designed to let you connect with your contact through Facebook Messenger, but of course you can also use it to view his/her profile.
 
 ==== Common Problems
-1. Facebook page does not load +
+* Facebook page does not load +
 Ensure that: +
 a) the correct Facebook Address of contact was saved and is not outdated. +
 b) your device is connected to the Internet.
 
-2. Not entering the correct `index` +
+* Not entering the correct `index` +
 Ensure that the `index` entered is correct, or it may cause unintentional changes to another contact. +
 
 [NOTE]
@@ -433,15 +452,15 @@ The `undo` command fails as there are no undoable commands executed previously. 
 (Select and List are both **not** commands that can be undone)
 
 ==== Common Problems
-1. Trying to `Undo` commands that cannot be undone, for example trying to undo a `find`. +
+* Trying to `Undo` commands that cannot be undone, for example trying to undo a `find`. +
 The commands that can be undone are `add`, `delete`, `edit`, `clear`. +
 However, reverting find commands can still be done, by entering the search command with the previous criteria.
 
-2. No commands to undo because application was closed. +
+* No commands to undo because application was closed. +
 When the application is closed, the command history is deleted and not stored. Therefore, the application will not be able to know which command to undo. +
 It is therefore recommended to undo any changes needed before closing the application.
 
-=== Redoing the previously undone command : `redo`
+=== Reverting last undo command : `redo`
 
 Reverses the most recent `undo` command. +
 
@@ -626,7 +645,6 @@ Command Words: **help**, **h**
 |-
 
 |===
-
 
 
 =======
