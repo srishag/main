@@ -58,9 +58,6 @@ public class TypicalPersons {
     public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
             .withEmail("anna@example.com").withAddress("4th street").withBirthday("29021992")
             .withFacebookAddress("https://www.facebook.com/george/").build();
-    public static final ReadOnlyPerson FREEDYNOTGOOGLEADDRESSBOOK = new PersonBuilder().withName("Freddy")
-            .withPhone("91234567").withEmail("freddy@hotmail.com").withAddress("Simei Blk 1 avenue 2").withBirthday("")
-            .withFacebookAddress("").withTags("GoogleContact").build();
 
     // Manually added
     public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")

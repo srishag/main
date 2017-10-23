@@ -68,7 +68,13 @@ public class GoogleContactBuilder {
             Phone phone = new Phone(phoneDefault);
             Email email = new Email(emailDefault);
             seedu.address.model.person.Address address = new seedu.address.model.person.Address(addressDefault);
-            GoogleId id = new GoogleId(googleIdDefault.substring(8));
+            GoogleId id;
+
+            if (googleIdDefault.length() != 0) {
+                id = new GoogleId(googleIdDefault.substring(8));
+            } else {
+                id = new GoogleId("not GoogleContact");
+            }
 
             Tag tag = new Tag("GoogleContact");
             Set<Tag> tags = new HashSet<>();

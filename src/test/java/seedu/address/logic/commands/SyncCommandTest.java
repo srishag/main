@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.TypicalPersons.FREEDYNOTGOOGLEADDRESSBOOK;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
@@ -105,7 +104,7 @@ public class SyncCommandTest {
 
         String expectedMessage = "1 contact/s Synced!     0 contact/s failed to Sync!";
         Model modelStub = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        modelStub.addPerson(FREEDYNOTGOOGLEADDRESSBOOK);
+        modelStub.addPerson(googleContactList.FREEDYNOTGOOGLEADDRESSBOOK);
 
         assertCommandFailure(command, expectedMessage, modelStub);
     }

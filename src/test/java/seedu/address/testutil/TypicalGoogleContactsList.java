@@ -2,6 +2,7 @@ package seedu.address.testutil;
 
 import com.google.api.services.people.v1.model.Person;
 
+
 /**
  * List of Stub Google contacts and its version of the addressbook contact
  */
@@ -26,4 +27,7 @@ public class TypicalGoogleContactsList {
     public static final seedu.address.model.person.Person FREDDYSYNADDRESSBOOK = new GoogleContactBuilder("Freddy",
             "90000000", "freddy@hotmail.com", "Simei Blk 1 avenue 2",
             "1234567891011121310").buildAddressBookPerson();
+    public static final seedu.address.model.person.Person FREEDYNOTGOOGLEADDRESSBOOK = new GoogleContactBuilder(
+            "Freddy", "91234567", "freddy@hotmail.com", "Simei Blk 1 avenue 2",
+            "").buildAddressBookPerson();
 }
