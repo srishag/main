@@ -104,7 +104,7 @@ public class ExportCommandTest {
         ReadOnlyPerson editedAlice =
                 command.getNewAddressBookContact(BERNICE, TypicalGoogleContactsList.BERNICEWITHGOOGLEID);
         assertEquals(editedAlice, TypicalGoogleContactsList.BERNICEADDRESSBOOK);
-   }
+    }
 
     /**
      * Test detailed messages for export command.
