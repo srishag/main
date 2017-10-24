@@ -17,6 +17,10 @@ public class TypicalGoogleContactsList {
             "freddy@hotmail.com", "Simei Blk 1 avenue 2",
             "1234567891011121310").buildGooglePerson();
 
+    public static final Person ALICE = new GoogleContactBuilder("Alice Pauline",
+            "85355255", "alice@example.com",
+            "123, Jurong West Ave 6, #08-111", null).buildGooglePerson();
+
     public static final seedu.address.model.person.Person FREEDYADDRESSBOOK = new GoogleContactBuilder("Freddy",
             "91234567", "freddy@hotmail.com", "Simei Blk 1 avenue 2",
             "1234567891011121310").buildAddressBookPerson();

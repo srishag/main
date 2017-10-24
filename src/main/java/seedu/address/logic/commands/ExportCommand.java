@@ -39,16 +39,30 @@ public class ExportCommand extends Command {
     private int contactsExportedCount = 0;
     private int errorExportCount = 0;
 
-    @Override
-    public CommandResult execute() throws CommandException {
-        List<ReadOnlyPerson> personList = model.getAddressBook().getPersonList();
-        GoogleContactsBuilder builder;
+    private GoogleContactsBuilder builder;
 
+    /**
+     * Constructor for ExportCommand (Gets the Google Builder for exporting of contacts after authentication)
+     */
+    public ExportCommand() throws CommandException {
         try {
             builder = new GoogleContactsBuilder();
         } catch (IOException e) {
             throw new CommandException("Authentication Failed. Please login again.");
         }
+    }
+
+    /**
+     * This constructor exists only for the sake of testing so as to pass through a dummy google builder.
+     * Will not be used in the main implementation of the programme
+     */
+    public ExportCommand(GoogleContactsBuilder builder) {
+        this.builder = builder;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        List<ReadOnlyPerson> personList = model.getAddressBook().getPersonList();
 
         Person createdContact;
 
@@ -84,7 +98,7 @@ public class ExportCommand extends Command {
         List phone = new ArrayList();
         List address = new ArrayList();
 
-        names.add(new Name().setGivenName(person.getName().fullName));
+        names.add(new Name().setDisplayName(person.getName().fullName));
         email.add(new EmailAddress().setValue(person.getEmail().value));
         phone.add(new PhoneNumber().setValue(person.getPhone().value));
         address.add(new Address().setStreetAddress(person.getAddress().value));
