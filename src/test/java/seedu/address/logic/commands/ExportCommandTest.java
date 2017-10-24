@@ -98,12 +98,12 @@ public class ExportCommandTest {
     /**
      * Test for changes in contact after being exported to google
      */
-   @Test
-   public void execute_exportContactChanges() throws IllegalValueException, CommandException {
-       ExportCommand command = prepareCommand(this.model);
-       ReadOnlyPerson editedAlice =
-               command.getNewAddressBookContact(BERNICE, TypicalGoogleContactsList.BERNICEWITHGOOGLEID);
-       assertEquals(editedAlice, TypicalGoogleContactsList.BERNICEADDRESSBOOK);
+    @Test
+    public void execute_exportContactChanges() throws IllegalValueException, CommandException {
+        ExportCommand command = prepareCommand(this.model);
+        ReadOnlyPerson editedAlice =
+                command.getNewAddressBookContact(BERNICE, TypicalGoogleContactsList.BERNICEWITHGOOGLEID);
+        assertEquals(editedAlice, TypicalGoogleContactsList.BERNICEADDRESSBOOK);
    }
 
     /**

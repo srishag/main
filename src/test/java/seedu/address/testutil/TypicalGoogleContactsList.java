@@ -19,11 +19,11 @@ public class TypicalGoogleContactsList {
 
     public static final Person BERNICE = new GoogleContactBuilder("Alice Pauline",
             "85355255", "alice@example.com",
-            "123, Jurong West Ave 6, #08-111",null).buildGooglePerson();
+            "123, Jurong West Ave 6, #08-111", null).buildGooglePerson();
 
-    public static final Person BERNICEWITHGOOGLEID= new GoogleContactBuilder("Alice Pauline",
+    public static final Person BERNICEWITHGOOGLEID = new GoogleContactBuilder("Alice Pauline",
             "85355255", "alice@example.com",
-            "123, Jurong West Ave 6, #08-111","12345678910111213112").buildGooglePerson();
+            "123, Jurong West Ave 6, #08-111", "12345678910111213112").buildGooglePerson();
 
     public static final seedu.address.model.person.Person FREEDYADDRESSBOOK = new GoogleContactBuilder("Freddy",
             "91234567", "freddy@hotmail.com", "Simei Blk 1 avenue 2",
@@ -38,8 +38,8 @@ public class TypicalGoogleContactsList {
     public static final seedu.address.model.person.Person FREEDYNOTGOOGLEADDRESSBOOK = new GoogleContactBuilder(
             "Freddy", "91234567", "freddy@hotmail.com", "Simei Blk 1 avenue 2",
             "").buildAddressBookPerson();
-    public static final seedu.address.model.person.Person BERNICEADDRESSBOOK= new GoogleContactBuilder(
+    public static final seedu.address.model.person.Person BERNICEADDRESSBOOK = new GoogleContactBuilder(
             "Alice Pauline", "85355255", "alice@example.com",
-            "123, Jurong West Ave 6, #08-111","12345678910111213112").buildAddressBookPerson();
+            "123, Jurong West Ave 6, #08-111", "12345678910111213112").buildAddressBookPerson();
 
 }
