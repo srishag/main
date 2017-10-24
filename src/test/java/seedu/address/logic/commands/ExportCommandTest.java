@@ -100,9 +100,10 @@ public class ExportCommandTest {
     @Test
     public void execute_exportDetailedMessages() throws IOException, CommandException {
         ExportCommand command = prepareCommand(this.model);
-        String messageSuccess = command.setCommandMessage(1,0);
-        String messageFailure = command.setCommandMessage(0,1);
-        assertEquals(messageSuccess,"1 contact/s exported!     All contacts can be now found in google contact");
+        String messageSuccess = command.setCommandMessage(1, 0);
+        String messageFailure = command.setCommandMessage(0, 1);
+        assertEquals(messageSuccess, "1 contact/s exported!     "
+                + "All contacts can be now found in google contact");
         assertEquals(messageFailure, "0 contact/s exported!     1 contact/s failed to export!");
     }
 
