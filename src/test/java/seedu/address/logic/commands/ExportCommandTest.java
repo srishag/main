@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BERNICE;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,6 +15,7 @@ import org.junit.rules.ExpectedException;
 import com.google.api.services.people.v1.model.Person;
 
 import seedu.address.commons.GoogleContactsBuilder;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -22,6 +23,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.testutil.TypicalGoogleContactsList;
 
@@ -63,7 +65,7 @@ public class ExportCommandTest {
     @Test
     public void execute_commandFailure_noAuthenticationToExport() throws Exception {
         thrown.expect(CommandException.class);
-        model.addPerson(ALICE);
+        model.addPerson(BERNICE);
         ExportCommand command = prepareCommand(this.model);
         command.execute();
     }
@@ -82,17 +84,27 @@ public class ExportCommandTest {
     }
 
     /**
-     * Test for no importing of contacts to addressbook as all contacts in addressbook are already in google contacts.
+     * Test for no converting a addressbook contact into a google contact
      */
     @Test
     public void execute_updateAddressBookContactToGoogle() throws IOException, CommandException,
             DuplicatePersonException {
-        model.addPerson(ALICE);
+        model.addPerson(BERNICE);
 
         ExportCommand command = prepareCommand(this.model);
-        Person aliceGoogleContact = command.createGoogleContact(ALICE);
-        assertEquals(aliceGoogleContact, TypicalGoogleContactsList.ALICE);
+        Person aliceGoogleContact = command.createGoogleContact(BERNICE);
+        assertEquals(aliceGoogleContact, TypicalGoogleContactsList.BERNICE);
     }
+    /**
+     * Test for changes in contact after being exported to google
+     */
+   @Test
+   public void execute_exportContactChanges() throws IllegalValueException, CommandException {
+       ExportCommand command = prepareCommand(this.model);
+       ReadOnlyPerson editedAlice =
+               command.getNewAddressBookContact(BERNICE, TypicalGoogleContactsList.BERNICEWITHGOOGLEID);
+       assertEquals(editedAlice, TypicalGoogleContactsList.BERNICEADDRESSBOOK);
+   }
 
     /**
      * Test detailed messages for export command.
