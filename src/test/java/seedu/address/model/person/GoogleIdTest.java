@@ -11,13 +11,13 @@ public class GoogleIdTest {
     public void isValidId() {
         // invalid GoogleId
         assertFalse(GoogleId.isValidGoogleId("")); // empty string
-        assertFalse(GoogleId.isValidGoogleId("f2134324")); // alphanumeric
         assertFalse(GoogleId.isValidGoogleId(" ")); // spaces only
-        assertFalse(GoogleId.isValidGoogleId("2344-344234")); // special symbols
 
 
         // valid GoogleId
-        assertTrue(GoogleId.isValidGoogleId("11111"));
-        assertTrue(GoogleId.isValidGoogleId("1234567890")); // one character
+        assertTrue(GoogleId.isValidGoogleId("1234567890")); // numbers
+        assertTrue(GoogleId.isValidGoogleId("not GoogleContact")); // Letters
+        assertTrue(GoogleId.isValidGoogleId("f2134324")); // alphanumeric
+
     }
 }
