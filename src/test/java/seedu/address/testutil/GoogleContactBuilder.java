@@ -50,7 +50,7 @@ public class GoogleContactBuilder {
         List phone = new ArrayList();
         List address = new ArrayList();
 
-        names.add(new Name().setDisplayName(nameDefault));
+        names.add(new Name().setGivenName(nameDefault));
         email.add(new EmailAddress().setValue(emailDefault));
         phone.add(new PhoneNumber().setValue(phoneDefault));
         address.add(new Address().setStreetAddress(addressDefault));

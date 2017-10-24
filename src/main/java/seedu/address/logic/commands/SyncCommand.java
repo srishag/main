@@ -84,7 +84,7 @@ public class SyncCommand extends Command {
                             }
                         } catch (IllegalValueException | NullPointerException | PersonNotFoundException e) {
                             errorSyncedCount++;
-                            namesNotSynced += person.getNames().get(0).getDisplayName() + ", ";
+                            namesNotSynced += person.getNames().get(0).getGivenName() + ", ";
                         }
                     }
                 }
@@ -109,7 +109,7 @@ public class SyncCommand extends Command {
      */
     public ReadOnlyPerson personToCheck(Person person) throws IllegalValueException, NullPointerException {
 
-        Name name = new Name(person.getNames().get(0).getDisplayName());
+        Name name = new Name(person.getNames().get(0).getGivenName());
         Phone phone = new Phone(person.getPhoneNumbers().get(0).getValue().replace(" ", ""));
         Email email = new Email(person.getEmailAddresses().get(0).getValue());
         Address address = new Address(person.getAddresses().get(0).getStreetAddress());

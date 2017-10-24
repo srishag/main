@@ -95,6 +95,18 @@ public class ExportCommandTest {
     }
 
     /**
+     * Test detailed messages for export command.
+     */
+    @Test
+    public void execute_exportDetailedMessages() throws IOException, CommandException {
+        ExportCommand command = prepareCommand(this.model);
+        String messageSuccess = command.setCommandMessage(1,0);
+        String messageFailure = command.setCommandMessage(0,1);
+        assertEquals(messageSuccess,"1 contact/s exported!     All contacts can be now found in google contact");
+        assertEquals(messageFailure, "0 contact/s exported!     1 contact/s failed to export!");
+    }
+
+    /**
      * Preparing import command by using a test-only constructor (Using a stub google person list)
      */
     private ExportCommand prepareCommand(Model model) throws CommandException {

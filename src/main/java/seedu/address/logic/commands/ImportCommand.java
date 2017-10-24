@@ -80,7 +80,7 @@ public class ImportCommand extends Command {
                     model.addPerson(this.newPerson(person));
                     contactsImportedCount++;
                 } catch (IllegalValueException | NullPointerException e) {
-                    namesNotImported += " " + person.getNames().get(0).getDisplayName() + ", ";
+                    namesNotImported += " " + person.getNames().get(0).getGivenName() + ", ";
                     errorImportsCount++;
                 }
             }
@@ -107,7 +107,7 @@ public class ImportCommand extends Command {
      * Creates a person in addressBook based on the contact in google contact
      */
     public ReadOnlyPerson newPerson(Person person) throws IllegalValueException, NullPointerException {
-        Name name = new Name(person.getNames().get(0).getDisplayName());
+        Name name = new Name(person.getNames().get(0).getGivenName());
         Email email = new Email(person.getEmailAddresses().get(0).getValue());
         Phone phone = new Phone(person.getPhoneNumbers().get(0).getValue().replace(" ", ""));
         Address address = new Address(person.getAddresses().get(0).getStreetAddress());

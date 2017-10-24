@@ -98,7 +98,7 @@ public class ExportCommand extends Command {
         List phone = new ArrayList();
         List address = new ArrayList();
 
-        names.add(new Name().setDisplayName(person.getName().fullName));
+        names.add(new Name().setGivenName(person.getName().fullName));
         email.add(new EmailAddress().setValue(person.getEmail().value));
         phone.add(new PhoneNumber().setValue(person.getPhone().value));
         address.add(new Address().setStreetAddress(person.getAddress().value));
