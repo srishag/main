@@ -78,24 +78,24 @@ public class SyncCommand extends UndoableCommand {
         for (ReadOnlyPerson addressPerson : personlist) {
             exists = false;
             if ((googleContactsList != null)) {
-                for (Person GooglePerson : googleContactsList) {
-                    if (GooglePerson.getResourceName().substring(8).equals(addressPerson.getGoogleId().value)) {
+                for (Person googlePerson : googleContactsList) {
+                    if (googlePerson.getResourceName().substring(8).equals(addressPerson.getGoogleId().value)) {
                         exists = true;
                         try {
-                            if (!addressPerson.isSameStateAs(convertToAddress(GooglePerson))) {
-                                model.updatePerson(addressPerson, convertToAddress(GooglePerson));
+                            if (!addressPerson.isSameStateAs(convertToAddress(googlePerson))) {
+                                model.updatePerson(addressPerson, convertToAddress(googlePerson));
                                 contactsSyncedCount++;
                             }
                         } catch (IllegalValueException | NullPointerException | PersonNotFoundException e) {
                             errorSyncedCount++;
-                            namesNotSynced += GooglePerson.getNames().get(0).getGivenName() + ", ";
+                            namesNotSynced += googlePerson.getNames().get(0).getGivenName() + ", ";
                         }
                     }
                 }
             }
 
             //Removes google contact status from addressbook Contact if it does not exists in google contacts
-            if((addressPerson.getGoogleId().value != "not GoogleContact") && (!exists)) {
+            if ((addressPerson.getGoogleId().value != "not GoogleContact") && (!exists)) {
                 try {
                     model.updatePerson(addressPerson, removeGoogleContactStatus(addressPerson));
                     contactsSyncedCount++;
