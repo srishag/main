@@ -16,32 +16,31 @@ import com.google.api.services.people.v1.model.Person;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.GoogleAuthException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.testutil.TypicalGoogleContactsList;
 
 public class ImportCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private TypicalGoogleContactsList googleContactList = new TypicalGoogleContactsList();
     private Model model;
-    private List<Person> listperson;
+    private List<Person> googleList;
 
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        listperson = new ArrayList<>();
+        googleList = new ArrayList<>();
     }
 
     /**
-     * Checks if Login is authenticated. In this case it is not and null exception is thrown.
+     * Checks if Login is authenticated. In this case it is not and GoogleAuthException is thrown.
      */
     @Test
     public void execute_require_login() throws Exception {
-        thrown.expect(NullPointerException.class);
+        thrown.expect(GoogleAuthException.class);
         new ImportCommand();
     }
     /**
@@ -50,19 +49,19 @@ public class ImportCommandTest {
     @Test
     public void execute_empty_googleContacts() throws Exception {
         thrown.expect(NullPointerException.class);
-        new ImportCommand(listperson).execute();
+        new ImportCommand(googleList).executeUndoableCommand();
     }
 
     /**
      * Test for normal importing of a google contact
      */
     @Test
-    public void execute_commandSuccess_imported() throws DuplicatePersonException, CommandException {
-        listperson.add(googleContactList.FREDDYGOOGLE);
-        ImportCommand command = prepareCommand(listperson, this.model);
+    public void execute_commandSuccess_imported() throws Exception {
+        googleList.add(TypicalGoogleContactsList.FREDDYGOOGLE);
+        ImportCommand command = prepareCommand(googleList, this.model);
 
         Model modelstub = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        modelstub.addPerson(googleContactList.FREEDYADDRESSBOOK);
+        modelstub.addPerson(TypicalGoogleContactsList.FREEDYADDRESSBOOK);
         String expectedMessage = "1 contact/s imported!     0 contact/s failed to import!" + "\n";
 
         assertCommandSuccess(command, expectedMessage, modelstub);
@@ -72,9 +71,9 @@ public class ImportCommandTest {
      * Test for invalid importing of a google contact due to invalid attributes
      */
     @Test
-    public void execute_commandFailure_contactInvalidFormat() throws DuplicatePersonException, CommandException {
-        listperson.add(googleContactList.MAYGOOGLE);
-        ImportCommand command = prepareCommand(listperson, this.model);
+    public void execute_commandFailure_contactInvalidFormat() throws Exception {
+        googleList.add(TypicalGoogleContactsList.MAYGOOGLE);
+        ImportCommand command = prepareCommand(googleList, this.model);
 
         String expectedMessage = "0 contact/s imported!     1 contact/s failed to import!" + "\n"
                 + "Contacts already existed : 0     Contacts not in the correct format : 1" + "\n"
@@ -87,10 +86,10 @@ public class ImportCommandTest {
      * Test for importing a contact that already exists in the addressbook
      */
     @Test
-    public void execute_commandFailure_contactExists() throws DuplicatePersonException, CommandException {
-        model.addPerson(googleContactList.FREEDYADDRESSBOOK);
-        listperson.add(googleContactList.FREDDYGOOGLE);
-        ImportCommand command = prepareCommand(listperson, model);
+    public void execute_commandFailure_contactExists() throws Exception {
+        model.addPerson(TypicalGoogleContactsList.FREEDYADDRESSBOOK);
+        googleList.add(TypicalGoogleContactsList.FREDDYGOOGLE);
+        ImportCommand command = prepareCommand(googleList, model);
 
         String expectedMessage = "0 contact/s imported!     1 contact/s failed to import!" + "\n"
                 + "Contacts already existed : 1     Contacts not in the correct format : 0" + "\n";
@@ -111,7 +110,7 @@ public class ImportCommandTest {
      * Asserts if a command successfully executed
      */
     private void assertCommandSuccess(Command command, String expectedMessage, Model modelstub)
-            throws CommandException {
+            throws CommandException, GoogleAuthException {
         CommandResult commandResult = command.execute();
         assertEquals(expectedMessage, commandResult.feedbackToUser);
         assertEquals(modelstub.getAddressBook(), model.getAddressBook());
@@ -121,7 +120,7 @@ public class ImportCommandTest {
      * Asserts if a command unsuccessfully executed
      */
     private void assertCommandFailure(Command command, String expectedMessage, Model modelstub)
-            throws CommandException {
+            throws CommandException, GoogleAuthException {
         CommandResult commandResult = command.execute();
         assertEquals(expectedMessage, commandResult.feedbackToUser);
         assertEquals(modelstub.getAddressBook(), model.getAddressBook());

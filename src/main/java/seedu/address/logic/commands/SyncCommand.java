@@ -12,6 +12,7 @@ import seedu.address.commons.GoogleContactsBuilder;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.GoogleAuthException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
@@ -27,7 +28,7 @@ import seedu.address.model.tag.Tag;
  * Syncs all existing google contacts in the addressbook with the contacts in google contacts
  * Contacts in google contacts takes higher precedence.
  */
-public class SyncCommand extends Command {
+public class SyncCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "sync";
     public static final String COMMAND_ALIAS = "sync";
@@ -46,12 +47,12 @@ public class SyncCommand extends Command {
     /**
      * Constructor for SyncCommand (Gets the Google Contact List after successful authentication)
      */
-    public SyncCommand() throws CommandException {
+    public SyncCommand() throws GoogleAuthException {
         try {
             GoogleContactsBuilder builder = new GoogleContactsBuilder();
             this.googleContactsList = builder.getPersonlist();
         } catch (IOException e) {
-            throw new CommandException("Authentication Failed. Please login again.");
+            throw new GoogleAuthException("Authentication Failed. Please login again.");
         }
     }
 
@@ -64,41 +65,46 @@ public class SyncCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
+
+        boolean exists;
 
         ObservableList<ReadOnlyPerson> personlist = model.getAddressBook().getPersonList();
         if (personlist.isEmpty()) {
             throw new CommandException("No contacts in addressbook to sync");
         }
 
-        for (ReadOnlyPerson contact : personlist) {
-            boolean checkifexists = false;
-            if ((googleContactsList != null) && (googleContactsList.size() > 0)) {
-                for (Person person : googleContactsList) {
-                    if (person.getResourceName().substring(8).equals(contact.getGoogleId().value)) {
-                        checkifexists = true;
+
+        for (ReadOnlyPerson addressPerson : personlist) {
+            exists = false;
+            if ((googleContactsList != null)) {
+                for (Person GooglePerson : googleContactsList) {
+                    if (GooglePerson.getResourceName().substring(8).equals(addressPerson.getGoogleId().value)) {
+                        exists = true;
                         try {
-                            if (!contact.isSameStateAs(personToCheck(person))) {
-                                model.updatePerson(contact, personToCheck(person));
+                            if (!addressPerson.isSameStateAs(convertToAddress(GooglePerson))) {
+                                model.updatePerson(addressPerson, convertToAddress(GooglePerson));
                                 contactsSyncedCount++;
                             }
                         } catch (IllegalValueException | NullPointerException | PersonNotFoundException e) {
                             errorSyncedCount++;
-                            namesNotSynced += person.getNames().get(0).getGivenName() + ", ";
+                            namesNotSynced += GooglePerson.getNames().get(0).getGivenName() + ", ";
                         }
                     }
                 }
             }
 
-            if ((contact.getGoogleId().value != "not GoogleContact") && (checkifexists == false)) {
+            //Removes google contact status from addressbook Contact if it does not exists in google contacts
+            if((addressPerson.getGoogleId().value != "not GoogleContact") && (!exists)) {
                 try {
-                    model.updatePerson(contact, removeGoogleContactStatus(contact));
+                    model.updatePerson(addressPerson, removeGoogleContactStatus(addressPerson));
                     contactsSyncedCount++;
                 } catch (IllegalValueException | NullPointerException | PersonNotFoundException e) {
                     errorSyncedCount++;
                 }
             }
         }
+
         commandMessage = setCommandMessage(namesNotSynced, contactsSyncedCount, errorSyncedCount);
 
         return new CommandResult(commandMessage);
@@ -107,7 +113,7 @@ public class SyncCommand extends Command {
     /**
      * Creates a person in addressBook based on the contact in google contact
      */
-    public ReadOnlyPerson personToCheck(Person person) throws IllegalValueException, NullPointerException {
+    public ReadOnlyPerson convertToAddress(Person person) throws IllegalValueException, NullPointerException {
 
         Name name = new Name(person.getNames().get(0).getGivenName());
         Phone phone = new Phone(person.getPhoneNumbers().get(0).getValue().replace(" ", ""));

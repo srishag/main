@@ -11,6 +11,7 @@ import seedu.address.commons.GoogleContactsBuilder;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.GoogleAuthException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
@@ -25,7 +26,7 @@ import seedu.address.model.tag.Tag;
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
  * Keyword matching is case sensitive.
  */
-public class ImportCommand extends Command {
+public class ImportCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "import";
     public static final String COMMAND_ALIAS = "import";
@@ -46,12 +47,12 @@ public class ImportCommand extends Command {
     /**
      * Constructor for ImportCommand (Gets the Google Contact List after successful authentication)
      */
-    public ImportCommand() throws CommandException {
+    public ImportCommand() throws GoogleAuthException {
         try {
             GoogleContactsBuilder builder = new GoogleContactsBuilder();
             this.googleContactsList = builder.getPersonlist();
         } catch (IOException e) {
-            throw new CommandException("Authentication Failed. Please login again.");
+            throw new GoogleAuthException("Authentication Failed. Please login again.");
         }
     }
 
@@ -66,21 +67,20 @@ public class ImportCommand extends Command {
 
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
+        List<ReadOnlyPerson> addressBookList = model.getAddressBook().getPersonList();
 
         if (this.googleContactsList == null) {
             throw new CommandException("No contacts found in Google Contacts");
         }
 
-        List<ReadOnlyPerson> personList = model.getAddressBook().getPersonList();
-
-        for (Person person : googleContactsList) {
-            if (!this.ifContactExists(personList, person)) {
+        for (Person googlePerson : googleContactsList) {
+            if (!this.ifContactExists(addressBookList, googlePerson)) {
                 try {
-                    model.addPerson(this.newPerson(person));
+                    model.addPerson(this.newPerson(googlePerson));
                     contactsImportedCount++;
                 } catch (IllegalValueException | NullPointerException e) {
-                    namesNotImported += " " + person.getNames().get(0).getGivenName() + ", ";
+                    namesNotImported += " " + googlePerson.getNames().get(0).getGivenName() + ", ";
                     errorImportsCount++;
                 }
             }

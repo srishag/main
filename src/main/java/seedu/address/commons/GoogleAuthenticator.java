@@ -16,7 +16,7 @@ import com.google.api.services.people.v1.model.Person;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.GetRedirectUrlEvent;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.logic.commands.exceptions.GoogleAuthException;
 
 /**
  * This class contains methods of the google Auth Api. For authentication after login.
@@ -56,15 +56,15 @@ public class GoogleAuthenticator {
     /**
      * This method obtains the token from the redirect URL after successful login
      */
-    public String getToken() {
-        String token = "";
+    public String getToken() throws GoogleAuthException {
+        String token;
         try {
             GetRedirectUrlEvent event = new GetRedirectUrlEvent();
             EventsCenter.getInstance().post(event);
             String url = event.getReDirectUrl();
             token = url.substring(url.indexOf("token=") + 6, url.indexOf("&"));
-        } catch (StringIndexOutOfBoundsException e) {
-            EventsCenter.getInstance().post(new NewResultAvailableEvent("Authentication Failed. Please login again."));
+        } catch (StringIndexOutOfBoundsException | NullPointerException e) {
+            throw new GoogleAuthException("Authentication Failed. Please login again.");
         }
         return token;
     }

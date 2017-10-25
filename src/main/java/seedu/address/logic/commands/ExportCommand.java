@@ -16,6 +16,7 @@ import seedu.address.commons.GoogleContactsBuilder;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.GoogleAuthException;
 import seedu.address.model.person.GoogleId;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -25,7 +26,7 @@ import seedu.address.model.tag.Tag;
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
  * Keyword matching is case sensitive.
  */
-public class ExportCommand extends Command {
+public class ExportCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "export";
     public static final String COMMAND_ALIAS = "export";
@@ -44,11 +45,11 @@ public class ExportCommand extends Command {
     /**
      * Constructor for ExportCommand (Gets the Google Builder for exporting of contacts after authentication)
      */
-    public ExportCommand() throws CommandException {
+    public ExportCommand() throws GoogleAuthException {
         try {
             builder = new GoogleContactsBuilder();
         } catch (IOException e) {
-            throw new CommandException("Authentication Failed. Please login again.");
+            throw new GoogleAuthException("Authentication Failed. Please login again.");
         }
     }
 
@@ -61,24 +62,23 @@ public class ExportCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
-        List<ReadOnlyPerson> personList = model.getAddressBook().getPersonList();
+    public CommandResult executeUndoableCommand() throws GoogleAuthException, CommandException {
+        List<ReadOnlyPerson> addressBookList = model.getAddressBook().getPersonList();
+        Person googleContact;
 
-        Person createdContact;
-
-        if (personList.isEmpty()) {
+        if (addressBookList.isEmpty()) {
             throw new CommandException("No contacts in addressbook to export");
         }
 
-        for (ReadOnlyPerson contact : personList) {
-            if (contact.getGoogleId().value.equals("not GoogleContact")) {
+        for (ReadOnlyPerson addressContact : addressBookList) {
+            if (addressContact.getGoogleId().value.equals("not GoogleContact")) {
                 try {
-                    createdContact = createGoogleContact(contact);
-                    createdContact = builder.getPeopleService().people().createContact(createdContact).execute();
-                    model.updatePerson(contact, getNewAddressBookContact(contact, createdContact));
+                    googleContact = createGoogleContact(addressContact);
+                    googleContact = builder.getPeopleService().people().createContact(googleContact).execute();
+                    model.updatePerson(addressContact, getNewAddressBookContact(addressContact, googleContact));
                     contactsExportedCount++;
                 } catch (IOException | NullPointerException e) {
-                    throw new CommandException("Authentication Failed. Please login again.");
+                    throw new GoogleAuthException("Authentication Failed. Please login again.");
                 } catch (IllegalValueException | PersonNotFoundException e) {
                     errorExportCount++;
                 }
@@ -122,6 +122,7 @@ public class ExportCommand extends Command {
                 contact.getEmail(), contact.getAddress(), contact.getBirthday(),
                 contact.getFacebookAddress(), tags, id);
     }
+
     /**
      * Creates a detailed message on the status of the sync
      */

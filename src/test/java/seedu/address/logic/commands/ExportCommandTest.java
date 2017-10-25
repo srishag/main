@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalPersons.BERNICE;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,16 +14,15 @@ import org.junit.rules.ExpectedException;
 import com.google.api.services.people.v1.model.Person;
 
 import seedu.address.commons.GoogleContactsBuilder;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.GoogleAuthException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.testutil.TypicalGoogleContactsList;
 
 public class ExportCommandTest {
@@ -32,20 +30,20 @@ public class ExportCommandTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private Model model;
-    private List<Person> listperson;
+    private List<Person> googleList;
 
     @Before
     public void setUp() {
         model = new ModelManager(new AddressBook(), new UserPrefs());
-        listperson = new ArrayList<>();
+        googleList = new ArrayList<>();
     }
 
     /**
-     * Checks if Login is authenticated. In this case it is not and null exception is thrown.
+     * Checks if Login is authenticated. In this case it is not and GoogleAuthException is thrown.
      */
     @Test
     public void execute_require_login() throws Exception {
-        thrown.expect(NullPointerException.class);
+        thrown.expect(GoogleAuthException.class);
         new ExportCommand();
     }
 
@@ -56,7 +54,7 @@ public class ExportCommandTest {
     public void execute_commandFailure_noContacts() throws Exception {
         thrown.expect(CommandException.class);
         ExportCommand command = prepareCommand(this.model);
-        command.execute();
+        command.executeUndoableCommand();
     }
 
     /**
@@ -64,10 +62,10 @@ public class ExportCommandTest {
      */
     @Test
     public void execute_commandFailure_noAuthenticationToExport() throws Exception {
-        thrown.expect(CommandException.class);
+        thrown.expect(GoogleAuthException.class);
         model.addPerson(BERNICE);
         ExportCommand command = prepareCommand(this.model);
-        command.execute();
+        command.executeUndoableCommand();
     }
 
 
@@ -75,7 +73,7 @@ public class ExportCommandTest {
      * Test for no importing of contacts to addressbook as all contacts in addressbook are already in google contacts.
      */
     @Test
-    public void execute_commandFailure_allGoogleContacts() throws DuplicatePersonException, CommandException {
+    public void execute_commandFailure_allGoogleContacts() throws Exception {
         model.addPerson(TypicalGoogleContactsList.FREEDYADDRESSBOOK);
 
         ExportCommand command = prepareCommand(this.model);
@@ -87,8 +85,7 @@ public class ExportCommandTest {
      * Test for no converting a addressbook contact into a google contact
      */
     @Test
-    public void execute_updateAddressBookContactToGoogle() throws IOException, CommandException,
-            DuplicatePersonException {
+    public void execute_updateAddressBookContactToGoogle() throws Exception {
         model.addPerson(BERNICE);
 
         ExportCommand command = prepareCommand(this.model);
@@ -99,7 +96,7 @@ public class ExportCommandTest {
      * Test for changes in contact after being exported to google
      */
     @Test
-    public void execute_exportContactChanges() throws IllegalValueException, CommandException {
+    public void execute_exportContactChanges() throws Exception {
         ExportCommand command = prepareCommand(this.model);
         ReadOnlyPerson editedAlice =
                 command.getNewAddressBookContact(BERNICE, TypicalGoogleContactsList.BERNICEWITHGOOGLEID);
@@ -110,7 +107,7 @@ public class ExportCommandTest {
      * Test detailed messages for export command.
      */
     @Test
-    public void execute_exportDetailedMessages() throws IOException, CommandException {
+    public void execute_exportDetailedMessages() throws Exception {
         ExportCommand command = prepareCommand(this.model);
         String messageSuccess = command.setCommandMessage(1, 0);
         String messageFailure = command.setCommandMessage(0, 1);
@@ -133,7 +130,7 @@ public class ExportCommandTest {
      * Asserts if a command unsuccessfully executed
      */
     private void assertCommandFailure(Command command, String expectedMessage, Model modelstub)
-            throws CommandException {
+            throws CommandException, GoogleAuthException {
         CommandResult commandResult = command.execute();
         assertEquals(expectedMessage, commandResult.feedbackToUser);
         assertEquals(modelstub.getAddressBook(), model.getAddressBook());

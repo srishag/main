@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import seedu.address.logic.commands.exceptions.GoogleAuthException;
 
 public class GoogleAuthenticatorTest {
 
@@ -27,7 +28,7 @@ public class GoogleAuthenticatorTest {
      */
     @Test
     public void execute_get_invalidToken() throws Exception {
-        thrown.expect(NullPointerException.class);
+        thrown.expect(GoogleAuthException.class);
         authenticator.getToken();
     }
 
