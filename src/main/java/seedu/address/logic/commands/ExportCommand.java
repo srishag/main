@@ -26,7 +26,7 @@ import seedu.address.model.tag.Tag;
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
  * Keyword matching is case sensitive.
  */
-public class ExportCommand extends UndoableCommand {
+public class ExportCommand extends Command {
 
     public static final String COMMAND_WORD = "export";
     public static final String COMMAND_ALIAS = "export";
@@ -62,7 +62,7 @@ public class ExportCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws GoogleAuthException, CommandException {
+    public CommandResult execute() throws GoogleAuthException, CommandException {
         List<ReadOnlyPerson> addressBookList = model.getAddressBook().getPersonList();
         Person googleContact;
 

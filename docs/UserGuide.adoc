@@ -231,14 +231,14 @@ Only full words will be matched, for example, finding `Han` will not match `Hans
 ==== EasyFind
 
 Auto updates the display when user enters an alphabet with the `find` command.
-Finds persons whose names contain any of the alphabets sequence in the command box constantly having the user to input `enter`.
+Finds persons whose names contain any of the letters in the command box constantly having the user to input `enter`.
 
 ****
 * The search will be case insensitibe. e.g. `hans` will match `Hans`
-* The alphabetic sequence must start with the name of the contacts. e.g. `hans` will match `handsome` but not `irhans`
+* The alphabetic sequence must start with the name of the contacts. e.g. `han` will match `handsome` but not `irhans`
 * Different alphabetic sequences will be separated by a `space`.
 * Persons matching at least one of the alphabetic sequence seperated by spaces will be returned. e.g. `Hans Ma` will return `Hans Gruber`, `May Tan`
-* When the search results displays `no results`, the particular alphabetic sequence will not display any contacts even when the user continues inputing new characters.
+* When the search results displays `no results`, the particular alphabetic sequence will not display any contacts even when the user continues inputing new characters without spaces.
 ****
 
 Examples:

@@ -54,7 +54,7 @@ public class ExportCommandTest {
     public void execute_commandFailure_noContacts() throws Exception {
         thrown.expect(CommandException.class);
         ExportCommand command = prepareCommand(this.model);
-        command.executeUndoableCommand();
+        command.execute();
     }
 
     /**
@@ -65,7 +65,7 @@ public class ExportCommandTest {
         thrown.expect(GoogleAuthException.class);
         model.addPerson(BERNICE);
         ExportCommand command = prepareCommand(this.model);
-        command.executeUndoableCommand();
+        command.execute();
     }
 
 
