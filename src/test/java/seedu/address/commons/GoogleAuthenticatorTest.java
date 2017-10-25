@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
 import seedu.address.logic.commands.exceptions.GoogleAuthException;
 
 public class GoogleAuthenticatorTest {

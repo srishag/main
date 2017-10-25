@@ -13,7 +13,6 @@ import org.junit.rules.ExpectedException;
 
 import com.google.api.services.people.v1.model.Person;
 
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -21,7 +20,6 @@ import seedu.address.logic.commands.exceptions.GoogleAuthException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.testutil.TypicalGoogleContactsList;
 
 public class SyncCommandTest {
