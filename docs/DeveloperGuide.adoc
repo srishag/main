@@ -360,6 +360,39 @@ The command also returns to the command box the number of being displayed.
 
 // end::findbytags[]
 
+=== Implementation of Facebook Field
+Each contact can now support a Facebook field, which is displayed on the person card.
+
+A few things to note about this field:
+
+1. The Facebook field is not compulsory when adding to the addressbook.
+
+2. If user does not input the Facebook field, removes it using the edit command, it will be replaced by
+the default Facebook homepage, "https://facebook.com/".
+
+3. User can input Facebook field in 2 ways, the first is the entire link to the Facebook profile.
+In this case, the program should take the entire link and store it as the Facebook field of the user.
+
+4. If the user enters in the Facebook field a String that is not a link, the programe should **assume** that what was
+entered was instead the **profile name** or **profile number** of the contact, and thus append the Facebook link prefix to it. +
+For example, if user enters f/john for a contact, john's Facebook field would be "https://facebook.com/john/".
+
+To perform steps 3 and 4, the program checks if that is entered in the field is a valid URL. If it is, then assume
+it is 3. and store the entire URL as the Facebook field. Else, append and store that String as the Facebook field, which is 4.
+
+In future update, will allow select command to open the facebook field instead of google searching the contact's name.
+
+==== Design Considerations
+
+**Aspect:** Empty or non-valid URL Facebook fields +
+**Alternative 1 (current choice):** Turn it into a proper URL by appending the correct prefixes. +
+**Pros:** More readable on the Person Card, user can easily see if there is a mistake. +
+**Cons:** May create some strange links. +
+**Alternative 2:** Leave it as it is. +
+**Pros:** Simple to implement. +
+**Cons:** Will look strange and ambiguous on the Person Card, especially if user made a mistake and does not notice. +
+
+---
 
 // tag::undoredo[]
 === Undo/Redo mechanism
