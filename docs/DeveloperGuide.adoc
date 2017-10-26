@@ -360,6 +360,57 @@ The command also returns to the command box the number of being displayed.
 
 // end::findbytags[]
 
+=== Birthdays
+
+Users are able to store birthdays of their contacts by inputting in the format of DDMMYYYY when adding a person, using the prefix `b/`.
+
+In general, the ability to store a person’s birthday was implemented by adding it to the component of `Person`.
+
+//UML diagram to be added
+
+=== Representation of birthdays
+
+Storing of birthdays is facilitated by an immutable `Birthday` object, which is a component of `Person`.
+
+The main classes that implement this attribute is: AddCommand, AddCommandParser, EditCommand, EditCommandParser, Person, PersonListCard.
+
+However, birthday has been made to be an optional field to include while adding a new contact.
+
+=== Validation of birthday
+
+Birthday uses the DateFormat and the SimpleDateFormat packages to check if the birthday entered is a valid date.
+For example, 31/02/1998 is not a valid date.
+
+Validation of birthday is implemented this way:
+[source,java]
+---
+public static boolean isValidBirthday(String test) {
+    if (test.matches(BIRTHDAY_VALIDATION_REGEX)) {
+        try {
+            DateFormat df = new SimpleDateFormat(DATE_FORMAT);
+            df.setLenient(false);
+            df.parse(test);
+            return true;
+        } catch (ParseException pe) {
+            return false;
+        }
+    } else if (test.matches("")) {
+        return true;
+    }
+    return false;
+}
+---
+
+==== Design Considerations
+**Aspect:** Representation of birthdays +
+**Alternative 1 (current choice):** Display the birthday of the specified contact after the address of the contact +
+**Pros:** It follows the format of the person card +
+**Cons:** It is difficult to recognise the number displayed is the birthday as it is merely represented as an eight digit number +
+
+**Alternative 2:** Display the birthday with "Birthday:" in front +
+**Pros:** Simple and easy to understand +
+**Cons:** Inconsistent with the format in person card
+
 
 // tag::undoredo[]
 === Undo/Redo mechanism
