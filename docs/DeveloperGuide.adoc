@@ -217,6 +217,15 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 This section describes some noteworthy details on how certain features are implemented.
 
+// tag::Google Implementation[]
+=== Google Implementation
+
+The Addressbook now incorporates and integrates Google Contacts and Gmail which will enhance its usability. Firstly, a
+`Login Command` is implemented so that the Addressbook can authenticate with the google servers when the user has successfully logged in.
+The new `GoogleAuthenticator` class is created run the authentication process.
+
+The `Login Command` sequence diagram is as follows:
+
 
 // tag::EasyFind[]
 === EasyFind mechanism

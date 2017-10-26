@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FACEBOOKADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GOOGLEID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -20,6 +21,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.FacebookAddress;
+import seedu.address.model.person.GoogleId;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -37,9 +39,8 @@ public class AddCommandParser implements Parser<AddCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_ADDRESS, PREFIX_BIRTHDAY, PREFIX_FACEBOOKADDRESS, PREFIX_TAG);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+                        PREFIX_ADDRESS, PREFIX_BIRTHDAY, PREFIX_FACEBOOKADDRESS, PREFIX_TAG, PREFIX_GOOGLEID);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS,
                 PREFIX_PHONE, PREFIX_EMAIL)) {
@@ -65,8 +66,14 @@ public class AddCommandParser implements Parser<AddCommand> {
             }
 
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+            Optional<String> googleIdOptional = argMultimap.getValue(PREFIX_GOOGLEID);
+            GoogleId id = new GoogleId("not GoogleContact");
+            if (googleIdOptional.isPresent()) {
+                id = ParserUtil.parseGoogleId(argMultimap.getValue(PREFIX_GOOGLEID)).get();
+            }
 
-            ReadOnlyPerson person = new Person(name, phone, email, address, birthday, facebookAddress, tagList);
+            ReadOnlyPerson person = new Person(name, phone, email, address, birthday, facebookAddress, tagList, id);
+
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {

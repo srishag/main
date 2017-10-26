@@ -12,8 +12,12 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.GetRedirectUrlEvent;
+import seedu.address.commons.events.ui.LoadLoginEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+
 import seedu.address.model.person.ReadOnlyPerson;
+
 
 /**
  * The Browser Panel of the App.
@@ -25,11 +29,12 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
 
     private static final String FXML = "BrowserPanel.fxml";
-
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+
 
     @FXML
     private WebView browser;
+
 
     public BrowserPanel() {
         super(FXML);
@@ -40,6 +45,7 @@ public class BrowserPanel extends UiPart<Region> {
         loadDefaultPage();
         registerAsAnEventHandler(this);
     }
+
 
     private void loadPersonPage(ReadOnlyPerson person) {
         loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
@@ -69,5 +75,16 @@ public class BrowserPanel extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
+    }
+
+    @Subscribe
+    private void loadLoginUrl(LoadLoginEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPage(event.getAuthenticationUrl());
+    }
+    @Subscribe
+    private void getRedirectUrlEvent (GetRedirectUrlEvent event) {
+        logger.info((LogsCenter.getEventHandlingLogMessage(event)));
+        event.setRedirectUrl(browser.getEngine().getLocation());
     }
 }

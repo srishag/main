@@ -12,6 +12,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.FacebookAddress;
+import seedu.address.model.person.GoogleId;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -39,6 +40,9 @@ public class XmlAdaptedPerson {
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
+    @XmlElement(required = true)
+    private String id;
+
     /**
      * Constructs an XmlAdaptedPerson.
      * This is the no-arg constructor that is required by JAXB.
@@ -62,6 +66,7 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+        id = source.getGoogleId().value;
     }
 
     /**
@@ -82,6 +87,7 @@ public class XmlAdaptedPerson {
         final Birthday birthday = new Birthday(this.birthday);
         final FacebookAddress facebookAddress = new FacebookAddress(this.facebookAddress);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, birthday, facebookAddress, tags);
+        final GoogleId id = new GoogleId(this.id);
+        return new Person(name, phone, email, address, birthday, facebookAddress, tags, id);
     }
 }

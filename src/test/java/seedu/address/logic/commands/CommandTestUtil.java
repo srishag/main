@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.GoogleAuthException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
@@ -42,6 +43,7 @@ public class CommandTestUtil {
     public static final String VALID_BIRTHDAY_BOB = "08081984";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_GOOGLEID_AMY = "not GoogleContact";
     public static final String VALID_FACEBOOKADDRESS_AMY = "https://www.facebook.com/amy/";
     public static final String VALID_FACEBOOKADDRESS_BOB = "https://www.facebook.com/bob/";
     public static final String VALID_ADDRESS_CORNIE = "Block 123, Cornie Street 3";
@@ -94,7 +96,7 @@ public class CommandTestUtil {
             CommandResult result = command.execute();
             assertEquals(expectedMessage, result.feedbackToUser);
             assertEquals(expectedModel, actualModel);
-        } catch (CommandException ce) {
+        } catch (CommandException | GoogleAuthException ce) {
             throw new AssertionError("Execution of command should not fail.", ce);
         }
     }
@@ -114,7 +116,7 @@ public class CommandTestUtil {
         try {
             command.execute();
             fail("The expected CommandException was not thrown.");
-        } catch (CommandException e) {
+        } catch (CommandException | GoogleAuthException e) {
             assertEquals(expectedMessage, e.getMessage());
             assertEquals(expectedAddressBook, actualModel.getAddressBook());
             assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());

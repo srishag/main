@@ -22,6 +22,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.FacebookAddress;
+import seedu.address.model.person.GoogleId;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -110,9 +111,10 @@ public class EditCommand extends UndoableCommand {
         FacebookAddress updatedFacebookAddress = editPersonDescriptor.getFacebookAddress()
                 .orElse(personToEdit.getFacebookAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        GoogleId googleId = editPersonDescriptor.getId().orElse(personToEdit.getGoogleId());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
-                updatedBirthday, updatedFacebookAddress, updatedTags);
+                updatedBirthday, updatedFacebookAddress, updatedTags, googleId);
 
     }
 
@@ -146,6 +148,7 @@ public class EditCommand extends UndoableCommand {
         private Birthday birthday;
         private FacebookAddress facebookAddress;
         private Set<Tag> tags;
+        private GoogleId iD;
 
         public EditPersonDescriptor() {}
 
@@ -157,6 +160,7 @@ public class EditCommand extends UndoableCommand {
             this.birthday = toCopy.birthday;
             this.facebookAddress = toCopy.facebookAddress;
             this.tags = toCopy.tags;
+            this.iD = toCopy.iD;
         }
 
         /**
@@ -223,6 +227,14 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(tags);
         }
 
+        public void setId (GoogleId iD) {
+            this.iD = iD;
+        }
+
+        public Optional<GoogleId> getId() {
+            return Optional.ofNullable(iD);
+        }
+
         @Override
         public boolean equals(Object other) {
             // short circuit if same object
@@ -242,6 +254,8 @@ public class EditCommand extends UndoableCommand {
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
+                    && getTags().equals(e.getTags())
+                    && getId().equals(e.getId())
                     && getBirthday().equals(e.getBirthday())
                     && getFacebookAddress().equals(e.getFacebookAddress())
                     && getTags().equals(e.getTags());

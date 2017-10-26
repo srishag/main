@@ -7,6 +7,7 @@
         <address isPrivate="false">4th street</address>
         <birthday isPrivate="false">06091971</birthday>
         <facebookAddress isPrivate="false">https://www.facebook.com/</facebookAddress>
+        <id isPrivate="false">not GoogleContact</id>
     </persons>
     <persons>
         <name>Ruth Mueller</name>
@@ -15,6 +16,7 @@
         <address isPrivate="false">81th street</address>
         <birthday isPrivate="false">02121983</birthday>
         <facebookAddress isPrivate="false"></facebookAddress>
+        <id isPrivate="false">not GoogleContact</id>
     </persons>
     <persons>
         <name>Heinz Kurz</name>
@@ -23,6 +25,7 @@
         <address isPrivate="false">wall street</address>
         <birthday isPrivate="false">19041999</birthday>
         <facebookAddress isPrivate="false"></facebookAddress>
+        <id isPrivate="false">not GoogleContact</id>
     </persons>
     <persons>
         <name>Cornelia Meier</name>
@@ -31,6 +34,7 @@
         <address isPrivate="false">10th street</address>
         <birthday isPrivate="false">02011990</birthday>
         <facebookAddress isPrivate="false"></facebookAddress>
+        <id isPrivate="false">not GoogleContact</id>
     </persons>
     <persons>
         <name>Werner Meyer</name>
@@ -39,6 +43,7 @@
         <address isPrivate="false">michegan ave</address>
         <birthday isPrivate="false">29021992</birthday>
         <facebookAddress isPrivate="false"></facebookAddress>
+        <id isPrivate="false">not GoogleContact</id>
     </persons>
     <persons>
         <name>Lydia Kunz</name>
@@ -47,6 +52,7 @@
         <address isPrivate="false">little tokyo</address>
         <birthday isPrivate="false">09021994</birthday>
         <facebookAddress isPrivate="false"></facebookAddress>
+        <id isPrivate="false">not GoogleContact</id>
     </persons>
     <persons>
         <name>Anna Best</name>
@@ -55,6 +61,7 @@
         <address isPrivate="false">4th street</address>
         <birthday isPrivate="false">19021990</birthday>
         <facebookAddress isPrivate="false"></facebookAddress>
+        <id isPrivate="false">not GoogleContact</id>
     </persons>
     <persons>
         <name>Stefan Meier</name>
@@ -63,6 +70,7 @@
         <address isPrivate="false">little india</address>
         <birthday isPrivate="false">22021996</birthday>
         <facebookAddress isPrivate="false"></facebookAddress>
+        <id isPrivate="false">not GoogleContact</id>
     </persons>
     <persons>
         <name>Martin Mueller</name>
@@ -71,5 +79,6 @@
         <address isPrivate="false">chicago ave</address>
         <birthday isPrivate="false">27061994</birthday>
         <facebookAddress isPrivate="false"></facebookAddress>
+        <id isPrivate="false">not GoogleContact</id>
     </persons>
 </addressbook>
