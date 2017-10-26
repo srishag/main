@@ -17,6 +17,7 @@ public class BirthdayTest {
         assertFalse(Birthday.isValidBirthday("1203 1996")); // spaces within digits
         assertFalse(Birthday.isValidBirthday("15/09/1993")); // forward slash within digits
         assertFalse(Birthday.isValidBirthday("15.09.1993")); // fullstops within digits
+        assertFalse(Birthday.isValidBirthday("99999999")); // invalid date
 
         // valid birthdays
         assertTrue(Birthday.isValidBirthday(""));
