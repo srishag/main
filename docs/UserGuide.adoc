@@ -546,6 +546,11 @@ Alternatively, you can exit by clicking on the RED X at the top right of the App
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+=== Google integration
+
+The Address book is now integrated with the ability to import/ export / sync contacts from google contacts.
+
+
 == Transferring of Data to Another Device
 Do you wish to transfer the data stored in Contact'em on one device to another?
 For example, you may wish to use Contact'em on device B with the data currently stored on device A.
