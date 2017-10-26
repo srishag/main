@@ -39,7 +39,7 @@ public class Birthday {
      * Returns if a given string is a valid person birthday.
      */
     public static boolean isValidBirthday(String test) {
-        if (test.matches(BIRTHDAY_VALIDATION_REGEX) || test.equals("")) {
+        if (test.matches(BIRTHDAY_VALIDATION_REGEX)) {
             try {
                 DateFormat df = new SimpleDateFormat(DATE_FORMAT);
                 df.setLenient(false);
@@ -48,6 +48,8 @@ public class Birthday {
             } catch (ParseException pe) {
                 return false;
             }
+        } else if(test.matches("")) {
+            return true;
         }
         return false;
     }
