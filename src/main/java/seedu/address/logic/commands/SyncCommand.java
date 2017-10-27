@@ -82,8 +82,8 @@ public class SyncCommand extends UndoableCommand {
                     if (googlePerson.getResourceName().substring(8).equals(addressPerson.getGoogleId().value)) {
                         exists = true;
                         try {
-                            if (!addressPerson.isSameStateAs(convertToAddress(googlePerson))) {
-                                model.updatePerson(addressPerson, convertToAddress(googlePerson));
+                            if (!addressPerson.isSameStateAs(convertToAddress(googlePerson, addressPerson))) {
+                                model.updatePerson(addressPerson, convertToAddress(googlePerson, addressPerson));
                                 contactsSyncedCount++;
                             }
                         } catch (IllegalValueException | NullPointerException | PersonNotFoundException e) {
@@ -113,7 +113,8 @@ public class SyncCommand extends UndoableCommand {
     /**
      * Creates a person in addressBook based on the contact in google contact
      */
-    public ReadOnlyPerson convertToAddress(Person person) throws IllegalValueException, NullPointerException {
+    public ReadOnlyPerson convertToAddress(Person person, ReadOnlyPerson addressPerson)
+            throws IllegalValueException, NullPointerException {
 
         Name name = new Name(person.getNames().get(0).getGivenName());
         Phone phone = new Phone(person.getPhoneNumbers().get(0).getValue().replace(" ", ""));
@@ -123,9 +124,7 @@ public class SyncCommand extends UndoableCommand {
         Birthday birthday = new Birthday("");
         FacebookAddress facebookAddress = new FacebookAddress("");
 
-        Tag tag = new Tag("GoogleContact");
-        Set<Tag> tags = new HashSet<>();
-        tags.add(tag);
+        Set<Tag> tags = addressPerson.getTags();
 
         return new seedu.address.model.person.Person(name, phone, email, address, birthday, facebookAddress, tags, id);
     }

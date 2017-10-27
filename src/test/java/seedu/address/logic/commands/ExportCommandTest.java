@@ -82,7 +82,7 @@ public class ExportCommandTest {
     }
 
     /**
-     * Test for no converting a addressbook contact into a google contact
+     * Test for converting a addressbook contact into a google contact
      */
     @Test
     public void execute_updateAddressBookContactToGoogle() throws Exception {
