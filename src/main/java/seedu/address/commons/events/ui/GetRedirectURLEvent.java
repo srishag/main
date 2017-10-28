@@ -6,12 +6,12 @@ import seedu.address.commons.events.BaseEvent;
 /**
  * Represents a selection change in the Person List Panel
  */
-public class GetRedirectURLEvent extends BaseEvent {
+public class GetRedirectUrlEvent extends BaseEvent {
 
 
-    private String reDirectURL;
+    private String reDirectUrl;
 
-    public GetRedirectURLEvent() {
+    public GetRedirectUrlEvent() {
     }
 
     @Override
@@ -20,12 +20,12 @@ public class GetRedirectURLEvent extends BaseEvent {
     }
 
     //Setter of redirect URL
-    public void setRedirectURL(String reDirectURL) {
-        this.reDirectURL = reDirectURL;
+    public void setRedirectUrl(String reDirectUrl) {
+        this.reDirectUrl = reDirectUrl;
     }
 
     //Getter
-    public String getReDirectURL(){
-        return reDirectURL;
+    public String getReDirectUrl() {
+        return reDirectUrl;
     }
 }
