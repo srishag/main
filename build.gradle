@@ -32,14 +32,11 @@ allprojects {
         mavenCentral()
         maven { url "https://repo.eclipse.org/content/repositories/egit-releases/" }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        flatDir {
+            dirs 'Library'
+        }
     }
 
-    dependencies {
-        compile 'com.google.apis:google-api-services-oauth2:v1-rev136-1.23.0'
-        compile 'com.google.apis:google-api-services-people:v1-rev153-1.23.0'
-        compile 'com.google.apis:google-api-services-gmail:v1-rev72-1.23.0'
-        compile 'com.google.api-client:google-api-client:1.23.0'
-    }
 
     // This part is similar to global variables
     // Access them by using double-quoted strings (GStrings) and referencing by $ e.g. "Variable contains $Variable"
@@ -53,7 +50,7 @@ allprojects {
         monocleVersion = '1.8.0_20'
         checkstyleVersion = '8.1'
 
-        libDir = 'lib'
+        LibraryDir = 'Library'
     }
 
     checkstyle {
@@ -69,6 +66,7 @@ allprojects {
     }
 
     dependencies {
+        compile fileTree(dir: 'Library', include: ['*.jar'])
         compile group: 'org.fxmisc.easybind', name: 'easybind', version: '1.0.3'
         compile "org.controlsfx:controlsfx:$controlsFxVersion"
         compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"

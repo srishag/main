@@ -9,10 +9,10 @@ import seedu.address.commons.events.BaseEvent;
 public class LoadLoginEvent extends BaseEvent {
 
 
-    private final String authenticationURL;
+    private final String authenticationUrl;
 
-    public LoadLoginEvent(String authenticationURL) {
-        this.authenticationURL = authenticationURL;
+    public LoadLoginEvent(String authenticationUrl) {
+        this.authenticationUrl = authenticationUrl;
     }
 
     @Override
@@ -20,7 +20,7 @@ public class LoadLoginEvent extends BaseEvent {
         return this.getClass().getSimpleName();
     }
 
-    public String getAuthenticationURL() {
-        return authenticationURL;
+    public String getAuthenticationUrl() {
+        return authenticationUrl;
     }
 }

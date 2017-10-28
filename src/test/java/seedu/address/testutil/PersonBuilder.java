@@ -6,6 +6,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.FacebookAddress;
+import seedu.address.model.person.GoogleId;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -23,7 +25,9 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_BIRTHDAY = "14051998";
+    public static final String DEFAULT_FACEBOOK_ADDRESS = "https://www.facebook.com/default_address_for_testing/";
     public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_GOOGLEID = "not GoogleContact";
 
     private Person person;
 
@@ -34,9 +38,13 @@ public class PersonBuilder {
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Birthday defaultBirthday = new Birthday(DEFAULT_BIRTHDAY);
+            FacebookAddress defaultFacebookAddress = new FacebookAddress(DEFAULT_FACEBOOK_ADDRESS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
+
+            GoogleId defaultGoogleId = new GoogleId(DEFAULT_GOOGLEID);
             this.person = new Person(defaultName, defaultPhone, defaultEmail,
-                    defaultAddress, defaultBirthday, defaultTags);
+                    defaultAddress, defaultBirthday, defaultFacebookAddress, defaultTags, defaultGoogleId);
+
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -98,6 +106,13 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code FacebookAddress} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withFacebookAddress(String facebookAddress) {
+        this.person.setFacebookAddress(new FacebookAddress(facebookAddress));
+        return this;
+    }
+    /**
      * Sets the {@code Email} of the {@code Person} that we are building.
      */
     public PersonBuilder withEmail(String email) {
@@ -110,6 +125,19 @@ public class PersonBuilder {
     }
 
     /**
+
+     * Sets the {@code GoogleID} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withGoogleId(String googleId) {
+        try {
+            this.person.setId(new GoogleId(googleId));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("GoogleID is expected to be unique.");
+        }
+        return this;
+    }
+    /**
+     *
      * Sets the {@code Birthday} of the {@code Person} that we are building.
      */
     public PersonBuilder withBirthday(String birthday) {

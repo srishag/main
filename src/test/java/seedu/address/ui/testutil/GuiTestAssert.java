@@ -36,6 +36,7 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
         assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
         assertEquals(expectedPerson.getBirthday().value, actualCard.getBirthday());
+        assertEquals(expectedPerson.getFacebookAddress().value, actualCard.getFacebookAddress());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
     }

@@ -19,15 +19,26 @@ public class PersonContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        Set<Tag> personTags = person.getTags();
-        String tempAllTagNames = "";
-        for (Tag tag: personTags) {
-            tempAllTagNames = tempAllTagNames + tag.getTagName() + " ";
-        }
-        final String allTagNames = tempAllTagNames;
+        String allTagNames = getStringOfAllTagNamesOfPerson(person);
 
         return keywords.stream()
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(allTagNames, keyword));
+    }
+
+
+    private String getStringOfAllTagNamesOfPerson(ReadOnlyPerson person) {
+        Set<Tag> personTags = getAllTagsOfPerson(person);
+
+        StringBuilder allTagNames = new StringBuilder();
+        for (Tag tag : personTags) {
+            allTagNames.append(tag.getTagName() + " ");
+        }
+
+        return allTagNames.toString().trim();
+    }
+
+    private Set<Tag> getAllTagsOfPerson(ReadOnlyPerson person) {
+        return person.getTags();
     }
 
     @Override
