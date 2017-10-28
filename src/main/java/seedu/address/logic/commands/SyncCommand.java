@@ -140,10 +140,14 @@ public class SyncCommand extends UndoableCommand {
         Address address = new Address(contact.getAddress().value);
         GoogleId id = new GoogleId("not GoogleContact");
         Set<Tag> tags = new HashSet<>();
-        Birthday birthday = new Birthday("");
-        FacebookAddress facebookAddress = new FacebookAddress("");
+        for (Tag existingTags : contact.getTags()){
+            if(!existingTags.getTagName().equals("GoogleContact")){
+                tags.add(existingTags);
+            }
+        }
 
-        return new seedu.address.model.person.Person(name, phone, email, address, birthday, facebookAddress, tags, id);
+        return new seedu.address.model.person.Person(name, phone, email, address,
+                contact.getBirthday(), contact.getFacebookAddress(), tags, id);
     }
 
     /**
