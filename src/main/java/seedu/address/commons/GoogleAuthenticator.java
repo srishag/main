@@ -107,4 +107,20 @@ public class GoogleAuthenticator {
 
         return connections;
     }
+
+    /**
+     * Obtain transport from google
+     * @return transport
+     */
+    public HttpTransport getTransport() {
+        return transport;
+    }
+
+    /**
+     * Obtain JsonFactory from google
+     * @return JsonFactory
+     */
+    public JacksonFactory getJsonFactory() {
+        return jsonFactory;
+    }
 }

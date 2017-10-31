@@ -1,15 +1,8 @@
 package seedu.address.model;
 
-import java.io.IOException;
 import java.util.function.Predicate;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-
-import com.google.api.services.gmail.Gmail;
-import com.google.api.services.gmail.model.Message;
 import javafx.collections.ObservableList;
-import seedu.address.model.person.Email;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
