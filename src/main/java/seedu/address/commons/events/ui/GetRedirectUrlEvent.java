@@ -7,27 +7,24 @@ import seedu.address.commons.events.BaseEvent;
  */
 public class GetRedirectUrlEvent extends BaseEvent {
 
-        private String reDirectUrl;
+    private String reDirectUrl;
 
-        public GetRedirectUrlEvent() {
-        }
+    public GetRedirectUrlEvent() {
+    }
 
-        @Override
-        public String toString() {
+    @Override
+    public String toString() {
             return this.getClass().getSimpleName();
         }
 
-        //Setter of redirect URL
-        public void setRedirectUrl(String reDirectUrl) {
+    //Setter of redirect URL
+    public void setRedirectUrl(String reDirectUrl) {
             this.reDirectUrl = reDirectUrl;
         }
 
-        //Getter
-        public String getReDirectUrl() {
+    //Getter
+    public String getReDirectUrl() {
             return reDirectUrl;
         }
-    }
-
 }
 
-}
