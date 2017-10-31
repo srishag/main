@@ -83,7 +83,7 @@ public class BrowserPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPage(event.getAuthenticationUrl());
     }
-  
+
     @Subscribe
     private void getRedirectUrlEvent (GetRedirectUrlEvent event) {
         logger.info((LogsCenter.getEventHandlingLogMessage(event)));
