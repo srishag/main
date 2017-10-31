@@ -112,6 +112,7 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    //@@author PokkaKiyo
     public void setBirthday(Birthday birthday) {
         this.birthday.set(requireNonNull(birthday));
     }
@@ -120,6 +121,7 @@ public class Person implements ReadOnlyPerson {
     public ObjectProperty<Birthday> birthdayProperty() {
         return birthday;
     }
+    //@@author
 
     @Override
     public Birthday getBirthday() {

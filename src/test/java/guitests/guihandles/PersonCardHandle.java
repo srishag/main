@@ -71,9 +71,12 @@ public class PersonCardHandle extends NodeHandle<Node> {
     public String getBirthday() {
         return birthdayLabel.getText();
     }
+
+    //@@author PokkaKiyo
     public String getFacebookAddress() {
         return facebookAddressLabel.getText();
     }
+    //@@author
 
     public List<String> getTags() {
         return tagLabels
