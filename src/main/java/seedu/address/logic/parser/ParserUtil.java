@@ -117,8 +117,8 @@ public class ParserUtil {
         requireNonNull(emailBody);
         return emailBody.isPresent() ? Optional.of(new String(emailBody.get())) : Optional.empty();
     }
- 
-    /*  
+
+    /**
      * Parses a {@code Optional<String> facebookAddress} into an {@code Optional<FacebookAddress>}
      * if {@code facebookAddress} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
