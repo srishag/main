@@ -105,6 +105,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author PokkaKiyo
     /**
      * Sets the {@code FacebookAddress} of the {@code Person} that we are building.
      */
@@ -112,6 +113,8 @@ public class PersonBuilder {
         this.person.setFacebookAddress(new FacebookAddress(facebookAddress));
         return this;
     }
+    //@@author
+
     /**
      * Sets the {@code Email} of the {@code Person} that we are building.
      */
