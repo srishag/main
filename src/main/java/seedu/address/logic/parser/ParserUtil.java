@@ -101,7 +101,8 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> emailSubject} into an {@code Optional<String>} if {@code emailSubject} is present.
+     * Parses a {@code Optional<String> emailSubject} into an {@code Optional<String>}
+     * if {@code emailSubject} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<String> parseEmailSubject(Optional<String> emailSubject) throws IllegalValueException {

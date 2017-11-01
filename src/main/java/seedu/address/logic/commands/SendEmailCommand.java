@@ -12,6 +12,7 @@ import javax.mail.internet.MimeMessage;
 
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.Message;
+
 import seedu.address.commons.GetGmailService;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -20,6 +21,9 @@ import seedu.address.logic.commands.exceptions.GoogleAuthException;
 import seedu.address.model.ModelManager;
 import seedu.address.model.person.ReadOnlyPerson;
 
+/**
+ * Sends an email with optional subject and body to the person of the specified index
+ */
 public class SendEmailCommand extends Command {
     public static final String COMMAND_WORD = "send";
     public static final String COMMAND_ALIAS = "sd";
@@ -67,7 +71,8 @@ public class SendEmailCommand extends Command {
         String personToSendEmail = lastShownList.get(targetIndex.getZeroBased()).getEmail().toString();
 
         try {
-            MimeMessage emailToBeSent = ModelManager.createEmail(personToSendEmail, EMAIL_SENDER, emailSubject, emailBody);
+            MimeMessage emailToBeSent = ModelManager.createEmail(personToSendEmail,
+                    EMAIL_SENDER, emailSubject, emailBody);
             Gmail gmailService = new GetGmailService().getGmailService();
             message = ModelManager.sendMessage(gmailService, EMAIL_SENDER, emailToBeSent);
         } catch (MessagingException | IOException E) {

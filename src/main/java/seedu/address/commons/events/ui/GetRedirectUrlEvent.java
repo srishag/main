@@ -14,17 +14,17 @@ public class GetRedirectUrlEvent extends BaseEvent {
 
     @Override
     public String toString() {
-            return this.getClass().getSimpleName();
-        }
+        return this.getClass().getSimpleName();
+    }
 
     //Setter of redirect URL
     public void setRedirectUrl(String reDirectUrl) {
-            this.reDirectUrl = reDirectUrl;
-        }
+        this.reDirectUrl = reDirectUrl;
+    }
 
     //Getter
     public String getReDirectUrl() {
-            return reDirectUrl;
-        }
+        return reDirectUrl;
+    }
 }
 
