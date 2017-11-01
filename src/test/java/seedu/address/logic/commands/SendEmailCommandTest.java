@@ -17,6 +17,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import com.google.api.services.gmail.Gmail;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -25,6 +26,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.exceptions.GoogleAuthException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -39,14 +41,20 @@ public class SendEmailCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+    /**
+     * Checks if Login is authenticated. In this case it is not and GoogleAuthException is thrown.
+     */
+    @Before
+    public void execute_require_login() throws Exception {
+        thrown.expect(GoogleAuthException.class);
+    }
+
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
-    @Test
     public Gmail getGmailService() throws IOException, GoogleAuthException {
         return new GetGmailService().getGmailService();
     }
 
-    @Test
     public MimeMessage getValidEmail(String personToSendEmail, String emailSubject,
                                      String emailBody) throws MessagingException {
         return ModelManager.createEmail(personToSendEmail, EMAIL_SENDER, emailSubject, emailBody);
