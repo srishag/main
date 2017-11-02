@@ -120,9 +120,11 @@ public class AddressBookParser {
         case UndoCommand.COMMAND_ALIAS:
             return new UndoCommand();
 
+        //@@author srishag
         case SendEmailCommand.COMMAND_WORD:
         case SendEmailCommand.COMMAND_ALIAS:
             return new SendEmailCommandParser().parse(arguments);
+        //@@author
 
         case RedoCommand.COMMAND_WORD:
         case RedoCommand.COMMAND_ALIAS:

@@ -91,6 +91,7 @@ public class ParserUtil {
         return googleId.isPresent() ? Optional.of(new GoogleId(googleId.get())) : Optional.empty();
     }
 
+    //@author srishag
     /**
      * Parses a {@code Optional<String> birthday} into an {@code Optional<Birthday>} if {@code birthday} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -100,7 +101,6 @@ public class ParserUtil {
         return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
     }
 
-    //@@author PokkaKiyo
     /**
      * Parses a {@code Optional<String> emailSubject} into an {@code Optional<String>}
      * if {@code emailSubject} is present.
@@ -119,7 +119,9 @@ public class ParserUtil {
         requireNonNull(emailBody);
         return emailBody.isPresent() ? Optional.of(new String(emailBody.get())) : Optional.empty();
     }
+    //@author
 
+    //@@author PokkaKiyo
     /**
      * Parses a {@code Optional<String> facebookAddress} into an {@code Optional<FacebookAddress>}
      * if {@code facebookAddress} is present.

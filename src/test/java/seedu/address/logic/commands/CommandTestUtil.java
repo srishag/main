@@ -73,10 +73,12 @@ public class CommandTestUtil {
     public static final String INVALID_BIRTHDAY_DESC = " " + PREFIX_BIRTHDAY + "070199"; // format should be ddMMyyyy
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
+    //@@author srishag
     public static final String EMAIL_SENDER = "me"; //unique userId as recognized by Google
 
     public static final String VALID_EMAIL_SUBJECT = "Meeting agenda for next week.";
     public static final String VALID_EMAIL_BODY = "See you next Monday at 10 am.//Thanks.";
+    //@@author
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
