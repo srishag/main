@@ -141,8 +141,8 @@ public class SyncCommand extends UndoableCommand {
         Address address = new Address(contact.getAddress().value);
         GoogleId id = new GoogleId("not GoogleContact");
         Set<Tag> tags = new HashSet<>();
-        for (Tag existingTags : contact.getTags()){
-            if(!existingTags.getTagName().equals("GoogleContact")){
+        for (Tag existingTags : contact.getTags()) {
+            if (!existingTags.getTagName().equals("GoogleContact")) {
                 tags.add(existingTags);
             }
         }

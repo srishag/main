@@ -117,8 +117,8 @@ public class ExportCommand extends Command {
         GoogleId id = new GoogleId(createdContact.getResourceName().substring(8));
         Tag tag = new Tag("GoogleContact");
         Set<Tag> tags = new HashSet<>();
-        for (Tag existingTags : contact.getTags()){
-            if(!existingTags.getTagName().equals("GoogleContact")){
+        for (Tag existingTags : contact.getTags()) {
+            if (!existingTags.getTagName().equals("GoogleContact")) {
                 tags.add(existingTags);
             }
         }
@@ -127,7 +127,7 @@ public class ExportCommand extends Command {
 
         return new seedu.address.model.person.Person(contact.getName(), contact.getPhone(),
                 contact.getEmail(), contact.getAddress(), contact.getBirthday(),
-                contact.getFacebookAddress(),tags, id);
+                contact.getFacebookAddress(), tags, id);
     }
 
     /**
