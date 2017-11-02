@@ -22,6 +22,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.testutil.TypicalGoogleContactsList;
 
+//@@author PhuaJunJie
 public class SyncCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();

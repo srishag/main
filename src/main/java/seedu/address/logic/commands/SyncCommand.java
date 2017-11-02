@@ -24,6 +24,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
+//@@author PhuaJunJie
 /**
  * Syncs all existing google contacts in the addressbook with the contacts in google contacts
  * Contacts in google contacts takes higher precedence.

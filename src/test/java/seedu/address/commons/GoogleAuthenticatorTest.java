@@ -8,6 +8,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.exceptions.GoogleAuthException;
 
+//@@author PhuaJunJie
 public class GoogleAuthenticatorTest {
 
     @Rule
