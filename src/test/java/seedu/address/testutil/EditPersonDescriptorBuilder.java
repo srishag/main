@@ -97,8 +97,9 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    //@@author PokkaKiyo
     /**
-     * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code facebookAddress} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withFacebookAddress(String facebookAddress) {
         try {
@@ -108,6 +109,7 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
+    //@@author
 
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}

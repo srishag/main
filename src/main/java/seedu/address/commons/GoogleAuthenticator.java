@@ -18,6 +18,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.GetRedirectUrlEvent;
 import seedu.address.logic.commands.exceptions.GoogleAuthException;
 
+//@@author PhuaJunJie
 /**
  * This class contains methods of the google Auth Api. For authentication after login.
  */
@@ -106,5 +107,21 @@ public class GoogleAuthenticator {
         List<Person> connections = response.getConnections();
 
         return connections;
+    }
+
+    /**
+     * Obtain transport from google
+     * @return transport
+     */
+    public HttpTransport getTransport() {
+        return transport;
+    }
+
+    /**
+     * Obtain JsonFactory from google
+     * @return JsonFactory
+     */
+    public JacksonFactory getJsonFactory() {
+        return jsonFactory;
     }
 }

@@ -8,7 +8,7 @@ import seedu.address.logic.commands.FindAlphabetCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsAlphabetsPredicate;
 
-
+//@@author PhuaJunJie
 /**
  * Parses input arguments and creates a new FindCommand object
  */

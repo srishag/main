@@ -100,6 +100,26 @@ public class ParserUtil {
         return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
     }
 
+    //@@author PokkaKiyo
+    /**
+     * Parses a {@code Optional<String> emailSubject} into an {@code Optional<String>}
+     * if {@code emailSubject} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseEmailSubject(Optional<String> emailSubject) throws IllegalValueException {
+        requireNonNull(emailSubject);
+        return emailSubject.isPresent() ? Optional.of(new String(emailSubject.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> emailBody} into an {@code Optional<String>} if {@code emailBody} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseEmailBody(Optional<String> emailBody) throws IllegalValueException {
+        requireNonNull(emailBody);
+        return emailBody.isPresent() ? Optional.of(new String(emailBody.get())) : Optional.empty();
+    }
+
     /**
      * Parses a {@code Optional<String> facebookAddress} into an {@code Optional<FacebookAddress>}
      * if {@code facebookAddress} is present.
@@ -111,6 +131,7 @@ public class ParserUtil {
         return facebookAddress.isPresent()
                 ? Optional.of(new FacebookAddress(facebookAddress.get())) : Optional.empty();
     }
+    //@@author
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.

@@ -24,7 +24,9 @@ import seedu.address.logic.commands.ListTagsCommand;
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SendEmailCommand;
 import seedu.address.logic.commands.SyncCommand;
+
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.exceptions.GoogleAuthException;
@@ -84,19 +86,23 @@ public class AddressBookParser {
         case FindCommand.COMMAND_ALIAS:
             return new FindCommandParser().parse(arguments);
 
+        //@@author PokkaKiyo
         case FindPersonsWithTagsCommand.COMMAND_WORD:
         case FindPersonsWithTagsCommand.COMMAND_ALIAS1:
         case FindPersonsWithTagsCommand.COMMAND_ALIAS2:
             return new FindPersonsWithTagsCommandParser().parse(arguments);
+        //@@author
 
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
 
+        //@@author PokkaKiyo
         case ListTagsCommand.COMMAND_WORD:
         case ListTagsCommand.COMMAND_WORD_ALIAS1:
         case ListTagsCommand.COMMAND_WORD_ALIAS2:
             return new ListTagsCommand();
+        //@@author
 
         case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALIAS:
@@ -113,6 +119,10 @@ public class AddressBookParser {
         case UndoCommand.COMMAND_WORD:
         case UndoCommand.COMMAND_ALIAS:
             return new UndoCommand();
+
+        case SendEmailCommand.COMMAND_WORD:
+        case SendEmailCommand.COMMAND_ALIAS:
+            return new SendEmailCommandParser().parse(arguments);
 
         case RedoCommand.COMMAND_WORD:
         case RedoCommand.COMMAND_ALIAS:
