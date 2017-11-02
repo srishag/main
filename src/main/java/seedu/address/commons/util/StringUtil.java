@@ -40,7 +40,7 @@ public class StringUtil {
         }
         return false;
     }
-
+    //@@author PhuaJunJie
     /**
      * Returns true if the {@code sentence} contains the {@code word}.
      *   Ignores case, but only a partial word match is required.
