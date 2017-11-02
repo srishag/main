@@ -112,7 +112,7 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
-    //@@author PokkaKiyo
+    //@@author srishag
     public void setBirthday(Birthday birthday) {
         this.birthday.set(requireNonNull(birthday));
     }
@@ -121,12 +121,12 @@ public class Person implements ReadOnlyPerson {
     public ObjectProperty<Birthday> birthdayProperty() {
         return birthday;
     }
-    //@@author
 
     @Override
     public Birthday getBirthday() {
         return birthday.get();
     }
+    //@@author
 
     public void setFacebookAddress(FacebookAddress facebookAddress) {
         this.facebookAddress.set(facebookAddress);

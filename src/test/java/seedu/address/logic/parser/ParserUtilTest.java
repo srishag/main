@@ -166,6 +166,7 @@ public class ParserUtilTest {
         assertEquals(expectedEmail, actualEmail.get());
     }
 
+    //@@author srishag
     @Test
     public void parseBirthday_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
@@ -190,6 +191,7 @@ public class ParserUtilTest {
 
         assertEquals(expectedBirthday, actualBirthday.get());
     }
+    //@@author
 
     @Test
     public void parseTags_null_throwsNullPointerException() throws Exception {

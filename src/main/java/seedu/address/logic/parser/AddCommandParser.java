@@ -53,11 +53,13 @@ public class AddCommandParser implements Parser<AddCommand> {
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
 
+            //@@author srishag
             Optional<String> birthdayOptional = argMultimap.getValue(PREFIX_BIRTHDAY);
             Birthday birthday = new Birthday("");
             if (birthdayOptional.isPresent()) {
                 birthday = ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY)).get();
             }
+            //@@author
 
             //@@author PokkaKiyo
             FacebookAddress facebookAddress = new FacebookAddress("");

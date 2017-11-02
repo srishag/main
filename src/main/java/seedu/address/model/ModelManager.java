@@ -111,6 +111,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    //@@author srishag
     /**
      * Create a MimeMessage using the parameters provided.
      *
@@ -180,6 +181,7 @@ public class ModelManager extends ComponentManager implements Model {
         message.setRaw(encodedEmail);
         return message;
     }
+    //@@author
 
 
     //=========== Filtered Person List Accessors =============================================================

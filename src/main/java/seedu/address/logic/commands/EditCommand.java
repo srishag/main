@@ -203,6 +203,7 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
+        //@@author srishag
         public void setBirthday(Birthday birthday) {
             this.birthday = birthday;
         }
@@ -210,6 +211,7 @@ public class EditCommand extends UndoableCommand {
         public Optional<Birthday> getBirthday() {
             return Optional.ofNullable(birthday);
         }
+        //@@author
 
         //@@author PokkaKiyo
         public void setFacebookAddress(FacebookAddress facebookAddress) {

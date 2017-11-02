@@ -58,8 +58,10 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS))
                     .ifPresent(editPersonDescriptor::setAddress);
 
+            //@@author srishag
             ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY))
                     .ifPresent(editPersonDescriptor::setBirthday);
+            //@@author
 
             ParserUtil.parseFacebookAddress(argMultimap.getValue(PREFIX_FACEBOOKADDRESS))
                     .ifPresent(editPersonDescriptor::setFacebookAddress);
