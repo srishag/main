@@ -518,6 +518,25 @@ There is no need to save manually.
 === Google integration
 
 The Address book is now integrated with the ability to import/ export / sync contacts from google contacts.
+Being able to access contacts from your mobile phones is the quickest way to get things done. Export your contact directly to your android phones through google contacts to have your contacts on the go. Simply synchronize Contact’em whenever you make changes to your Google Contacts and your contacts will be updated.
+
+Enter `login` to link Contact’em with Google Contacts. When the login page is loaded, simply key in your credentials and you will be redirected to google contacts.
+
+Enter `import` to have all your Google Contacts transfered to Contact’em.
+
+Enter `sync` to have your contacts in Google Contacts updated to Contact’em. Contacts in Google Contacts takes higher precedence and when sync is used, contacts in Contact’em will be updated to the contacts in Google Contacts.
+
+Use `export` to have all your contacts in Contact’em transferred to Google Contacts.
+
+==== Usage Notes
+When using `import` / `export` / `sync` command, your browser must have google contacts page loaded
+    If you have switched the page, you will have to login again to use the commands.
+
+If a google contact fails to import or sync, please check the contact to make sure that the parameters are valid.
+    Please check the reference guide on the validity of the parameters
+
+All google contacts imported are tagged with a ‘GoogleContact’ tag to indicate that they are linked to Google Contacts.
+    Contacts deleted in Google Contacts will not be deleted in Contact’em when synced. It will simply lose its `GoogleContact` tag.
 
 
 == Transferring of Data to Another Device
