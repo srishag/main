@@ -8,7 +8,6 @@ import seedu.address.commons.events.BaseEvent;
  */
 public class GetRedirectUrlEvent extends BaseEvent {
 
-
     private String reDirectUrl;
 
     public GetRedirectUrlEvent() {
@@ -29,3 +28,4 @@ public class GetRedirectUrlEvent extends BaseEvent {
         return reDirectUrl;
     }
 }
+
