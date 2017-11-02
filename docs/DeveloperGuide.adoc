@@ -380,80 +380,181 @@ image::FindAlphabetsCommand.png[width="800"]
 // tag::findbytags[]
 === Finding contacts by tags
 
-The application allows users to find contacts based on their tags. The figure below helps illustrate this process, and more detailed explanations and elaborations are given in the sub-sections below.
+The application allows users to find contacts based on their tags. The command word is findtags, and the alternatives are findtag and ft. The following subsections explain how the program is supposed to function given this command, and how it is implemented.
 
-image::FindContactsByTagsLogic.png[width="800"]
-Figure 3.2.1 Interaction for execution of `find by tags` command
+==== User Inputs and Expected Actions/Results
+
+In general, there are three ways users will use this command. Some pseudo-code is provided for each of these 3 scenarios to aid understanding.
+
+**Scenario 1**
+
+In the first scenario, also the most basic, the user only specifies tags to **include**. For this, the program should simply return all contacts that have at least one of the tags.
+
+**Example Command 1:** findtags friends +
+Expected result: returns contacts that are tagged “friends”.
+
+**Pseudo-code snippet**
+[source,java]
+----
+for each tag : contact.getTagList {
+if (keywordsToInclude.hasAnyMatchingWordsWith(tag.value)) {
+    return true;
+    }
+}
+return false;
+----
+
+**Scenario 2**
+
+In the second scenario, the user only specifies tags to **exclude**. To specify a tag to exclude, user includes a hyphen -  before the keyword to be excluded. In this case, the program should return all contacts that do not have any of these tags to be excluded.
+
+Note that this includes contacts with no tags.
+
+
+**Example Command 2:** findtags -colleagues +
+Expected result: returns all contacts not tagged “colleagues”.
+
+**Pseudo-code snippet**
+[source,java]
+----
+for each tag : contact.getTagList {
+if (keywordsToExclude.hasAnyMatchingWordsWith(tag.value)) {
+return false;
+    }
+}
+return true;
+----
+
+**Scenario 3**
+
+In the third scenario, the user specifies **both tags to include and exclude**. The program will return all contacts that have: +
+1) ANY of the tags to include. +
+2) NONE of the tags to exclude.
+
+**Example Command 3:** findtags friends -colleagues +
+Expected result: returns all contacts tagged “friends” but not tagged “colleagues”.
+
+**Pseudo-code snippet:**
+[source,java]
+----
+boolean personHasAtLeastOneMatchingTag = false;
+
+for each tag : contact.getTagList {
+     if keywordsToExclude.hasAnyMatchingWordsWith(tag.value)
+                return false;
+     If keywordsToInclude.hasAnyMatchingWordsWith(person.getTagList()
+                 personHasAtLeastOneMatchingTag = true;
+}
+
+if (personHasAtLeastOneMatchingTag)
+      return true;
+else
+      return false;
+----
+
+[NOTE]
+There must be at least one parameter specified, but the order of parameters entered does not matter.
 
 ==== Brief Overview of Command Procedure
 
-1. User enters the command and arguments, which is parsed by `AddressbookParser`.
-2. `AddressbookParser` deciphers the command by calling `FindPersonsWithTagsCommandParser`.
-3. The latter returns a list of keywords based on the arguments.
-4. These keywords and instantiated within a `PersonContainsTagsPredicate`.
-5. The command, `FindPersonsWithTagsCommand`, is created and returned to the UI, with the above predicate as an attribute.
-6. The command is executed, list is updated, and shows to user the new filtered list.
+The activity diagram below helps illustrate the process of the command, from user input to execution and updating the Model.
+As seen from the diagram above, the entire command consists of 4 main steps:
+
+image::activity diagram findtags.png[width="200"]
+
+
+1) The parameters are parsed and deciphered. +
+2) Using the deciphered information from step 1, the Predicate and Command are constructed. +
+3) Command is executed. +
+4) Predicate is called and the Model is updated.
+
+More detailed explanations and elaborations are given in the subsections below.
+
 
 ==== Implementation of Parser
 
-As mentioned in 3.2.1, after receiving the command word and arguments, AddressbookParser will call the parser, `FindPersonsWithTagsCommandParser`.
+he parser associated with this command is FindPersonsWithTagsCommandParser, under seedu.address.logic.parser. Due to this parser’s long name, it will be referred to as the “command parser” or simply “parser” within this section to aid clarity.
 
-The parser first checks if the arguments are empty.
+When this command is invoked by the user, this command parser will be constructed by AddressbookParser, receiving the user’s input as a String parameter. The command parser deciphers the input, and eventually returns a FindPersonsWithTagsCommand for execution.
 
-[WARNING]
-If the arguments are empty, the ParseException error will be thrown.
+The command parser first checks if the arguments are valid. If the arguments are empty, a ParseException will be thrown for invalid arguments. If the arguments are valid (non-empty), they are split into individual keywords and stored in a String array tagKeywords.
 
-If the arguments are valid (non-empty), they are split and stored in a String array `tagKeywords`.
+image::StringToTagKeywords.png[width="800"]
 
-[NOTE]
-The condition for splitting is the existence of spaces between argument words, as all tags in the App cannot contain spaces either.
+As the diagram above shows, the keywords are split by the spaces in between each word, and each of these words are stored in a String array tagKeywords.
 
-Each keyword is then passed into the parser's private method, `getImprovedList()`, to retrieve a more comprehensive list of tags.
-This method is merely a crude way of improving convenience for the user when spelling tags, and it adds these tags to the list in addition to the original tags.
+The array of keywords is then passed into the parser’s private method, getImprovedList(), to retrieve a more comprehensive list of tags in addition to the original list of keywords.
 
 [NOTE]
-The added tags are formed by appending the letter 's' to tags which do not end with the letter 's', and vice-versa.
+The details of **getImprovedList** is not crucially important to the functionality of the parser, and is thus omitted here, but included in the addendum in Section 3.3.6.
 
-[WARNING]
-This method, however, does not account for words where the singular and plural forms do not defer by just a single letter 's', such as "family", and "families".
+After obtaining the improved list, the parser constructs the command Predicate (details in Section 3.3.4), and the Command itself (details in the Section 3.3.5). Then it returns the Command to AddressbookParser and then the LogicManager for execution.
 
-[TIP]
-It is therefore suggested that future developers improve this method by implementing a proper dictionary/library for this method, after weighing the costs and the benefits.
-
-The new list of keywords is used for forming the predicate needed for determining the right contact to show to the user.
-
-Finally, after creating the predicate, the command, `FindPersonByTagsCommand` will be instantiated with the predicate as an attribute, and returned to the UI.
-
-The details of which will be provided in the subsections below.
 
 ==== Implementation of Predicate
 
-The predicate associated with this functionality is `PersonContainsTagsPredicate`.
+The Predicate associated with this functionality is called PersonContainsTagsPredicate, found in seedu.address.model.person. This Predicate is constructed with the keywords generated in the command parser (details in the above section). After this Predicate is constructed, it is used in the constructor of a FindPersonsWithTagsCommand and becomes that command’s attribute.
 
-Every contact in the application is checked by the predicate.
+When the command is executed, this Predicate will be called for every contact in the address book to determine if a contact should be filtered or not based on the user’s inputs.
 
-To determine if a contact should be returned, the `test` method of the predicate is called, which returns a boolean value, true if this contact should be returned, and false otherwise.
+To do so, the test method of this Predicate is used, which returns a Boolean value: true if this contact should be returned, and false otherwise.
 
-Within this method, all of the person's tags, if any, are appended to a string.
+Within this test method, there are 3 steps which occur:
 
-[NOTE]
-If a contact has tags "friends" and "colleagues", the resulting String is "friends colleagues".
+image::path diagram findtags.png[width="800"]
 
-This String is then compared with the list of keywords generated by the parser earlier.
 
-[NOTE]
-For the current version of this command, as long as a single tag matches the keywords, the contact will be returned.
-However, in future iterations of the command, there will be choices to exclude certain tags, more details in future updates.
+The diagram above gives a brief overview of the three steps executed in the Predicate.
+
+Firstly, all of the person’s tags, if any, are appended to a String allTagNames. For example, if a contact has tags "friends" and "colleagues", the resulting String is "friends colleagues".
+
+Secondly, the list of keywords, now an attribute of the Predicate, is split into 2 lists, keywordsToInclude and keywordsToExclude. Note that it is possible for either list to be empty.
+
+Last but not least, the comparison is made between allTagNames and the 2 lists generated in the second part, to return the appropriate Boolean value. Below is the code snippet used in the comparison. Note that this is not the only way to implement this comparison.
+
+**Code Snippet:**
+[source,java]
+----
+//For scenario 2
+if (onlyKeywordsToExcludeAreSpecified) {
+            return !(keywordsToExclude.stream()
+                    .anyMatch((keyword -> StringUtil.containsWordIgnoreCase(allTagNames, keyword))));
+}
+
+
+//For scenarios 1 and 3
+return keywordsToInclude.stream()
+    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(allTagNames, keyword)) &&
+    !(keywordsToExclude.stream()
+    .anyMatch((keyword -> StringUtil.containsWordIgnoreCase(allTagNames, keyword))));
+----
 
 ==== Implementation of Command
+The command executed in this feature is FindPersonsWithTagsCommand, found in seedu.address.logic.commands.
 
-After the parser returns the command, assuming that no exceptions are thrown so far, the command is executed.
+After the command parser returns the command to AddressbookParser and then to the LogicManager, assuming that no exceptions are thrown so far, the command is executed, by calling its execute() method.
 
-The current model invokes its updateFilteredPersonList method, with the predicate as describe above as its parameter.
+In this execute() method, the current model invokes its updateFilteredPersonList method, with the command Predicate as described above as its parameter.
 
-This runs the test method of the predicate, which returns the appropriate contacts, and updates the model and contacts displayed in the UI.
+This runs the test method of the Predicate, which determines the appropriate contacts to filter. This causes the model to update accordingly and filters the contacts displayed in the UI.
 
-The command also returns to the command box the number of being displayed.
+Finally, this command returns a CommandResult, which includes the number of contacts being displayed. This value is displayed on the UI command box for the user’s reference.
+
+==== Addendum
+
+**Implementation of getImprovedList** +
+In the command parser (as detailed in Section 3.3.3), there exists a private method getImprovedList(), which takes in the list of keywords entered by the user and attempts to return a more comprehensive one in addition to the original list, to account for grammatical differences in plural and singular forms of the keywords.
+
+To give an example, if the keyword is “friend”, the extra keyword generated is “friends” and vice-versa. This works for “exclusion-keywords” (keywords with a dash in front) as well.
+
+What is of note is that this method is merely a crude, quality-of-life improvement for the user. It simply generates the keywords by appending the letter ‘s’ to keywords which do not end with ‘s’, and removes ‘s’ from words that do end with the letter ‘s’.
+
+As a result, it does not account for words where singular and plural forms differ by more than just a single letter ‘s’, such as “family” and “families”.
+
+It is therefore recommended that future developers improve this method, perhaps by implementing a proper dictionary or library for this method, after weighing the costs and benefits. Alternatively, this idea could be further improved or refined on with a Lookup Table to save file storage space.
+
+Nevertheless, this improvement is meant to increase user enjoyment and convenience. The bonus of organising and spelling tags in an organised manner is still on the user. To that end,  if the case arises that, based on user feedback, this improvement does more harm than good, it is recommended that this feature be removed or made optional. Although, this is not something that the current developers foresee will occur based on how people in general spell their tags.
+
 
 ==== Design Considerations
 
@@ -464,6 +565,9 @@ The command also returns to the command box the number of being displayed.
 **Alternative 2:** Import appropriate library for getting singular/plural words. +
 **Pros:** More likely to account for all words. +
 **Cons:** May impact performance. +
+**Alternative 3:** Implement a Look-up Table. +
+**Pros:** Can account for more words than alternative 1, and less impactful on performance and storage than alternative 2. +
+**Cons:** Might be difficult to implement and may not be as comprehensive as alternative 2. +
 
 ---
 

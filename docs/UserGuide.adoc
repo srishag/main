@@ -315,7 +315,7 @@ Searching by tag `family` will attempt to find contacts with tags `family` and `
 Therefore, the onus is still on the user to specify the spelling of the tags.
 
 ==== Specifying Exclusions
-`SINCE V1.3`
+`since v1.4`
 
 You can now specify tags to be excluded in this command, by simply adding a dash ('-') before keywords specified for exclusion.
 This feature will help you better manage your contacts.
@@ -333,7 +333,7 @@ In this case, the application will show **all** contacts who are #NOT# tagged co
 
 
 === List tags : `listtags` +
-`coming in v1.3`
+`since v1.3`
 
 Lists all existing tags in the App +
 
