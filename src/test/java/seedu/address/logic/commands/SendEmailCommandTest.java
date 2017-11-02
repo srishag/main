@@ -1,14 +1,11 @@
 package seedu.address.logic.commands;
 
-import static junit.framework.TestCase.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_SENDER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BODY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_SUBJECT;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.io.IOException;
@@ -17,26 +14,31 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import com.google.api.services.gmail.Gmail;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import seedu.address.commons.GetGmailService;
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
+
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.exceptions.GoogleAuthException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
 
+import seedu.address.commons.GetGmailService;
+
+import seedu.address.commons.core.index.Index;
+
+
 /**
  * Contains integration tests (interaction with the Model) and unit tests for SendEmailCommand.
  */
 public class SendEmailCommandTest {
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -48,8 +50,6 @@ public class SendEmailCommandTest {
     public void execute_require_login() throws Exception {
         thrown.expect(GoogleAuthException.class);
     }
-
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     public Gmail getGmailService() throws IOException, GoogleAuthException {
         return new GetGmailService().getGmailService();
@@ -92,7 +92,8 @@ public class SendEmailCommandTest {
         assertCommandSuccess(sendEmailCommand, model, expectedMessage, expectedModel);
 
     }
-/*
+
+    /*
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
@@ -113,7 +114,8 @@ public class SendEmailCommandTest {
 
         assertCommandFailure(sendEmailCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
-*/
+    */
+
     //Email subject and email body specified
     @Test
     public void execute_allEmailFieldsSpecifiedUnfilteredList_success() throws Exception {
@@ -132,7 +134,7 @@ public class SendEmailCommandTest {
 
     //Only index and email subject specified
     @Test
-    public void execute_EmailSubjectSpecifiedUnfilteredList_success() throws Exception {
+    public void execute_emailSubjectSpecifiedUnfilteredList_success() throws Exception {
         ReadOnlyPerson recipientOfEmail = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         SendEmailCommand sendEmailCommand = prepareCommand(INDEX_FIRST_PERSON, VALID_EMAIL_SUBJECT,
                 "");
@@ -148,7 +150,7 @@ public class SendEmailCommandTest {
 
     //Only index and email body specified
     @Test
-    public void execute_EmailBodySpecifiedUnfilteredList_success() throws Exception {
+    public void execute_emailBodySpecifiedUnfilteredList_success() throws Exception {
         ReadOnlyPerson recipientOfEmail = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         SendEmailCommand sendEmailCommand = prepareCommand(INDEX_FIRST_PERSON, "", VALID_EMAIL_BODY);
 
