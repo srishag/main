@@ -1,5 +1,6 @@
 package seedu.address.logic.commands.exceptions;
 
+//@@author PhuaJunJie
 /**
  * Represents an error which occurs during authentication process
  */

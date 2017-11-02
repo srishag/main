@@ -25,6 +25,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.TypicalGoogleContactsList;
 
+//@@author PhuaJunJie
 public class ExportCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -82,7 +83,7 @@ public class ExportCommandTest {
     }
 
     /**
-     * Test for no converting a addressbook contact into a google contact
+     * Test for converting a addressbook contact into a google contact
      */
     @Test
     public void execute_updateAddressBookContactToGoogle() throws Exception {

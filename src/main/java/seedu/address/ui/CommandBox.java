@@ -41,6 +41,7 @@ public class CommandBox extends UiPart<Region> {
         historySnapshot = logic.getHistorySnapshot();
     }
 
+    //@@author PhuaJunJie
     /**
      * Handles the key release event, {@code keyEvent}.
      */
@@ -68,6 +69,7 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
+    //@@author
     /**
      * Handles the key press event, {@code keyEvent}.
      */

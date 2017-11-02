@@ -76,7 +76,7 @@ public class BrowserPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
     }
-
+    //@@author PhuaJunJie
     @Subscribe
     private void loadLoginUrl(LoadLoginEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

@@ -10,6 +10,7 @@ import com.google.api.services.people.v1.model.Person;
 
 import seedu.address.logic.commands.exceptions.GoogleAuthException;
 
+//@@author PhuaJunJie
 /**
  * This class builds a list of Person from google contacts
  */
