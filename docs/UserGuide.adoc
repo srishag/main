@@ -452,6 +452,38 @@ When the application is closed, command history is wiped.
 Command history is not saved on exit, therefore,
 it will only show the command history from when the application was opened.
 
+// tag::gmail[]
+=== Gmail integration : `send`
+
+You can now use Contact'em to send e-mails to your contacts using the Command Line Interface of the application. +
+
+==== The Command
+Format: `send INDEX [es/EMAIL SUBJECT] [eb/EMAIL BODY]`
+
+==== Usage Examples
+* `send 1 es/Meeting for next Monday. eb/Looking forward to next Monday.` +
+Sends an e-mail using the e-mail account you used to login to the contact at index 1 with the subject `Meeting for next Monday.`
+and with the body `Looking forward to next Monday.`
+* `send 8 es/Merry Christmas! eb/Wishing you and your family a very Merry Christmas!` +
+Sends an e-mail using the e-mail account you used to login to the contact at index 8 with the subject `Merry Christmas!`
+and with the body `Wishing you and your family a very Merry Christmas!`
+
+==== More Information
+You must login to a specific e-mail account before you can start using this feature.
+
+==== Common Problems
+* Unable to send an e-mail after using other commands except `login` +
+Ensure that you only `send` command is used once you login to your Google Account. +
+* Unable to send e-mail despite providing the correct format for the command +
+Ensure that your desktop is connected to the Internet.
+* Unable to send e-mails to a particular account
+If a contact has several e-mails, it is likely that the e-mail you want to send to is not present in Contact'em.
+Please ensure you have entered the necessary details for each contact.
+
+[NOTE]
+`Index` is the #currently displayed# number corresponding to the contact, which may differ if the current displayed list has been filtered.
+
+
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
@@ -559,6 +591,7 @@ Enter `sync` to have your contacts in Google Contacts updated to Contact’em. C
 
 Use `export` to have all your contacts in Contact’em transferred to Google Contacts.
 
+
 ==== Usage Notes
 When using `import` / `export` / `sync` command, your browser must have google contacts page loaded
     If you have switched the page, you will have to login again to use the commands.
@@ -568,7 +601,6 @@ If a google contact fails to import or sync, please check the contact to make su
 
 All google contacts imported are tagged with a ‘GoogleContact’ tag to indicate that they are linked to Google Contacts.
     Contacts deleted in Google Contacts will not be deleted in Contact’em when synced. It will simply lose its `GoogleContact` tag.
-
 
 == Transferring of Data to Another Device
 Do you wish to transfer the data stored in Contact'em on one device to another?
