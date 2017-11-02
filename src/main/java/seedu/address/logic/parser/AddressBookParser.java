@@ -86,19 +86,23 @@ public class AddressBookParser {
         case FindCommand.COMMAND_ALIAS:
             return new FindCommandParser().parse(arguments);
 
+        //@@author PokkaKiyo
         case FindPersonsWithTagsCommand.COMMAND_WORD:
         case FindPersonsWithTagsCommand.COMMAND_ALIAS1:
         case FindPersonsWithTagsCommand.COMMAND_ALIAS2:
             return new FindPersonsWithTagsCommandParser().parse(arguments);
+        //@@author
 
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
 
+        //@@author PokkaKiyo
         case ListTagsCommand.COMMAND_WORD:
         case ListTagsCommand.COMMAND_WORD_ALIAS1:
         case ListTagsCommand.COMMAND_WORD_ALIAS2:
             return new ListTagsCommand();
+        //@@author
 
         case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALIAS:

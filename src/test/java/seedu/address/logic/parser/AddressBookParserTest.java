@@ -270,16 +270,17 @@ public class AddressBookParserTest {
         listOfAllCommandWordsAndAliases.add(ListCommand.COMMAND_ALIAS);
     }
 
+    //@@author PokkaKiyo
     @Test
     public void parseCommand_listTags() throws Exception {
-        assertTrue(parser.parseCommand(ListTagsCommand.COMMAND_WORD) instanceof ListTagsCommand);
-        assertTrue(parser.parseCommand(ListTagsCommand.COMMAND_WORD + " 3") instanceof ListTagsCommand);
+        assertTrue(parser.parseCommand(ListTagsCommand.COMMAND_WORD_ALIAS1) instanceof ListTagsCommand);
+        assertTrue(parser.parseCommand(ListTagsCommand.COMMAND_WORD_ALIAS1 + " 3") instanceof ListTagsCommand);
     }
 
     @Test
     public void parseCommand_listTags_alias1() throws Exception {
-        assertTrue(parser.parseCommand(ListTagsCommand.COMMAND_WORD) instanceof ListTagsCommand);
-        assertTrue(parser.parseCommand(ListTagsCommand.COMMAND_WORD + " 3") instanceof ListTagsCommand);
+        assertTrue(parser.parseCommand(ListTagsCommand.COMMAND_WORD_ALIAS2) instanceof ListTagsCommand);
+        assertTrue(parser.parseCommand(ListTagsCommand.COMMAND_WORD_ALIAS2 + " 3") instanceof ListTagsCommand);
     }
 
     @Test
@@ -287,6 +288,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ListTagsCommand.COMMAND_WORD) instanceof ListTagsCommand);
         assertTrue(parser.parseCommand(ListTagsCommand.COMMAND_WORD + " 3") instanceof ListTagsCommand);
     }
+    //@@author
 
     @Test
     public void parseCommand_select() throws Exception {

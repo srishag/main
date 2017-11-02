@@ -100,6 +100,7 @@ public class ParserUtil {
         return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
     }
 
+    //@@author PokkaKiyo
     /**
      * Parses a {@code Optional<String> emailSubject} into an {@code Optional<String>}
      * if {@code emailSubject} is present.
@@ -130,6 +131,7 @@ public class ParserUtil {
         return facebookAddress.isPresent()
                 ? Optional.of(new FacebookAddress(facebookAddress.get())) : Optional.empty();
     }
+    //@@author
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.

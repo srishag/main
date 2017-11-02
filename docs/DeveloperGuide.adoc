@@ -226,6 +226,122 @@ The new `GoogleAuthenticator` class is created run the authentication process.
 
 The `Login Command` sequence diagram is as follows:
 
+image::LoginSequence.png[width="800"]
+_Figure 3.1.1 : Login command sequence diagram_
+
+The login page will be loaded in the browser panel after the login command have successfully executed. This is for the user to authenticate with google. The command will then redirect the user to the Google contacts webpage after successful authentication.
+
+==== GoogleContactsBuilder class and GoogleID attribute
+The GoogleContactsBuilder class can be instantiated to access the list of contacts from Google and also to obtain the PeopleService object needed to modify the contacts in Google. This is done by making use of the methods in the GoogleAuthenticator object to obtain the tokens and PeopleService from Google.
+
+The token required for authentication is obtained from the redirect url after loging in. This means that the user must stay on the Google contacts page in the browser panel when instantiating this class (For import / export / sync
+commands). The class diagram for GoogleContactsBuilder is shown below.
+
+image::Class diagram.png[width="800"]
+_Figure 3.1.1.1 : GoogleContactsBuilder class diagram_
+
+Every Person in the address book now has a new attribute known as the GoogleID. This ID refers to its own GoogleID in Google contacts. Contacts that are not synced with Google will have a null GoogleID.
+
+==== Import Command
+After successful authentication, the user can proceed to import contacts from his google account. The import command creates a GoogleContactsBuilder object to retrieve the list of google contacts from the server.
+
+The Import command sequence diagram is as follows:
+
+image::Import command.png[width="800"]
+_Figure 3.1.2.1 : Import command sequence diagram_
+
+When the command is executed, the list of Google contacts will be looped through and compared with the contacts within the address book. If the GoogleID of a particular Google contact is not found within the address book, the contact will then be imported. This is represented by the code snippet as shown below.
+
+`Pseudo-code snippet:`
+
+ for each contact: googleContactsList {
+     if contact does not exists in address book
+                model.addPerson(newPerson(contact))
+}
+
+`Scenario 1`
+
+The newPerson(...) method shown in the above code snippet successfully creates a Person object using the attributes from the Google contact and it will be added to the address book. The GoogleID of the contact will also be instantiated within the new Person Object. The Person will also be given a GoogleContact Tag.
+
+`Scenario 2`
+The newPerson(...) method fails to create a Person object from the Google contact. The Google contact will fail to import. Reasons for the above mentioned failure includes,
+Google contact might have invalid attributes. Eg: Invalid email format
+Google contact might not have all attributes required to create a new Person object.
+	All the following attributes must be present: Name, Phone, Email and Address.
+
+A message detailing the result of the command will be displayed to inform the user on the number of contacts imported or the number of contacts and a string of names of those that failed to be imported.
+
+==== Export Command
+After successful authentication, the user can next proceed to export contacts from Contact’em into his google account. The command creates a GoogleContactsBuilder object to retrieve peopleService from the server needed to modify/add contacts in Google.
+
+The Export command sequence diagram is as follows:
+
+image::Export command.png[width="800"]
+_Figure 3.1.3.1 : Export command sequence diagram_
+
+When the command is executed, the list of contacts in the address book will be looped through to check whether they are a google contact. If they not, they will be exported to Google contacts. This is represented by the code snippet shown below.
+
+`Pseudo-code snippet:`
+
+ for each contact: addressBookList{
+     if contact does not have a GoogleContact Tag
+                New googleContact = createGoogleContact (contact);
+                googleContact = builder.getPeopleService().people() createContact(googleContact).
+                                            execute();
+                model.updatePerson(contact, newAddressBookContact(contact));
+}
+
+`Scenario 1`
+
+The createGoogleContact method shown in the above code snippet successfully creates a GooglePerson that will be exported to Google contacts. The address book will then update the contact by instantiating its GoogleID attribute retrieved from the newly created Google contact and adding a GoogleContacts Tag to it.
+
+`Scenario 2`
+
+The contact might not be exported to Google due to the failure in connecting to Google servers. This is can be due to token expiring.
+
+A message detailing the result of the command will be displayed to inform the user on the number of contacts imported or failed to import.
+
+=== Sync Command
+After successful authentication, the user can proceed to sync contacts in his address book. The sync command creates a GoogleContactsBuilder object to retrieve the list of Google contacts from the server. In this case, the contacts in Google contacts takes higher precedence and any changes to them will be updated to the contacts in Contact’em when the user syncs the address book. However, any changes made to the contact in the Contact’em will not be transferred to Google contacts when the user syncs but instead, its attribute will be restored to its original value.
+
+The Sync command sequence diagram is as follows:
+
+image::Sync command.png[width="800"]
+_Figure 3.1.4.1 : Sync command sequence diagram_
+
+When the command is executed, the list of contacts in the Contact’em will be looped through to check if they exists within the list of Google contacts as well. If they are, a Person object based on the Google contact will be created and it will be used to compare with the contact in the address book. This is represented by the code snippet shown below.
+
+`Pseudo-code snippet:`
+
+ for each contact: addressBookList{
+     for each googlecontact : googleContactsList{
+                if contact shares a similar googleID with the googlecontact
+                exists = true;
+                           If convertToAddress(googlecontact) is not the same as contact
+                                     model.updatePerson(contact, convertToAddress(googlecontact))
+      }
+     If contact is a google contact but exists == false
+                 model.updatePerson(contact, removeGoogleContactStatus(contact));
+}
+
+`Scenario 1`
+
+The attributes of the contact are the same as itself in Google contacts. No syncing will be done on that contact.
+
+`Scenario 2`
+
+The attributes of the contact are different from itself in Google contacts. The newly created contact will replace the previous contact as shown in the above code snippet in model.updatePerson(...).
+
+`Scenario 3`
+
+The attributes of the Google contact is invalid and hence no new Person is created to compare itself with the contact in the address book. The contact in the Contact’em will not be synced.
+
+`Scenario 4`
+
+The contact in the addressbook is thought to exist in Google contacts but is not found. The removeGoogleContactStatus() method shown in the above code snippet will remove the Google contact status of the contact.
+
+A message detailing the result of the command will be displayed to inform the user on the number of contacts synced and the number of contacts and a string of names of those that failed to sync.
+
 
 // tag::EasyFind[]
 === EasyFind mechanism
@@ -258,8 +374,12 @@ image::FindAlphabetsCommand.png[width="800"]
 **Alternative 2:** Just replace `FindCommand` with `FindAlphabetsCommand` +
 **Pros:** The results displayed will not change even after the user has pressed `enter`. It can also help the user to speed up the process of searching for contacts as they user does not have to input the full name +
 **Cons:** Removing the find Command may affect other functions of the Addressbook.
+// end::EasyFind[]
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 // tag::findbytags[]
 === Finding contacts by tags
 
