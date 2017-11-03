@@ -78,7 +78,7 @@ public class GoogleAuthenticator {
 
     /**
      * Checks if google login is valid
-     * Returns true if valid (i.e. index is not -1) or false if not valid(i.e. index is -1)
+     * @returns true if valid (i.e. index is not -1) or false if not valid(i.e. index is -1)
      */
     public boolean checkValidTokenIndex(int index) {
         if(index == -1) {
