@@ -16,7 +16,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new SendEmailCommand object
  */
-public class SendEmailCommandParser {
+public class SendEmailCommandParser implements Parser<SendEmailCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the SendEmailCommand
      * and returns an SendEmailCommand object for execution.

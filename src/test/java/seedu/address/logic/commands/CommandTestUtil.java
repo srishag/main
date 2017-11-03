@@ -5,6 +5,8 @@ import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL_BODY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL_SUBJECT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FACEBOOKADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -78,6 +80,12 @@ public class CommandTestUtil {
 
     public static final String VALID_EMAIL_SUBJECT = "Meeting agenda for next week.";
     public static final String VALID_EMAIL_BODY = "See you next Monday at 10 am.//Thanks.";
+
+    public static final String VALID_EMAIL_SUBJECT_DESC = PREFIX_EMAIL_SUBJECT + VALID_EMAIL_SUBJECT;
+    public static final String VALID_EMAIL_BODY_DESC = PREFIX_EMAIL_BODY + VALID_EMAIL_BODY;
+
+    public static final String EMPTY_EMAIL_SUBJECT_DESC = PREFIX_EMAIL_SUBJECT + " ";
+    public static final String EMPTY_EMAIL_BODY_DESC = PREFIX_EMAIL_BODY + " ";
     //@@author
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
