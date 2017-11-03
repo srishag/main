@@ -5,6 +5,7 @@ import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BODY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_SUBJECT;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -40,6 +41,9 @@ public class SendEmailCommandTest {
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     private Model model;
+    private Index index;
+    private String subject;
+    private String body;
 
     @Before
     public void setUp() {
@@ -49,18 +53,19 @@ public class SendEmailCommandTest {
     /**
      * Checks if login is authenticated. In this case it is not, GoogleAuthException is thrown.
      */
-    @Before
-    public void execute_require_login() throws Exception {
-        thrown.expect(GoogleAuthException.class);
+    @Test
+    public void executeLogin() throws Exception {
+        LoginCommand loginCommand = new LoginCommand();
+        CommandResult commandResult = loginCommand.execute();
     }
 
     @Test
-    public void execute_validIndexUnfilteredList_success() {
-        Index lastPersonIndex = Index.fromOneBased(model.getFilteredPersonList().size());
+    public void execute_validIndexUnfilteredList_success() throws Exception {
+        SendEmailCommand command = prepareCommand(INDEX_FIRST_PERSON, VALID_EMAIL_SUBJECT, VALID_EMAIL_BODY);
+        Model modelStub = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        String expectedMessage = SendEmailCommand.MESSAGE_SUCCESS;
 
-        assertExecutionSuccess(INDEX_FIRST_PERSON, VALID_EMAIL_SUBJECT, VALID_EMAIL_BODY);
-        assertExecutionSuccess(INDEX_THIRD_PERSON, VALID_EMAIL_SUBJECT, VALID_EMAIL_BODY);
-        assertExecutionSuccess(lastPersonIndex, VALID_EMAIL_SUBJECT, VALID_EMAIL_BODY);
+        assertCommandSuccess(command, model, expectedMessage, modelStub);
     }
 
     @Test
@@ -72,10 +77,13 @@ public class SendEmailCommandTest {
     }
 
     @Test
-    public void execute_validIndexFilteredList_success() {
+    public void execute_validIndexFilteredList_success() throws Exception {
         showFirstPersonOnly(model);
+        SendEmailCommand command = prepareCommand(INDEX_FIRST_PERSON, VALID_EMAIL_SUBJECT, VALID_EMAIL_BODY);
+        Model modelStub = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        String expectedMessage = SendEmailCommand.MESSAGE_SUCCESS;
 
-        assertExecutionSuccess(INDEX_FIRST_PERSON, VALID_EMAIL_SUBJECT, VALID_EMAIL_BODY);
+        assertCommandSuccess(command, model, expectedMessage, modelStub);
     }
 
     @Test
@@ -93,60 +101,31 @@ public class SendEmailCommandTest {
     //Index, Subject, Body has been specified
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
-        SendEmailCommand sendEmailCommand = prepareCommand(INDEX_FIRST_PERSON, VALID_EMAIL_SUBJECT, VALID_EMAIL_BODY);
-        String expectedMessage = String.format(SendEmailCommand.MESSAGE_SUCCESS);
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        assertCommandSuccess(sendEmailCommand, model, expectedMessage, expectedModel);
+        SendEmailCommand command = prepareCommand(INDEX_FIRST_PERSON, VALID_EMAIL_SUBJECT, VALID_EMAIL_BODY);
+        Model modelStub = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        String expectedMessage = SendEmailCommand.MESSAGE_SUCCESS;
+
+        assertCommandSuccess(command, model, expectedMessage, modelStub);
     }
 
     //Index, Subject has been specified
     @Test
     public void execute_subjectFieldSpecifiedUnfilteredList_success() throws Exception {
-        Index indexLastPerson = Index.fromOneBased(model.getFilteredPersonList().size());
-        SendEmailCommand sendEmailCommand = prepareCommand(indexLastPerson, VALID_EMAIL_SUBJECT, "");
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS);
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        assertCommandSuccess(sendEmailCommand, model, expectedMessage, expectedModel);
+        SendEmailCommand command = prepareCommand(INDEX_FIRST_PERSON, VALID_EMAIL_SUBJECT, " ");
+        Model modelStub = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        String expectedMessage = SendEmailCommand.MESSAGE_SUCCESS;
+
+        assertCommandSuccess(command, model, expectedMessage, modelStub);
     }
 
     //Index, Body has been specified
     @Test
     public void execute_bodyFieldSpecifiedUnfilteredList_success() throws Exception {
-        Index indexLastPerson = Index.fromOneBased(model.getFilteredPersonList().size());
-        SendEmailCommand sendEmailCommand = prepareCommand(indexLastPerson, "", VALID_EMAIL_BODY);
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS);
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        assertCommandSuccess(sendEmailCommand, model, expectedMessage, expectedModel);
-    }
+        SendEmailCommand command = prepareCommand(INDEX_FIRST_PERSON, " ", VALID_EMAIL_BODY);
+        Model modelStub = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        String expectedMessage = SendEmailCommand.MESSAGE_SUCCESS;
 
-    //Only Index has been specified
-    @Test
-    public void execute_noFieldSpecifiedUnfilteredList_success() {
-        Index indexLastPerson = Index.fromOneBased(model.getFilteredPersonList().size());
-        SendEmailCommand sendEmailCommand = prepareCommand(indexLastPerson, "", "");
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS);
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        assertCommandSuccess(sendEmailCommand, model, expectedMessage, expectedModel);
-    }
-
-    /**
-     * Executes a {@code SendEmailCommand} with the given {@code index, subject, body},
-     * and checks that {@code JumpToListRequestEvent}
-     * is raised with the correct index.
-     */
-    private void assertExecutionSuccess(Index index, String subject, String body) {
-        SendEmailCommand sendEmailCommand = prepareCommand(index, subject, body);
-
-        try {
-            CommandResult commandResult = sendEmailCommand.execute();
-            assertEquals(String.format(SendEmailCommand.MESSAGE_SUCCESS, index.getOneBased()),
-                    commandResult.feedbackToUser);
-        } catch (CommandException | GoogleAuthException e) {
-            throw new IllegalArgumentException("Execution of command should not fail.", e);
-        }
-
-        JumpToListRequestEvent lastEvent = (JumpToListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
-        assertEquals(index, Index.fromZeroBased(lastEvent.targetIndex));
+        assertCommandSuccess(command, model, expectedMessage, modelStub);
     }
 
     /**
@@ -162,7 +141,6 @@ public class SendEmailCommandTest {
             Assert.fail("The expected exception was not thrown.");
         } catch (CommandException | GoogleAuthException e) {
             assertEquals(expectedMessage, e.getMessage());
-            Assert.assertTrue(eventsCollectorRule.eventsCollector.isEmpty());
         }
     }
 

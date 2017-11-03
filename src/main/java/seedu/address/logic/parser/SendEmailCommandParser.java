@@ -33,11 +33,13 @@ public class SendEmailCommandParser implements Parser<SendEmailCommand> {
         try {
             //parse args to find index entered until PREFIX_EMAIL_SUBJECT
             Index index = ParserUtil.parseIndex(args.substring(0, args.indexOf("e")));
+
             Optional<String> subjectOptional = argMultimap.getValue(PREFIX_EMAIL_SUBJECT);
             String emailSubject = new String("");
             if (subjectOptional.isPresent()) {
                 emailSubject = ParserUtil.parseEmailSubject(argMultimap.getValue(PREFIX_EMAIL_SUBJECT)).get();
             }
+
             Optional<String> bodyOptional = argMultimap.getValue(PREFIX_EMAIL_BODY);
             String emailBody = new String("");
             if (bodyOptional.isPresent()) {

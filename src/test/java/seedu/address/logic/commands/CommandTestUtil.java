@@ -84,8 +84,8 @@ public class CommandTestUtil {
     public static final String VALID_EMAIL_SUBJECT_DESC = PREFIX_EMAIL_SUBJECT + VALID_EMAIL_SUBJECT;
     public static final String VALID_EMAIL_BODY_DESC = PREFIX_EMAIL_BODY + VALID_EMAIL_BODY;
 
-    public static final String EMPTY_EMAIL_SUBJECT_DESC = PREFIX_EMAIL_SUBJECT + " ";
-    public static final String EMPTY_EMAIL_BODY_DESC = PREFIX_EMAIL_BODY + " ";
+    public static final String EMPTY_EMAIL_SUBJECT_DESC = PREFIX_EMAIL_SUBJECT + "";
+    public static final String EMPTY_EMAIL_BODY_DESC = PREFIX_EMAIL_BODY + "";
     //@@author
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
