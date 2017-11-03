@@ -2,9 +2,11 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.commands.SendEmailCommand.EMAIL_SENDER;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -25,7 +27,10 @@ import javafx.collections.transformation.FilteredList;
 
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.GoogleAuthException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -109,6 +114,11 @@ public class ModelManager extends ComponentManager implements Model {
 
             addressBook.updatePerson(oldPerson, newPerson);
         }
+    }
+
+    @Override
+    public void sendEmail(Index index, String subject, String body) throws CommandException, GoogleAuthException{
+        addressBook.sendEmail(index, subject, body);
     }
 
     //@@author srishag
