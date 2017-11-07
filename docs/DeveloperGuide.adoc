@@ -217,6 +217,131 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 This section describes some noteworthy details on how certain features are implemented.
 
+// tag::Google Implementation[]
+=== Google Implementation
+
+The Addressbook now incorporates and integrates Google Contacts and Gmail which will enhance its usability. Firstly, a
+`Login Command` is implemented so that the Addressbook can authenticate with the google servers when the user has successfully logged in.
+The new `GoogleAuthenticator` class is created run the authentication process.
+
+The `Login Command` sequence diagram is as follows:
+
+image::LoginSequence.png[width="800"]
+_Figure 3.1.1 : Login command sequence diagram_
+
+The login page will be loaded in the browser panel after the login command have successfully executed. This is for the user to authenticate with google. The command will then redirect the user to the Google contacts webpage after successful authentication.
+
+==== GoogleContactsBuilder class and GoogleID attribute
+The GoogleContactsBuilder class can be instantiated to access the list of contacts from Google and also to obtain the PeopleService object needed to modify the contacts in Google. This is done by making use of the methods in the GoogleAuthenticator object to obtain the tokens and PeopleService from Google.
+
+The token required for authentication is obtained from the redirect url after loging in. This means that the user must stay on the Google contacts page in the browser panel when instantiating this class (For import / export / sync
+commands). The class diagram for GoogleContactsBuilder is shown below.
+
+image::Class diagram.png[width="800"]
+_Figure 3.1.1.1 : GoogleContactsBuilder class diagram_
+
+Every Person in the address book now has a new attribute known as the GoogleID. This ID refers to its own GoogleID in Google contacts. Contacts that are not synced with Google will have a null GoogleID.
+
+==== Import Command
+After successful authentication, the user can proceed to import contacts from his google account. The import command creates a GoogleContactsBuilder object to retrieve the list of google contacts from the server.
+
+The Import command sequence diagram is as follows:
+
+image::Import command.png[width="800"]
+_Figure 3.1.2.1 : Import command sequence diagram_
+
+When the command is executed, the list of Google contacts will be looped through and compared with the contacts within the address book. If the GoogleID of a particular Google contact is not found within the address book, the contact will then be imported. This is represented by the code snippet as shown below.
+
+`Pseudo-code snippet:`
+
+ for each contact: googleContactsList {
+     if contact does not exists in address book
+                model.addPerson(newPerson(contact))
+}
+
+`Scenario 1`
+
+The newPerson(...) method shown in the above code snippet successfully creates a Person object using the attributes from the Google contact and it will be added to the address book. The GoogleID of the contact will also be instantiated within the new Person Object. The Person will also be given a GoogleContact Tag.
+
+`Scenario 2`
+The newPerson(...) method fails to create a Person object from the Google contact. The Google contact will fail to import. Reasons for the above mentioned failure includes,
+Google contact might have invalid attributes. Eg: Invalid email format
+Google contact might not have all attributes required to create a new Person object.
+	All the following attributes must be present: Name, Phone, Email and Address.
+
+A message detailing the result of the command will be displayed to inform the user on the number of contacts imported or the number of contacts and a string of names of those that failed to be imported.
+
+==== Export Command
+After successful authentication, the user can next proceed to export contacts from Contact’em into his google account. The command creates a GoogleContactsBuilder object to retrieve peopleService from the server needed to modify/add contacts in Google.
+
+The Export command sequence diagram is as follows:
+
+image::Export command.png[width="800"]
+_Figure 3.1.3.1 : Export command sequence diagram_
+
+When the command is executed, the list of contacts in the address book will be looped through to check whether they are a google contact. If they not, they will be exported to Google contacts. This is represented by the code snippet shown below.
+
+`Pseudo-code snippet:`
+
+ for each contact: addressBookList{
+     if contact does not have a GoogleContact Tag
+                New googleContact = createGoogleContact (contact);
+                googleContact = builder.getPeopleService().people() createContact(googleContact).
+                                            execute();
+                model.updatePerson(contact, newAddressBookContact(contact));
+}
+
+`Scenario 1`
+
+The createGoogleContact method shown in the above code snippet successfully creates a GooglePerson that will be exported to Google contacts. The address book will then update the contact by instantiating its GoogleID attribute retrieved from the newly created Google contact and adding a GoogleContacts Tag to it.
+
+`Scenario 2`
+
+The contact might not be exported to Google due to the failure in connecting to Google servers. This is can be due to token expiring.
+
+A message detailing the result of the command will be displayed to inform the user on the number of contacts imported or failed to import.
+
+=== Sync Command
+After successful authentication, the user can proceed to sync contacts in his address book. The sync command creates a GoogleContactsBuilder object to retrieve the list of Google contacts from the server. In this case, the contacts in Google contacts takes higher precedence and any changes to them will be updated to the contacts in Contact’em when the user syncs the address book. However, any changes made to the contact in the Contact’em will not be transferred to Google contacts when the user syncs but instead, its attribute will be restored to its original value.
+
+The Sync command sequence diagram is as follows:
+
+image::Sync command.png[width="800"]
+_Figure 3.1.4.1 : Sync command sequence diagram_
+
+When the command is executed, the list of contacts in the Contact’em will be looped through to check if they exists within the list of Google contacts as well. If they are, a Person object based on the Google contact will be created and it will be used to compare with the contact in the address book. This is represented by the code snippet shown below.
+
+`Pseudo-code snippet:`
+
+ for each contact: addressBookList{
+     for each googlecontact : googleContactsList{
+                if contact shares a similar googleID with the googlecontact
+                exists = true;
+                           If convertToAddress(googlecontact) is not the same as contact
+                                     model.updatePerson(contact, convertToAddress(googlecontact))
+      }
+     If contact is a google contact but exists == false
+                 model.updatePerson(contact, removeGoogleContactStatus(contact));
+}
+
+`Scenario 1`
+
+The attributes of the contact are the same as itself in Google contacts. No syncing will be done on that contact.
+
+`Scenario 2`
+
+The attributes of the contact are different from itself in Google contacts. The newly created contact will replace the previous contact as shown in the above code snippet in model.updatePerson(...).
+
+`Scenario 3`
+
+The attributes of the Google contact is invalid and hence no new Person is created to compare itself with the contact in the address book. The contact in the Contact’em will not be synced.
+
+`Scenario 4`
+
+The contact in the addressbook is thought to exist in Google contacts but is not found. The removeGoogleContactStatus() method shown in the above code snippet will remove the Google contact status of the contact.
+
+A message detailing the result of the command will be displayed to inform the user on the number of contacts synced and the number of contacts and a string of names of those that failed to sync.
+
 
 // tag::EasyFind[]
 === EasyFind mechanism
@@ -251,62 +376,185 @@ image::FindAlphabetsCommand.png[width="800"]
 **Cons:** Removing the find Command may affect other functions of the Addressbook.
 // end::EasyFind[]
 
+
 // tag::findbytags[]
 === Finding contacts by tags
 
-The application allows users to find contacts based on their tags. The figure below helps illustrate this process, and more detailed explanations and elaborations are given in the sub-sections below.
+The application allows users to find contacts based on their tags. The command word is findtags, and the alternatives are findtag and ft. The following subsections explain how the program is supposed to function given this command, and how it is implemented.
 
-image::FindContactsByTagsLogic.png[width="800"]
+==== User Inputs and Expected Actions/Results
+
+In general, there are three ways users will use this command. Some pseudo-code is provided for each of these 3 scenarios to aid understanding.
+
+**Scenario 1**
+
+In the first scenario, also the most basic, the user only specifies tags to **include**. For this, the program should simply return all contacts that have at least one of the tags.
+
+**Example Command 1:** findtags friends +
+Expected result: returns contacts that are tagged “friends”.
+
+**Pseudo-code snippet**
+[source,java]
+----
+for each tag : contact.getTagList {
+if (keywordsToInclude.hasAnyMatchingWordsWith(tag.value)) {
+    return true;
+    }
+}
+return false;
+----
+
+**Scenario 2**
+
+In the second scenario, the user only specifies tags to **exclude**. To specify a tag to exclude, user includes a hyphen -  before the keyword to be excluded. In this case, the program should return all contacts that do not have any of these tags to be excluded.
+
+Note that this includes contacts with no tags.
+
+
+**Example Command 2:** findtags -colleagues +
+Expected result: returns all contacts not tagged “colleagues”.
+
+**Pseudo-code snippet**
+[source,java]
+----
+for each tag : contact.getTagList {
+if (keywordsToExclude.hasAnyMatchingWordsWith(tag.value)) {
+return false;
+    }
+}
+return true;
+----
+
+**Scenario 3**
+
+In the third scenario, the user specifies **both tags to include and exclude**. The program will return all contacts that have: +
+1) ANY of the tags to include. +
+2) NONE of the tags to exclude.
+
+**Example Command 3:** findtags friends -colleagues +
+Expected result: returns all contacts tagged “friends” but not tagged “colleagues”.
+
+**Pseudo-code snippet:**
+[source,java]
+----
+boolean personHasAtLeastOneMatchingTag = false;
+
+for each tag : contact.getTagList {
+     if keywordsToExclude.hasAnyMatchingWordsWith(tag.value)
+                return false;
+     If keywordsToInclude.hasAnyMatchingWordsWith(person.getTagList()
+                 personHasAtLeastOneMatchingTag = true;
+}
+
+if (personHasAtLeastOneMatchingTag)
+      return true;
+else
+      return false;
+----
+
+[NOTE]
+There must be at least one parameter specified, but the order of parameters entered does not matter.
+
+==== Brief Overview of Command Procedure
+
+The activity diagram below helps illustrate the process of the command, from user input to execution and updating the Model.
+As seen from the diagram above, the entire command consists of 4 main steps:
+
+image::activity diagram findtags.png[width="200"]
+
+
+1) The parameters are parsed and deciphered. +
+2) Using the deciphered information from step 1, the Predicate and Command are constructed. +
+3) Command is executed. +
+4) Predicate is called and the Model is updated.
+
+More detailed explanations and elaborations are given in the subsections below.
+
 
 ==== Implementation of Parser
-To begin, the user enters the command and the relevant arguments, AddressbookParser will call this command's parser, FindPersonsWithTagsCommandParser, which will then parse the arguments and eventually return the proper FindPersonsWithTagsCommand.
 
-Within the command parser, the parser first checks if the arguments are empty.
+he parser associated with this command is FindPersonsWithTagsCommandParser, under seedu.address.logic.parser. Due to this parser’s long name, it will be referred to as the “command parser” or simply “parser” within this section to aid clarity.
 
-[WARNING]
-If the arguments are empty, the ParseException error will be thrown.
+When this command is invoked by the user, this command parser will be constructed by AddressbookParser, receiving the user’s input as a String parameter. The command parser deciphers the input, and eventually returns a FindPersonsWithTagsCommand for execution.
 
-If the arguments are valid (non-empty), they are split and stored in a String array "tagKeywords".
+The command parser first checks if the arguments are valid. If the arguments are empty, a ParseException will be thrown for invalid arguments. If the arguments are valid (non-empty), they are split into individual keywords and stored in a String array tagKeywords.
 
-Each keyword is then passed into the parser's private method, getImprovedList(), to retrieve a more comprehensive list of tags.
-This method is merely a crude way of improving convenience for the user when spelling tags, and it adds these tags to the list in addition to the original tags.
+image::StringToTagKeywords.png[width="800"]
+
+As the diagram above shows, the keywords are split by the spaces in between each word, and each of these words are stored in a String array tagKeywords.
+
+The array of keywords is then passed into the parser’s private method, getImprovedList(), to retrieve a more comprehensive list of tags in addition to the original list of keywords.
 
 [NOTE]
-The added tags are formed by appending the letter 's' to tags which do not end with the letter 's', and vice-versa.
+The details of **getImprovedList** is not crucially important to the functionality of the parser, and is thus omitted here, but included in the addendum in Section 3.3.6.
 
-[WARNING]
-This method, however, does not account for words where the singular and plural forms do not defer by just a single letter 's', such as "family", and "families".
+After obtaining the improved list, the parser constructs the command Predicate (details in Section 3.3.4), and the Command itself (details in the Section 3.3.5). Then it returns the Command to AddressbookParser and then the LogicManager for execution.
 
-[TIP]
-It is therefore recommended that future developers improve this method by implementing a proper dictionary/library for this method, after weighing the costs and the benefits.
-
-The parser then returns the proper FindPersonWithTagsCommand with the proper predicate (details in later section), created with the improved tag list, to be executed.
 
 ==== Implementation of Predicate
-The predicate associated with this functionality is called PersonContainsTagsPredicate.
 
-To determine if a contact should be returned, the 'test' method of the predicate is called, which returns a boolean value, true if this contact should be returned, and false otherwise.
+The Predicate associated with this functionality is called PersonContainsTagsPredicate, found in seedu.address.model.person. This Predicate is constructed with the keywords generated in the command parser (details in the above section). After this Predicate is constructed, it is used in the constructor of a FindPersonsWithTagsCommand and becomes that command’s attribute.
 
-Within the test method, all of the person's tags, if any, are appended to a string.
+When the command is executed, this Predicate will be called for every contact in the address book to determine if a contact should be filtered or not based on the user’s inputs.
 
-[NOTE]
-If a contact has tags "friends" and "colleagues", the resulting String is "friends colleagues".
+To do so, the test method of this Predicate is used, which returns a Boolean value: true if this contact should be returned, and false otherwise.
 
-This String is then compared with the list of keywords generated by the parser earlier.
+Within this test method, there are 3 steps which occur:
 
-[NOTE]
-For the current version of this command, as long as a single tag matches the keywords, the contact will be returned.
-However, in future iterations of the command, there will be choices to exclude certain tags, more details in future updates.
+image::path diagram findtags.png[width="800"]
+
+
+The diagram above gives a brief overview of the three steps executed in the Predicate.
+
+Firstly, all of the person’s tags, if any, are appended to a String allTagNames. For example, if a contact has tags "friends" and "colleagues", the resulting String is "friends colleagues".
+
+Secondly, the list of keywords, now an attribute of the Predicate, is split into 2 lists, keywordsToInclude and keywordsToExclude. Note that it is possible for either list to be empty.
+
+Last but not least, the comparison is made between allTagNames and the 2 lists generated in the second part, to return the appropriate Boolean value. Below is the code snippet used in the comparison. Note that this is not the only way to implement this comparison.
+
+**Code Snippet:**
+[source,java]
+----
+//For scenario 2
+if (onlyKeywordsToExcludeAreSpecified) {
+            return !(keywordsToExclude.stream()
+                    .anyMatch((keyword -> StringUtil.containsWordIgnoreCase(allTagNames, keyword))));
+}
+
+
+//For scenarios 1 and 3
+return keywordsToInclude.stream()
+    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(allTagNames, keyword)) &&
+    !(keywordsToExclude.stream()
+    .anyMatch((keyword -> StringUtil.containsWordIgnoreCase(allTagNames, keyword))));
+----
 
 ==== Implementation of Command
+The command executed in this feature is FindPersonsWithTagsCommand, found in seedu.address.logic.commands.
 
-After the parser returns the command, assuming that no exceptions are thrown so far, the command is executed.
+After the command parser returns the command to AddressbookParser and then to the LogicManager, assuming that no exceptions are thrown so far, the command is executed, by calling its execute() method.
 
-The current model invokes its updateFilteredPersonList method, with the predicate as describe above as its parameter.
+In this execute() method, the current model invokes its updateFilteredPersonList method, with the command Predicate as described above as its parameter.
 
-This runs the test method of the predicate, which returns the appropriate contacts, and updates the model and contacts displayed in the UI.
+This runs the test method of the Predicate, which determines the appropriate contacts to filter. This causes the model to update accordingly and filters the contacts displayed in the UI.
 
-The command also returns to the command box the number of being displayed.
+Finally, this command returns a CommandResult, which includes the number of contacts being displayed. This value is displayed on the UI command box for the user’s reference.
+
+==== Addendum
+
+**Implementation of getImprovedList** +
+In the command parser (as detailed in Section 3.3.3), there exists a private method getImprovedList(), which takes in the list of keywords entered by the user and attempts to return a more comprehensive one in addition to the original list, to account for grammatical differences in plural and singular forms of the keywords.
+
+To give an example, if the keyword is “friend”, the extra keyword generated is “friends” and vice-versa. This works for “exclusion-keywords” (keywords with a dash in front) as well.
+
+What is of note is that this method is merely a crude, quality-of-life improvement for the user. It simply generates the keywords by appending the letter ‘s’ to keywords which do not end with ‘s’, and removes ‘s’ from words that do end with the letter ‘s’.
+
+As a result, it does not account for words where singular and plural forms differ by more than just a single letter ‘s’, such as “family” and “families”.
+
+It is therefore recommended that future developers improve this method, perhaps by implementing a proper dictionary or library for this method, after weighing the costs and benefits. Alternatively, this idea could be further improved or refined on with a Lookup Table to save file storage space.
+
+Nevertheless, this improvement is meant to increase user enjoyment and convenience. The bonus of organising and spelling tags in an organised manner is still on the user. To that end,  if the case arises that, based on user feedback, this improvement does more harm than good, it is recommended that this feature be removed or made optional. Although, this is not something that the current developers foresee will occur based on how people in general spell their tags.
+
 
 ==== Design Considerations
 
@@ -317,6 +565,9 @@ The command also returns to the command box the number of being displayed.
 **Alternative 2:** Import appropriate library for getting singular/plural words. +
 **Pros:** More likely to account for all words. +
 **Cons:** May impact performance. +
+**Alternative 3:** Implement a Look-up Table. +
+**Pros:** Can account for more words than alternative 1, and less impactful on performance and storage than alternative 2. +
+**Cons:** Might be difficult to implement and may not be as comprehensive as alternative 2. +
 
 ---
 
@@ -330,6 +581,39 @@ The command also returns to the command box the number of being displayed.
 
 // end::findbytags[]
 
+=== Implementation of Facebook Field
+Each contact can now support a Facebook field, which is displayed on the person card.
+
+A few things to note about this field:
+
+1. The Facebook field is not compulsory when adding to the addressbook.
+
+2. If user does not input the Facebook field, removes it using the edit command, it will be replaced by
+the default Facebook homepage, "https://facebook.com/".
+
+3. User can input Facebook field in 2 ways, the first is the entire link to the Facebook profile.
+In this case, the program should take the entire link and store it as the Facebook field of the user.
+
+4. If the user enters in the Facebook field a String that is not a link, the programe should **assume** that what was
+entered was instead the **profile name** or **profile number** of the contact, and thus append the Facebook link prefix to it. +
+For example, if user enters f/john for a contact, john's Facebook field would be "https://facebook.com/john/".
+
+To perform steps 3 and 4, the program checks if that is entered in the field is a valid URL. If it is, then assume
+it is 3. and store the entire URL as the Facebook field. Else, append and store that String as the Facebook field, which is 4.
+
+In future update, will allow select command to open the facebook field instead of google searching the contact's name.
+
+==== Design Considerations
+
+**Aspect:** Empty or non-valid URL Facebook fields +
+**Alternative 1 (current choice):** Turn it into a proper URL by appending the correct prefixes. +
+**Pros:** More readable on the Person Card, user can easily see if there is a mistake. +
+**Cons:** May create some strange links. +
+**Alternative 2:** Leave it as it is. +
+**Pros:** Simple to implement. +
+**Cons:** Will look strange and ambiguous on the Person Card, especially if user made a mistake and does not notice. +
+
+---
 
 // tag::undoredo[]
 === Undo/Redo mechanism

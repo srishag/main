@@ -12,15 +12,24 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.ExportCommand;
 import seedu.address.logic.commands.FindAlphabetCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindPersonsWithTagsCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListTagsCommand;
+import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SendEmailCommand;
+import seedu.address.logic.commands.SyncCommand;
+
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.GoogleAuthException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -36,11 +45,14 @@ public class AddressBookParser {
     /**
      * Parses user input into command for execution.
      *
+     * Note: the switch-case implementation below should not be changed frivolously as it provides a layer of defence
+     * against having duplicate command words
+     *
      * @param userInput full user input string
      * @return the command based on the user input
      * @throws ParseException if the user input does not conform the expected format
      */
-    public Command parseCommand(String userInput) throws ParseException {
+    public Command parseCommand(String userInput) throws ParseException, CommandException, GoogleAuthException {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         if (!matcher.matches()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
@@ -74,14 +86,23 @@ public class AddressBookParser {
         case FindCommand.COMMAND_ALIAS:
             return new FindCommandParser().parse(arguments);
 
+        //@@author PokkaKiyo
         case FindPersonsWithTagsCommand.COMMAND_WORD:
-        case FindPersonsWithTagsCommand.COMMAND_WORD_ALIAS1:
-        case FindPersonsWithTagsCommand.COMMAND_WORD_ALIAS2:
+        case FindPersonsWithTagsCommand.COMMAND_ALIAS1:
+        case FindPersonsWithTagsCommand.COMMAND_ALIAS2:
             return new FindPersonsWithTagsCommandParser().parse(arguments);
+        //@@author
 
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
+
+        //@@author PokkaKiyo
+        case ListTagsCommand.COMMAND_WORD:
+        case ListTagsCommand.COMMAND_WORD_ALIAS1:
+        case ListTagsCommand.COMMAND_WORD_ALIAS2:
+            return new ListTagsCommand();
+        //@@author
 
         case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALIAS:
@@ -99,9 +120,28 @@ public class AddressBookParser {
         case UndoCommand.COMMAND_ALIAS:
             return new UndoCommand();
 
+        //@@author srishag
+        case SendEmailCommand.COMMAND_WORD:
+        case SendEmailCommand.COMMAND_ALIAS:
+            return new SendEmailCommandParser().parse(arguments);
+        //@@author
+
         case RedoCommand.COMMAND_WORD:
         case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
+
+        case LoginCommand.COMMAND_WORD:
+            return new LoginCommand();
+
+
+        case ImportCommand.COMMAND_WORD:
+            return new ImportCommand();
+
+        case ExportCommand.COMMAND_WORD:
+            return new ExportCommand();
+
+        case SyncCommand.COMMAND_WORD:
+            return new SyncCommand();
 
         case FindAlphabetCommand.COMMAND_WORD:
             return new FindAlphabetCommandParser().parse(arguments);

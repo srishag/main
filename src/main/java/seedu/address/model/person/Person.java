@@ -23,21 +23,27 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<Birthday> birthday;
+    private ObjectProperty<FacebookAddress> facebookAddress;
 
     private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<GoogleId> googleId;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Birthday birthday, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Birthday birthday,
+                  FacebookAddress facebookAddress, Set<Tag> tags, GoogleId id) {
+
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.birthday = new SimpleObjectProperty<>(birthday);
+        this.facebookAddress = new SimpleObjectProperty<>(facebookAddress);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.googleId = new SimpleObjectProperty<>(id);
     }
 
     /**
@@ -45,7 +51,8 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getBirthday(), source.getTags());
+                source.getBirthday(), source.getFacebookAddress(), source.getTags(), source.getGoogleId());
+
     }
 
 
@@ -105,6 +112,7 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    //@@author srishag
     public void setBirthday(Birthday birthday) {
         this.birthday.set(requireNonNull(birthday));
     }
@@ -117,6 +125,21 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Birthday getBirthday() {
         return birthday.get();
+    }
+    //@@author
+
+    public void setFacebookAddress(FacebookAddress facebookAddress) {
+        this.facebookAddress.set(facebookAddress);
+    }
+
+    @Override
+    public ObjectProperty<FacebookAddress> facebookAddressProperty() {
+        return facebookAddress;
+    }
+
+    @Override
+    public FacebookAddress getFacebookAddress() {
+        return facebookAddress.get();
     }
 
     /**
@@ -137,6 +160,19 @@ public class Person implements ReadOnlyPerson {
      */
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
+    }
+
+    @Override
+    public GoogleId getGoogleId() {
+        return googleId.get();
+    }
+
+    public ObjectProperty<GoogleId> idProperty() {
+        return googleId;
+    }
+
+    public void setId(GoogleId googleId) {
+        this.googleId.set(requireNonNull(googleId));
     }
 
     @Override
