@@ -1,3 +1,4 @@
+//@@author PhuaJunJie
 package seedu.address.commons;
 
 import java.io.IOException;
@@ -18,7 +19,6 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.GetRedirectUrlEvent;
 import seedu.address.logic.commands.exceptions.GoogleAuthException;
 
-//@@author PhuaJunJie
 /**
  * This class contains methods of the google Auth Api. For authentication after login.
  */

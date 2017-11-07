@@ -1,3 +1,4 @@
+//@@author PhuaJunJie
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -11,7 +12,6 @@ import org.junit.Test;
 import seedu.address.logic.commands.FindAlphabetCommand;
 import seedu.address.model.person.NameContainsAlphabetsPredicate;
 
-//@@author PhuaJunJie
 public class FindAlphabetCommandParserTest {
 
     private FindAlphabetCommandParser parser = new FindAlphabetCommandParser();

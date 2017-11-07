@@ -1,3 +1,4 @@
+//@@author PhuaJunJie
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
@@ -22,7 +23,6 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.testutil.TypicalGoogleContactsList;
 
-//@@author PhuaJunJie
 public class ImportCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
