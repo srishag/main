@@ -1,3 +1,4 @@
+//@@author PhuaJunJie
 package seedu.address.logic.commands;
 
 import java.io.IOException;
@@ -24,7 +25,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
-//@@author PhuaJunJie
 /**
  * Syncs all existing google contacts in the addressbook with the contacts in google contacts
  * Contacts in google contacts takes higher precedence.
@@ -80,7 +80,7 @@ public class SyncCommand extends UndoableCommand {
             if ((googleContactsList != null)) {
                 for (Person googlePerson : googleContactsList) {
                     exists = updateAddressBook(googlePerson, addressPerson);
-                    if(exists == true) {
+                    if (exists == true) {
                         break;
                     }
                 }
