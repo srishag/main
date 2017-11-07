@@ -37,7 +37,8 @@ public class ImportCommandTest {
     }
 
     /**
-     * Checks if Login is authenticated. In this case it is not and GoogleAuthException is thrown.
+     * Checks if Login is authenticated. In this case it is not as user is not authenticated
+     * and GoogleAuthException is thrown.
      */
     @Test
     public void execute_require_login() throws Exception {

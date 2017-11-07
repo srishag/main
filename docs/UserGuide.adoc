@@ -548,6 +548,38 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::google[]
+=== Google integration
+
+The Address book is now integrated with the ability to import/ export / sync contacts from google contacts.
+Being able to access contacts from your mobile phones is the quickest way to get things done. Export your contact directly to your android phones through google contacts to have your contacts on the go. Simply synchronize Contact’em whenever you make changes to your Google Contacts and your contacts will be updated.
+
+Enter `login` to link Contact’em with Google Contacts. When the login page is loaded, simply key in your credentials and you will be redirected to google contacts.
+
+Enter `import` to have all your Google Contacts transferred to Contact’em.
+
+image::importusage.png[width="800"]
+_Figure 5.14.1 : Example of usage of Sync command_
+
+Enter `sync` to have your contacts in Google Contacts updated to Contact’em. Contacts in Google Contacts takes higher precedence and when sync is used, contacts in Contact’em will be updated to the contacts in Google Contacts.
+
+Use `export` to have all your contacts in Contact’em transferred to Google Contacts.
+
+image::exportusage.png[width="800"]
+_Figure 5.14.2 : Example of usage of Export command_
+
+==== Usage Notes
+When using `import` / `export` / `sync` command, your browser must have google contacts page loaded
+    If you have switched the page, you will have to login again to use the commands.
+
+If a google contact fails to import or sync, please check the contact to make sure that the parameters are valid.
+    Please check the reference guide on the validity of the parameters
+
+All google contacts imported are tagged with a ‘GoogleContact’ tag to indicate that they are linked to Google Contacts.
+    Contacts deleted in Google Contacts will not be deleted in Contact’em when synced. It will simply lose its `GoogleContact` tag.
+
+// end::google[]
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -577,30 +609,6 @@ Alternatively, you can exit by clicking on the RED X at the top right of the App
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
-
-=== Google integration
-
-The Address book is now integrated with the ability to import/ export / sync contacts from google contacts.
-Being able to access contacts from your mobile phones is the quickest way to get things done. Export your contact directly to your android phones through google contacts to have your contacts on the go. Simply synchronize Contact’em whenever you make changes to your Google Contacts and your contacts will be updated.
-
-Enter `login` to link Contact’em with Google Contacts. When the login page is loaded, simply key in your credentials and you will be redirected to google contacts.
-
-Enter `import` to have all your Google Contacts transfered to Contact’em.
-
-Enter `sync` to have your contacts in Google Contacts updated to Contact’em. Contacts in Google Contacts takes higher precedence and when sync is used, contacts in Contact’em will be updated to the contacts in Google Contacts.
-
-Use `export` to have all your contacts in Contact’em transferred to Google Contacts.
-
-
-==== Usage Notes
-When using `import` / `export` / `sync` command, your browser must have google contacts page loaded
-    If you have switched the page, you will have to login again to use the commands.
-
-If a google contact fails to import or sync, please check the contact to make sure that the parameters are valid.
-    Please check the reference guide on the validity of the parameters
-
-All google contacts imported are tagged with a ‘GoogleContact’ tag to indicate that they are linked to Google Contacts.
-    Contacts deleted in Google Contacts will not be deleted in Contact’em when synced. It will simply lose its `GoogleContact` tag.
 
 == Transferring of Data to Another Device
 Do you wish to transfer the data stored in Contact'em on one device to another?
