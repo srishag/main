@@ -4,8 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FACEBOOKADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_HEADER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -21,6 +24,10 @@ import seedu.address.model.Model;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.task.Header;
+import seedu.address.model.task.HeaderContainsKeywordsPredicate;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -50,6 +57,12 @@ public class CommandTestUtil {
     public static final String VALID_TAG_UNIQUETAG = "uniquetag";
     public static final String VALID_TAG_UNIQUETAG2 = "uniquetag2";
 
+    public static final String VALID_HEADER_HOMEWORK = "Homework";
+    public static final String VALID_HEADER_ASSIGNMENT = "Assignment";
+    public static final String VALID_DESC_HOMEWORK = "Page 6 to 9";
+    public static final String VALID_DESC_ASSIGNMENT = "Tutorial homework";
+    public static final String VALID_DEADLINE_HOMEWORK = "27/11/2017";
+    public static final String VALID_DEADLINE_ASSIGNMENT = "05/12/2017";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -65,6 +78,17 @@ public class CommandTestUtil {
     public static final String BIRTHDAY_DESC_BOB = " " + PREFIX_BIRTHDAY + VALID_BIRTHDAY_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+
+    public static final String HEADER_DESC_HOMEWORK = " " + PREFIX_HEADER + VALID_HEADER_HOMEWORK;
+    public static final String HEADER_DESC_ASSIGNMENT = " " + PREFIX_HEADER + VALID_HEADER_ASSIGNMENT;
+    public static final String DESC_DESC_HOMEWORK = " " + PREFIX_DESC + VALID_DESC_HOMEWORK;
+    public static final String DESC_DESC_ASSIGNMENT = " " + PREFIX_DESC + VALID_DESC_ASSIGNMENT;
+    public static final String DESC_DEADLINE_HOMEWORK = " " + PREFIX_DEADLINE + VALID_DEADLINE_HOMEWORK;
+    public static final String DESC_DEADLINE_ASSIGNMENT = " " + PREFIX_DEADLINE + VALID_DEADLINE_ASSIGNMENT;
+
+    public static final String INVALID_HEADER_DESC = " " + PREFIX_HEADER; // empty string not allowed for headers
+    public static final String INVALID_DESC_DESC = " " + PREFIX_DESC; // empty string not allowed for desc
+    public static final String INVALID_DEADLINE_DESC = " " + PREFIX_DEADLINE; // empty string not allowed for deadlines
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
@@ -92,6 +116,16 @@ public class CommandTestUtil {
                 .withBirthday(VALID_BIRTHDAY_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 
+    public static final EditTaskCommand.EditTaskDescriptor DESC_HOMEWORK;
+    public static final EditTaskCommand.EditTaskDescriptor DESC_ASSIGNMENT;
+
+    static {
+        DESC_HOMEWORK = new EditTaskDescriptorBuilder().withHeader(VALID_HEADER_HOMEWORK)
+                .withDesc(VALID_DESC_HOMEWORK).withDeadline(VALID_DEADLINE_HOMEWORK).build();
+        DESC_ASSIGNMENT = new EditTaskDescriptorBuilder().withHeader(VALID_HEADER_ASSIGNMENT)
+                .withDesc(VALID_DESC_ASSIGNMENT).withDeadline(VALID_DEADLINE_ASSIGNMENT).build();
+    }
+
     /**
      * Executes the given {@code command}, confirms that <br>
      * - the result message matches {@code expectedMessage} <br>
@@ -112,13 +146,15 @@ public class CommandTestUtil {
      * Executes the given {@code command}, confirms that <br>
      * - a {@code CommandException} is thrown <br>
      * - the CommandException message matches {@code expectedMessage} <br>
-     * - the address book and the filtered person list in the {@code actualModel} remain unchanged
+     * - the address book, filtered task list and
+     * - the filtered person list in the {@code actualModel} remain unchanged
      */
     public static void assertCommandFailure(Command command, Model actualModel, String expectedMessage) {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
         AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
-        List<ReadOnlyPerson> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
+        List<ReadOnlyPerson> expectedPersonFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
+        List<ReadOnlyTask> expectedTaskFilteredList = new ArrayList<>(actualModel.getFilteredTaskList());
 
         try {
             command.execute();
@@ -126,7 +162,8 @@ public class CommandTestUtil {
         } catch (CommandException | GoogleAuthException e) {
             assertEquals(expectedMessage, e.getMessage());
             assertEquals(expectedAddressBook, actualModel.getAddressBook());
-            assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
+            assertEquals(expectedPersonFilteredList, actualModel.getFilteredPersonList());
+            assertEquals(expectedTaskFilteredList, actualModel.getFilteredTaskList());
         }
     }
 
@@ -150,6 +187,29 @@ public class CommandTestUtil {
             model.deletePerson(firstPerson);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("Person in filtered list must exist in model.", pnfe);
+        }
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show only the first task in the {@code model}'s address book.
+     */
+    public static void showFirstTaskOnly(Model model) {
+        ReadOnlyTask task = model.getAddressBook().getTaskList().get(0);
+        final String[] splitTask = task.getHeader().value.split("\\s+");
+        model.updateFilteredTaskList(new HeaderContainsKeywordsPredicate(Arrays.asList(splitHeader[0])));
+
+        assert model.getFilteredTaskList().size() == 1;
+    }
+
+    /**
+     * Deletes the first task in {@code model}'s filtered list from {@code model}'s address book.
+     */
+    public static void deleteTaskPerson(Model model) {
+        ReadOnlyTask firstTask = model.getFilteredTaskList().get(0);
+        try {
+            model.deleteTask(firstTask);
+        } catch (TaskNotFoundException e) {
+            throw new AssertionError("Task in filtered list must exist in model.", e);
         }
     }
 }
