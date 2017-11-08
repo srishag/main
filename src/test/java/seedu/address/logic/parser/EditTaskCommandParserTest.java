@@ -5,36 +5,19 @@ import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_ASSIGNM
 import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_HOMEWORK;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_DESC_ASSIGNMENT;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_DESC_HOMEWORK;
-import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.HEADER_DESC_HOMEWORK;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_BIRTHDAY_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DEADLINE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DESC_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_HEADER_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_ASSIGNMENT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_HOMEWORK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESC_ASSIGNMENT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESC_HOMEWORK;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_HEADER_ASSIGNMENT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_HEADER_HOMEWORK;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_TASK;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_TASK;
 
 import org.junit.Test;
@@ -44,7 +27,6 @@ import seedu.address.logic.commands.EditTaskCommand.EditTaskDescriptor;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Desc;
 import seedu.address.model.task.Header;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.EditTaskDescriptorBuilder;
 
 public class EditTaskCommandParserTest {

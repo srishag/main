@@ -3,23 +3,14 @@ package seedu.address.ui;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalTasks.CODE;
-import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysTask;
 
-import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.TaskCardHandle;
 import org.junit.Test;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
-import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.TaskBuilder;
-import seedu.address.ui.GuiUnitTest;
-import seedu.address.ui.PersonCard;
-import seedu.address.ui.TaskCard;
 
 public class TaskCardTest extends GuiUnitTest {
 

@@ -2,17 +2,11 @@ package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_TASK;
-import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 import static seedu.address.testutil.TypicalTasks.getTypicalTasks;
-import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysTask;
-import static seedu.address.ui.testutil.GuiTestAssert.assertCardEquals;
 import static seedu.address.ui.testutil.GuiTestAssert.assertTaskCardEquals;
 
-import guitests.guihandles.PersonCardHandle;
-import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.TaskCardHandle;
 import guitests.guihandles.TaskListPanelHandle;
 import javafx.collections.FXCollections;
@@ -20,7 +14,6 @@ import javafx.collections.ObservableList;
 import org.junit.Before;
 import org.junit.Test;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.task.ReadOnlyTask;
 
 public class TaskListPanelTest extends GuiUnitTest {

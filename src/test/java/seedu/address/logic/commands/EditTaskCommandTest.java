@@ -4,7 +4,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_ASSIGNMENT;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_HOMEWORK;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DESC_ASSIGNMENT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_HEADER_ASSIGNMENT;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;

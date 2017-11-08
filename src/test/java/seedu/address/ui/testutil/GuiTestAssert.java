@@ -9,6 +9,7 @@ import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.TaskCardHandle;
+import guitests.guihandles.TaskListPanelHandle;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.task.ReadOnlyTask;
 
@@ -66,6 +67,16 @@ public class GuiTestAssert {
     public static void assertListMatching(PersonListPanelHandle personListPanelHandle, ReadOnlyPerson... persons) {
         for (int i = 0; i < persons.length; i++) {
             assertCardDisplaysPerson(persons[i], personListPanelHandle.getPersonCardHandle(i));
+        }
+    }
+
+    /**
+     * Asserts that the list in {@code taskListPanelHandle} displays the details of {@code tasks} correctly and
+     * in the correct order.
+     */
+    public static void assertTaskListMatching(TaskListPanelHandle taskListPanelHandle, ReadOnlyTask... tasks) {
+        for (int i = 0; i < tasks.length; i++) {
+            assertCardDisplaysTask(tasks[i], taskListPanelHandle.getTaskCardHandle(i));
         }
     }
 
