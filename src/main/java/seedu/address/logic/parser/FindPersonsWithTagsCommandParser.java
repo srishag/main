@@ -52,7 +52,7 @@ public class FindPersonsWithTagsCommandParser implements Parser<FindPersonsWithT
      * From the original list of keywords, generate more keywords
      * corresponding to the singular/plural form of the word,
      * but might generate words that are not in proper English,
-     * for example, "memory" to "memorys" instead of "memories".
+     * for example, "family" to "familys" instead of "families".
      * @param originalKeywords
      * @return a new list of keywords that includes the original keywords and
      * singular/plural differences
