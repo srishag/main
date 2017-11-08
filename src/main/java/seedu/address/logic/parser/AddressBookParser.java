@@ -7,10 +7,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddTaskCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteTaskCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EditTaskCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.ExportCommand;
 import seedu.address.logic.commands.FindAlphabetCommand;
@@ -123,6 +126,18 @@ public class AddressBookParser {
         //@@author srishag
         case SendEmailCommand.COMMAND_WORD:
         case SendEmailCommand.COMMAND_ALIAS:
+            return new SendEmailCommandParser().parse(arguments);
+
+        case AddTaskCommand.COMMAND_WORD:
+        case AddTaskCommand.COMMAND_ALIAS:
+            return new SendEmailCommandParser().parse(arguments);
+
+        case EditTaskCommand.COMMAND_WORD:
+        case EditTaskCommand.COMMAND_ALIAS:
+            return new SendEmailCommandParser().parse(arguments);
+
+        case DeleteTaskCommand.COMMAND_WORD:
+        case DeleteTaskCommand.COMMAND_ALIAS:
             return new SendEmailCommandParser().parse(arguments);
         //@@author
 
