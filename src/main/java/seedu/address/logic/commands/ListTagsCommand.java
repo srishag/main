@@ -14,7 +14,6 @@ import seedu.address.model.tag.Tag;
  * List all tags in the addressbook to the user
  */
 public class ListTagsCommand extends Command {
-
     public static final String COMMAND_WORD = "listtags";
     public static final String COMMAND_WORD_ALIAS1 = "lt";
     public static final String COMMAND_WORD_ALIAS2 = "ltags";
