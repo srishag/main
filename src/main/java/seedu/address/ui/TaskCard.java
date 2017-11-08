@@ -48,7 +48,7 @@ public class TaskCard extends UiPart<Region> {
      * Binds the individual UI elements to observe their respective {@code Task} properties
      * so that they will be notified of any changes.
      */
-    private void bindListeners(ReadOnlyPerson person) {
+    private void bindListeners(ReadOnlyTask task) {
         header.textProperty().bind(Bindings.convert(task.headerProperty()));
         desc.textProperty().bind(Bindings.convert(task.descProperty()));
         deadline.textProperty().bind(Bindings.convert(task.deadlineProperty()));

@@ -82,7 +82,7 @@ public interface Model {
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
     /** Returns an unmodifiable view of the filtered task list */
-    ObservableList<ReadOnlyTask> getFilteredTaskist();
+    ObservableList<ReadOnlyTask> getFilteredTaskList();
 
     /**
      * Updates the filter of the filtered task list to filter by the given {@code predicate}.

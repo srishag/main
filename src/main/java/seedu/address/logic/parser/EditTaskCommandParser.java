@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_HEADER;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditTaskCommand;
+import seedu.address.logic.commands.EditTaskCommand.EditTaskDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -38,9 +39,9 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
 
         try {
             ParserUtil.parseHeader(argMultimap.getValue(PREFIX_HEADER)).ifPresent(editTaskDescriptor::setHeader);
-            ParserUtil.parseDesc(argMultimap.getValue(PREFIX_DESC)).ifPresent(editTasktDescriptor::setDesc);
+            ParserUtil.parseDesc(argMultimap.getValue(PREFIX_DESC)).ifPresent(editTaskDescriptor::setDesc);
             ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE))
-                    .ifPresent(editTaskDescriptor::setEventDate);
+                    .ifPresent(editTaskDescriptor::setDeadline);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }

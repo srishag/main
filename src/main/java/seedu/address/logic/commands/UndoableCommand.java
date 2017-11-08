@@ -51,7 +51,7 @@ public abstract class UndoableCommand extends Command {
                     + "it should not fail now");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_TASKS);
+        model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
     }
 
     @Override

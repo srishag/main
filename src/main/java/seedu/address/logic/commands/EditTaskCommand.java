@@ -45,7 +45,7 @@ public class EditTaskCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the address book.";
 
     private final Index index;
-    private final EditTaskDespcriptor editTaskDespcriptor;
+    private final EditTaskDescriptor editTaskDescriptor;
 
     /**
      * @param index of the task in the filtered task list to edit
@@ -56,7 +56,7 @@ public class EditTaskCommand extends UndoableCommand {
         requireNonNull(editTaskDescriptor);
 
         this.index = index;
-        this.editTaskDespcriptor = new EditTaskDescriptor(editTaskDescriptor);
+        this.editTaskDescriptor = new EditTaskDescriptor(editTaskDescriptor);
     }
 
     @Override
@@ -182,4 +182,5 @@ public class EditTaskCommand extends UndoableCommand {
                     && getDeadline().equals(e.getDeadline());
         }
     }
+
 }
