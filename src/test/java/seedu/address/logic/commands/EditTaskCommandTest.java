@@ -50,27 +50,6 @@ public class EditTaskCommandTest {
     }
 
     @Test
-    public void execute_someFieldsSpecifiedUnfilteredList_success() throws Exception {
-        Index indexLastTask = Index.fromOneBased(model.getFilteredTaskList().size());
-        ReadOnlyTask lastTask = model.getFilteredTaskList().get(indexLastTask.getZeroBased());
-
-        TaskBuilder taskInList = new TaskBuilder(lastTask);
-        Task editedTask = taskInList.withHeader(VALID_HEADER_ASSIGNMENT).withDesc(VALID_DESC_ASSIGNMENT)
-                .withDeadline(VALID_DESC_ASSIGNMENT).build();
-
-        EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withHeader(VALID_HEADER_ASSIGNMENT)
-                .withDesc(VALID_DESC_ASSIGNMENT).withDeadline(VALID_DESC_ASSIGNMENT).build();
-        EditTaskCommand editTaskCommand = prepareCommand(indexLastTask, descriptor);
-
-        String expectedMessage = String.format(EditTaskCommand.MESSAGE_EDIT_TASK_SUCCESS, editedTask);
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updateTask(lastTask, editedTask);
-
-        assertCommandSuccess(editTaskCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
     public void execute_noFieldSpecifiedUnfilteredList_success() {
         EditTaskCommand editTaskCommand = prepareCommand(INDEX_FIRST_TASK, new EditTaskDescriptor());
         ReadOnlyTask editedTask = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());

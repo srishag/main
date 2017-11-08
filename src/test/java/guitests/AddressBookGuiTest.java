@@ -75,6 +75,10 @@ public abstract class AddressBookGuiTest {
         return mainWindowHandle.getPersonListPanel();
     }
 
+    protected TaskListPanelHandle getTaskListPanel() {
+        return mainWindowHandle.getTaskListPanel();
+    }
+
     protected MainMenuHandle getMainMenu() {
         return mainWindowHandle.getMainMenu();
     }

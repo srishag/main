@@ -75,7 +75,7 @@ public class AddTaskCommandTest {
         assertTrue(addHomeworkCommand.equals(addHomeworkCommand));
 
         // same values -> returns true
-        AddTaskCommand addHomeworkCommandCopy = new AddTaskCommand(addHomeworkCommand);
+        AddTaskCommand addHomeworkCommandCopy = new AddTaskCommand(homework);
         assertTrue(addHomeworkCommand.equals(addHomeworkCommandCopy));
 
         // different types -> returns false

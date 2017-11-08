@@ -196,7 +196,7 @@ public class CommandTestUtil {
      */
     public static void showFirstTaskOnly(Model model) {
         ReadOnlyTask task = model.getAddressBook().getTaskList().get(0);
-        final String[] splitTask = task.getHeader().value.split("\\s+");
+        final String[] splitHeader = task.getHeader().value.split("\\s+");
         model.updateFilteredTaskList(new HeaderContainsKeywordsPredicate(Arrays.asList(splitHeader[0])));
 
         assert model.getFilteredTaskList().size() == 1;
