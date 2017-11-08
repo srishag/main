@@ -26,7 +26,7 @@ public class TaskUtil {
         StringBuilder sb = new StringBuilder();
         sb.append(PREFIX_HEADER + task.getHeader().value + " ");
         sb.append(PREFIX_DESC + task.getDesc().value + " ");
-        sb.append(PREFIX_DEADLINE + task.getDeadline().localDeadline.toString() + " ");
+        sb.append(PREFIX_DEADLINE + task.getDeadline().value + " ");
         return sb.toString();
     }
 }

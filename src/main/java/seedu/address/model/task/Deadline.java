@@ -20,8 +20,6 @@ public class Deadline {
                     + "Format: DD/MM/YYYY";
 
     public final String value;
-    public final LocalDate localDeadline;
-    private String countDown;
 
     /**
      * Validates given eventDate.
@@ -30,57 +28,9 @@ public class Deadline {
      */
     public Deadline(String deadline) throws IllegalValueException {
         requireNonNull(deadline);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        try {
-            localDeadline = LocalDate.parse(deadline, formatter);
-        } catch (DateTimeParseException e) {
-            throw new IllegalValueException(MESSAGE_DEADLINE_CONSTRAINTS, e);
-        }
-        getCountDown();
-        this.value = deadline + "\n" + countDown;
+        this.value = deadline;
     }
 
-    private void getCountDown() {
-        ZoneId SGT = ZoneId.of("GMT+8");
-        LocalDate currentDate = LocalDate.now(SGT);
-        Period period = currentDate.until(localDeadline);
-
-        int years = getYearsUntilDeadline();
-        int months = getMonthsUntilDeadline();
-        int days = getDaysUntilDeadline();
-
-        if (period.isNegative()) {
-            this.countDown = "Event is overdue.";
-        } else if (period.isZero()) {
-            this.countDown = "Event is today!";
-        } else {
-            this.countDown = "Event in: " + years + "years " + months + "months " + days + "days";
-        }
-    }
-
-    public int getYearsUntilDeadline() {
-        ZoneId SGT = ZoneId.of("GMT+8");
-        LocalDate currentDate = LocalDate.now(SGT);
-        Period period = currentDate.until(localDeadline);
-
-        return period.getYears();
-    }
-
-    public int getMonthsUntilDeadline() {
-        ZoneId SGT = ZoneId.of("GMT+8");
-        LocalDate currentDate = LocalDate.now(SGT);
-        Period period = currentDate.until(localDeadline);
-
-        return period.getMonths();
-    }
-
-    public int getDaysUntilDeadline() {
-        ZoneId SGT = ZoneId.of("GMT+8");
-        LocalDate currentDate = LocalDate.now(SGT);
-        Period period = currentDate.until(localDeadline);
-
-        return period.getDays();
-    }
 
     @Override
     public String toString() {

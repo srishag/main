@@ -14,7 +14,7 @@ public class TaskBuilder {
 
     public static final String DEFAULT_HEADER = "Homework";
     public static final String DEFAULT_DESC = "Questions 1 and 2";
-    public static final String DEFAULT_DEADLINE = "01/12/2017";
+    public static final String DEFAULT_DEADLINE = "23/12/2017";
 
     private Task task;
 
