@@ -82,4 +82,11 @@ public class SendEmailCommand extends Command {
 
         return new CommandResult(String.format(MESSAGE_SUCCESS));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SendEmailCommand // instanceof handles nulls
+                && this.message.equals(((SendEmailCommand) other).message)); // state check
+    }
 }

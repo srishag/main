@@ -1,7 +1,7 @@
+//@@author PhuaJunJie
 package seedu.address.testutil;
 
 import com.google.api.services.people.v1.model.Person;
-
 
 /**
  * List of Stub Google contacts and its version of the addressbook contact

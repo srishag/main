@@ -16,7 +16,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new SendEmailCommand object
  */
-public class SendEmailCommandParser {
+public class SendEmailCommandParser implements Parser<SendEmailCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the SendEmailCommand
      * and returns an SendEmailCommand object for execution.
@@ -33,11 +33,13 @@ public class SendEmailCommandParser {
         try {
             //parse args to find index entered until PREFIX_EMAIL_SUBJECT
             Index index = ParserUtil.parseIndex(args.substring(0, args.indexOf("e")));
+
             Optional<String> subjectOptional = argMultimap.getValue(PREFIX_EMAIL_SUBJECT);
             String emailSubject = new String("");
             if (subjectOptional.isPresent()) {
                 emailSubject = ParserUtil.parseEmailSubject(argMultimap.getValue(PREFIX_EMAIL_SUBJECT)).get();
             }
+
             Optional<String> bodyOptional = argMultimap.getValue(PREFIX_EMAIL_BODY);
             String emailBody = new String("");
             if (bodyOptional.isPresent()) {

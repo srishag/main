@@ -3,7 +3,9 @@ package seedu.address.logic.commands;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
@@ -19,6 +21,7 @@ public class ListTagsCommand extends Command {
     public static final String MESSAGE_FAILURE = "You do not have any tags!";
     public static final String MESSAGE_SUCCESS = "You have the following tags: ";
 
+    private static final Logger logger = LogsCenter.getLogger(ListTagsCommand.class);
 
     @Override
     public CommandResult execute() throws CommandException {
@@ -29,18 +32,21 @@ public class ListTagsCommand extends Command {
 
         String feedbackForUser;
 
-        ArrayList<Tag> listOfAllTags = getAllTagsWithNoDuplicates();
+        ArrayList<Tag> listOfAllTags = getUniqueListOfTags();
 
         if (listOfAllTags.isEmpty()) {
+            logger.info("------ ListTagsCommand found no tags attached to any contacts");
             feedbackForUser = MESSAGE_FAILURE;
         } else {
             feedbackForUser = MESSAGE_SUCCESS + getListOfAllTagsInString(listOfAllTags);
         }
 
+        assert feedbackForUser != null : "feedbackForUser should contain some message and not be null";
+
         return feedbackForUser;
     }
 
-    private ArrayList<Tag> getAllTagsWithNoDuplicates() {
+    private ArrayList<Tag> getUniqueListOfTags() {
         ArrayList<Tag> listOfAllTags = new ArrayList<Tag>();
 
         for (ReadOnlyPerson p : model.getAddressBook().getPersonList()) {
@@ -55,14 +61,14 @@ public class ListTagsCommand extends Command {
 
     private String getListOfAllTagsInString(ArrayList<Tag> listOfAllTags) {
 
-        ArrayList<String> listOfAllTagNames = getAllTagNamesWithNoDuplicates(listOfAllTags);
+        ArrayList<String> listOfAllTagNames = getUniqueListOfTagNames(listOfAllTags);
 
-        sortListOfAllTagNamesAlphabetically(listOfAllTagNames);
+        sortTagNamesAlphabetically(listOfAllTagNames);
 
-        return getSortedTagNamesAsString(listOfAllTagNames);
+        return convertSortedTagNamesToString(listOfAllTagNames);
     }
 
-    private ArrayList<String> getAllTagNamesWithNoDuplicates(ArrayList<Tag> listOfAllTags) {
+    private ArrayList<String> getUniqueListOfTagNames(ArrayList<Tag> listOfAllTags) {
         ArrayList<String> listOfAllTagNames = new ArrayList<String>();
 
         for (Tag tag : listOfAllTags) {
@@ -71,11 +77,16 @@ public class ListTagsCommand extends Command {
         return listOfAllTagNames;
     }
 
-    private void sortListOfAllTagNamesAlphabetically(ArrayList<String> listOfAllTagNames) {
+    private void sortTagNamesAlphabetically(ArrayList<String> listOfAllTagNames) {
         Collections.sort(listOfAllTagNames);
     }
 
-    private String getSortedTagNamesAsString(ArrayList<String> listOfAllTagNames) {
+    /**
+     * Converts the list of all tag names into a string to display
+     * @param listOfAllTagNames the ArrayList containing all Tag names that are attached to at least 1 contact
+     * @return a String with all the names of the Tags, formatted appropriately.
+     */
+    private String convertSortedTagNamesToString(ArrayList<String> listOfAllTagNames) {
         StringBuilder tagNamesInListOfAllTags = new StringBuilder("");
         for (String tagName : listOfAllTagNames) {
             tagNamesInListOfAllTags.append("[").append(tagName).append("] ");

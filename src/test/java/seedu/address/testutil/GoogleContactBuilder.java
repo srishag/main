@@ -1,3 +1,4 @@
+//@@author PhuaJunJie
 package seedu.address.testutil;
 
 import java.util.ArrayList;
@@ -69,7 +70,6 @@ public class GoogleContactBuilder {
             Email email = new Email(emailDefault);
             seedu.address.model.person.Address address = new seedu.address.model.person.Address(addressDefault);
             GoogleId id;
-
             if (googleIdDefault.length() != 0) {
                 id = new GoogleId(googleIdDefault.substring(8));
             } else {

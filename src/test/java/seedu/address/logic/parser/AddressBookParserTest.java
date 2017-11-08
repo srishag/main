@@ -5,6 +5,10 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BODY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BODY_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_SUBJECT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_SUBJECT_DESC;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 
@@ -39,6 +43,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListTagsCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SendEmailCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
@@ -237,6 +242,7 @@ public class AddressBookParserTest {
         listOfAllCommandWordsAndAliases.add(FindCommand.COMMAND_ALIAS);
 
     }
+    //@@author PokkaKiyo
     @Test
     public void parseCommand_findPersonsWithTags() throws Exception {
         List<String> keywords = Arrays.asList("friend", "colleague");
@@ -248,6 +254,7 @@ public class AddressBookParserTest {
 
         listOfAllCommandWordsAndAliases.add(FindPersonsWithTagsCommand.COMMAND_WORD);
     }
+    //@@author
 
     @Test
     public void parseCommand_findPersonsWithTags_alias1() throws Exception {
@@ -374,6 +381,24 @@ public class AddressBookParserTest {
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
 
         listOfAllCommandWordsAndAliases.add(SelectCommand.COMMAND_ALIAS);
+    }
+
+    @Test
+    public void parseCommand_sendEmail() throws Exception {
+        SendEmailCommand command = (SendEmailCommand) parser.parseCommand(SendEmailCommand.COMMAND_WORD
+                + " " + "1" + " " + VALID_EMAIL_SUBJECT_DESC + " " + VALID_EMAIL_BODY_DESC);
+        assertEquals(new SendEmailCommand(INDEX_FIRST_PERSON, VALID_EMAIL_SUBJECT, VALID_EMAIL_BODY), command);
+
+        listOfAllCommandWordsAndAliases.add(SendEmailCommand.COMMAND_WORD);
+    }
+
+    @Test
+    public void parseCommand_sendEmail_alias() throws Exception {
+        SendEmailCommand command = (SendEmailCommand) parser.parseCommand(SendEmailCommand.COMMAND_ALIAS
+                + " " + "1" + " " + VALID_EMAIL_SUBJECT_DESC + " " + VALID_EMAIL_BODY_DESC);
+        assertEquals(new SendEmailCommand(INDEX_FIRST_PERSON, VALID_EMAIL_SUBJECT, VALID_EMAIL_BODY), command);
+
+        listOfAllCommandWordsAndAliases.add(SendEmailCommand.COMMAND_ALIAS);
     }
 
     @Test
