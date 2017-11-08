@@ -10,6 +10,10 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.SendEmailCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.GoogleAuthException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -72,6 +76,23 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
+    }
+
+    //// email-level operations
+
+    /**
+     * Sends email to person at index
+     * @param index
+     * with subject
+     * @param subject
+     * with body
+     * @param body
+     * @throws CommandException
+     * @throws GoogleAuthException
+     */
+    public void sendEmail(Index index, String subject, String body) throws CommandException, GoogleAuthException {
+        SendEmailCommand send = new SendEmailCommand(index, subject, body);
+        send.execute();
     }
 
     //// person-level operations

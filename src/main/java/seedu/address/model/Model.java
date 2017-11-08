@@ -3,6 +3,9 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.GoogleAuthException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -38,6 +41,8 @@ public interface Model {
             throws DuplicatePersonException, PersonNotFoundException;
 
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
+
+    void sendEmail(Index index, String subject, String body) throws CommandException, GoogleAuthException;
 
     ///** Creates the email to be sent */
     //MimeMessage createEmail(String to, String from, String subject, String bodyText) throws MessagingException;
