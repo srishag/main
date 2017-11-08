@@ -47,7 +47,9 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    //@@author srishag
     private final FilteredList<ReadOnlyTask> filteredTasks;
+    //@@author
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -60,7 +62,9 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        //@@author srishag
         filteredTasks = new FilteredList<>(this.addressBook.getTaskList());
+        //@@author
     }
 
     public ModelManager() {
@@ -105,6 +109,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author srishag
     @Override
     public synchronized void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
         addressBook.removeTask(target);
@@ -126,6 +131,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updateTask(target, editedTask);
         indicateAddressBookChanged();
     }
+    //@@author
 
     @Override
     public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
@@ -141,12 +147,12 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    //@@author srishag
     @Override
     public void sendEmail(Index index, String subject, String body) throws CommandException, GoogleAuthException {
         addressBook.sendEmail(index, subject, body);
     }
 
-    //@@author srishag
     /**
      * Create a MimeMessage using the parameters provided.
      *
@@ -236,6 +242,8 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //@@author srishag
+
     //=========== Filtered Task List Accessors =============================================================
 
     /**
@@ -252,6 +260,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredTasks.setPredicate(predicate);
     }
+    //@@author
 
 
     @Override
@@ -270,6 +279,7 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons)
+                //@@author srishag
                 && filteredTasks.equals(other.filteredTasks);
     }
 

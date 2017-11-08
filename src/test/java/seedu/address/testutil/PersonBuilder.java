@@ -24,7 +24,9 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    //@@author srishag
     public static final String DEFAULT_BIRTHDAY = "14051998";
+    //@@author
     public static final String DEFAULT_FACEBOOK_ADDRESS = "https://www.facebook.com/default_address_for_testing/";
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_GOOGLEID = "not GoogleContact";
@@ -37,7 +39,9 @@ public class PersonBuilder {
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
+            //@@author srishag
             Birthday defaultBirthday = new Birthday(DEFAULT_BIRTHDAY);
+            //@@author
             FacebookAddress defaultFacebookAddress = new FacebookAddress(DEFAULT_FACEBOOK_ADDRESS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
 

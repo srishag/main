@@ -133,10 +133,12 @@ public class AddCommandTest {
             fail("This method should not be called");
         }
 
+        //@@author srishag
         @Override
         public void sendEmail(Index index, String subject, String body) {
             fail("This method should not be called");
         }
+        //@@author
 
         @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
@@ -149,6 +151,7 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author srishag
         @Override
         public void addTask(ReadOnlyTask task) throws DuplicateTaskException {
             fail("This method should not be called.");
@@ -175,6 +178,7 @@ public class AddCommandTest {
         public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
             fail("This method should not be called.");
         }
+        //@@author
     }
 
     /**

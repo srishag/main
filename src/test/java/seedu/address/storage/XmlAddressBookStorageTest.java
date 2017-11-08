@@ -78,8 +78,10 @@ public class XmlAddressBookStorageTest {
         //Modify data, overwrite exiting file, and read back
         original.addPerson(new Person(HOON));
         original.removePerson(new Person(ALICE));
+        //@@author srishag
         original.addTask(new Task(MILK));
         original.removeTask(new Task(MILK));
+        //@@author
         xmlAddressBookStorage.saveAddressBook(original, filePath);
         readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
         assertEquals(original, new AddressBook(readBack));
@@ -106,12 +108,14 @@ public class XmlAddressBookStorageTest {
         addressBook.getPersonList().remove(0);
     }
 
+    //@@author srishag
     @Test
     public void getTaskList_modifyList_throwsUnsupportedOperationException() {
         XmlSerializableAddressBook addressBook = new XmlSerializableAddressBook();
         thrown.expect(UnsupportedOperationException.class);
         addressBook.getTaskList().remove(0);
     }
+    //@@author
 
     @Test
     public void getTagList_modifyList_throwsUnsupportedOperationException() {
