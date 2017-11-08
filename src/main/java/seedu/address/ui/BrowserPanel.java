@@ -47,10 +47,11 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-
+    //@@author PokkaKiyo
     private void loadPersonPage(ReadOnlyPerson person) {
-            loadPage(person.getFacebookAddress().value);
+        loadPage(person.getFacebookAddress().value);
     }
+    //@@author
 
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
