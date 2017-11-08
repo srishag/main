@@ -5,11 +5,13 @@ import static java.util.Objects.requireNonNull;
 import java.util.Iterator;
 import java.util.List;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.fxmisc.easybind.EasyBind;
+
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  * A list of tasks that enforces uniqueness between its elements and does not allow nulls.

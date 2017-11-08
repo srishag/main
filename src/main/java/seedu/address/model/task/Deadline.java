@@ -2,12 +2,6 @@ package seedu.address.model.task;
 
 import static java.util.Objects.requireNonNull;
 
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
