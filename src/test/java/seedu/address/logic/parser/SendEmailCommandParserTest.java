@@ -19,33 +19,6 @@ public class SendEmailCommandParserTest {
     private SendEmailCommandParser parser = new SendEmailCommandParser();
 
     @Test
-    public void parse_allFieldsPresent_success() {
-        SendEmailCommand sendEmailCommandAllPresent = new SendEmailCommand(INDEX_FIRST_PERSON, VALID_EMAIL_SUBJECT,
-                VALID_EMAIL_BODY);
-        assertParseSuccess(parser, SendEmailCommand.COMMAND_WORD + INDEX_FIRST_PERSON + VALID_EMAIL_SUBJECT_DESC
-                + VALID_EMAIL_BODY_DESC, sendEmailCommandAllPresent);
-    }
-
-//    @Test
-//    public void parse_someOptionalFieldsPresent_success() {
-//        SendEmailCommand sendEmailCommandNoSubject = new SendEmailCommand(INDEX_FIRST_PERSON, " ", VALID_EMAIL_BODY);
-//        SendEmailCommand sendEmailCommandNoBody = new SendEmailCommand(INDEX_FIRST_PERSON, VALID_EMAIL_SUBJECT, " ");
-//
-//        assertParseSuccess(parser, SendEmailCommand.COMMAND_WORD + INDEX_FIRST_PERSON + EMPTY_EMAIL_SUBJECT_DESC
-//                + VALID_EMAIL_BODY_DESC, sendEmailCommandNoSubject);
-//        assertParseSuccess(parser, SendEmailCommand.COMMAND_WORD + INDEX_FIRST_PERSON + VALID_EMAIL_SUBJECT_DESC
-//                + EMPTY_EMAIL_BODY_DESC, sendEmailCommandNoBody);
-//    }
-//
-//    @Test
-//    public void parse_noOptionalFieldsPresent_success() {
-//        SendEmailCommand sendEmailCommandAllEmpty = new SendEmailCommand(INDEX_FIRST_PERSON, " ", " ");
-//
-//        assertParseSuccess(parser, SendEmailCommand.COMMAND_WORD + INDEX_FIRST_PERSON + EMPTY_EMAIL_SUBJECT_DESC
-//                + EMPTY_EMAIL_BODY_DESC, sendEmailCommandAllEmpty);
-//    }
-
-    @Test
     public void parse_compulsoryFieldMissing_failure() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SendEmailCommand.MESSAGE_USAGE);
 

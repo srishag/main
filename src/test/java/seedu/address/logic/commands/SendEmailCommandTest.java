@@ -1,16 +1,13 @@
 package seedu.address.logic.commands;
 
 import static junit.framework.TestCase.assertTrue;
-import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BODY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_SUBJECT;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Assert;
@@ -20,16 +17,14 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.exceptions.GoogleAuthException;
-import seedu.address.model.AddressBook;
+import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 public class SendEmailCommandTest {
@@ -41,9 +36,7 @@ public class SendEmailCommandTest {
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     private Model model;
-    private Index index;
-    private String subject;
-    private String body;
+    private final AddressBookParser parser = new AddressBookParser();
 
     @Before
     public void setUp() {
@@ -60,30 +53,11 @@ public class SendEmailCommandTest {
     }
 
     @Test
-    public void execute_validIndexUnfilteredList_success() throws Exception {
-        SendEmailCommand command = prepareCommand(INDEX_FIRST_PERSON, VALID_EMAIL_SUBJECT, VALID_EMAIL_BODY);
-        Model modelStub = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        String expectedMessage = SendEmailCommand.MESSAGE_SUCCESS;
-
-        assertCommandSuccess(command, model, expectedMessage, modelStub);
-    }
-
-    @Test
     public void execute_invalidIndexUnfilteredList_failure() {
         Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
 
         assertExecutionFailure(outOfBoundsIndex, VALID_EMAIL_SUBJECT, VALID_EMAIL_BODY,
                 Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-    }
-
-    @Test
-    public void execute_validIndexFilteredList_success() throws Exception {
-        showFirstPersonOnly(model);
-        SendEmailCommand command = prepareCommand(INDEX_FIRST_PERSON, VALID_EMAIL_SUBJECT, VALID_EMAIL_BODY);
-        Model modelStub = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        String expectedMessage = SendEmailCommand.MESSAGE_SUCCESS;
-
-        assertCommandSuccess(command, model, expectedMessage, modelStub);
     }
 
     @Test
@@ -98,34 +72,20 @@ public class SendEmailCommandTest {
                 Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
-    //Index, Subject, Body has been specified
     @Test
-    public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
-        SendEmailCommand command = prepareCommand(INDEX_FIRST_PERSON, VALID_EMAIL_SUBJECT, VALID_EMAIL_BODY);
-        Model modelStub = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        String expectedMessage = SendEmailCommand.MESSAGE_SUCCESS;
+    public void equals() {
+        SendEmailCommand command = new SendEmailCommand(INDEX_FIRST_PERSON, VALID_EMAIL_SUBJECT, VALID_EMAIL_BODY);
+        SendEmailCommand sameCommand = new SendEmailCommand(INDEX_FIRST_PERSON, VALID_EMAIL_SUBJECT, VALID_EMAIL_BODY);
+        SendEmailCommand differentCommand = new SendEmailCommand(INDEX_SECOND_PERSON, VALID_EMAIL_SUBJECT,
+                VALID_EMAIL_BODY);
 
-        assertCommandSuccess(command, model, expectedMessage, modelStub);
-    }
+        assertTrue(command.equals(sameCommand));
 
-    //Index, Subject has been specified
-    @Test
-    public void execute_subjectFieldSpecifiedUnfilteredList_success() throws Exception {
-        SendEmailCommand command = prepareCommand(INDEX_FIRST_PERSON, VALID_EMAIL_SUBJECT, " ");
-        Model modelStub = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        String expectedMessage = SendEmailCommand.MESSAGE_SUCCESS;
+        assertTrue(command.equals(command));
 
-        assertCommandSuccess(command, model, expectedMessage, modelStub);
-    }
+        assertFalse(command == null);
 
-    //Index, Body has been specified
-    @Test
-    public void execute_bodyFieldSpecifiedUnfilteredList_success() throws Exception {
-        SendEmailCommand command = prepareCommand(INDEX_FIRST_PERSON, " ", VALID_EMAIL_BODY);
-        Model modelStub = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        String expectedMessage = SendEmailCommand.MESSAGE_SUCCESS;
-
-        assertCommandSuccess(command, model, expectedMessage, modelStub);
+        assertFalse(command == differentCommand);
     }
 
     /**
