@@ -131,11 +131,11 @@ public class SampleDataUtil {
                 new Task(new Header("Homework"), new Desc("Page 6 to 9"), new Deadline("21/11/2017")),
                 new Task(new Header("Assignment"), new Desc("Tutorial homework"), new Deadline("17/12/2017")),
                 new Task(new Header("Project"), new Desc("Finish Verilog code"), new Deadline("13/12/2017"))
-             };
-          } catch (IllegalValueException e) {
+            };
+        } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);
-          }
-      }
+        }
+    }
 
     public static ReadOnlyAddressBook getSampleAddressBook() {
         try {
