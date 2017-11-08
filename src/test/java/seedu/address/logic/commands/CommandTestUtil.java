@@ -83,8 +83,8 @@ public class CommandTestUtil {
     public static final String HEADER_DESC_ASSIGNMENT = " " + PREFIX_HEADER + VALID_HEADER_ASSIGNMENT;
     public static final String DESC_DESC_HOMEWORK = " " + PREFIX_DESC + VALID_DESC_HOMEWORK;
     public static final String DESC_DESC_ASSIGNMENT = " " + PREFIX_DESC + VALID_DESC_ASSIGNMENT;
-    public static final String DESC_DEADLINE_HOMEWORK = " " + PREFIX_DEADLINE + VALID_DEADLINE_HOMEWORK;
-    public static final String DESC_DEADLINE_ASSIGNMENT = " " + PREFIX_DEADLINE + VALID_DEADLINE_ASSIGNMENT;
+    public static final String DEADLINE_DESC_HOMEWORK = " " + PREFIX_DEADLINE + VALID_DEADLINE_HOMEWORK;
+    public static final String DEADLINE_DESC_ASSIGNMENT = " " + PREFIX_DEADLINE + VALID_DEADLINE_ASSIGNMENT;
 
     public static final String INVALID_HEADER_DESC = " " + PREFIX_HEADER; // empty string not allowed for headers
     public static final String INVALID_DESC_DESC = " " + PREFIX_DESC; // empty string not allowed for desc
