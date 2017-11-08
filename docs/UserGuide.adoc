@@ -259,7 +259,7 @@ Examples:
 * `find Betsy Tim John` +
 Returns any person having starting alphabets `Betsy`, `Tim`, or `John`
 
-
+// tag::findtags[]
 === Locating persons by tag name: `findtags`
 `SINCE V1.2`
 
@@ -330,8 +330,9 @@ Specifying only tags to exclude +
 Example 2:
 `findtags` #-colleagues# +
 In this case, the application will show **all** contacts who are #NOT# tagged colleagues, regardless of other tags.
+// end::findtags[]
 
-
+// tag::listtags[]
 === List tags : `listtags` +
 `since v1.3`
 
@@ -342,6 +343,8 @@ Listing all tags is designed to help you choose which tags to specify when using
 
 ==== The Command
 Format: `listtags`
+
+// end::listtags[]
 
 
 === Deleting a person : `delete`
