@@ -85,7 +85,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_addEvent() throws Exception {
+    public void parseCommand_addTask() throws Exception {
         Task task = new TaskBuilder().build();
         AddTaskCommand command = (AddTaskCommand) parser.parseCommand(TaskUtil.getAddTaskCommand(task));
         assertEquals(new AddTaskCommand(task), command);
@@ -94,7 +94,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_addEvent_alias() throws Exception {
+    public void parseCommand_addTask_alias() throws Exception {
         Task task = new TaskBuilder().build();
         AddTaskCommand command = (AddTaskCommand) parser.parseCommand(TaskUtil.getAddTaskCommand(task));
         assertEquals(new AddTaskCommand(task), command);
@@ -138,7 +138,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_deleteEvent() throws Exception {
+    public void parseCommand_deleteTask() throws Exception {
         DeleteTaskCommand command = (DeleteTaskCommand) parser.parseCommand(
                 DeleteTaskCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased());
         assertEquals(new DeleteTaskCommand(INDEX_FIRST_TASK), command);
@@ -148,7 +148,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_deleteEvent_alias() throws Exception {
+    public void parseCommand_deleteTask_alias() throws Exception {
         DeleteTaskCommand command = (DeleteTaskCommand) parser.parseCommand(
                 DeleteTaskCommand.COMMAND_ALIAS + " " + INDEX_FIRST_TASK.getOneBased());
         assertEquals(new DeleteTaskCommand(INDEX_FIRST_TASK), command);

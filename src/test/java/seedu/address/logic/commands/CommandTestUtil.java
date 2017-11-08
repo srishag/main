@@ -89,7 +89,7 @@ public class CommandTestUtil {
 
     public static final String INVALID_HEADER_DESC = " " + PREFIX_HEADER; // empty string not allowed for headers
     public static final String INVALID_DESC_DESC = " " + PREFIX_DESC; // empty string not allowed for desc
-    public static final String INVALID_DEADLINE_DESC = " " + PREFIX_DEADLINE; // empty string not allowed for deadlines
+    public static final String INVALID_DEADLINE_DESC = " " + PREFIX_DEADLINE; // format should be DD/MM/YYYY
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones

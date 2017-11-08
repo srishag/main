@@ -5,6 +5,7 @@ import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_ASSIGNM
 import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_HOMEWORK;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_DESC_ASSIGNMENT;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_DESC_HOMEWORK;
+import static seedu.address.logic.commands.CommandTestUtil.HEADER_DESC_ASSIGNMENT;
 import static seedu.address.logic.commands.CommandTestUtil.HEADER_DESC_HOMEWORK;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DEADLINE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DESC_DESC;
@@ -13,6 +14,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_ASSIGN
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_HOMEWORK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESC_ASSIGNMENT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESC_HOMEWORK;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_HEADER_ASSIGNMENT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_HEADER_HOMEWORK;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -151,15 +153,16 @@ public class EditTaskCommandParserTest {
     public void parse_invalidValueFollowedByValidValue_success() {
         // no other valid values specified
         Index targetIndex = INDEX_FIRST_TASK;
-        String userInput = targetIndex.getOneBased() + INVALID_DESC_DESC + DEADLINE_DESC_ASSIGNMENT;
-        EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withDeadline(VALID_DEADLINE_ASSIGNMENT).build();
+        String userInput = targetIndex.getOneBased() + INVALID_DESC_DESC + DESC_DESC_ASSIGNMENT;
+        EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withDesc(VALID_DESC_ASSIGNMENT).build();
         EditTaskCommand expectedCommand = new EditTaskCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // other valid values specified
-        userInput = targetIndex.getOneBased() + DEADLINE_DESC_HOMEWORK + INVALID_DESC_DESC + DESC_DESC_HOMEWORK;
-        descriptor = new EditTaskDescriptorBuilder().withDesc(VALID_DESC_HOMEWORK)
-                .withDeadline(VALID_DEADLINE_HOMEWORK).build();
+        userInput = targetIndex.getOneBased() + DEADLINE_DESC_ASSIGNMENT + INVALID_DESC_DESC + HEADER_DESC_ASSIGNMENT
+                + DESC_DESC_ASSIGNMENT;
+        descriptor = new EditTaskDescriptorBuilder().withDesc(VALID_DESC_ASSIGNMENT)
+                .withDeadline(VALID_DEADLINE_ASSIGNMENT).withHeader(VALID_HEADER_ASSIGNMENT).build();
         expectedCommand = new EditTaskCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }

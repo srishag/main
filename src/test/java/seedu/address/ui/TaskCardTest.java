@@ -27,7 +27,7 @@ public class TaskCardTest extends GuiUnitTest {
             task.setDesc(CODE.getDesc());
             task.setDeadline(CODE.getDeadline());
         });
-        assertCardDisplay(taskCard, task, 2);
+        assertCardDisplay(taskCard, task, 1);
     }
 
     @Test

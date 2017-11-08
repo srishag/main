@@ -7,6 +7,7 @@ import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalTasks.EMAIL;
+import static seedu.address.testutil.TypicalTasks.HOMEWORK;
 import static seedu.address.testutil.TypicalTasks.MILK;
 import static seedu.address.testutil.TypicalTasks.PRESENTATION;
 
@@ -80,7 +81,7 @@ public class XmlAddressBookStorageTest {
         original.addPerson(new Person(HOON));
         original.removePerson(new Person(ALICE));
         original.addTask(new Task(MILK));
-        original.removeTask(new Task(PRESENTATION));
+        original.removeTask(new Task(MILK));
         xmlAddressBookStorage.saveAddressBook(original, filePath);
         readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
         assertEquals(original, new AddressBook(readBack));
