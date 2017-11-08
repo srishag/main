@@ -22,7 +22,7 @@ public class SendEmailCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void send() {
-        /* ----------------- Performing send email operation while an unfiltered list is being shown ----------------- */
+        /* --------------- Performing send email operation while an unfiltered list is being shown ----------------- */
 
         /*
        /* Case: send email to the first person in the list, command with leading spaces and trailing spaces -> sent
