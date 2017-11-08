@@ -8,7 +8,9 @@ import java.util.stream.Collectors;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import guitests.guihandles.TaskCardHandle;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.task.ReadOnlyTask;
 
 /**
  * A set of assertion methods useful for writing GUI tests.
@@ -27,6 +29,13 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
 
+    public static void assertTaskCardEquals(TaskCardHandle expectedCard, TaskCardHandle actualCard) {
+        assertEquals(expectedCard.getId(), actualCard.getId());
+        assertEquals(expectedCard.getHeader(), actualCard.getHeader());
+        assertEquals(expectedCard.getDesc(), actualCard.getDesc());
+        assertEquals(expectedCard.getDeadline(), actualCard.getDeadline());
+    }
+
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
      */
@@ -39,6 +48,15 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getFacebookAddress().value, actualCard.getFacebookAddress());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
+    }
+
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedTask}.
+     */
+    public static void assertCardDisplaysTask(ReadOnlyTask expectedTask, TaskCardHandle actualCard) {
+        assertEquals(expectedTask.getHeader().value, actualCard.getHeader());
+        assertEquals(expectedTask.getDesc().value, actualCard.getDesc());
+        assertEquals(expectedTask.getDeadline().value, actualCard.getDeadline());
     }
 
     /**
