@@ -63,8 +63,8 @@ public class SampleDataUtil {
     public static Task[] getSampleTasks() {
         try {
             return new Task[]{
-                    new Task(new Header("Homework"), new Desc("Page 6 to 9"), new Deadline("27/11/2017")),
-                    new Task(new Header("Assignment"), new Desc("Tutorial homework"), new Deadline("05/12/2017")),
+                    new Task(new Header("Homework"), new Desc("Page 6 to 9"), new Deadline("21/11/2017")),
+                    new Task(new Header("Assignment"), new Desc("Tutorial homework"), new Deadline("17/12/2017")),
                     new Task(new Header("Project"), new Desc("Finish Verilog code"), new Deadline("13/12/2017"))
             };
         } catch (IllegalValueException e) {
@@ -85,7 +85,7 @@ public class SampleDataUtil {
 
             return sampleAb;
         } catch (DuplicatePersonException | DuplicateTaskException e) {
-            throw new AssertionError("sample data cannot contain duplicate persons", e);
+            throw new AssertionError("sample data cannot contain duplicate persons or tasks", e);
         }
     }
 

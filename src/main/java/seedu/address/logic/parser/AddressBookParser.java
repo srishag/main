@@ -130,15 +130,15 @@ public class AddressBookParser {
 
         case AddTaskCommand.COMMAND_WORD:
         case AddTaskCommand.COMMAND_ALIAS:
-            return new SendEmailCommandParser().parse(arguments);
+            return new AddTaskCommandParser().parse(arguments);
 
         case EditTaskCommand.COMMAND_WORD:
         case EditTaskCommand.COMMAND_ALIAS:
-            return new SendEmailCommandParser().parse(arguments);
+            return new EditTaskCommandParser().parse(arguments);
 
         case DeleteTaskCommand.COMMAND_WORD:
         case DeleteTaskCommand.COMMAND_ALIAS:
-            return new SendEmailCommandParser().parse(arguments);
+            return new DeleteTaskCommandParser().parse(arguments);
         //@@author
 
         case RedoCommand.COMMAND_WORD:
