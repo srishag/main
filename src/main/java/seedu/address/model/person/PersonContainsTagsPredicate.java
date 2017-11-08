@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.tag.Tag;
 
@@ -13,20 +15,26 @@ import seedu.address.model.tag.Tag;
  * Tests that a Person has a tag with a tag name matches any of the keywords given.
  */
 public class PersonContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
+    private static final Logger logger = LogsCenter.getLogger(PersonContainsTagsPredicate.class);
+
     private final List<String> keywords;
+    private final List<String> keywordsToInclude;
+    private final List<String> keywordsToExclude;
 
     public PersonContainsTagsPredicate(List<String> keywords) {
+        logger.info("------Creating PersonContainsTagsPredicate");
         this.keywords = keywords;
+        keywordsToInclude = new ArrayList<String>();
+        keywordsToExclude = new ArrayList<String>();
+        separateKeywordsToIncludeAndExclude(keywordsToInclude, keywordsToExclude);
+        logger.info("-------Number of keywords to include: " + keywordsToInclude.size() / 2);
+        logger.info("-------Number of keywords to exclude: " + keywordsToExclude.size() / 2);
+
     }
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-
         String allTagNames = getStringOfAllTagNamesOfPerson(person);
-
-        final List<String> keywordsToInclude = new ArrayList<String>();
-        final List<String> keywordsToExclude = new ArrayList<String>();
-        separateKeywordsToIncludeAndExclude(keywordsToInclude, keywordsToExclude);
 
         boolean onlyKeywordsToExcludeAreSpecified =
                 checkIfOnlyKeywordsToExcludeAreSpecified(keywordsToInclude, keywordsToExclude);
@@ -95,7 +103,9 @@ public class PersonContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof PersonContainsTagsPredicate // instanceof handles nulls
-                && this.keywords.equals(((PersonContainsTagsPredicate) other).keywords)); // state check
+                && this.keywords.equals(((PersonContainsTagsPredicate) other).keywords) //state check
+                && this.keywordsToInclude.equals(((PersonContainsTagsPredicate) other).keywordsToInclude)
+                && this.keywordsToExclude.equals(((PersonContainsTagsPredicate) other).keywordsToExclude));
     }
 
 }

@@ -3,7 +3,9 @@ package seedu.address.logic.commands;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
@@ -12,6 +14,7 @@ import seedu.address.model.tag.Tag;
  * List all tags in the addressbook to the user
  */
 public class ListTagsCommand extends Command {
+
     public static final String COMMAND_WORD = "listtags";
     public static final String COMMAND_WORD_ALIAS1 = "lt";
     public static final String COMMAND_WORD_ALIAS2 = "ltags";
@@ -19,6 +22,7 @@ public class ListTagsCommand extends Command {
     public static final String MESSAGE_FAILURE = "You do not have any tags!";
     public static final String MESSAGE_SUCCESS = "You have the following tags: ";
 
+    private static final Logger logger = LogsCenter.getLogger(ListTagsCommand.class);
 
     @Override
     public CommandResult execute() throws CommandException {
@@ -32,6 +36,7 @@ public class ListTagsCommand extends Command {
         ArrayList<Tag> listOfAllTags = getUniqueListOfTags();
 
         if (listOfAllTags.isEmpty()) {
+            logger.info("------ ListTagsCommand found no tags attached to any contacts");
             feedbackForUser = MESSAGE_FAILURE;
         } else {
             feedbackForUser = MESSAGE_SUCCESS + getListOfAllTagsInString(listOfAllTags);
