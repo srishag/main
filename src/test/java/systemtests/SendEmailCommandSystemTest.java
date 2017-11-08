@@ -22,49 +22,7 @@ public class SendEmailCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void send() {
-        /* --------------- Performing send email operation while an unfiltered list is being shown ----------------- */
-
-        /*
-       /* Case: send email to the first person in the list, command with leading spaces and trailing spaces -> sent
-        Model expectedModel = getModel();
-        String command = "     " + SendEmailCommand.COMMAND_WORD + "      " + INDEX_FIRST_PERSON.getOneBased()
-                + "       " + VALID_EMAIL_SUBJECT_DESC + "       " + VALID_EMAIL_BODY_DESC;
-        String expectedSuccessMessage = SendEmailCommand.MESSAGE_SUCCESS;
-        assertEquals(new SendEmailCommand(INDEX_FIRST_PERSON, VALID_EMAIL_SUBJECT, VALID_EMAIL_BODY), command);
-
-        /* Case: send email to the last person in the list -> sent
-        Model modelBeforeSendingLast = getModel();
-        Index lastPersonIndex = getLastIndex(modelBeforeSendingLast);
-        String lastPersonCommand = "     " + SendEmailCommand.COMMAND_WORD + "      " + lastPersonIndex
-                + "       " + VALID_EMAIL_SUBJECT_DESC + "       " + VALID_EMAIL_BODY_DESC;
-        assertEquals(new SendEmailCommand(lastPersonIndex, VALID_EMAIL_SUBJECT, VALID_EMAIL_BODY), lastPersonCommand);
-
-        /* Case: send email to the middle person in the list -> sent
-        Model modelBeforeSendingMiddle = getModel();
-        Index middlePersonIndex = getMidIndex(modelBeforeSendingMiddle);
-        String middlePersonCommand = "     " + SendEmailCommand.COMMAND_WORD + "      " + middlePersonIndex
-                + "       " + VALID_EMAIL_SUBJECT_DESC + "       " + VALID_EMAIL_BODY_DESC;
-        assertEquals(new SendEmailCommand(middlePersonIndex, VALID_EMAIL_SUBJECT, VALID_EMAIL_BODY),
-                middlePersonCommand);
-        */
-
-        /* ------------------ Performing send email operation while a filtered list is being shown ------------------ */
-
-        /*
-        /* Case: filtered person list, send email to index within bounds of address book and person list -> sent
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        Index index = INDEX_FIRST_PERSON;
-        assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
-        command = SendEmailCommand.COMMAND_WORD + " " + index + " " + VALID_EMAIL_SUBJECT_DESC
-                + " " + VALID_EMAIL_BODY_DESC;
-        assertEquals(new SendEmailCommand(index, VALID_EMAIL_SUBJECT, VALID_EMAIL_BODY), command);
-        */
-
-        /* Case: filtered person list, send email to index within bounds of address book
-         * but out of bounds of person list
-         * -> rejected
-        */
-
+        
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         int invalidIndex = getModel().getAddressBook().getPersonList().size();
         command = SendEmailCommand.COMMAND_WORD + " " + invalidIndex + " " + VALID_EMAIL_SUBJECT_DESC
