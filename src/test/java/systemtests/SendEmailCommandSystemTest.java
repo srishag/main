@@ -23,7 +23,7 @@ public class SendEmailCommandSystemTest extends AddressBookSystemTest {
     public void send() {
        /* ----------------- Performing send email operation while an unfiltered list is being shown ----------------- */
 
-       /*
+        /*
        /* Case: send email to the first person in the list, command with leading spaces and trailing spaces -> sent
         Model expectedModel = getModel();
         String command = "     " + SendEmailCommand.COMMAND_WORD + "      " + INDEX_FIRST_PERSON.getOneBased()
@@ -59,9 +59,10 @@ public class SendEmailCommandSystemTest extends AddressBookSystemTest {
         assertEquals(new SendEmailCommand(index, VALID_EMAIL_SUBJECT, VALID_EMAIL_BODY), command);
         */
 
-        /* Case: filtered person list, send email to index within bounds of address book but out of bounds of person list
+        /* Case: filtered person list, send email to index within bounds of address book
+         * but out of bounds of person list
          * -> rejected
-         */
+        */
 
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         int invalidIndex = getModel().getAddressBook().getPersonList().size();

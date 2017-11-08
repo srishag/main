@@ -3,16 +3,13 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.EMPTY_EMAIL_BODY_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.EMPTY_EMAIL_SUBJECT_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BODY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BODY_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_SUBJECT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_SUBJECT_DESC;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.Test;
-import seedu.address.commons.core.index.Index;
+
 import seedu.address.logic.commands.SendEmailCommand;
 
 public class SendEmailCommandParserTest {

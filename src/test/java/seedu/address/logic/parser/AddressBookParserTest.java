@@ -9,8 +9,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BODY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BODY_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_SUBJECT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_SUBJECT_DESC;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL_BODY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL_SUBJECT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.ArrayList;
@@ -317,8 +315,8 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_sendEmail() throws Exception {
-        SendEmailCommand command = (SendEmailCommand) parser.parseCommand(SendEmailCommand.COMMAND_WORD +
-                " " + "1" + " " + VALID_EMAIL_SUBJECT_DESC + " " + VALID_EMAIL_BODY_DESC);
+        SendEmailCommand command = (SendEmailCommand) parser.parseCommand(SendEmailCommand.COMMAND_WORD
+                + " " + "1" + " " + VALID_EMAIL_SUBJECT_DESC + " " + VALID_EMAIL_BODY_DESC);
         assertEquals(new SendEmailCommand(INDEX_FIRST_PERSON, VALID_EMAIL_SUBJECT, VALID_EMAIL_BODY), command);
 
         listOfAllCommandWordsAndAliases.add(SendEmailCommand.COMMAND_WORD);
@@ -326,8 +324,8 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_sendEmail_alias() throws Exception {
-        SendEmailCommand command = (SendEmailCommand) parser.parseCommand(SendEmailCommand.COMMAND_ALIAS +
-                " " + "1" + " " + VALID_EMAIL_SUBJECT_DESC + " " + VALID_EMAIL_BODY_DESC);
+        SendEmailCommand command = (SendEmailCommand) parser.parseCommand(SendEmailCommand.COMMAND_ALIAS
+                + " " + "1" + " " + VALID_EMAIL_SUBJECT_DESC + " " + VALID_EMAIL_BODY_DESC);
         assertEquals(new SendEmailCommand(INDEX_FIRST_PERSON, VALID_EMAIL_SUBJECT, VALID_EMAIL_BODY), command);
 
         listOfAllCommandWordsAndAliases.add(SendEmailCommand.COMMAND_ALIAS);
