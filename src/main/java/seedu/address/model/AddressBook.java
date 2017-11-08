@@ -80,6 +80,16 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// email-level operations
 
+    /**
+     * Sends email to person at index
+     * @param index
+     * with subject
+     * @param subject
+     * with body
+     * @param body
+     * @throws CommandException
+     * @throws GoogleAuthException
+     */
     public void sendEmail(Index index, String subject, String body) throws CommandException, GoogleAuthException {
         SendEmailCommand send = new SendEmailCommand(index, subject, body);
         send.execute();

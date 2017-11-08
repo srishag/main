@@ -2,11 +2,9 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.logic.commands.SendEmailCommand.EMAIL_SENDER;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -117,7 +115,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void sendEmail(Index index, String subject, String body) throws CommandException, GoogleAuthException{
+    public void sendEmail(Index index, String subject, String body) throws CommandException, GoogleAuthException {
         addressBook.sendEmail(index, subject, body);
     }
 

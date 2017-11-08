@@ -65,7 +65,7 @@ public class GoogleAuthenticator {
             EventsCenter.getInstance().post(event);
             String url = event.getReDirectUrl();
             indexToken = checkValidTokenIndex(url.indexOf("token="));
-            if(indexToken) {
+            if (indexToken) {
                 token = url.substring(url.indexOf("token=") + 6, url.indexOf("&"));
             } else {
                 throw new StringIndexOutOfBoundsException();
@@ -81,7 +81,7 @@ public class GoogleAuthenticator {
      * @returns true if valid (i.e. index is not -1) or false if not valid(i.e. index is -1)
      */
     public boolean checkValidTokenIndex(int index) {
-        if(index == -1) {
+        if (index == -1) {
             return false;
         }
         return true;
