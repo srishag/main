@@ -22,7 +22,9 @@ public class SendEmailCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void send() {
-        
+
+        /* ----------------------- Perform send email operation while a filtered list is being shown --------------- */
+
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         int invalidIndex = getModel().getAddressBook().getPersonList().size();
         command = SendEmailCommand.COMMAND_WORD + " " + invalidIndex + " " + VALID_EMAIL_SUBJECT_DESC
