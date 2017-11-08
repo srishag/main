@@ -28,10 +28,10 @@ import seedu.address.model.task.exceptions.DuplicateTaskException;
 public class SampleDataUtil {
     public static Person[] getSamplePersons() {
         try {
-            return new Person[] {
+            return new Person[]{
 
-                new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"), //head
-                    new Address("Blk 30 Geylang Street 29, #06-40"), new Birthday("03041987"),
+                    new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"), //head
+                            new Address("Blk 30 Geylang Street 29, #06-40"), new Birthday("03041987"),
                             new FacebookAddress("Alex"), getTagSet("friends"), new GoogleId("not GoogleContact")),
 
                     new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
@@ -51,7 +51,7 @@ public class SampleDataUtil {
                     new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
                             new Address("Blk 47 Tampines Street 20, #17-35"), new Birthday("17121994"),
                             new FacebookAddress("ii"), getTagSet("classmates"), new GoogleId("not GoogleContact")),
-              
+
                     new Person(new Name("Kelvin Naomi"), new Phone("96847231"), new Email("kelvin@example.com"),
                             new Address("Blk 13 Naomi Street 20, #17-35"), new Birthday("12121994"),
                             new FacebookAddress("kelvin"), getTagSet("classmates"), new GoogleId("not GoogleContact")),
@@ -61,8 +61,8 @@ public class SampleDataUtil {
                             new FacebookAddress("Lovell"), getTagSet("schoolmates"), new GoogleId("not GoogleContact")),
 
                     new Person(new Name("Shevon Ocean"), new Phone("96847233"), new Email("Ocean@example.com"),
-                           new Address("Blk 33 Shevon Street 20, #17-35"), new Birthday("12111994"),
-                           new FacebookAddress("Shevon"), getTagSet("friends"), new GoogleId("not GoogleContact")),
+                            new Address("Blk 33 Shevon Street 20, #17-35"), new Birthday("12111994"),
+                            new FacebookAddress("Shevon"), getTagSet("friends"), new GoogleId("not GoogleContact")),
 
                     new Person(new Name("Reagan Deforest"), new Phone("96847243"), new Email("Reagen@example.com"),
                             new Address("Blk 322 Reagen Street 20, #17-35"), new Birthday("12111974"),
@@ -118,14 +118,14 @@ public class SampleDataUtil {
                             new GoogleId("not GoogleContact")),
 
                     new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
-                        new Address("Blk 45 Aljunied Street 85, #11-31"), new Birthday("03081970"),
-                        new FacebookAddress("roy"), getTagSet("colleagues"), new GoogleId("not GoogleContact"))
+                            new Address("Blk 45 Aljunied Street 85, #11-31"), new Birthday("03081970"),
+                            new FacebookAddress("roy"), getTagSet("colleagues"), new GoogleId("not GoogleContact"))
             };
         } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);
         }
     }
-  
+
     public static Task[] getSampleTasks() {
           try {
               return new Task[]{
