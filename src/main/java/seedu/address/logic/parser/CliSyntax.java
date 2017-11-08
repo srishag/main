@@ -16,5 +16,8 @@ public class CliSyntax {
     public static final Prefix PREFIX_EMAIL_SUBJECT = new Prefix("es/");
     public static final Prefix PREFIX_EMAIL_BODY = new Prefix("eb/");
     public static final Prefix PREFIX_GOOGLEID = new Prefix("c/");
+    public static final Prefix PREFIX_HEADER = new Prefix("th/");
+    public static final Prefix PREFIX_DESC = new Prefix("td/");
+    public static final Prefix PREFIX_DEADLINE = new Prefix("tdl/");
 
 }

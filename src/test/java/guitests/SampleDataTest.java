@@ -1,6 +1,7 @@
 package guitests;
 
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
+import static seedu.address.ui.testutil.GuiTestAssert.assertTaskListMatching;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,6 +11,7 @@ import org.junit.Test;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.Person;
+import seedu.address.model.task.Task;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.TestUtil;
 
@@ -41,7 +43,9 @@ public class SampleDataTest extends AddressBookGuiTest {
 
     @Test
     public void addressBook_dataFileDoesNotExist_loadSampleData() {
-        Person[] expectedList = SampleDataUtil.getSamplePersons();
-        assertListMatching(getPersonListPanel(), expectedList);
+        Person[] expectedPersonList = SampleDataUtil.getSamplePersons();
+        Task[] expectedTaskList = SampleDataUtil.getSampleTasks();
+        assertListMatching(getPersonListPanel(), expectedPersonList);
+        assertTaskListMatching(getTaskListPanel(), expectedTaskList);
     }
 }

@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
+
 <VBox xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
   <stylesheets>
     <URL value="@Extensions.css" />
@@ -37,11 +38,12 @@
   </StackPane>
 
   <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-    <VBox fx:id="personList" minWidth="340" prefWidth="340" style="-fx-background-color: #1E1F26;" SplitPane.resizableWithParent="false">
+    <VBox fx:id="personList" minWidth="160" prefWidth="340" maxWidth="350" prefHeight="620"
+          SplitPane.resizableWithParent="false">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
-      <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+      <StackPane fx:id="personListPanelPlaceholder" maxWidth="400.0" prefWidth="375.0" VBox.vgrow="ALWAYS"/>
     </VBox>
 
     <StackPane fx:id="browserPlaceholder" prefWidth="340" style="-fx-background-color: #1E1F26;">
@@ -49,6 +51,13 @@
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
     </StackPane>
+
+    <VBox fx:id="taskList" minWidth="140" prefWidth="410" maxWidth="410" prefHeight="620"
+          SplitPane.resizableWithParent="false">
+      <children>
+        <StackPane fx:id="taskListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+      </children>
+    </VBox>
   </SplitPane>
 
   <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />

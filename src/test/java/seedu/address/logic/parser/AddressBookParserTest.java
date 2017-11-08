@@ -10,6 +10,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BODY_DESC
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_SUBJECT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_SUBJECT_DESC;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,10 +26,14 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddTaskCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteTaskCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.EditTaskCommand;
+import seedu.address.logic.commands.EditTaskCommand.EditTaskDescriptor;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindPersonsWithTagsCommand;
@@ -44,9 +49,13 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonContainsTagsPredicate;
+import seedu.address.model.task.Task;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.testutil.EditTaskDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
+import seedu.address.testutil.TaskBuilder;
+import seedu.address.testutil.TaskUtil;
 
 public class AddressBookParserTest {
     @Rule
@@ -78,6 +87,24 @@ public class AddressBookParserTest {
         assertEquals(new AddCommand(person), command);
 
         listOfAllCommandWordsAndAliases.add(AddCommand.COMMAND_ALIAS);
+    }
+
+    @Test
+    public void parseCommand_addTask() throws Exception {
+        Task task = new TaskBuilder().build();
+        AddTaskCommand command = (AddTaskCommand) parser.parseCommand(TaskUtil.getAddTaskCommand(task));
+        assertEquals(new AddTaskCommand(task), command);
+
+        listOfAllCommandWordsAndAliases.add(AddTaskCommand.COMMAND_WORD);
+    }
+
+    @Test
+    public void parseCommand_addTask_alias() throws Exception {
+        Task task = new TaskBuilder().build();
+        AddTaskCommand command = (AddTaskCommand) parser.parseCommand(TaskUtil.getAddTaskCommand(task));
+        assertEquals(new AddTaskCommand(task), command);
+
+        listOfAllCommandWordsAndAliases.add(AddTaskCommand.COMMAND_ALIAS);
     }
 
     @Test
@@ -116,6 +143,25 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_deleteTask() throws Exception {
+        DeleteTaskCommand command = (DeleteTaskCommand) parser.parseCommand(
+                DeleteTaskCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased());
+        assertEquals(new DeleteTaskCommand(INDEX_FIRST_TASK), command);
+
+        listOfAllCommandWordsAndAliases.add(DeleteTaskCommand.COMMAND_WORD);
+
+    }
+
+    @Test
+    public void parseCommand_deleteTask_alias() throws Exception {
+        DeleteTaskCommand command = (DeleteTaskCommand) parser.parseCommand(
+                DeleteTaskCommand.COMMAND_ALIAS + " " + INDEX_FIRST_TASK.getOneBased());
+        assertEquals(new DeleteTaskCommand(INDEX_FIRST_TASK), command);
+
+        listOfAllCommandWordsAndAliases.add(DeleteTaskCommand.COMMAND_ALIAS);
+    }
+
+    @Test
     public void parseCommand_edit() throws Exception {
         Person person = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
@@ -135,6 +181,28 @@ public class AddressBookParserTest {
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
 
         listOfAllCommandWordsAndAliases.add(EditCommand.COMMAND_ALIAS);
+    }
+
+    @Test
+    public void parseCommand_editTask() throws Exception {
+        Task task = new TaskBuilder().build();
+        EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder(task).build();
+        EditTaskCommand command = (EditTaskCommand) parser.parseCommand(EditTaskCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_TASK.getOneBased() + " " + TaskUtil.getTaskDetails(task));
+        assertEquals(new EditTaskCommand(INDEX_FIRST_TASK, descriptor), command);
+
+        listOfAllCommandWordsAndAliases.add(EditTaskCommand.COMMAND_WORD);
+    }
+
+    @Test
+    public void parseCommand_editTask_alias() throws Exception {
+        Task task = new TaskBuilder().build();
+        EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder(task).build();
+        EditTaskCommand command = (EditTaskCommand) parser.parseCommand(EditTaskCommand.COMMAND_ALIAS + " "
+                + INDEX_FIRST_TASK.getOneBased() + " " + TaskUtil.getTaskDetails(task));
+        assertEquals(new EditTaskCommand(INDEX_FIRST_TASK, descriptor), command);
+
+        listOfAllCommandWordsAndAliases.add(EditTaskCommand.COMMAND_ALIAS);
     }
 
     @Test
