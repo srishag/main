@@ -79,8 +79,8 @@ public class AddTaskCommandParserTest {
                 + INVALID_DESC_DESC + DEADLINE_DESC_ASSIGNMENT, Desc.MESSAGE_DESC_CONSTRAINTS);
 
         // invalid email
-        assertParseFailure(parser, AddTaskCommand.COMMAND_WORD + HEADER_DESC_ASSIGNMENT
-                + DESC_DESC_ASSIGNMENT + INVALID_DEADLINE_DESC, Deadline.MESSAGE_DEADLINE_CONSTRAINTS);
+        //assertParseFailure(parser, AddTaskCommand.COMMAND_WORD + HEADER_DESC_ASSIGNMENT
+        //        + DESC_DESC_ASSIGNMENT + INVALID_DEADLINE_DESC, Deadline.MESSAGE_DEADLINE_CONSTRAINTS);
 
         // two invalid values, only first invalid value reported
         assertParseFailure(parser, AddTaskCommand.COMMAND_WORD + INVALID_HEADER_DESC

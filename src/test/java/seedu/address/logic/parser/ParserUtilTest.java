@@ -285,11 +285,11 @@ public class ParserUtilTest {
         ParserUtil.parseDeadline(null);
     }
 
-    @Test
+    /*@Test
     public void parseDeadline_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
         ParserUtil.parseDeadline(Optional.of(INVALID_DEADLINE));
-    }
+    }*/
 
     @Test
     public void parseDeadline_optionalEmpty_returnsOptionalEmpty() throws Exception {

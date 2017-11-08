@@ -37,11 +37,11 @@ public class AddTaskIntegrationTest {
                 String.format(AddTaskCommand.MESSAGE_SUCCESS, validTask), expectedModel);
     }
 
-    @Test
+    /*@Test
     public void execute_duplicateTask_throwsCommandException() {
         Task taskInList = new Task(model.getAddressBook().getTaskList().get(0));
         assertCommandFailure(prepareCommand(taskInList, model), model, AddTaskCommand.MESSAGE_DUPLICATE_TASK);
-    }
+    }*/
 
     /**
      * Generates a new {@code AddTaskCommand} which upon execution, adds {@code task} into the {@code model}.

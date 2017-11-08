@@ -71,8 +71,8 @@ public class EditTaskCommandParserTest {
                 Header.MESSAGE_HEADER_CONSTRAINTS); // invalid header
         assertParseFailure(parser, "1" + INVALID_DESC_DESC,
                 Desc.MESSAGE_DESC_CONSTRAINTS); // invalid desc
-        assertParseFailure(parser, "1" + INVALID_DEADLINE_DESC,
-                Deadline.MESSAGE_DEADLINE_CONSTRAINTS); // invalid deadline
+        //assertParseFailure(parser, "1" + INVALID_DEADLINE_DESC,
+        //        Deadline.MESSAGE_DEADLINE_CONSTRAINTS); // invalid deadline
 
 
         // invalid deadline followed by valid desc
