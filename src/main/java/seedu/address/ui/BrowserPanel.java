@@ -26,8 +26,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
-    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
 
     private static final String FXML = "BrowserPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
@@ -49,6 +47,7 @@ public class BrowserPanel extends UiPart<Region> {
 
     //@@author PokkaKiyo
     private void loadPersonPage(ReadOnlyPerson person) {
+        logger.info("----[Accessing URL] " + person.getFacebookAddress().value);
         loadPage(person.getFacebookAddress().value);
     }
     //@@author

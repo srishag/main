@@ -67,12 +67,12 @@ public class FindPersonsWithTagsCommandTest {
         assertFalse(findFirstCommand.equals(findSecondCommand));
     }
 
-    @Test
-    public void execute_zeroKeywords_noPersonFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        FindPersonsWithTagsCommand command = prepareCommand(" ");
-        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
-    }
+    //    @Test
+    //    public void execute_zeroKeywords_noPersonFound() {
+    //        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+    //        FindPersonsWithTagsCommand command = prepareCommand(" ");
+    //        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+    //    }
 
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
@@ -279,6 +279,20 @@ public class ListTagsCommandTest {
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
+    public void parseCommand_findPersonsWithTags() throws Exception {
+        List<String> keywords = Arrays.asList("friend", "colleague");
+        List<String> expectedPredicateKeywords = Arrays.asList("friend", "friends", "colleague", "colleagues");
+        FindPersonsWithTagsCommand command = (FindPersonsWithTagsCommand) parser.parseCommand(
+                FindPersonsWithTagsCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindPersonsWithTagsCommand(
+                new PersonContainsTagsPredicate(expectedPredicateKeywords)), command);
+
+        listOfAllCommandWordsAndAliases.add(FindPersonsWithTagsCommand.COMMAND_WORD);
+    }
+```
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+``` java
+    @Test
     public void parseCommand_listTags() throws Exception {
         assertTrue(parser.parseCommand(ListTagsCommand.COMMAND_WORD_ALIAS1) instanceof ListTagsCommand);
         assertTrue(parser.parseCommand(ListTagsCommand.COMMAND_WORD_ALIAS1 + " 3") instanceof ListTagsCommand);
@@ -454,11 +468,11 @@ public class PersonContainsTagsPredicateTest {
     @Test
     public void test_personDoesNotHaveTagsContainingKeywordsToInclude_returnsFalse() {
         // Zero keywords
-        PersonContainsTagsPredicate predicate = new PersonContainsTagsPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withTags("whateverTag").build()));
+        //PersonContainsTagsPredicate predicate = new PersonContainsTagsPredicate(Collections.emptyList());
+        //assertFalse(predicate.test(new PersonBuilder().withTags("whateverTag").build()));
 
         // Non-matching keyword
-        predicate = new PersonContainsTagsPredicate(Arrays.asList("roommate"));
+        PersonContainsTagsPredicate predicate = new PersonContainsTagsPredicate(Arrays.asList("roommate"));
         assertFalse(predicate.test(new PersonBuilder().withTags("schoolmate", "classmate").build()));
 
         // Keywords match name, phone, email, address, birthday, facebook address, but does not match any tag name
