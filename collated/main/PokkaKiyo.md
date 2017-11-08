@@ -455,6 +455,7 @@ public class PersonContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
 ###### \java\seedu\address\ui\BrowserPanel.java
 ``` java
     private void loadPersonPage(ReadOnlyPerson person) {
+        logger.info("----[Accessing URL] " + person.getFacebookAddress().value);
         loadPage(person.getFacebookAddress().value);
     }
 ```
