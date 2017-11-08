@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.SendEmailCommand;
@@ -21,7 +22,7 @@ public class SendEmailCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void send() {
-       /* ----------------- Performing send email operation while an unfiltered list is being shown ----------------- */
+        /* ----------------- Performing send email operation while an unfiltered list is being shown ----------------- */
 
         /*
        /* Case: send email to the first person in the list, command with leading spaces and trailing spaces -> sent
