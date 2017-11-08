@@ -2,7 +2,6 @@ package guitests;
 
 import java.util.concurrent.TimeoutException;
 
-import guitests.guihandles.TaskListPanelHandle;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -22,6 +21,8 @@ import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.model.AddressBook;
 import seedu.address.testutil.TypicalPersons;
+
+import guitests.guihandles.TaskListPanelHandle;
 
 /**
  * A GUI Test class for AddressBook.

@@ -6,11 +6,13 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalTasks.CODE;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysTask;
 
-import guitests.guihandles.TaskCardHandle;
 import org.junit.Test;
+
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
 import seedu.address.testutil.TaskBuilder;
+
+import guitests.guihandles.TaskCardHandle;
 
 public class TaskCardTest extends GuiUnitTest {
 

@@ -7,7 +7,6 @@ import static seedu.address.logic.commands.CommandTestUtil.DESC_DESC_ASSIGNMENT;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_DESC_HOMEWORK;
 import static seedu.address.logic.commands.CommandTestUtil.HEADER_DESC_ASSIGNMENT;
 import static seedu.address.logic.commands.CommandTestUtil.HEADER_DESC_HOMEWORK;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_DEADLINE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DESC_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_HEADER_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_ASSIGNMENT;
@@ -17,8 +16,8 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import org.junit.Test;
+
 import seedu.address.logic.commands.AddTaskCommand;
-import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Desc;
 import seedu.address.model.task.Header;
 import seedu.address.model.task.Task;

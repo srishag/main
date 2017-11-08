@@ -23,6 +23,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_TASK;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_TASK;
 
 import org.junit.Test;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditTaskCommand;
 import seedu.address.logic.commands.EditTaskCommand.EditTaskDescriptor;
@@ -95,7 +96,8 @@ public class EditTaskCommandParserTest {
         String userInput = targetIndex.getOneBased() + DESC_DESC_ASSIGNMENT
                 + HEADER_DESC_HOMEWORK + DEADLINE_DESC_HOMEWORK;
 
-        EditTaskCommand.EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withHeader(VALID_HEADER_HOMEWORK)
+        EditTaskCommand.EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder()
+                .withHeader(VALID_HEADER_HOMEWORK)
                 .withDesc(VALID_DESC_ASSIGNMENT).withDeadline(VALID_DEADLINE_HOMEWORK).build();
         EditTaskCommand expectedCommand = new EditTaskCommand(targetIndex, descriptor);
 
@@ -139,8 +141,8 @@ public class EditTaskCommandParserTest {
     @Test
     public void parse_multipleRepeatedFields_acceptsLast() {
         Index targetIndex = INDEX_FIRST_TASK;
-        String userInput = targetIndex.getOneBased()  + HEADER_DESC_HOMEWORK + DESC_DESC_HOMEWORK + DEADLINE_DESC_HOMEWORK
-                + HEADER_DESC_HOMEWORK + DESC_DESC_HOMEWORK + DEADLINE_DESC_HOMEWORK;
+        String userInput = targetIndex.getOneBased()  + HEADER_DESC_HOMEWORK + DESC_DESC_HOMEWORK
+                + DEADLINE_DESC_HOMEWORK + HEADER_DESC_HOMEWORK + DESC_DESC_HOMEWORK + DEADLINE_DESC_HOMEWORK;
 
         EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withHeader(VALID_HEADER_HOMEWORK)
                 .withDesc(VALID_DESC_HOMEWORK).withDeadline(VALID_DEADLINE_HOMEWORK).build();

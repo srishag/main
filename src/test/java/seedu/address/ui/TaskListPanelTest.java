@@ -7,14 +7,17 @@ import static seedu.address.testutil.TypicalTasks.getTypicalTasks;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysTask;
 import static seedu.address.ui.testutil.GuiTestAssert.assertTaskCardEquals;
 
-import guitests.guihandles.TaskCardHandle;
-import guitests.guihandles.TaskListPanelHandle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.junit.Before;
 import org.junit.Test;
+
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.task.ReadOnlyTask;
+
+import guitests.guihandles.TaskCardHandle;
+import guitests.guihandles.TaskListPanelHandle;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class TaskListPanelTest extends GuiUnitTest {
     private static final ObservableList<ReadOnlyTask> TYPICAL_TASKS =

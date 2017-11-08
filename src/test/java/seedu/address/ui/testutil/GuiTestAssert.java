@@ -30,6 +30,9 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
 
+    /**
+     * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
+     */
     public static void assertTaskCardEquals(TaskCardHandle expectedCard, TaskCardHandle actualCard) {
         assertEquals(expectedCard.getId(), actualCard.getId());
         assertEquals(expectedCard.getHeader(), actualCard.getHeader());
@@ -84,9 +87,9 @@ public class GuiTestAssert {
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
      * in the correct order.
      */
-    public static void assertListMatching(PersonListPanelHandle personListPanelHandle, List<ReadOnlyPerson> persons) {
+    /*public static void assertListMatching(PersonListPanelHandle personListPanelHandle, List<ReadOnlyPerson> persons) {
         assertListMatching(personListPanelHandle, persons.toArray(new ReadOnlyPerson[0]));
-    }
+    }*/
 
     /**
      * Asserts the size of the list in {@code personListPanelHandle} equals to {@code size}.

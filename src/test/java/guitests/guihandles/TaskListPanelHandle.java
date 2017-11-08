@@ -4,9 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javafx.scene.control.ListView;
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.task.ReadOnlyTask;
-import seedu.address.ui.PersonCard;
 import seedu.address.ui.TaskCard;
 
 /**
@@ -106,7 +104,7 @@ public class TaskListPanelHandle extends NodeHandle<ListView<TaskCard>> {
         List<TaskCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedItems.size() == 0) {
-            lastRememberedSelectedTaskCard= Optional.empty();
+            lastRememberedSelectedTaskCard = Optional.empty();
         } else {
             lastRememberedSelectedTaskCard = Optional.of(selectedItems.get(0));
         }

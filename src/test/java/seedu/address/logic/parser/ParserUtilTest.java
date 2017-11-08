@@ -249,7 +249,7 @@ public class ParserUtilTest {
     @Test
     public void parseHeader_validValue_returnsName() throws Exception {
         Header expectedHeader = new Header(VALID_HEADER);
-        Optional<Header> actualHeader= ParserUtil.parseHeader(Optional.of(VALID_HEADER));
+        Optional<Header> actualHeader = ParserUtil.parseHeader(Optional.of(VALID_HEADER));
 
         assertEquals(expectedHeader, actualHeader.get());
     }

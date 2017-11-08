@@ -7,9 +7,7 @@ import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalTasks.EMAIL;
-import static seedu.address.testutil.TypicalTasks.HOMEWORK;
 import static seedu.address.testutil.TypicalTasks.MILK;
-import static seedu.address.testutil.TypicalTasks.PRESENTATION;
 
 import java.io.IOException;
 
