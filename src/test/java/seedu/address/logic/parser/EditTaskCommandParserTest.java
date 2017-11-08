@@ -1,10 +1,6 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.BIRTHDAY_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.BIRTHDAY_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_ASSIGNMENT;
 import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_HOMEWORK;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_DESC_ASSIGNMENT;
@@ -18,17 +14,7 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_DEADLINE_DESC
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DESC_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_HEADER_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_BIRTHDAY_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_BIRTHDAY_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_ASSIGNMENT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_HOMEWORK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESC_ASSIGNMENT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESC_HOMEWORK;
@@ -53,19 +39,13 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_TASK;
 
 import org.junit.Test;
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.EditTaskCommand;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Birthday;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
-import seedu.address.model.tag.Tag;
+import seedu.address.logic.commands.EditTaskCommand.EditTaskDescriptor;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Desc;
 import seedu.address.model.task.Header;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.testutil.EditTaskDescriptorBuilder;
 
 public class EditTaskCommandParserTest {
 
@@ -131,7 +111,7 @@ public class EditTaskCommandParserTest {
         String userInput = targetIndex.getOneBased() + DESC_DESC_ASSIGNMENT
                 + HEADER_DESC_HOMEWORK + DEADLINE_DESC_HOMEWORK;
 
-        EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withHeader(VALID_HEADER_HOMEWORK)
+        EditTaskCommand.EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withHeader(VALID_HEADER_HOMEWORK)
                 .withDesc(VALID_DESC_ASSIGNMENT).withDeadline(VALID_DEADLINE_HOMEWORK).build();
         EditTaskCommand expectedCommand = new EditTaskCommand(targetIndex, descriptor);
 
@@ -190,8 +170,8 @@ public class EditTaskCommandParserTest {
         // no other valid values specified
         Index targetIndex = INDEX_FIRST_TASK;
         String userInput = targetIndex.getOneBased() + INVALID_DESC_DESC + DEADLINE_DESC_ASSIGNMENT;
-        EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withPhone(VALID_PHONE_BOB).build();
-        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
+        EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withDeadline(VALID_DEADLINE_ASSIGNMENT).build();
+        EditTaskCommand expectedCommand = new EditTaskCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // other valid values specified

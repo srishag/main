@@ -29,6 +29,7 @@ import seedu.address.model.task.Task;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.TaskBuilder;
 
 public class AddTaskCommandTest {
 

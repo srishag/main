@@ -5,8 +5,10 @@ import java.util.Optional;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.EditTaskCommand.EditTaskDescriptor;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.task.ReadOnlyTask;
 
 /**
  * A utility class to help with building EditTaskDescriptor objects.
@@ -70,7 +72,7 @@ public class EditTaskDescriptorBuilder {
     }
 
 
-    public EditPersonDescriptor build() {
+    public EditTaskDescriptor build() {
         return descriptor;
     }
 }

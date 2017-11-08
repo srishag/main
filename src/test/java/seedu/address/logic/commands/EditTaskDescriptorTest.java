@@ -11,6 +11,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_HEADER_ASSIGNME
 import org.junit.Test;
 
 import seedu.address.logic.commands.EditTaskCommand.EditTaskDescriptor;
+import seedu.address.testutil.EditTaskDescriptorBuilder;
 
 public class EditTaskDescriptorTest {
 

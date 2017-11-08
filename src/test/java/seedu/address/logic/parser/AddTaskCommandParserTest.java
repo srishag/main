@@ -58,6 +58,7 @@ import seedu.address.model.task.Desc;
 import seedu.address.model.task.Header;
 import seedu.address.model.task.Task;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.TaskBuilder;
 
 public class AddTaskCommandParserTest {
     private AddCommandParser parser = new AddCommandParser();

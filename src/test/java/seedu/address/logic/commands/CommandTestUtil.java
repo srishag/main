@@ -29,6 +29,7 @@ import seedu.address.model.task.HeaderContainsKeywordsPredicate;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.testutil.EditTaskDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
