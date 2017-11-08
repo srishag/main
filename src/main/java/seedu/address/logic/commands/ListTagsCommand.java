@@ -41,6 +41,8 @@ public class ListTagsCommand extends Command {
             feedbackForUser = MESSAGE_SUCCESS + getListOfAllTagsInString(listOfAllTags);
         }
 
+        assert feedbackForUser != null : "feedbackForUser should contain some message and not be null";
+
         return feedbackForUser;
     }
 

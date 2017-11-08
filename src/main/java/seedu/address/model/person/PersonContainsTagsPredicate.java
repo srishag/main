@@ -36,6 +36,8 @@ public class PersonContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
     public boolean test(ReadOnlyPerson person) {
         String allTagNames = getStringOfAllTagNamesOfPerson(person);
 
+        assert !(keywordsToExclude.isEmpty() && keywordsToInclude.isEmpty()) : "at least one keyword must be specified";
+
         boolean onlyKeywordsToExcludeAreSpecified =
                 checkIfOnlyKeywordsToExcludeAreSpecified(keywordsToInclude, keywordsToExclude);
 
@@ -44,6 +46,8 @@ public class PersonContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
             return !(keywordsToExclude.stream()
                     .anyMatch((keyword -> StringUtil.containsWordIgnoreCase(allTagNames, keyword))));
         }
+
+        assert !keywordsToInclude.isEmpty() : "there must be at least one keyword to include here";
 
         return keywordsToInclude.stream()
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(allTagNames, keyword))
@@ -63,6 +67,7 @@ public class PersonContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
         if (keywordsToInclude.isEmpty() && !keywordsToExclude.isEmpty()) {
             return true;
         } else {
+            assert !keywordsToInclude.isEmpty() : "there must be at least one keyword to include here";
             return false;
         }
     }
