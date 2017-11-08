@@ -1,3 +1,4 @@
+//@@author PhuaJunJie
 package seedu.address.commons;
 
 import static org.junit.Assert.assertTrue;
@@ -8,7 +9,6 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.exceptions.GoogleAuthException;
 
-//@@author PhuaJunJie
 public class GoogleAuthenticatorTest {
 
     @Rule

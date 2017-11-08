@@ -1,10 +1,10 @@
+//@@author PhuaJunJie
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
-//@@author PhuaJunJie
 /**
  * Represents a Person's Google ID in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidGoogleId(String)}
