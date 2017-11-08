@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalTasks.CODE;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
+import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysTask;
 
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.TaskCardHandle;

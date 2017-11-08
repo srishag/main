@@ -2,6 +2,7 @@ package guitests;
 
 import java.util.concurrent.TimeoutException;
 
+import guitests.guihandles.TaskListPanelHandle;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
