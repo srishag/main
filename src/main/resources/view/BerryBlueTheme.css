@@ -78,7 +78,7 @@
 
 .split-pane:horizontal .split-pane-divider {
     -fx-background-color: derive(#1E1F26, 5%);
-    -fx-border-color: transparent transparent transparent #4d4d4d;
+    -fx-border-color: #1E1F26 #1E1F26 #1E1F26 #1E1F26;
 }
 
 .split-pane {
@@ -88,12 +88,13 @@
 }
 
 .list-view {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: #1E1F26;
     -fx-background-insets: 0;
     -fx-padding: 0;
 }
 
 .list-cell {
+    -fx-background-color: #1E1F26;
     -fx-label-padding: 0 0 0 0;
     -fx-graphic-text-gap : 0;
     -fx-padding: 0 0 0 0;
@@ -148,7 +149,7 @@
 }
 
 .result-display {
-    -fx-background-color: transparent;
+    -fx-background-color: black;
     -fx-font-family: "Segoe UI Light";
     -fx-font-size: 13pt;
     -fx-text-fill: white;
@@ -180,7 +181,7 @@
 }
 
 .grid-pane .anchor-pane {
-    -fx-background-color: derive(#1d1d1d, 30%);
+    -fx-background-color: derive(#1E1F26, 30%);
 }
 
 .context-menu {
