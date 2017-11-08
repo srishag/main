@@ -69,5 +69,7 @@ include::../DeveloperGuide.adoc[tag=listtags]
 
 === Other contributions
 
-* Allow contacts to support a Facebook URL field.
-* Updated the GUI color scheme (Pull requests #to be added#)
+* Allow contacts to support a Facebook URL field (Pull Request https://github.com/CS2103AUG2017-T11-B4/main/pull/46[46]).
+* Select Command now opens the Facebook URL of the Contact in the Browser
+(Pull Request https://github.com/CS2103AUG2017-T11-B4/main/pull/95[#95]).
+* Updated the GUI color scheme (Pull request https://github.com/CS2103AUG2017-T11-B4/main/pull/93[#93]).
