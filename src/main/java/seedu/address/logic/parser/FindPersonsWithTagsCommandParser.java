@@ -38,7 +38,7 @@ public class FindPersonsWithTagsCommandParser implements Parser<FindPersonsWithT
 
     /**
      * Checks if the given String of arguments is empty
-     * @param trimmedArgs
+     * @param trimmedArgs args entered by user
      * @throws ParseException if the provided String does not conform to expected format
      */
     private void checkForNonEmptyArguments(String trimmedArgs) throws ParseException {
@@ -52,8 +52,8 @@ public class FindPersonsWithTagsCommandParser implements Parser<FindPersonsWithT
      * From the original list of keywords, generate more keywords
      * corresponding to the singular/plural form of the word,
      * but might generate words that are not in proper English,
-     * for example, "memory" to "memorys" instead of "memories".
-     * @param originalKeywords
+     * for example, "family" to "familys" instead of "families".
+     * @param originalKeywords keywords entered by user
      * @return a new list of keywords that includes the original keywords and
      * singular/plural differences
      */

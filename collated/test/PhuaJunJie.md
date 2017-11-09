@@ -1,6 +1,16 @@
 # PhuaJunJie
 ###### \java\seedu\address\commons\GoogleAuthenticatorTest.java
 ``` java
+package seedu.address.commons;
+
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import seedu.address.logic.commands.exceptions.GoogleAuthException;
+
 public class GoogleAuthenticatorTest {
 
     @Rule
@@ -18,7 +28,7 @@ public class GoogleAuthenticatorTest {
     }
 
     /**
-     * Checks if Login is authenticated. In this case it is not and null exception is thrown.
+     * Checks if user is authenticated. In this case no token is generated and null exception is thrown.
      */
     @Test
     public void execute_get_invalidToken() throws Exception {
@@ -27,7 +37,7 @@ public class GoogleAuthenticatorTest {
     }
 
     /**
-     * Checks if Login is authenticated. In this case it is not and null exception is thrown.
+     * Checks if user is authenticated. In this case no google contacts list is generated and null exception is thrown.
      */
     @Test
     public void execute_get_invalidGooglePersonList() throws Exception {
@@ -38,6 +48,33 @@ public class GoogleAuthenticatorTest {
 ```
 ###### \java\seedu\address\logic\commands\ExportCommandTest.java
 ``` java
+package seedu.address.logic.commands;
+
+import static org.junit.Assert.assertEquals;
+import static seedu.address.testutil.TypicalPersons.BERNICE;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import com.google.api.services.people.v1.model.Person;
+
+import seedu.address.commons.GoogleContactsBuilder;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.GoogleAuthException;
+import seedu.address.model.AddressBook;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.testutil.TypicalGoogleContactsList;
+
 public class ExportCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -152,6 +189,32 @@ public class ExportCommandTest {
 ```
 ###### \java\seedu\address\logic\commands\FindAlphabetCommandTest.java
 ``` java
+package seedu.address.logic.commands;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.commons.core.Messages.MESSAGE_ALPHABET_LISTED_OVERVIEW;
+import static seedu.address.commons.core.Messages.MESSAGE_NO_ALPHABET_LISTED_OVERVIEW;
+import static seedu.address.testutil.TypicalPersons.CARL;
+import static seedu.address.testutil.TypicalPersons.ELLE;
+import static seedu.address.testutil.TypicalPersons.FIONA;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.Test;
+
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.person.NameContainsAlphabetsPredicate;
+import seedu.address.model.person.ReadOnlyPerson;
+
 /**
  * Contains integration tests (interaction with the Model) for {@code FindAlphabetCommand}.
  */
@@ -233,6 +296,30 @@ public class FindAlphabetCommandTest {
 ```
 ###### \java\seedu\address\logic\commands\ImportCommandTest.java
 ``` java
+package seedu.address.logic.commands;
+
+import static org.junit.Assert.assertEquals;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import com.google.api.services.people.v1.model.Person;
+
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.GoogleAuthException;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.testutil.TypicalGoogleContactsList;
+
 public class ImportCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -247,7 +334,8 @@ public class ImportCommandTest {
     }
 
     /**
-     * Checks if Login is authenticated. In this case it is not and GoogleAuthException is thrown.
+     * Checks if Login is authenticated. In this case it is not as user is not authenticated
+     * and GoogleAuthException is thrown.
      */
     @Test
     public void execute_require_login() throws Exception {
@@ -337,6 +425,33 @@ public class ImportCommandTest {
         assertEquals(modelstub.getAddressBook(), model.getAddressBook());
     }
 }
+```
+###### \java\seedu\address\logic\commands\SyncCommandTest.java
+``` java
+package seedu.address.logic.commands;
+
+import static org.junit.Assert.assertEquals;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import com.google.api.services.people.v1.model.Person;
+
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.GoogleAuthException;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.testutil.TypicalGoogleContactsList;
+
 ```
 ###### \java\seedu\address\logic\commands\SyncCommandTest.java
 ``` java
@@ -456,6 +571,19 @@ public class SyncCommandTest {
 ```
 ###### \java\seedu\address\logic\parser\FindAlphabetCommandParserTest.java
 ``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import java.util.Arrays;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.FindAlphabetCommand;
+import seedu.address.model.person.NameContainsAlphabetsPredicate;
+
 public class FindAlphabetCommandParserTest {
 
     private FindAlphabetCommandParser parser = new FindAlphabetCommandParser();
@@ -481,6 +609,13 @@ public class FindAlphabetCommandParserTest {
 ```
 ###### \java\seedu\address\model\person\GoogleIdTest.java
 ``` java
+package seedu.address.model.person;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
 public class GoogleIdTest {
 
     @Test
@@ -500,6 +635,19 @@ public class GoogleIdTest {
 ```
 ###### \java\seedu\address\model\person\NameContainsAlphabetsPredicateTest.java
 ``` java
+package seedu.address.model.person;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.Test;
+
+import seedu.address.testutil.PersonBuilder;
+
 public class NameContainsAlphabetsPredicateTest {
 
     @Test
@@ -567,5 +715,146 @@ public class NameContainsAlphabetsPredicateTest {
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
                 .withEmail("alice@email.com").withAddress("Main Street").build()));
     }
+}
+```
+###### \java\seedu\address\testutil\GoogleContactBuilder.java
+``` java
+package seedu.address.testutil;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import com.google.api.services.people.v1.model.Address;
+import com.google.api.services.people.v1.model.EmailAddress;
+import com.google.api.services.people.v1.model.Name;
+import com.google.api.services.people.v1.model.Person;
+import com.google.api.services.people.v1.model.PhoneNumber;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.FacebookAddress;
+import seedu.address.model.person.GoogleId;
+import seedu.address.model.person.Phone;
+import seedu.address.model.tag.Tag;
+
+/**
+ * Builds Stub Google contact and addressbook contacts
+ */
+public class GoogleContactBuilder {
+    private String nameDefault;
+    private String phoneDefault;
+    private String emailDefault;
+    private String addressDefault;
+    private String googleIdDefault;
+
+    /**
+     * Constructor
+     */
+    public GoogleContactBuilder(String name, String phone, String email, String address, String googleId) {
+        this.nameDefault = name;
+        this.phoneDefault = phone;
+        this.emailDefault = email;
+        this.addressDefault = address;
+        this.googleIdDefault = googleId;
+    }
+
+    /**
+     * Builds Stub Google contact
+     */
+    public Person buildGooglePerson() {
+        Person contactToCreate = new Person();
+
+        List names = new ArrayList();
+        List email = new ArrayList();
+        List phone = new ArrayList();
+        List address = new ArrayList();
+
+        names.add(new Name().setGivenName(nameDefault));
+        email.add(new EmailAddress().setValue(emailDefault));
+        phone.add(new PhoneNumber().setValue(phoneDefault));
+        address.add(new Address().setStreetAddress(addressDefault));
+
+        return contactToCreate.setNames(names).setEmailAddresses(email).setPhoneNumbers(phone)
+                .setAddresses(address).setResourceName(googleIdDefault);
+    }
+    /**
+     * Builds Stub Addressbook contact
+     */
+    public seedu.address.model.person.Person buildAddressBookPerson() {
+        seedu.address.model.person.Person person;
+        try {
+            seedu.address.model.person.Name name = new seedu.address.model.person.Name(nameDefault);
+            Phone phone = new Phone(phoneDefault);
+            Email email = new Email(emailDefault);
+            seedu.address.model.person.Address address = new seedu.address.model.person.Address(addressDefault);
+            GoogleId id;
+
+            if (googleIdDefault.length() != 0) {
+                id = new GoogleId(googleIdDefault.substring(8));
+            } else {
+                id = new GoogleId("not GoogleContact");
+            }
+
+            Tag tag = new Tag("GoogleContact");
+            Set<Tag> tags = new HashSet<>();
+            tags.add(tag);
+            FacebookAddress facebookAddress = new FacebookAddress("");
+            seedu.address.model.person.Birthday birthday = new seedu.address.model.person.Birthday("");
+            person = new seedu.address.model.person.Person(name, phone, email, address, birthday, facebookAddress,
+                    tags, id);
+        } catch (IllegalValueException e) {
+            person = null;
+        }
+        return person;
+    }
+}
+```
+###### \java\seedu\address\testutil\TypicalGoogleContactsList.java
+``` java
+package seedu.address.testutil;
+
+import com.google.api.services.people.v1.model.Person;
+
+/**
+ * List of Stub Google contacts and its version of the addressbook contact
+ */
+public class TypicalGoogleContactsList {
+    public static final Person FREDDYGOOGLE = new GoogleContactBuilder("Freddy", "91234567",
+            "freddy@hotmail.com", "Simei Blk 1 avenue 2",
+            "1234567891011121310").buildGooglePerson();
+    public static final Person MAYGOOGLE = new GoogleContactBuilder("May", "91234567",
+            "may", "Simei Blk 15 avenue 21",
+            "1234567891011121311").buildGooglePerson();
+    public static final Person FREDDYSYNGOOGLE = new GoogleContactBuilder("Freddy", "90000000",
+            "freddy@hotmail.com", "Simei Blk 1 avenue 2",
+            "1234567891011121310").buildGooglePerson();
+
+    public static final Person BERNICE = new GoogleContactBuilder("Alice Pauline",
+            "85355255", "alice@example.com",
+            "123, Jurong West Ave 6, #08-111", null).buildGooglePerson();
+
+    public static final Person BERNICEWITHGOOGLEID = new GoogleContactBuilder("Alice Pauline",
+            "85355255", "alice@example.com",
+            "123, Jurong West Ave 6, #08-111", "12345678910111213112").buildGooglePerson();
+
+    public static final seedu.address.model.person.Person FREEDYADDRESSBOOK = new GoogleContactBuilder("Freddy",
+            "91234567", "freddy@hotmail.com", "Simei Blk 1 avenue 2",
+            "1234567891011121310").buildAddressBookPerson();
+    public static final seedu.address.model.person.Person MAYADDRESSBOOK = new GoogleContactBuilder("May",
+            "91234567",
+            "may@hotmail.com", "Simei Blk 15 avenue 21",
+            "1234567891011121311").buildAddressBookPerson();
+    public static final seedu.address.model.person.Person FREDDYSYNADDRESSBOOK = new GoogleContactBuilder(
+            "Freddy", "90000000", "freddy@hotmail.com", "Simei Blk 1 avenue 2",
+            "1234567891011121310").buildAddressBookPerson();
+    public static final seedu.address.model.person.Person FREEDYNOTGOOGLEADDRESSBOOK = new GoogleContactBuilder(
+            "Freddy", "91234567", "freddy@hotmail.com", "Simei Blk 1 avenue 2",
+            "").buildAddressBookPerson();
+    public static final seedu.address.model.person.Person BERNICEADDRESSBOOK = new GoogleContactBuilder(
+            "Alice Pauline", "85355255", "alice@example.com",
+            "123, Jurong West Ave 6, #08-111", "12345678910111213112").buildAddressBookPerson();
+
 }
 ```

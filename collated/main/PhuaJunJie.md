@@ -1,11 +1,14 @@
 # PhuaJunJie
 ###### \java\seedu\address\commons\events\ui\GetRedirectUrlEvent.java
 ``` java
+package seedu.address.commons.events.ui;
+
+import seedu.address.commons.events.BaseEvent;
+
 /**
  * Represents a selection change in the Person List Panel
  */
 public class GetRedirectUrlEvent extends BaseEvent {
-
 
     private String reDirectUrl;
 
@@ -27,6 +30,14 @@ public class GetRedirectUrlEvent extends BaseEvent {
         return reDirectUrl;
     }
 }
+
+```
+###### \java\seedu\address\commons\events\ui\LoadLoginEvent.java
+``` java
+package seedu.address.commons.events.ui;
+
+import seedu.address.commons.events.BaseEvent;
+
 ```
 ###### \java\seedu\address\commons\events\ui\LoadLoginEvent.java
 ``` java
@@ -54,6 +65,26 @@ public class LoadLoginEvent extends BaseEvent {
 ```
 ###### \java\seedu\address\commons\GoogleAuthenticator.java
 ``` java
+package seedu.address.commons;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
+import com.google.api.client.googleapis.auth.oauth2.GoogleBrowserClientRequestUrl;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.services.people.v1.PeopleService;
+import com.google.api.services.people.v1.model.ListConnectionsResponse;
+import com.google.api.services.people.v1.model.Person;
+
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.GetRedirectUrlEvent;
+import seedu.address.logic.commands.exceptions.GoogleAuthException;
+
 /**
  * This class contains methods of the google Auth Api. For authentication after login.
  */
@@ -143,10 +174,38 @@ public class GoogleAuthenticator {
 
         return connections;
     }
+    //@author srishag
+    /**
+     * Obtain transport from google
+     * @return transport
+     */
+    public HttpTransport getTransport() {
+        return transport;
+    }
+
+    /**
+     * Obtain JsonFactory from google
+     * @return JsonFactory
+     */
+    public JacksonFactory getJsonFactory() {
+        return jsonFactory;
+    }
 }
 ```
 ###### \java\seedu\address\commons\GoogleContactsBuilder.java
 ``` java
+package seedu.address.commons;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.services.people.v1.PeopleService;
+import com.google.api.services.people.v1.model.Person;
+
+import seedu.address.logic.commands.exceptions.GoogleAuthException;
+
 /**
  * This class builds a list of Person from google contacts
  */
@@ -177,8 +236,68 @@ public class GoogleContactsBuilder {
     }
 }
 ```
+###### \java\seedu\address\commons\util\StringUtil.java
+``` java
+    /**
+     * Returns true if the {@code sentence} contains the {@code word}.
+     *   Ignores case, but only a partial word match is required.
+     *   <br>examples:<pre>
+     *       containsWordIgnoreCase("ABc def", "ab") == true
+     *       containsWordIgnoreCase("ABc def", "D") == true
+     *       containsWordIgnoreCase("ABc def", "Ac") == false //not a full word match
+     *       </pre>
+     * @param sentence cannot be null
+     * @param word cannot be null, cannot be empty, must be a single word
+     */
+    public static boolean containsAlphabetIgnoreCase(String sentence, String word) {
+        requireNonNull(sentence);
+        requireNonNull(word);
+
+        String preppedWord = word.trim();
+        String preppedSentence = sentence;
+        String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
+        for (String wordInSentence: wordsInPreppedSentence) {
+            if (wordInSentence.toLowerCase().contains(preppedWord.toLowerCase())
+                    && (wordInSentence.toLowerCase().indexOf(preppedWord.toLowerCase()) == 0)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns a detailed message of the t, including the stack trace.
+     */
+    public static String getDetails(Throwable t) {
+        requireNonNull(t);
+        StringWriter sw = new StringWriter();
+        t.printStackTrace(new PrintWriter(sw));
+        return t.getMessage() + "\n" + sw.toString();
+    }
+
+    /**
+     * Returns true if {@code s} represents a non-zero unsigned integer
+     * e.g. 1, 2, 3, ..., {@code Integer.MAX_VALUE} <br>
+     * Will return false for any other non-null string input
+     * e.g. empty string, "-1", "0", "+1", and " 2 " (untrimmed), "3 0" (contains whitespace), "1 a" (contains letters)
+     * @throws NullPointerException if {@code s} is null.
+     */
+    public static boolean isNonZeroUnsignedInteger(String s) {
+        requireNonNull(s);
+
+        try {
+            int value = Integer.parseInt(s);
+            return value > 0 && !s.startsWith("+"); // "+1" is successfully parsed by Integer#parseInt(String)
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\exceptions\GoogleAuthException.java
 ``` java
+package seedu.address.logic.commands.exceptions;
+
 /**
  * Represents an error which occurs during authentication process
  */
@@ -190,6 +309,30 @@ public class GoogleAuthException extends Exception {
 ```
 ###### \java\seedu\address\logic\commands\ExportCommand.java
 ``` java
+package seedu.address.logic.commands;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import com.google.api.services.people.v1.model.Address;
+import com.google.api.services.people.v1.model.EmailAddress;
+import com.google.api.services.people.v1.model.Name;
+import com.google.api.services.people.v1.model.Person;
+import com.google.api.services.people.v1.model.PhoneNumber;
+
+import seedu.address.commons.GoogleContactsBuilder;
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.GoogleAuthException;
+import seedu.address.model.person.GoogleId;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
  * Keyword matching is case sensitive.
@@ -314,6 +457,10 @@ public class ExportCommand extends Command {
 ```
 ###### \java\seedu\address\logic\commands\FindAlphabetCommand.java
 ``` java
+package seedu.address.logic.commands;
+
+import seedu.address.model.person.NameContainsAlphabetsPredicate;
+
 /**
  * Finds and lists all persons in address book whose name contains any of the characters.\
  * This function works without having the user to hit the "Enter Key"
@@ -348,6 +495,30 @@ public class FindAlphabetCommand extends Command {
 ```
 ###### \java\seedu\address\logic\commands\ImportCommand.java
 ``` java
+package seedu.address.logic.commands;
+
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import com.google.api.services.people.v1.model.Person;
+
+import seedu.address.commons.GoogleContactsBuilder;
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.GoogleAuthException;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.FacebookAddress;
+import seedu.address.model.person.GoogleId;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.tag.Tag;
+
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
  * Keyword matching is case sensitive.
@@ -472,6 +643,13 @@ public class ImportCommand extends UndoableCommand {
 ```
 ###### \java\seedu\address\logic\commands\LoginCommand.java
 ``` java
+package seedu.address.logic.commands;
+
+import seedu.address.commons.GoogleAuthenticator;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.events.ui.LoadLoginEvent;
+
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
  * Keyword matching is case sensitive.
@@ -500,6 +678,32 @@ public class LoginCommand extends Command {
 ```
 ###### \java\seedu\address\logic\commands\SyncCommand.java
 ``` java
+package seedu.address.logic.commands;
+
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import com.google.api.services.people.v1.model.Person;
+
+import javafx.collections.ObservableList;
+import seedu.address.commons.GoogleContactsBuilder;
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.GoogleAuthException;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.FacebookAddress;
+import seedu.address.model.person.GoogleId;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+
 /**
  * Syncs all existing google contacts in the addressbook with the contacts in google contacts
  * Contacts in google contacts takes higher precedence.
@@ -543,7 +747,7 @@ public class SyncCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
-        boolean exists;
+        boolean exists = false;
 
         ObservableList<ReadOnlyPerson> personlist = model.getAddressBook().getPersonList();
         if (personlist.isEmpty()) {
@@ -552,20 +756,11 @@ public class SyncCommand extends UndoableCommand {
 
 
         for (ReadOnlyPerson addressPerson : personlist) {
-            exists = false;
             if ((googleContactsList != null)) {
                 for (Person googlePerson : googleContactsList) {
-                    if (googlePerson.getResourceName().substring(8).equals(addressPerson.getGoogleId().value)) {
-                        exists = true;
-                        try {
-                            if (!addressPerson.isSameStateAs(convertToAddress(googlePerson, addressPerson))) {
-                                model.updatePerson(addressPerson, convertToAddress(googlePerson, addressPerson));
-                                contactsSyncedCount++;
-                            }
-                        } catch (IllegalValueException | NullPointerException | PersonNotFoundException e) {
-                            errorSyncedCount++;
-                            namesNotSynced += googlePerson.getNames().get(0).getGivenName() + ", ";
-                        }
+                    exists = updateAddressBook(googlePerson, addressPerson);
+                    if (exists == true) {
+                        break;
                     }
                 }
             }
@@ -587,6 +782,27 @@ public class SyncCommand extends UndoableCommand {
     }
 
     /**
+     * First, the method runs a check to see if the addressbook contact exists in google contacts
+     * Updates the contact in addressbook with the new contact in google contact if they are found to be different
+     * Returns true if contact cant be found in google contacts
+     */
+    public boolean updateAddressBook(Person googlePerson, ReadOnlyPerson addressPerson) {
+        if (googlePerson.getResourceName().substring(8).equals(addressPerson.getGoogleId().value)) {
+            try {
+                if (!addressPerson.isSameStateAs(convertToAddress(googlePerson, addressPerson))) {
+                    model.updatePerson(addressPerson, convertToAddress(googlePerson, addressPerson));
+                    contactsSyncedCount++;
+                }
+            } catch (IllegalValueException | NullPointerException | PersonNotFoundException e) {
+                errorSyncedCount++;
+                namesNotSynced += googlePerson.getNames().get(0).getGivenName() + ", ";
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Creates a person in addressBook based on the contact in google contact
      */
     public ReadOnlyPerson convertToAddress(Person person, ReadOnlyPerson addressPerson)
@@ -604,8 +820,10 @@ public class SyncCommand extends UndoableCommand {
 
         return new seedu.address.model.person.Person(name, phone, email, address, birthday, facebookAddress, tags, id);
     }
+
     /**
      * Creates a new person without its previous google contact status
+     * This method is used if a person has a google contact status but cannot be found in google contacts
      */
     public ReadOnlyPerson removeGoogleContactStatus(ReadOnlyPerson contact)
             throws IllegalValueException, NullPointerException {
@@ -626,6 +844,7 @@ public class SyncCommand extends UndoableCommand {
                 contact.getBirthday(), contact.getFacebookAddress(), tags, id);
     }
 
+
     /**
      * Creates a detailed message on the status of the sync
      */
@@ -643,6 +862,16 @@ public class SyncCommand extends UndoableCommand {
 ```
 ###### \java\seedu\address\logic\parser\FindAlphabetCommandParser.java
 ``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import java.util.Arrays;
+
+import seedu.address.logic.commands.FindAlphabetCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.NameContainsAlphabetsPredicate;
+
 /**
  * Parses input arguments and creates a new FindCommand object
  */
@@ -669,6 +898,12 @@ public class FindAlphabetCommandParser implements Parser<FindAlphabetCommand> {
 ```
 ###### \java\seedu\address\model\person\GoogleId.java
 ``` java
+package seedu.address.model.person;
+
+import static java.util.Objects.requireNonNull;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+
 /**
  * Represents a Person's Google ID in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidGoogleId(String)}
@@ -723,6 +958,13 @@ public class GoogleId {
 ```
 ###### \java\seedu\address\model\person\NameContainsAlphabetsPredicate.java
 ``` java
+package seedu.address.model.person;
+
+import java.util.List;
+import java.util.function.Predicate;
+
+import seedu.address.commons.util.StringUtil;
+
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
  */
@@ -755,6 +997,7 @@ public class NameContainsAlphabetsPredicate implements Predicate<ReadOnlyPerson>
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPage(event.getAuthenticationUrl());
     }
+
     @Subscribe
     private void getRedirectUrlEvent (GetRedirectUrlEvent event) {
         logger.info((LogsCenter.getEventHandlingLogMessage(event)));

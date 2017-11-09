@@ -18,6 +18,9 @@ import seedu.address.model.person.GoogleId;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.Deadline;
+import seedu.address.model.task.Desc;
+import seedu.address.model.task.Header;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -109,6 +112,33 @@ public class ParserUtil {
     public static Optional<String> parseEmailSubject(Optional<String> emailSubject) throws IllegalValueException {
         requireNonNull(emailSubject);
         return emailSubject.isPresent() ? Optional.of(new String(emailSubject.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> Header} into an {@code Optional<Header>} if {@code header} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Header> parseHeader(Optional<String> header) throws IllegalValueException {
+        requireNonNull(header);
+        return header.isPresent() ? Optional.of(new Header(header.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> Desc} into an {@code Optional<Desc>} if {@code desc} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Desc> parseDesc(Optional<String> desc) throws IllegalValueException {
+        requireNonNull(desc);
+        return desc.isPresent() ? Optional.of(new Desc(desc.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> Deadline} into an {@code Optional<Deadline>} if {@code deadline} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Deadline> parseDeadline(Optional<String> deadline) throws IllegalValueException {
+        requireNonNull(deadline);
+        return deadline.isPresent() ? Optional.of(new Deadline(deadline.get())) : Optional.empty();
     }
 
     /**

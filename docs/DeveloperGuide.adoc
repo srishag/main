@@ -220,8 +220,8 @@ This section describes some noteworthy details on how certain features are imple
 // tag::Google Implementation[]
 === Google Implementation
 
-The Addressbook now incorporates and integrates Google Contacts and Gmail which will enhance its usability. Firstly, a
-`Login Command` is implemented so that the Addressbook can authenticate with the google servers when the user has successfully logged in.
+Contact’em now incorporates and integrates Google Contacts and Gmail which will enhance its usability. Firstly,
+`Login Command` is implemented so that the Contact’em can authenticate with the google servers when the user has successfully logged in.
 The new `GoogleAuthenticator` class is created run the authentication process.
 
 The `Login Command` sequence diagram is as follows:
@@ -229,35 +229,37 @@ The `Login Command` sequence diagram is as follows:
 image::LoginSequence.png[width="800"]
 _Figure 3.1.1 : Login command sequence diagram_
 
-The login page will be loaded in the browser panel after the login command have successfully executed. This is for the user to authenticate with google. The command will then redirect the user to the Google contacts webpage after successful authentication.
+The login page will be loaded in the browser panel after the login command has successfully executed. This is for the user to authenticate with google. The command will then redirect the user to the Google contacts webpage after successful authentication.
 
 ==== GoogleContactsBuilder class and GoogleID attribute
-The GoogleContactsBuilder class can be instantiated to access the list of contacts from Google and also to obtain the PeopleService object needed to modify the contacts in Google. This is done by making use of the methods in the GoogleAuthenticator object to obtain the tokens and PeopleService from Google.
+The `GoogleContactsBuilder` class can be instantiated to access the list of contacts from Google and also to obtain the `PeopleService` object needed to modify the contacts in Google. This is done by making use of the methods in the `GoogleAuthenticator` object to obtain the tokens and `PeopleService` from Google.
 
-The token required for authentication is obtained from the redirect url after loging in. This means that the user must stay on the Google contacts page in the browser panel when instantiating this class (For import / export / sync
-commands). The class diagram for GoogleContactsBuilder is shown below.
+The token required for authentication is obtained from the redirect url after logging in. This means that the user must stay on the Google contacts page in the browser panel when instantiating this class (For import / export / sync
+commands). The class diagram for `GoogleContactsBuilder` is shown below.
 
 image::Class diagram.png[width="800"]
 _Figure 3.1.1.1 : GoogleContactsBuilder class diagram_
 
-Every Person in the address book now has a new attribute known as the GoogleID. This ID refers to its own GoogleID in Google contacts. Contacts that are not synced with Google will have a null GoogleID.
+Every Person in the address book now has a new attribute known as the GoogleID. This ID refers to its own GoogleID in Google contacts. Contacts that are not synchronised with Google will have a null GoogleID.
 
 ==== Import Command
-After successful authentication, the user can proceed to import contacts from his google account. The import command creates a GoogleContactsBuilder object to retrieve the list of google contacts from the server.
+After successful authentication, the user can proceed to import contacts from his google account. The import command creates a `GoogleContactsBuilder` object to retrieve the list of google contacts from the server.
 
-The Import command sequence diagram is as follows:
+The `Import command` sequence diagram is as follows:
 
 image::Import command.png[width="800"]
 _Figure 3.1.2.1 : Import command sequence diagram_
 
-When the command is executed, the list of Google contacts will be looped through and compared with the contacts within the address book. If the GoogleID of a particular Google contact is not found within the address book, the contact will then be imported. This is represented by the code snippet as shown below.
+When the command is executed, the list of Google contacts will be looped through and compared with the contacts in Contact’em. If the GoogleID of a particular Google contact is not found in Contact’em, the contact will be imported. This is represented by the code snippet as shown below.
 
 `Pseudo-code snippet:`
-
- for each contact: googleContactsList {
-     if contact does not exists in address book
-                model.addPerson(newPerson(contact))
+[source,java]
+----
+for each contact: googleContactsList {
+    if contact does not exists in address book
+               model.addPerson(newPerson(contact))
 }
+----
 
 `Scenario 1`
 
@@ -269,31 +271,33 @@ Google contact might have invalid attributes. Eg: Invalid email format
 Google contact might not have all attributes required to create a new Person object.
 	All the following attributes must be present: Name, Phone, Email and Address.
 
-A message detailing the result of the command will be displayed to inform the user on the number of contacts imported or the number of contacts and a string of names of those that failed to be imported.
+A message detailing the result of the command will be displayed to inform the user on the number of contacts imported or the number of contacts along with a string of names of contacts that failed to import.
 
 ==== Export Command
 After successful authentication, the user can next proceed to export contacts from Contact’em into his google account. The command creates a GoogleContactsBuilder object to retrieve peopleService from the server needed to modify/add contacts in Google.
 
-The Export command sequence diagram is as follows:
+The `Export command` sequence diagram is as follows:
 
 image::Export command.png[width="800"]
 _Figure 3.1.3.1 : Export command sequence diagram_
 
-When the command is executed, the list of contacts in the address book will be looped through to check whether they are a google contact. If they not, they will be exported to Google contacts. This is represented by the code snippet shown below.
+When the command is executed, the list of contacts in Contact’em will be looped through to check whether they are a google contact. If they not, they will be exported to Google contacts. This is represented by the code snippet shown below.
 
-`Pseudo-code snippet:`
-
- for each contact: addressBookList{
-     if contact does not have a GoogleContact Tag
-                New googleContact = createGoogleContact (contact);
-                googleContact = builder.getPeopleService().people() createContact(googleContact).
+**Pseudo-code snippet**
+[source,java]
+----
+for each contact: addressBookList{
+    if contact does not have a GoogleContact Tag
+               New googleContact = createGoogleContact (contact);
+               googleContact = builder.getPeopleService().people() createContact(googleContact).
                                             execute();
-                model.updatePerson(contact, newAddressBookContact(contact));
+               model.updatePerson(contact, newAddressBookContact(contact));
 }
+----
 
 `Scenario 1`
 
-The createGoogleContact method shown in the above code snippet successfully creates a GooglePerson that will be exported to Google contacts. The address book will then update the contact by instantiating its GoogleID attribute retrieved from the newly created Google contact and adding a GoogleContacts Tag to it.
+The createGoogleContact method shown in the above code snippet successfully creates a GooglePerson that will be exported to Google contacts. The export command will then update the contact by instantiating its GoogleID attribute retrieved from the newly created Google contact and adding a GoogleContacts Tag to it.
 
 `Scenario 2`
 
@@ -301,28 +305,30 @@ The contact might not be exported to Google due to the failure in connecting to 
 
 A message detailing the result of the command will be displayed to inform the user on the number of contacts imported or failed to import.
 
-=== Sync Command
-After successful authentication, the user can proceed to sync contacts in his address book. The sync command creates a GoogleContactsBuilder object to retrieve the list of Google contacts from the server. In this case, the contacts in Google contacts takes higher precedence and any changes to them will be updated to the contacts in Contact’em when the user syncs the address book. However, any changes made to the contact in the Contact’em will not be transferred to Google contacts when the user syncs but instead, its attribute will be restored to its original value.
+==== Sync Command
+After successful authentication, the user can proceed to sync contacts in Contact’em. The sync command creates a GoogleContactsBuilder object to retrieve the list of Google contacts from the server. In this case, the contacts in Google contacts takes higher precedence and any changes to them will be updated to the contacts in Contact’em when the user syncs it. However, any changes made to the contact in the Contact’em will not be transferred to Google contacts when the user syncs but instead, its attribute will be restored to its original value.
 
-The Sync command sequence diagram is as follows:
+The `Sync command` sequence diagram is as follows:
 
 image::Sync command.png[width="800"]
 _Figure 3.1.4.1 : Sync command sequence diagram_
 
-When the command is executed, the list of contacts in the Contact’em will be looped through to check if they exists within the list of Google contacts as well. If they are, a Person object based on the Google contact will be created and it will be used to compare with the contact in the address book. This is represented by the code snippet shown below.
+When the command is executed, the list of contacts in Contact’em will be looped through to check if they exists within the list of Google contacts as well. If they are, a Person object based on the Google contact will be created and it will be used to compare with the contact in the address book. This is represented by the code snippet shown below.
 
 `Pseudo-code snippet:`
-
- for each contact: addressBookList{
-     for each googlecontact : googleContactsList{
-                if contact shares a similar googleID with the googlecontact
-                exists = true;
-                           If convertToAddress(googlecontact) is not the same as contact
-                                     model.updatePerson(contact, convertToAddress(googlecontact))
-      }
-     If contact is a google contact but exists == false
-                 model.updatePerson(contact, removeGoogleContactStatus(contact));
+[source,java]
+----
+for each contact: addressBookList{
+    for each googlecontact : googleContactsList{
+               if contact shares a similar googleID with the googlecontact
+               exists = true;
+                          if convertToAddress(googlecontact) is not the same as contact
+                                    model.updatePerson(contact, convertToAddress(googlecontact))
+     }
+    if contact is a google contact but exists == false
+                model.updatePerson(contact, removeGoogleContactStatus(contact));
 }
+----
 
 `Scenario 1`
 
@@ -334,13 +340,34 @@ The attributes of the contact are different from itself in Google contacts. The 
 
 `Scenario 3`
 
-The attributes of the Google contact is invalid and hence no new Person is created to compare itself with the contact in the address book. The contact in the Contact’em will not be synced.
+The attributes of the Google contact is invalid and hence no new Person is created to compare itself with the contact in Contact’em. The contact in the Contact’em will not be synced.
 
 `Scenario 4`
 
-The contact in the addressbook is thought to exist in Google contacts but is not found. The removeGoogleContactStatus() method shown in the above code snippet will remove the Google contact status of the contact.
+The contact in the Contact’em is thought to exist in Google contacts but is not found. The removeGoogleContactStatus() method shown in the above code snippet will remove the Google contact status of the contact.
 
-A message detailing the result of the command will be displayed to inform the user on the number of contacts synced and the number of contacts and a string of names of those that failed to sync.
+A message detailing the result of the command will be displayed to inform the user on the number of contacts synced and the number of contacts along with a string of names of contacts that failed to sync.
+
+==== Design Considerations
+
+**Aspect:** Storing of access token. +
+**Alternative 1 (current choice):** The user have to be on the Google contact web page in order to use the following commands : `Import`, `Export`, `Sync`. This is because the token is retrieved from the url every time the user does the above mentioned commands. +
+**Pros:** Users will be able to inspect the contacts within the Google contacts and they will be able to update the contacts if the contacts fail to `import` or `sync` by referring to the warning messages displayed. +
+**Cons:** This might cause some inconvenience because the users have to re-login to use the above mentioned commands if they have switched pages in the browser panel. +
+**Alternative 2:** Stores the token within the program once the user has logged in. +
+**Pros:** More convenience for user as they do not have to stay on the Google contacts page whenever they want to use the above mentioned commands. +
+**Cons:** In the case whereby some contacts fail to synchronise or import, the user have to re login anyway to check on the contacts in google. By doing so, the error message produced earlier on will be removed and the user does not have a reference to see which contact is not importing or synchronising. +
+
+---
+
+**Aspect:** Precedence of Contact’em contacts versus Google contacts in sync command +
+**Alternative 1 (current choice):** Google contacts takes higher precedence. Contacts updated in Google contacts will be synchronised to Contact'em. +
+**Pros:** This alternative allow users to update contacts in Google contacts on-the-go which can be synchronised to Contact’em next time they use it. +
+**Cons:** Contacts updated in Contact’em must be manually updated in the Google contacts as well. If not, next time when the user synchronises Contact'em, the changes will be removed. +
+**Alternative 2:** Contact’em takes higher precedence. Contacts updated in Contact’em will be synced to Google contacts. +
+**Pros:** This is better for user who uses Contact’em  more often than Google contacts. For some, the contacts in Google contacts might just be an on-the-go reference and most updating is done within Contact’em. +
+**Cons:** Will not be able to update contacts if they are away from the computer.
+
 
 
 // tag::EasyFind[]
@@ -380,7 +407,7 @@ image::FindAlphabetsCommand.png[width="800"]
 // tag::findbytags[]
 === Finding contacts by tags
 
-The application allows users to find contacts based on their tags. The command word is findtags, and the alternatives are findtag and ft. The following subsections explain how the program is supposed to function given this command, and how it is implemented.
+The application allows users to find contacts based on their tags. The command word is `findtags`, and the alternatives are `findtag` and `ft`. The following subsections explain how the program is supposed to function given this command, and how it is implemented.
 
 ==== User Inputs and Expected Actions/Results
 
@@ -581,12 +608,71 @@ Nevertheless, this improvement is meant to increase user enjoyment and convenien
 
 // end::findbytags[]
 
+// tag::listtags[]
+=== Implementation of List Tags
+The application allows users to see the list of all tags that are currently attached to contacts in the application. The command word is `listtags`, and
+the shortcut alternative is `lt`. The follow subsections explain how the program is supposed to function given the command, and how it is implemented.
+
+==== User Inputs and Expected Actions/Results
+In general, when this command is used, there are only 2 scenarios that will occur.
+
+**Scenario 1** +
+There is at least 1 tag attached to at least 1 contact.
+
+In this scenario, the application will show these tags in the result box.
+
+Below is the format of the results: +
+You have the following tags: [tag1] [tag2] [tag3] ...
+
+**Scenario 2** +
+There are no tags attached to any contacts in the application. This could happen if there are: +
+1. No contacts in the application. +
+2. No tags attached to any contact.
+
+In this scenario, the application will show to user the following message: +
+"You do not have any tags!"
+
+==== Brief Overview of the Command
+A brief overview of the steps taken by the application in producing the appropriate results is as given: +
+1. Creates a list of tags by iterating through every Contact in the application and adding their tags to the list. +
+2. Check if this list of tags is empty or not, that is, whether it is scenario 1 or scenario 2. +
+2a. If it is scenario 2, that is, there are no tags to output, the command merely returns the failure message. +
+3. If the list is not empty, it will output the success message along with the list of tags in the appropriate format. The details of this step is given
+in the next subsection.
+
+==== Implementation of Success Scenario
+The steps taken are: +
+1. Converts the list of Tags to a list of String containing the names of each Tag. +
+2. Sorts the list in alphabetical order. +
+3. Using a StringBuilder, appends the names to each other with the appropriate formatting. +
+4. Output the result.
+
+==== Design Considerations
+
+**Aspect:** Order of Tags displayed +
+**Alternative 1 (current choice):** Display in alphabetical order. +
+**Pros:** More readable and more easily understood. +
+**Cons:** May not be the most meaningful. +
+
+**Alternative 2:** Display based on how many of each tag there are, for example in ascending order. +
+**Pros:** Might be more meaningful for certain users and cases. +
+**Cons:** Much more difficult to implement, and may appear more confusing to users, as alphabetical order is generally more easily understood. +
+
+**Alternative 3:** Allow option to display both in alphabetical order or in ascending order. +
+**Pros:** Best of both worlds, allowing user to choose the most meaningful. +
+**Cons:** Adding on to the already numerous commands may not be the most meaningful, especially when the main
+function of this enhancement is to complement the find tags feature.
+
+---
+
+// end::listtags[]
+
 === Implementation of Facebook Field
 Each contact can now support a Facebook field, which is displayed on the person card.
 
 A few things to note about this field:
 
-1. The Facebook field is not compulsory when adding to the addressbook.
+1. The Facebook field is not compulsory when adding to the application.
 
 2. If user does not input the Facebook field, removes it using the edit command, it will be replaced by
 the default Facebook homepage, "https://facebook.com/".
