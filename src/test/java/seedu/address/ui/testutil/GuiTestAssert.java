@@ -81,6 +81,14 @@ public class GuiTestAssert {
         }
     }
 
+    /**
+     * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
+     * in the correct order.
+     */
+    public static void assertListMatching(PersonListPanelHandle personListPanelHandle, List<ReadOnlyPerson> persons) {
+        assertListMatching(personListPanelHandle, persons.toArray(new ReadOnlyPerson[0]));
+    }
+
     //@@author srishag
     /**
      * Asserts that the list in {@code taskListPanelHandle} displays the details of {@code tasks} correctly and
@@ -92,14 +100,6 @@ public class GuiTestAssert {
         }
     }
     //@@author
-
-    /**
-     * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
-     * in the correct order.
-     */
-    public static void assertListMatching(PersonListPanelHandle personListPanelHandle, List<ReadOnlyPerson> persons) {
-        assertListMatching(personListPanelHandle, persons.toArray(new ReadOnlyPerson[0]));
-    }
 
     /**
      * Asserts the size of the list in {@code personListPanelHandle} equals to {@code size}.
