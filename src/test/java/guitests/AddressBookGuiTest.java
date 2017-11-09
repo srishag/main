@@ -22,6 +22,8 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.model.AddressBook;
 import seedu.address.testutil.TypicalPersons;
 
+import guitests.guihandles.TaskListPanelHandle;
+
 /**
  * A GUI Test class for AddressBook.
  */
@@ -73,6 +75,10 @@ public abstract class AddressBookGuiTest {
 
     protected PersonListPanelHandle getPersonListPanel() {
         return mainWindowHandle.getPersonListPanel();
+    }
+
+    protected TaskListPanelHandle getTaskListPanel() {
+        return mainWindowHandle.getTaskListPanel();
     }
 
     protected MainMenuHandle getMainMenu() {

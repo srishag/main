@@ -407,7 +407,7 @@ image::FindAlphabetsCommand.png[width="800"]
 // tag::findbytags[]
 === Finding contacts by tags
 
-The application allows users to find contacts based on their tags. The command word is findtags, and the alternatives are findtag and ft. The following subsections explain how the program is supposed to function given this command, and how it is implemented.
+The application allows users to find contacts based on their tags. The command word is `findtags`, and the alternatives are `findtag` and `ft`. The following subsections explain how the program is supposed to function given this command, and how it is implemented.
 
 ==== User Inputs and Expected Actions/Results
 
@@ -608,12 +608,71 @@ Nevertheless, this improvement is meant to increase user enjoyment and convenien
 
 // end::findbytags[]
 
+// tag::listtags[]
+=== Implementation of List Tags
+The application allows users to see the list of all tags that are currently attached to contacts in the application. The command word is `listtags`, and
+the shortcut alternative is `lt`. The follow subsections explain how the program is supposed to function given the command, and how it is implemented.
+
+==== User Inputs and Expected Actions/Results
+In general, when this command is used, there are only 2 scenarios that will occur.
+
+**Scenario 1** +
+There is at least 1 tag attached to at least 1 contact.
+
+In this scenario, the application will show these tags in the result box.
+
+Below is the format of the results: +
+You have the following tags: [tag1] [tag2] [tag3] ...
+
+**Scenario 2** +
+There are no tags attached to any contacts in the application. This could happen if there are: +
+1. No contacts in the application. +
+2. No tags attached to any contact.
+
+In this scenario, the application will show to user the following message: +
+"You do not have any tags!"
+
+==== Brief Overview of the Command
+A brief overview of the steps taken by the application in producing the appropriate results is as given: +
+1. Creates a list of tags by iterating through every Contact in the application and adding their tags to the list. +
+2. Check if this list of tags is empty or not, that is, whether it is scenario 1 or scenario 2. +
+2a. If it is scenario 2, that is, there are no tags to output, the command merely returns the failure message. +
+3. If the list is not empty, it will output the success message along with the list of tags in the appropriate format. The details of this step is given
+in the next subsection.
+
+==== Implementation of Success Scenario
+The steps taken are: +
+1. Converts the list of Tags to a list of String containing the names of each Tag. +
+2. Sorts the list in alphabetical order. +
+3. Using a StringBuilder, appends the names to each other with the appropriate formatting. +
+4. Output the result.
+
+==== Design Considerations
+
+**Aspect:** Order of Tags displayed +
+**Alternative 1 (current choice):** Display in alphabetical order. +
+**Pros:** More readable and more easily understood. +
+**Cons:** May not be the most meaningful. +
+
+**Alternative 2:** Display based on how many of each tag there are, for example in ascending order. +
+**Pros:** Might be more meaningful for certain users and cases. +
+**Cons:** Much more difficult to implement, and may appear more confusing to users, as alphabetical order is generally more easily understood. +
+
+**Alternative 3:** Allow option to display both in alphabetical order or in ascending order. +
+**Pros:** Best of both worlds, allowing user to choose the most meaningful. +
+**Cons:** Adding on to the already numerous commands may not be the most meaningful, especially when the main
+function of this enhancement is to complement the find tags feature.
+
+---
+
+// end::listtags[]
+
 === Implementation of Facebook Field
 Each contact can now support a Facebook field, which is displayed on the person card.
 
 A few things to note about this field:
 
-1. The Facebook field is not compulsory when adding to the addressbook.
+1. The Facebook field is not compulsory when adding to the application.
 
 2. If user does not input the Facebook field, removes it using the edit command, it will be replaced by
 the default Facebook homepage, "https://facebook.com/".

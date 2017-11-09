@@ -59,15 +59,32 @@ public class GoogleAuthenticator {
      */
     public String getToken() throws GoogleAuthException {
         String token;
+        boolean indexToken;
         try {
             GetRedirectUrlEvent event = new GetRedirectUrlEvent();
             EventsCenter.getInstance().post(event);
             String url = event.getReDirectUrl();
-            token = url.substring(url.indexOf("token=") + 6, url.indexOf("&"));
+            indexToken = checkValidTokenIndex(url.indexOf("token="));
+            if (indexToken) {
+                token = url.substring(url.indexOf("token=") + 6, url.indexOf("&"));
+            } else {
+                throw new StringIndexOutOfBoundsException();
+            }
         } catch (StringIndexOutOfBoundsException | NullPointerException e) {
             throw new GoogleAuthException("Authentication Failed. Please login again.");
         }
         return token;
+    }
+
+    /**
+     * Checks if google login is valid
+     * @returns true if valid (i.e. index is not -1) or false if not valid(i.e. index is -1)
+     */
+    public boolean checkValidTokenIndex(int index) {
+        if (index == -1) {
+            return false;
+        }
+        return true;
     }
 
     /**
