@@ -1,0 +1,71 @@
+= srishag - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Contact'em
+Contact’em is a desktop address book application, and the user interacts with it through typing commands into the application.
+
+*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]]
+
+=== Enhancement Added: Birthday attribute for Person
+
+==== Justification
+
+It is crucial that we remember the special day of the people who are important in our life.
+The Birthday attribute helps users to remember the birthday of contacts and make this data more accessible.
+However, it remains an optional field to ensure that a random date is not added when the birthday of a contact is
+not known to the user. It also checks that the date entered is valid.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+//PR for DG (Birthday) yet to be merged
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Send Email
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=gmail]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The main intention of this enhancement is to utilise the email attribute added to person and contact them.
+We used the Gmail API as this works well together with the `import`, `sync` and `export` commands.
+
+
+=== Enhancement Added: Add Task
+
+==== Justification
+
+We wanted Contact'em to be more than just an place to store contacts.
+Here we add the ability to add tasks into a separate list of tasks, each with their own Header, Description and Deadline.
+
+=== Enhancement Added: Edit Task
+
+==== Justification
+
+It is common for tasks to change, more or less things to include, different deadlines, etc.
+Editing a task is crucial for any user. Simply deleting and adding it again with different parameters is just not practical.
+
+=== Enhancement Added: Delete Task
+
+==== Justification
+
+Deleting a task is crucial to indicate a completed, cancelled or even a task passed on to someone else.
+As long as it's off the task list of the user, we want it to be removed from the task list on Contact'em.
+
+

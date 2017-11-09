@@ -32,7 +32,9 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
+        //@@author srishag
         descriptor.setBirthday(person.getBirthday());
+        //@@author
         descriptor.setFacebookAddress(person.getFacebookAddress());
         descriptor.setTags(person.getTags());
     }

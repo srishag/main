@@ -66,9 +66,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
+    //@@author srishag
     public void setTasks(List<? extends ReadOnlyTask> tasks) throws DuplicateTaskException {
         this.tasks.setTasks(tasks);
     }
+    //@@author
 
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
@@ -85,15 +87,19 @@ public class AddressBook implements ReadOnlyAddressBook {
             assert false : "AddressBooks should not have duplicate persons";
         }
 
+        //@@author srishag
         try {
             setTasks(newData.getTaskList());
         } catch (DuplicateTaskException e) {
             assert false : "AddressBooks should not have duplicate tasks";
         }
+        //@@author
 
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
     }
+
+    //@@author srishag
 
     //// email-level operations
 
@@ -111,6 +117,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         SendEmailCommand send = new SendEmailCommand(index, subject, body);
         send.execute();
     }
+    //@@author
 
     //// person-level operations
 
@@ -200,6 +207,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
+    //@@author srishag
     //// task-level operations
 
     /**
@@ -238,6 +246,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new TaskNotFoundException();
         }
     }
+    //@@author
 
     //// util methods
 
@@ -253,10 +262,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.asObservableList();
     }
 
+    //@@author srishag
     @Override
     public ObservableList<ReadOnlyTask> getTaskList() {
         return tasks.asObservableList();
     }
+    //@@author
 
     @Override
     public ObservableList<Tag> getTagList() {

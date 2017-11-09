@@ -52,12 +52,14 @@
       </padding>
     </StackPane>
 
+    <!---@@author srishag-->
     <VBox fx:id="taskList" minWidth="140" prefWidth="410" maxWidth="410" prefHeight="620"
           SplitPane.resizableWithParent="false">
       <children>
         <StackPane fx:id="taskListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
       </children>
     </VBox>
+    <!---@@author-->
   </SplitPane>
 
   <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
