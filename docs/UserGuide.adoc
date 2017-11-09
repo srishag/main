@@ -237,6 +237,7 @@ As long as a single word in a contact's name matches any of the keywords, that c
 [NOTE]
 Only full words will be matched, for example, finding `Han` will not match `Hans`. To search for a contact without specifying the full word, refer to `EasyFind` in the section below.
 
+// tag::EasyFind[]
 ==== EasyFind
 
 Auto updates the display when user enters an alphabet with the `find` command.
@@ -258,6 +259,8 @@ Examples:
  Returns `Alexandra`
 * `find Betsy Tim John` +
 Returns any person having starting alphabets `Betsy`, `Tim`, or `John`
+// end::EasyFind[]
+
 
 // tag::findtags[]
 === Locating persons by tag name: `findtags`
