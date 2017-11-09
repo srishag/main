@@ -1,0 +1,69 @@
+= PokkaKiyo - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Contact'em
+Contact’em is a desktop address book application, and the user interacts with it through typing commands into the application.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T11-B4/main/blob/master/collated/main/PhuaJunJie.md] [https://github.com/CS2103AUG2017-T11-B4/main/blob/master/collated/test/PhuaJunJie.md] {give links to collated code files}
+
+=== Enhancement Added: Google Contacts implementation, EasyFind
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=google]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The main theme of Contact'em is to easily manage and store contacts.  As the use of Smart phones is becoming more prevalent in the world right now, being able to access contacts on the go has became the priority of many users.
+Hence, by implementing import, export and sync, we now allow users to synchronise contact'em with google contacts, which can be accessed on most mobile devices.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=googleimplementation]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: EasyFind
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=EasyFind]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+One of the main functionality of Contact'em is to allow users to search for contacts. However, the current search command is extremely inefficient as users have to input entire first names or given names inorder to obtain the contact. Addtionally, this search command does not aid the user in the event he has forgotten the exact name when searching for contacts.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=EasyFind]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+

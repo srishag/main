@@ -217,7 +217,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 This section describes some noteworthy details on how certain features are implemented.
 
-// tag::Google Implementation[]
+// tag::googleimplementation[]
 === Google Implementation
 
 Contact’em now incorporates and integrates Google Contacts and Gmail which will enhance its usability. Firstly,
@@ -367,7 +367,7 @@ A message detailing the result of the command will be displayed to inform the us
 **Alternative 2:** Contact’em takes higher precedence. Contacts updated in Contact’em will be synced to Google contacts. +
 **Pros:** This is better for user who uses Contact’em  more often than Google contacts. For some, the contacts in Google contacts might just be an on-the-go reference and most updating is done within Contact’em. +
 **Cons:** Will not be able to update contacts if they are away from the computer.
-
+// end::googleimplementation[]
 
 
 // tag::EasyFind[]
