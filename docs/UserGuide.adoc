@@ -485,7 +485,7 @@ Please ensure you have entered the necessary details for each contact.
 
 [NOTE]
 `Index` is the #currently displayed# number corresponding to the contact, which may differ if the current displayed list has been filtered.
-
+// end::gmail[]
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
