@@ -163,7 +163,7 @@ boolean personHasAtLeastOneMatchingTag = false;
 for each tag : contact.getTagList {
      if keywordsToExclude.hasAnyMatchingWordsWith(tag.value)
                 return false;
-     If keywordsToInclude.hasAnyMatchingWordsWith(person.getTagList()
+     if keywordsToInclude.hasAnyMatchingWordsWith(person.getTagList()
                  personHasAtLeastOneMatchingTag = true;
 }
 
