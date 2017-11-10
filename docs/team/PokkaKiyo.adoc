@@ -118,8 +118,8 @@ Expected result: returns contacts that are tagged “friends”.
 [source,java]
 ----
 for each tag : contact.getTagList {
-if (keywordsToInclude.hasAnyMatchingWordsWith(tag.value)) {
-    return true;
+    if (keywordsToInclude.hasAnyMatchingWordsWith(tag.value)) {
+        return true;
     }
 }
 return false;
@@ -139,8 +139,8 @@ Expected result: returns all contacts not tagged “colleagues”.
 [source,java]
 ----
 for each tag : contact.getTagList {
-if (keywordsToExclude.hasAnyMatchingWordsWith(tag.value)) {
-return false;
+    if (keywordsToExclude.hasAnyMatchingWordsWith(tag.value)) {
+        return false;
     }
 }
 return true;
