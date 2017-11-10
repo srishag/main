@@ -312,7 +312,6 @@ For example: +
 
 However, this may not always be correct for words where plural and singular differs not only by a single letter 's'.
 Searching by tag `family` will attempt to find contacts with tags `family` and `familyS` instead of `families`.
-Therefore, the onus is still on the user to specify the spelling of the tags.
 
 ==== Specifying Exclusions
 `since v1.4`
