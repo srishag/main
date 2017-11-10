@@ -40,7 +40,7 @@ public class StringUtil {
         }
         return false;
     }
-
+    //@@author PhuaJunJie
     /**
      * Returns true if the {@code sentence} contains the {@code word}.
      *   Ignores case, but only a partial word match is required.
@@ -50,7 +50,7 @@ public class StringUtil {
      *       containsWordIgnoreCase("ABc def", "Ac") == false //not a full word match
      *       </pre>
      * @param sentence cannot be null
-     * @param word cannot be null, cannot be empty, must be a single word
+     * @param word cannot be null, cannot be empty
      */
     public static boolean containsAlphabetIgnoreCase(String sentence, String word) {
         requireNonNull(sentence);
@@ -67,7 +67,7 @@ public class StringUtil {
         }
         return false;
     }
-
+    //@@author
     /**
      * Returns a detailed message of the t, including the stack trace.
      */

@@ -1,13 +1,12 @@
+//@@author PhuaJunJie
 package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
-
 
 /**
  * Represents a selection change in the Person List Panel
  */
 public class GetRedirectUrlEvent extends BaseEvent {
-
 
     private String reDirectUrl;
 
@@ -29,3 +28,4 @@ public class GetRedirectUrlEvent extends BaseEvent {
         return reDirectUrl;
     }
 }
+

@@ -1,3 +1,4 @@
+//@@author PhuaJunJie
 package seedu.address.commons;
 
 import static org.junit.Assert.assertTrue;
@@ -25,7 +26,7 @@ public class GoogleAuthenticatorTest {
     }
 
     /**
-     * Checks if Login is authenticated. In this case it is not and null exception is thrown.
+     * Checks if user is authenticated. In this case no token is generated and null exception is thrown.
      */
     @Test
     public void execute_get_invalidToken() throws Exception {
@@ -34,7 +35,7 @@ public class GoogleAuthenticatorTest {
     }
 
     /**
-     * Checks if Login is authenticated. In this case it is not and null exception is thrown.
+     * Checks if user is authenticated. In this case no google contacts list is generated and null exception is thrown.
      */
     @Test
     public void execute_get_invalidGooglePersonList() throws Exception {

@@ -1,3 +1,4 @@
+//@@author PhuaJunJie
 package seedu.address.logic.commands;
 
 import java.io.IOException;
@@ -116,7 +117,13 @@ public class ExportCommand extends Command {
         GoogleId id = new GoogleId(createdContact.getResourceName().substring(8));
         Tag tag = new Tag("GoogleContact");
         Set<Tag> tags = new HashSet<>();
+        for (Tag existingTags : contact.getTags()) {
+            if (!existingTags.getTagName().equals("GoogleContact")) {
+                tags.add(existingTags);
+            }
+        }
         tags.add(tag);
+
 
         return new seedu.address.model.person.Person(contact.getName(), contact.getPhone(),
                 contact.getEmail(), contact.getAddress(), contact.getBirthday(),

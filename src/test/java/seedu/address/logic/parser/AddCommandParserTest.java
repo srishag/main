@@ -80,10 +80,12 @@ public class AddCommandParserTest {
                 + ADDRESS_DESC_AMY + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + FACEBOOK_ADDRESS_DESC_BOB
                 + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
 
+        //@@author srishag
         // multiple birthdays - last birthday accepted
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + BIRTHDAY_DESC_AMY + BIRTHDAY_DESC_BOB + FACEBOOK_ADDRESS_DESC_BOB
                 + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+        //@@author
 
         // multiple tags - all accepted
         Person expectedPersonMultipleTags = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
@@ -99,6 +101,7 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_optionalFieldsMissing_success() {
+        //@@author srishag
         // no birthday
         Person expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
                 .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withBirthday("")
@@ -107,8 +110,9 @@ public class AddCommandParserTest {
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + FACEBOOK_ADDRESS_DESC_AMY
                 + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+        //@@author
 
-
+        //@@author PokkaKiyo
         // no facebook address
         expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
                 .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY)
@@ -131,6 +135,8 @@ public class AddCommandParserTest {
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY + FACEBOOK_ADDRESS_DESC_AMY,
                 new AddCommand(expectedPerson));
+
+        //@@author
     }
 
     @Test

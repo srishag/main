@@ -1,3 +1,4 @@
+//@@author PhuaJunJie
 package seedu.address.logic.commands;
 
 import java.io.IOException;
@@ -67,7 +68,7 @@ public class SyncCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
-        boolean exists;
+        boolean exists = false;
 
         ObservableList<ReadOnlyPerson> personlist = model.getAddressBook().getPersonList();
         if (personlist.isEmpty()) {
@@ -76,20 +77,11 @@ public class SyncCommand extends UndoableCommand {
 
 
         for (ReadOnlyPerson addressPerson : personlist) {
-            exists = false;
             if ((googleContactsList != null)) {
                 for (Person googlePerson : googleContactsList) {
-                    if (googlePerson.getResourceName().substring(8).equals(addressPerson.getGoogleId().value)) {
-                        exists = true;
-                        try {
-                            if (!addressPerson.isSameStateAs(convertToAddress(googlePerson))) {
-                                model.updatePerson(addressPerson, convertToAddress(googlePerson));
-                                contactsSyncedCount++;
-                            }
-                        } catch (IllegalValueException | NullPointerException | PersonNotFoundException e) {
-                            errorSyncedCount++;
-                            namesNotSynced += googlePerson.getNames().get(0).getGivenName() + ", ";
-                        }
+                    exists = updateAddressBook(googlePerson, addressPerson);
+                    if (exists == true) {
+                        break;
                     }
                 }
             }
@@ -111,9 +103,31 @@ public class SyncCommand extends UndoableCommand {
     }
 
     /**
+     * First, the method runs a check to see if the addressbook contact exists in google contacts
+     * Updates the contact in addressbook with the new contact in google contact if they are found to be different
+     * Returns true if contact cant be found in google contacts
+     */
+    public boolean updateAddressBook(Person googlePerson, ReadOnlyPerson addressPerson) {
+        if (googlePerson.getResourceName().substring(8).equals(addressPerson.getGoogleId().value)) {
+            try {
+                if (!addressPerson.isSameStateAs(convertToAddress(googlePerson, addressPerson))) {
+                    model.updatePerson(addressPerson, convertToAddress(googlePerson, addressPerson));
+                    contactsSyncedCount++;
+                }
+            } catch (IllegalValueException | NullPointerException | PersonNotFoundException e) {
+                errorSyncedCount++;
+                namesNotSynced += googlePerson.getNames().get(0).getGivenName() + ", ";
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Creates a person in addressBook based on the contact in google contact
      */
-    public ReadOnlyPerson convertToAddress(Person person) throws IllegalValueException, NullPointerException {
+    public ReadOnlyPerson convertToAddress(Person person, ReadOnlyPerson addressPerson)
+            throws IllegalValueException, NullPointerException {
 
         Name name = new Name(person.getNames().get(0).getGivenName());
         Phone phone = new Phone(person.getPhoneNumbers().get(0).getValue().replace(" ", ""));
@@ -123,14 +137,14 @@ public class SyncCommand extends UndoableCommand {
         Birthday birthday = new Birthday("");
         FacebookAddress facebookAddress = new FacebookAddress("");
 
-        Tag tag = new Tag("GoogleContact");
-        Set<Tag> tags = new HashSet<>();
-        tags.add(tag);
+        Set<Tag> tags = addressPerson.getTags();
 
         return new seedu.address.model.person.Person(name, phone, email, address, birthday, facebookAddress, tags, id);
     }
+
     /**
      * Creates a new person without its previous google contact status
+     * This method is used if a person has a google contact status but cannot be found in google contacts
      */
     public ReadOnlyPerson removeGoogleContactStatus(ReadOnlyPerson contact)
             throws IllegalValueException, NullPointerException {
@@ -141,11 +155,16 @@ public class SyncCommand extends UndoableCommand {
         Address address = new Address(contact.getAddress().value);
         GoogleId id = new GoogleId("not GoogleContact");
         Set<Tag> tags = new HashSet<>();
-        Birthday birthday = new Birthday("");
-        FacebookAddress facebookAddress = new FacebookAddress("");
+        for (Tag existingTags : contact.getTags()) {
+            if (!existingTags.getTagName().equals("GoogleContact")) {
+                tags.add(existingTags);
+            }
+        }
 
-        return new seedu.address.model.person.Person(name, phone, email, address, birthday, facebookAddress, tags, id);
+        return new seedu.address.model.person.Person(name, phone, email, address,
+                contact.getBirthday(), contact.getFacebookAddress(), tags, id);
     }
+
 
     /**
      * Creates a detailed message on the status of the sync

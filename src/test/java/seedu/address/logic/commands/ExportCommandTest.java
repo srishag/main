@@ -1,3 +1,4 @@
+//@@author PhuaJunJie
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
@@ -82,7 +83,7 @@ public class ExportCommandTest {
     }
 
     /**
-     * Test for no converting a addressbook contact into a google contact
+     * Test for converting a addressbook contact into a google contact
      */
     @Test
     public void execute_updateAddressBookContactToGoogle() throws Exception {

@@ -18,6 +18,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.GetRedirectUrlEvent;
 import seedu.address.logic.commands.exceptions.GoogleAuthException;
 
+//@@author PhuaJunJie
 /**
  * This class contains methods of the google Auth Api. For authentication after login.
  */
@@ -58,15 +59,32 @@ public class GoogleAuthenticator {
      */
     public String getToken() throws GoogleAuthException {
         String token;
+        boolean indexToken;
         try {
             GetRedirectUrlEvent event = new GetRedirectUrlEvent();
             EventsCenter.getInstance().post(event);
             String url = event.getReDirectUrl();
-            token = url.substring(url.indexOf("token=") + 6, url.indexOf("&"));
+            indexToken = checkValidTokenIndex(url.indexOf("token="));
+            if (indexToken) {
+                token = url.substring(url.indexOf("token=") + 6, url.indexOf("&"));
+            } else {
+                throw new StringIndexOutOfBoundsException();
+            }
         } catch (StringIndexOutOfBoundsException | NullPointerException e) {
             throw new GoogleAuthException("Authentication Failed. Please login again.");
         }
         return token;
+    }
+
+    /**
+     * Checks if google login is valid
+     * @returns true if valid (i.e. index is not -1) or false if not valid(i.e. index is -1)
+     */
+    public boolean checkValidTokenIndex(int index) {
+        if (index == -1) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -106,5 +124,21 @@ public class GoogleAuthenticator {
         List<Person> connections = response.getConnections();
 
         return connections;
+    }
+    //@author srishag
+    /**
+     * Obtain transport from google
+     * @return transport
+     */
+    public HttpTransport getTransport() {
+        return transport;
+    }
+
+    /**
+     * Obtain JsonFactory from google
+     * @return JsonFactory
+     */
+    public JacksonFactory getJsonFactory() {
+        return jsonFactory;
     }
 }

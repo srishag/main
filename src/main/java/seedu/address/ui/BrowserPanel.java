@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
+
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.GetRedirectUrlEvent;
 import seedu.address.commons.events.ui.LoadLoginEvent;
@@ -25,8 +26,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
-    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
 
     private static final String FXML = "BrowserPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
@@ -46,11 +45,12 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-
+    //@@author PokkaKiyo
     private void loadPersonPage(ReadOnlyPerson person) {
-        loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
-                + GOOGLE_SEARCH_URL_SUFFIX);
+        logger.info("----[Accessing URL] " + person.getFacebookAddress().value);
+        loadPage(person.getFacebookAddress().value);
     }
+    //@@author
 
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
@@ -76,12 +76,13 @@ public class BrowserPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
     }
-
+    //@@author PhuaJunJie
     @Subscribe
     private void loadLoginUrl(LoadLoginEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPage(event.getAuthenticationUrl());
     }
+
     @Subscribe
     private void getRedirectUrlEvent (GetRedirectUrlEvent event) {
         logger.info((LogsCenter.getEventHandlingLogMessage(event)));

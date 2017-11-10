@@ -237,6 +237,7 @@ As long as a single word in a contact's name matches any of the keywords, that c
 [NOTE]
 Only full words will be matched, for example, finding `Han` will not match `Hans`. To search for a contact without specifying the full word, refer to `EasyFind` in the section below.
 
+// tag::EasyFind[]
 ==== EasyFind
 
 Auto updates the display when user enters an alphabet with the `find` command.
@@ -258,8 +259,10 @@ Examples:
  Returns `Alexandra`
 * `find Betsy Tim John` +
 Returns any person having starting alphabets `Betsy`, `Tim`, or `John`
+// end::EasyFind[]
 
 
+// tag::findtags[]
 === Locating persons by tag name: `findtags`
 `SINCE V1.2`
 
@@ -315,7 +318,7 @@ Searching by tag `family` will attempt to find contacts with tags `family` and `
 Therefore, the onus is still on the user to specify the spelling of the tags.
 
 ==== Specifying Exclusions
-`SINCE V1.3`
+`since v1.4`
 
 You can now specify tags to be excluded in this command, by simply adding a dash ('-') before keywords specified for exclusion.
 This feature will help you better manage your contacts.
@@ -330,10 +333,11 @@ Specifying only tags to exclude +
 Example 2:
 `findtags` #-colleagues# +
 In this case, the application will show **all** contacts who are #NOT# tagged colleagues, regardless of other tags.
+// end::findtags[]
 
-
+// tag::listtags[]
 === List tags : `listtags` +
-`coming in v1.3`
+`since v1.3`
 
 Lists all existing tags in the App +
 
@@ -342,6 +346,8 @@ Listing all tags is designed to help you choose which tags to specify when using
 
 ==== The Command
 Format: `listtags`
+
+// end::listtags[]
 
 
 === Deleting a person : `delete`
@@ -452,6 +458,38 @@ When the application is closed, command history is wiped.
 Command history is not saved on exit, therefore,
 it will only show the command history from when the application was opened.
 
+// tag::gmail[]
+=== Gmail integration : `send`
+
+You can now use Contact'em to send e-mails to your contacts using the Command Line Interface of the application. +
+
+==== The Command
+Format: `send INDEX [es/EMAIL SUBJECT] [eb/EMAIL BODY]`
+
+==== Usage Examples
+* `send 1 es/Meeting for next Monday. eb/Looking forward to next Monday.` +
+Sends an e-mail using the e-mail account you used to login to the contact at index 1 with the subject `Meeting for next Monday.`
+and with the body `Looking forward to next Monday.`
+* `send 8 es/Merry Christmas! eb/Wishing you and your family a very Merry Christmas!` +
+Sends an e-mail using the e-mail account you used to login to the contact at index 8 with the subject `Merry Christmas!`
+and with the body `Wishing you and your family a very Merry Christmas!`
+
+==== More Information
+You must login to a specific e-mail account before you can start using this feature.
+
+==== Common Problems
+* Unable to send an e-mail after using other commands except `login` +
+Ensure that you only `send` command is used once you login to your Google Account. +
+* Unable to send e-mail despite providing the correct format for the command +
+Ensure that your desktop is connected to the Internet.
+* Unable to send e-mails to a particular account
+If a contact has several e-mails, it is likely that the e-mail you want to send to is not present in Contact'em.
+Please ensure you have entered the necessary details for each contact.
+
+[NOTE]
+`Index` is the #currently displayed# number corresponding to the contact, which may differ if the current displayed list has been filtered.
+// end::gmail[]
+
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
@@ -516,6 +554,38 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::google[]
+=== Google integration
+
+The Address book is now integrated with the ability to import/ export / sync contacts from google contacts.
+Being able to access contacts from your mobile phones is the quickest way to get things done. Export your contact directly to your android phones through google contacts to have your contacts on the go. Simply synchronize Contact’em whenever you make changes to your Google Contacts and your contacts will be updated.
+
+Enter `login` to link Contact’em with Google Contacts. When the login page is loaded, simply key in your credentials and you will be redirected to google contacts.
+
+Enter `import` to have all your Google Contacts transferred to Contact’em.
+
+image::importusage.png[width="800"]
+_Figure 5.14.1 : Example of usage of Sync command_
+
+Enter `sync` to have your contacts in Google Contacts updated to Contact’em. Contacts in Google Contacts takes higher precedence and when sync is used, contacts in Contact’em will be updated to the contacts in Google Contacts.
+
+Use `export` to have all your contacts in Contact’em transferred to Google Contacts.
+
+image::exportusage.png[width="800"]
+_Figure 5.14.2 : Example of usage of Export command_
+
+==== Usage Notes
+When using `import` / `export` / `sync` command, your browser must have google contacts page loaded
+    If you have switched the page, you will have to login again to use the commands.
+
+If a google contact fails to import or sync, please check the contact to make sure that the parameters are valid.
+    Please check the reference guide on the validity of the parameters
+
+All google contacts imported are tagged with a ‘GoogleContact’ tag to indicate that they are linked to Google Contacts.
+    Contacts deleted in Google Contacts will not be deleted in Contact’em when synced. It will simply lose its `GoogleContact` tag.
+
+// end::google[]
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -545,11 +615,6 @@ Alternatively, you can exit by clicking on the RED X at the top right of the App
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
-
-=== Google integration
-
-The Address book is now integrated with the ability to import/ export / sync contacts from google contacts.
-
 
 == Transferring of Data to Another Device
 Do you wish to transfer the data stored in Contact'em on one device to another?

@@ -32,7 +32,9 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
+        //@@author srishag
         descriptor.setBirthday(person.getBirthday());
+        //@@author
         descriptor.setFacebookAddress(person.getFacebookAddress());
         descriptor.setTags(person.getTags());
     }
@@ -85,6 +87,7 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    //@@author srishag
     /**
      * Sets the {@code Birthday} of the {@code EditPersonDescriptor} that we are building.
      */
@@ -96,9 +99,11 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
+    //@@author
 
+    //@@author PokkaKiyo
     /**
-     * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code facebookAddress} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withFacebookAddress(String facebookAddress) {
         try {
@@ -108,6 +113,7 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
+    //@@author
 
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
