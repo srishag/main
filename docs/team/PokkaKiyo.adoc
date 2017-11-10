@@ -180,10 +180,11 @@ There must be at least one parameter specified, but the order of parameters ente
 ==== Brief Overview of Command Procedure
 
 The activity diagram below helps illustrate the process of the command, from user input to execution and updating the Model.
-As seen from the diagram above, the entire command consists of 4 main steps:
 
 image::findtags-activitydiagram.png[width="200"]
+_Figure 3.3.2.1 : Brief Overview of Command Procedure_
 
+As seen from _Figure 3.3.2.1_ above, the entire command consists of 4 main steps:
 
 1) The parameters are parsed and deciphered. +
 2) Using the deciphered information from step 1, the Predicate and Command are constructed. +
@@ -202,6 +203,8 @@ When this command is invoked by the user, this command parser will be constructe
 The command parser first checks if the arguments are valid. If the arguments are empty, a **ParseException** will be thrown for invalid arguments. If the arguments are valid (non-empty), they are split into individual keywords and stored in a String array tagKeywords.
 
 image::StringToTagKeywords.png[width="800"]
+_Figure 3.3.3.1 : Splitting Up Keywords_
+
 
 As the diagram above shows, the keywords are split by the spaces in between each word, and each of these words are stored in a String array **tagKeywords**.
 
