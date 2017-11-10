@@ -265,6 +265,11 @@ This runs the test method of the _Predicate_, which determines the appropriate c
 
 Finally, this command returns a **CommandResult**, which includes the number of contacts being displayed. This value is displayed on the UI command box for the user’s reference.
 
+image::findtagssequencediagram.png[width="800"]
+_Figure 3.3.5.1 : Findtags Sequence Diagram_
+
+Figure 3.3.5.1 above shows the overall sequence diagram and how it works.
+
 ==== Addendum
 
 **Implementation of getImprovedList** +
