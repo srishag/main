@@ -214,24 +214,24 @@ After obtaining the improved list, the parser constructs the command _Predicate_
 
 ==== Implementation of Predicate
 
-The _Predicate_ associated with this functionality is called **PersonContainsTagsPredicate**, found in **seedu.address.model.person**. This _Predicate_ is constructed with the keywords generated in the command parser (details in the above section). After this _Predicate_ is constructed, it is used in the constructor of a **FindPersonsWithTagsCommand** and becomes that command’s attribute.
+The _Predicate_ associated with this functionality is called **PersonContainsTagsPredicate**, found in **seedu.address.model.person**.
+
+This _Predicate_ has three attributes, _keywords_, which are generated in the _parser_, and 2 lists, _keywordsToInclude_ and _keywordsToExclude_. The 2 lists are generated from _keywords_.
+
+After this _Predicate_ is constructed, it is used in the constructor of a **FindPersonsWithTagsCommand** and becomes that command’s attribute.
 
 When the command is executed, this _Predicate_ will be called for every contact in the address book to determine if a contact should be filtered or not based on the user’s inputs.
 
 To do so, the **test** method of this Predicate is used, which returns a Boolean value: true if this contact should be returned, and false otherwise.
 
-Within this test method, there are 3 steps which occur:
+Within this test method, the following steps occur, for each contact in the currently stored in the application:
 
 image::findtags-pathdiagram.png[width="800"]
-
-
-The diagram above gives a brief overview of the three steps executed in the _Predicate_.
+_Figure 3.3.4.1 : Findtags Predicate Activity Diagram_
 
 Firstly, all of the person’s tags, if any, are appended to a String **allTagNames**. For example, if a contact has tags "friends" and "colleagues", the resulting String is "friends colleagues".
 
-Secondly, the list of keywords, now an attribute of the _Predicate_, is split into 2 lists, **keywordsToInclude** and **keywordsToExclude**. Note that it is possible for either list to be empty.
-
-Last but not least, the comparison is made between **allTagNames** and the 2 lists generated in the second part, to return the appropriate Boolean value. Below is the code snippet used in the comparison. Note that this is not the only way to implement this comparison.
+Then, the comparison is made between **allTagNames** and the 2 lists generated in constructor, to return the appropriate Boolean value. Below is the code snippet used in the comparison. Note that this is not the only way to implement this comparison.
 
 **Code Snippet:**
 [source,java]
@@ -290,7 +290,7 @@ Nevertheless, this improvement is meant to increase user enjoyment and convenien
 **Cons:** May impact performance. +
 
 **Alternative 3:** Implement a Look-up Table. +
-**Pros:** Can account for more words than alternative 1, and less impactful on performance and storage than alternative 2. +
+**Pros:** Can account for more words than alternative 1, and less impact on performance and storage than alternative 2. +
 **Cons:** Might be difficult to implement and may not be as comprehensive as alternative 2. +
 
 ---
