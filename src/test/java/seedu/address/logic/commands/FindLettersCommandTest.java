@@ -26,9 +26,9 @@ import seedu.address.model.person.NameContainsAlphabetsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
- * Contains integration tests (interaction with the Model) for {@code FindAlphabetCommand}.
+ * Contains integration tests (interaction with the Model) for {@code FindLettersCommand}.
  */
-public class FindAlphabetCommandTest {
+public class FindLettersCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
@@ -38,14 +38,14 @@ public class FindAlphabetCommandTest {
         NameContainsAlphabetsPredicate secondPredicate =
                 new NameContainsAlphabetsPredicate(Collections.singletonList("second"));
 
-        FindAlphabetCommand findFirstCommand = new FindAlphabetCommand(firstPredicate);
-        FindAlphabetCommand findSecondCommand = new FindAlphabetCommand(secondPredicate);
+        FindLettersCommand findFirstCommand = new FindLettersCommand(firstPredicate);
+        FindLettersCommand findSecondCommand = new FindLettersCommand(secondPredicate);
 
         // same object -> returns true
         assertTrue(findFirstCommand.equals(findFirstCommand));
 
         // same values -> returns true
-        FindAlphabetCommand findFirstCommandCopy = new FindAlphabetCommand(firstPredicate);
+        FindLettersCommand findFirstCommandCopy = new FindLettersCommand(firstPredicate);
         assertTrue(findFirstCommand.equals(findFirstCommandCopy));
 
         // different types -> returns false
@@ -61,30 +61,30 @@ public class FindAlphabetCommandTest {
     @Test
     public void executeZeroAlphabetsNoPersonFound() {
         String expectedMessage = String.format(MESSAGE_NO_ALPHABET_LISTED_OVERVIEW);
-        FindAlphabetCommand command = prepareCommand(" ");
+        FindLettersCommand command = prepareCommand(" ");
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
     //Test when user inputs partial names
     @Test
     public void executeMultipleAlphabetsMultiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_ALPHABET_LISTED_OVERVIEW, 2);
-        FindAlphabetCommand command = prepareCommand("Ku");
+        FindLettersCommand command = prepareCommand("Ku");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, FIONA));
     }
     //Test when user inputs full names
     @Test
     public void executeMultipleKeywordsMultiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_ALPHABET_LISTED_OVERVIEW, 3);
-        FindAlphabetCommand command = prepareCommand("Kurz Elle Kunz");
+        FindLettersCommand command = prepareCommand("Kurz Elle Kunz");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
 
     /**
      * Parses {@code userInput} into a {@code FindCommand}.
      */
-    private FindAlphabetCommand prepareCommand(String userInput) {
-        FindAlphabetCommand command =
-                new FindAlphabetCommand(new NameContainsAlphabetsPredicate(Arrays.asList(userInput.split("\\s+"))));
+    private FindLettersCommand prepareCommand(String userInput) {
+        FindLettersCommand command =
+                new FindLettersCommand(new NameContainsAlphabetsPredicate(Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -94,7 +94,7 @@ public class FindAlphabetCommandTest {
      *     - the command feedback is equal to {@code expectedMessage}<br>
      *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
      */
-    private void assertCommandSuccess(FindAlphabetCommand command, String expectedMessage,
+    private void assertCommandSuccess(FindLettersCommand command, String expectedMessage,
                                       List<ReadOnlyPerson> expectedList) {
         CommandResult commandResult = command.execute();
 

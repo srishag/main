@@ -14,6 +14,7 @@ import org.junit.rules.ExpectedException;
 
 import com.google.api.services.people.v1.model.Person;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -57,7 +58,7 @@ public class SyncCommandTest {
 
         Model modelStub = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         modelStub.addPerson(TypicalGoogleContactsList.FREDDYSYNADDRESSBOOK);
-        String expectedMessage = "1 contact/s Synced!     0 contact/s failed to Sync!";
+        String expectedMessage = String.format(Messages.MESSAGE_SYNC_CONTACT, 1, 0);
 
         assertCommandSuccess(command, expectedMessage, modelStub);
     }
@@ -72,7 +73,7 @@ public class SyncCommandTest {
         googleList.add(TypicalGoogleContactsList.MAYGOOGLE);
         SyncCommand command = prepareCommand(googleList, model);
 
-        String expectedMessage = "0 contact/s Synced!     1 contact/s failed to Sync!" + "\n"
+        String expectedMessage = String.format(Messages.MESSAGE_SYNC_CONTACT, 0, 1) + "\n"
                 + "Please check the format of the following google contacts : May";
 
         assertCommandFailure(command, expectedMessage, model);
@@ -87,7 +88,7 @@ public class SyncCommandTest {
         googleList.add(TypicalGoogleContactsList.FREDDYGOOGLE);
         SyncCommand command = prepareCommand(googleList, model);
 
-        String expectedMessage = "0 contact/s Synced!     0 contact/s failed to Sync!";
+        String expectedMessage = String.format(Messages.MESSAGE_SYNC_CONTACT, 0, 0);
         assertCommandFailure(command, expectedMessage, model);
     }
 
@@ -100,10 +101,9 @@ public class SyncCommandTest {
         model.addPerson(TypicalGoogleContactsList.FREEDYADDRESSBOOK);
         SyncCommand command = prepareCommand(googleList, model);
 
-
-        String expectedMessage = "1 contact/s Synced!     0 contact/s failed to Sync!";
         Model modelStub = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         modelStub.addPerson(TypicalGoogleContactsList.FREEDYNOTGOOGLEADDRESSBOOK);
+        String expectedMessage = String.format(Messages.MESSAGE_SYNC_CONTACT, 1, 0);
 
         assertCommandFailure(command, expectedMessage, modelStub);
     }

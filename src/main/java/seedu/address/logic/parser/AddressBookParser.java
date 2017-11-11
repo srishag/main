@@ -16,7 +16,7 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditTaskCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.ExportCommand;
-import seedu.address.logic.commands.FindAlphabetCommand;
+import seedu.address.logic.commands.FindLettersCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindPersonsWithTagsCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -158,8 +158,8 @@ public class AddressBookParser {
         case SyncCommand.COMMAND_WORD:
             return new SyncCommand();
 
-        case FindAlphabetCommand.COMMAND_WORD:
-            return new FindAlphabetCommandParser().parse(arguments);
+        case FindLettersCommand.COMMAND_WORD:
+            return new FindLettersCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

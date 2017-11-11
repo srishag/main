@@ -39,12 +39,6 @@ public class ImportCommand extends UndoableCommand {
 
     private List<Person> googleContactsList;
 
-
-    private String commandMessage = "";
-    private String namesNotImported = "";
-    private int contactsImportedCount = 0;
-    private int errorImportsCount = 0;
-
     /**
      * Constructor for ImportCommand (Gets the Google Contact List after successful authentication)
      */
@@ -69,6 +63,11 @@ public class ImportCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
+        String commandMessage;
+        String namesNotImported = "";
+        int contactsImportedCount = 0;
+        int errorImportsCount = 0;
+
         List<ReadOnlyPerson> addressBookList = model.getAddressBook().getPersonList();
 
         if (this.googleContactsList == null) {
@@ -88,7 +87,7 @@ public class ImportCommand extends UndoableCommand {
         }
 
         commandMessage = setCommandMessage(namesNotImported, contactsImportedCount, errorImportsCount,
-                googleContactsList.size());
+                googleContactsList.size(), namesNotImported);
         return new CommandResult(commandMessage);
     }
 
@@ -126,16 +125,17 @@ public class ImportCommand extends UndoableCommand {
     /**
      * Creates a detailed message on the status of the import
      */
-    public String setCommandMessage(String notImported, int contactsImported, int errorImports, int size) {
+    public String setCommandMessage(String notImported, int contactsImported, int errorImports, int size,
+                                    String namesNotImported) {
         int existedContacts = size - contactsImported - errorImports;
         String commandMessage;
         commandMessage = String.format(Messages.MESSAGE_IMPORT_CONTACT, contactsImported,
                 size - contactsImported) + "\n";
 
         if (size > contactsImported) {
-            commandMessage += "Contacts already existed : " + String.valueOf(existedContacts)
-                    + "     Contacts not in the correct format : " + String.valueOf(errorImports) + "\n";
+            commandMessage += String.format(Messages.MESSAGE_IMPORT_STATUS, existedContacts, errorImports) + "\n";
         }
+
         if (errorImports > 0) {
             commandMessage += "Please check the format of the following google contacts : "
                     + notImported.substring(0, namesNotImported.length() - 2);

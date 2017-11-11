@@ -8,7 +8,7 @@ import seedu.address.model.person.NameContainsAlphabetsPredicate;
  * This function works without having the user to hit the "Enter Key"
  * Keyword matching is case insensitive.
  */
-public class FindAlphabetCommand extends Command {
+public class FindLettersCommand extends Command {
 
     public static final String COMMAND_WORD = "Sfind";
 
@@ -18,7 +18,7 @@ public class FindAlphabetCommand extends Command {
 
     private final NameContainsAlphabetsPredicate predicate;
 
-    public FindAlphabetCommand(NameContainsAlphabetsPredicate predicate) {
+    public FindLettersCommand(NameContainsAlphabetsPredicate predicate) {
         this.predicate = predicate;
     }
 
@@ -30,7 +30,7 @@ public class FindAlphabetCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof FindAlphabetCommand // instanceof handles nulls
-                && this.predicate.equals(((FindAlphabetCommand) other).predicate)); // state check
+                || (other instanceof FindLettersCommand // instanceof handles nulls
+                && this.predicate.equals(((FindLettersCommand) other).predicate)); // state check
     }
 }
