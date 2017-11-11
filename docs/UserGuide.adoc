@@ -279,10 +279,10 @@ Returns any contact tagged `friends`.
 Returns any person having any of the tags `friends`, `colleagues`, and/or `schoolmates`.
 
 ==== Demonstration
-image::findtags-before.png[width="200"]
+image::findtags-before.PNG[width="200"]
 _Figure 5.6.3a : Before entering command_
 
-image::findtags-enter-command.png[width="200"]
+image::findtags-enter-command.PNG[width="200"]
 _Figure 5.6.3b : Entering command to find all contacted tagged as friends_
 
 image::findtags-after.png[width="200"]
@@ -315,7 +315,6 @@ For example: +
 
 However, this may not always be correct for words where plural and singular differs not only by a single letter 's'.
 Searching by tag `family` will attempt to find contacts with tags `family` and `familyS` instead of `families`.
-Therefore, the onus is still on the user to specify the spelling of the tags.
 
 ==== Specifying Exclusions
 `since v1.4`
