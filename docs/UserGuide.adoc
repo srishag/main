@@ -240,25 +240,32 @@ Only full words will be matched, for example, finding `Han` will not match `Hans
 // tag::EasyFind[]
 ==== EasyFind
 
-Auto updates the display when user enters an alphabet with the `find` command.
+The easyfind feature improves on the find feature. Contact'em now auto updates the display whenever user inputs a letter with the `find` command word.
 Finds persons whose names contain any of the letters in the command box constantly having the user to input `enter`.
 
-****
-* The search will be case insensitibe. e.g. `hans` will match `Hans`
-* The alphabetic sequence must start with the name of the contacts. e.g. `han` will match `handsome` but not `irhans`
-* Different alphabetic sequences will be separated by a `space`.
-* Persons matching at least one of the alphabetic sequence seperated by spaces will be returned. e.g. `Hans Ma` will return `Hans Gruber`, `May Tan`
-* When the search results displays `no results`, the particular alphabetic sequence will not display any contacts even when the user continues inputing new characters without spaces.
-****
-
-Examples:
-
+==== Examples
  * `find Alex` +
  Returns `Alex` and `Alexandra`
  * `find Alexan` +
  Returns `Alexandra`
-* `find Betsy Tim John` +
+* `find Bet Ti Jo` +
 Returns any person having starting alphabets `Betsy`, `Tim`, or `John`
+
+image::EasyFind example.png[width="200"]
+_Figure 5.5.1 : Example of usage of EasyFind feature_
+
+[NOTE]
+Letters are case-insensitive.
+
+[NOTE]
+Different letter sequences will be separated by a space .
+
+[NOTE]
+As long as a letter in a contact’s name matches any of the keywords, that contact will be displayed.
+
+[NOTE]
+When the search results displays no results , the letters will not match any contacts even when the user continues inputting new characters.
+
 // end::EasyFind[]
 
 
@@ -458,6 +465,39 @@ When the application is closed, command history is wiped.
 Command history is not saved on exit, therefore,
 it will only show the command history from when the application was opened.
 
+// tag::google[]
+=== Google Contacts integration
+
+The Address book is now integrated with the ability to import/ export / sync contacts from google contacts.
+Being able to access contacts from your mobile phones is the quickest way to get things done. Export your contact directly to your android phones through google contacts to have your contacts on the go. Simply synchronize Contact’em whenever you make changes to your Google Contacts and your contacts will be updated.
+
+Enter `login` to link Contact’em with Google Contacts / Gmail. When the login page is loaded, simply key in your credentials and you will be redirected to google contacts.
+
+Enter `import` to have all your Google Contacts transferred to Contact’em.
+
+image::importusage.png[width="800"]
+_Figure 5.14.1 : Example of usage of Sync command_
+
+Use `export` to have all your contacts in Contact’em transferred to Google Contacts.
+
+image::exportusage.png[width="800"]
+_Figure 5.14.2 : Example of usage of Export command_
+
+Enter `sync` to have your contacts in Google Contacts updated to Contact’em. Contacts in Google Contacts takes higher precedence and when sync is used, contacts in Contact’em will be updated to the contacts in Google Contacts.
+
+
+==== Usage Notes
+When using `import` / `export` / `sync` command, your browser must have google contacts page loaded
+    If you have switched the page, you will have to login again to use the commands.
+
+If a google contact fails to import or sync, please check the contact to make sure that the parameters are valid.
+    Please check the reference guide on the validity of the parameters
+
+All google contacts imported are tagged with a ‘GoogleContact’ tag to indicate that they are linked to Google Contacts.
+    Contacts deleted in Google Contacts will not be deleted in Contact’em when synced. It will simply lose its `GoogleContact` tag.
+
+// end::google[]
+
 // tag::gmail[]
 === Gmail integration : `send`
 
@@ -553,38 +593,6 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `delete 1` command) +
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
-
-// tag::google[]
-=== Google integration
-
-The Address book is now integrated with the ability to import/ export / sync contacts from google contacts.
-Being able to access contacts from your mobile phones is the quickest way to get things done. Export your contact directly to your android phones through google contacts to have your contacts on the go. Simply synchronize Contact’em whenever you make changes to your Google Contacts and your contacts will be updated.
-
-Enter `login` to link Contact’em with Google Contacts. When the login page is loaded, simply key in your credentials and you will be redirected to google contacts.
-
-Enter `import` to have all your Google Contacts transferred to Contact’em.
-
-image::importusage.png[width="800"]
-_Figure 5.14.1 : Example of usage of Sync command_
-
-Enter `sync` to have your contacts in Google Contacts updated to Contact’em. Contacts in Google Contacts takes higher precedence and when sync is used, contacts in Contact’em will be updated to the contacts in Google Contacts.
-
-Use `export` to have all your contacts in Contact’em transferred to Google Contacts.
-
-image::exportusage.png[width="800"]
-_Figure 5.14.2 : Example of usage of Export command_
-
-==== Usage Notes
-When using `import` / `export` / `sync` command, your browser must have google contacts page loaded
-    If you have switched the page, you will have to login again to use the commands.
-
-If a google contact fails to import or sync, please check the contact to make sure that the parameters are valid.
-    Please check the reference guide on the validity of the parameters
-
-All google contacts imported are tagged with a ‘GoogleContact’ tag to indicate that they are linked to Google Contacts.
-    Contacts deleted in Google Contacts will not be deleted in Contact’em when synced. It will simply lose its `GoogleContact` tag.
-
-// end::google[]
 
 === Clearing all entries : `clear`
 
