@@ -887,20 +887,33 @@ image::UndoRedoActivityDiagram.png[width="200"]
 === Send email mechanism
 
 The send email mechanism is facilitated by a specific Google account, which the user needs to login to before he can begin using the application to send e-mails.
+He can then use the command-line interface of the application to add the recipient, subject and body of the e-mail.
 
 E-mails can be sent to the e-mail address attached to any contact in the address book.
 
-A snippet of how e-mails are sent is shown below:
+Sending of e-mails is implemented this way:
 [source,java]
 ----
-try {
-    MimeMessage emailToBeSent = ModelManager.createEmail(personToSendEmail,
-            EMAIL_SENDER, emailSubject, emailBody);
-    Gmail gmailService = new GetGmailService().getGmailService();
-    message = ModelManager.sendMessage(gmailService, EMAIL_SENDER, emailToBeSent);
+public CommandResult execute() throws CommandException, GoogleAuthException {
+    requireNonNull(model);
+    List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+    if (targetIndex.getZeroBased() >= lastShownList.size()) {
+        throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    String personToSendEmail = lastShownList.get(targetIndex.getZeroBased()).getEmail().toString();
+
+    try {
+        MimeMessage emailToBeSent = ModelManager.createEmail(personToSendEmail,
+                EMAIL_SENDER, emailSubject, emailBody);
+        Gmail gmailService = new GetGmailService().getGmailService();
+        message = ModelManager.sendMessage(gmailService, EMAIL_SENDER, emailToBeSent);
     } catch (MessagingException | IOException E) {
         assert false;
     }
+
+    return new CommandResult(String.format(MESSAGE_SUCCESS));
 }
 ----
 
