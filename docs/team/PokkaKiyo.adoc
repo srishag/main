@@ -215,7 +215,7 @@ As the diagram above shows, the keywords are split by the spaces in between each
 The array of keywords is then passed into the parser’s private method, **getImprovedList()**, to retrieve a more comprehensive list of tags in addition to the original list of keywords.
 
 [NOTE]
-The details of **getImprovedList** is not crucially important to the functionality of the parser, and is thus omitted here, but included in the addendum in Section 3.3.6.
+The details of **getImprovedList** are not crucially important to the functionality of the parser, and is thus omitted here, but included in the addendum in Section 3.3.6.
 
 After obtaining the improved list, the parser constructs the command _Predicate_ (details in Section 3.3.4), and the _Command_ itself (details in the Section 3.3.5). Then it returns the _Command_ to **AddressbookParser** and then the **LogicManager** for execution.
 
@@ -272,7 +272,7 @@ Finally, this command returns a **CommandResult**, which includes the number of 
 image::FindContactsByTagsSequenceDiagram.png[width="800"]
 _Figure 3.3.5.1 : Findtags Sequence Diagram_
 
-Figure 3.3.5.1 above shows the overall sequence diagram and a brief summary of how it works.
+Last but not least, Figure 3.3.5.1 above shows the overall sequence diagram and a final summary of how it works.
 
 ==== Addendum
 
