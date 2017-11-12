@@ -153,7 +153,7 @@ _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `TaskListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -195,7 +195,7 @@ The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
-* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` and `ObservableList<ReadOnlyTask>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 === Storage component
@@ -882,6 +882,76 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+// tag::tasks[]
+=== Task class mechanism
+
+The `Task` class, which is located inside `Model`, is implemented with similar logic as `Person` class. We have introduced three commands that modifies the address book: `addt`, `editt` and `deletet`, which extends `UndoableCommand`.
+A `Task` consist of three sub-components: `Header`, `Desc` and `Deadline`. Commands such as `undo` and `redo` can be used to alter events in the list as they deal with code that directly modifies the address book.
+
+The `TaskPanel` is incorporated into the address book `MainWindow` to display all the tasks inside the internal list using `ObservableList<ReadOnlyTask>`. This process will be explained later on under the section `Task card`.
+
+==== Task methods
+As mentioned earlier, the `Task` class contains three main methods: `addt`, `editt` and `deletet`.
+The execution flow is similar for all three methods on a higher level. We can demonstrate how different levels of components communicate with one another by referring to an example of `addt` command in the following sequence diagram:
+
+//image::AddEventDiagram.PNG[width="800"]
+//_Figure 4.2.1: AddEvent Sequence Diagram_
+
+==== Exceptions
+When the user input a task command with its parameters, the validity of the command word is checked inside the `AddressBookParser`. Next, the presence of the parameter prefixes is checked inside `AddTaskCommandParser`.
+An appropriate `ParseException` will be thrown if the command word or prefixes are incorrect.
+
+Before modifying the list of tasks inside the address book, the system may throw exceptions due to some invalid parameters. Here are the possible exceptions:
+
+* `TaskNotFoundException`: This exception can be thrown by `editt` and `deletet` command when the an invalid index for a task is provided by the user. The index needs to be within the size of the task list at the current state of the address book.
+* `DuplicateTaskException`: This exception can be thrown by `addt` and `editt` command. The system will first create an `Task` object with the input parameters, compare the object to all tasks residing in the task list and throw this exception if there is a duplicate found.
+
+[source,java]
+----
+public static boolean isValidDeadline(String test) {
+    if (test.matches(DEADLINE_VALIDATION_REGEX)) {
+        try {
+            DateFormat df = new SimpleDateFormat(DATE_FORMAT);
+            df.setLenient(false);
+            df.parse(test);
+            return true;
+        } catch (ParseException pe) {
+            return false;
+        }
+    } else if (test.matches("")) {
+        return true;
+    }
+    return false;
+}
+----
+
+==== Task card
+The `TaskCard` class extends `UiPart<Region>` to represent a distinct part of the UI. The object properties of every task is assigned to a label held by an `TaskCard`. The graphic scene is then constructed with the appropriate `FXML` files created to support the display of all tasks.
+
+===== Design implementation
+When the user starts the `MainApp`, the system calls the `UiManager` to create a new `MainWindow` and fills it with `TaskListPanel` and other components. The displayed events are created by `UniqueTaskList` and the binding of individual UI elements to the `TaskCard` ensures that any changes to the parameter will be displayed in the `TaskListPanel`.
+The sequence diagram below illustrates the interaction between the `TaskCard` and the `UiManager`:
+
+//image::EventCardDiagram.PNG[width="800"]
+//_Figure 4.2.2: EventCard Interaction Sequence Diagram_
+
+==== Design Considerations
+**Aspect(future enhancement):** How to implement adding/tagging of contacts into a `Task` using a `Person` list parameter +
+
+**Chosen Implementation:** +
+Add by the index of contact shown in the `PersonListPanel`. +
+**Pros:** +
+The system only has to check for validity of index which leads to increased performance. +
+**Cons:** +
+This requires the user to refer to the `PersonListPanel` before executing command to add contact into task's `Person` list. +
+
+**Alternative:** Add by the name of contact in the `Person` list. +
+**Pros:** +
+Easier for users to add using names, as they do not need to refer to the `Person` list. +
+**Cons:** +
+System has to check through the list to check if the contact's name exist in the current address book, which can be more difficult if there are more than one contacts with the same name.
+// end::tasks[]
 
 // tag::gmail[]
 === Send email mechanism
