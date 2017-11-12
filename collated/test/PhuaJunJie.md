@@ -581,7 +581,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.FindAlphabetCommand;
+import seedu.address.logic.commands.FindLettersCommand;
 import seedu.address.model.person.NameContainsAlphabetsPredicate;
 
 public class FindAlphabetCommandParserTest {
