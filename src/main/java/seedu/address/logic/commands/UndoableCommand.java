@@ -35,7 +35,9 @@ public abstract class UndoableCommand extends Command {
         requireAllNonNull(model, previousAddressBook);
         model.resetData(previousAddressBook);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        //@@author srishag
         model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+        //@@author
     }
 
     /**
@@ -51,7 +53,9 @@ public abstract class UndoableCommand extends Command {
                     + "it should not fail now");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        //@@author srishag
         model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+        //@@author
     }
 
     @Override

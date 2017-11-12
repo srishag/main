@@ -1,3 +1,4 @@
+//@@author srishag
 package seedu.address.model;
 
 import org.junit.Rule;

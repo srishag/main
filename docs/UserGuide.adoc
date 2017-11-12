@@ -237,6 +237,7 @@ As long as a single word in a contact's name matches any of the keywords, that c
 [NOTE]
 Only full words will be matched, for example, finding `Han` will not match `Hans`. To search for a contact without specifying the full word, refer to `EasyFind` in the section below.
 
+// tag::EasyFind[]
 ==== EasyFind
 
 Auto updates the display when user enters an alphabet with the `find` command.
@@ -258,6 +259,8 @@ Examples:
  Returns `Alexandra`
 * `find Betsy Tim John` +
 Returns any person having starting alphabets `Betsy`, `Tim`, or `John`
+// end::EasyFind[]
+
 
 // tag::findtags[]
 === Locating persons by tag name: `findtags`
@@ -276,10 +279,10 @@ Returns any contact tagged `friends`.
 Returns any person having any of the tags `friends`, `colleagues`, and/or `schoolmates`.
 
 ==== Demonstration
-image::findtags-before.png[width="200"]
+image::findtags-before.PNG[width="200"]
 _Figure 5.6.3a : Before entering command_
 
-image::findtags-enter-command.png[width="200"]
+image::findtags-enter-command.PNG[width="200"]
 _Figure 5.6.3b : Entering command to find all contacted tagged as friends_
 
 image::findtags-after.png[width="200"]
@@ -312,7 +315,6 @@ For example: +
 
 However, this may not always be correct for words where plural and singular differs not only by a single letter 's'.
 Searching by tag `family` will attempt to find contacts with tags `family` and `familyS` instead of `families`.
-Therefore, the onus is still on the user to specify the spelling of the tags.
 
 ==== Specifying Exclusions
 `since v1.4`
@@ -485,7 +487,7 @@ Please ensure you have entered the necessary details for each contact.
 
 [NOTE]
 `Index` is the #currently displayed# number corresponding to the contact, which may differ if the current displayed list has been filtered.
-
+// end::gmail[]
 
 // tag::undoredo[]
 === Undoing previous command : `undo`

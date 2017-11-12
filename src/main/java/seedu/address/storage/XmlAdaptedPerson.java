@@ -32,8 +32,10 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
+    //@@author srishag
     @XmlElement(required = true)
     private String birthday;
+    //@@author
     @XmlElement(required = true)
     private String facebookAddress;
 
@@ -60,7 +62,9 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        //@@author srishag
         birthday = source.getBirthday().value;
+        //@@author
         facebookAddress = source.getFacebookAddress().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
@@ -84,7 +88,9 @@ public class XmlAdaptedPerson {
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
+        //@@author srishag
         final Birthday birthday = new Birthday(this.birthday);
+        //@@author
         final FacebookAddress facebookAddress = new FacebookAddress(this.facebookAddress);
         final Set<Tag> tags = new HashSet<>(personTags);
         final GoogleId id = new GoogleId(this.id);

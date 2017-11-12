@@ -41,6 +41,7 @@ public class SampleDataTest extends AddressBookGuiTest {
         }
     }
 
+    //@@author srishag
     @Test
     public void addressBook_dataFileDoesNotExist_loadSampleData() {
         Person[] expectedPersonList = SampleDataUtil.getSamplePersons();

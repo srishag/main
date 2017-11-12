@@ -1,3 +1,4 @@
+//@@author srishag
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
@@ -8,11 +9,10 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysTask;
 
 import org.junit.Test;
 
+import guitests.guihandles.TaskCardHandle;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
 import seedu.address.testutil.TaskBuilder;
-
-import guitests.guihandles.TaskCardHandle;
 
 public class TaskCardTest extends GuiUnitTest {
 

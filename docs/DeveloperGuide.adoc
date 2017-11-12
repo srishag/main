@@ -217,7 +217,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 This section describes some noteworthy details on how certain features are implemented.
 
-// tag::Google Implementation[]
+// tag::googleimplementation[]
 === Google Implementation
 
 Contact’em now incorporates and integrates Google Contacts and Gmail which will enhance its usability. Firstly,
@@ -367,7 +367,7 @@ A message detailing the result of the command will be displayed to inform the us
 **Alternative 2:** Contact’em takes higher precedence. Contacts updated in Contact’em will be synced to Google contacts. +
 **Pros:** This is better for user who uses Contact’em  more often than Google contacts. For some, the contacts in Google contacts might just be an on-the-go reference and most updating is done within Contact’em. +
 **Cons:** Will not be able to update contacts if they are away from the computer.
-
+// end::googleimplementation[]
 
 
 // tag::EasyFind[]
@@ -487,7 +487,7 @@ There must be at least one parameter specified, but the order of parameters ente
 The activity diagram below helps illustrate the process of the command, from user input to execution and updating the Model.
 As seen from the diagram above, the entire command consists of 4 main steps:
 
-image::activity diagram findtags.png[width="200"]
+image::findtags-activitydiagram.png[width="200"]
 
 
 1) The parameters are parsed and deciphered. +
@@ -528,7 +528,7 @@ To do so, the test method of this Predicate is used, which returns a Boolean val
 
 Within this test method, there are 3 steps which occur:
 
-image::path diagram findtags.png[width="800"]
+image::findtags-pathdiagram.png[width="800"]
 
 
 The diagram above gives a brief overview of the three steps executed in the Predicate.
@@ -607,6 +607,59 @@ Nevertheless, this improvement is meant to increase user enjoyment and convenien
 **Cons:** More difficult to implement, and may create many tags that are never used because the keywords and expanded to improve user convenience (singular vs plural tag names). +
 
 // end::findbytags[]
+
+// tag::birthday[]
+
+=== Birthdays
+
+Users are able to store birthdays of their contacts by inputting in the format of DDMMYYYY when adding a person, using the prefix `b/`.
+
+In general, the ability to store a person’s birthday was implemented by adding it to the component of `Person`.
+
+=== Representation of birthdays
+
+Storing of birthdays is facilitated by an immutable `Birthday` object, which is a component of `Person`.
+
+The main classes that implement this attribute is: AddCommand, AddCommandParser, EditCommand, EditCommandParser, Person, PersonListCard.
+
+However, birthday has been made to be an optional field to include while adding a new contact.
+
+=== Validation of birthday
+
+Birthday uses the DateFormat and the SimpleDateFormat packages to check if the birthday entered is a valid date.
+For example, 31/02/1998 is not a valid date.
+
+Validation of birthday is implemented this way:
+[source,java]
+---
+public static boolean isValidBirthday(String test) {
+    if (test.matches(BIRTHDAY_VALIDATION_REGEX)) {
+        try {
+            DateFormat df = new SimpleDateFormat(DATE_FORMAT);
+            df.setLenient(false);
+            df.parse(test);
+            return true;
+        } catch (ParseException pe) {
+            return false;
+        }
+    } else if (test.matches("")) {
+        return true;
+    }
+    return false;
+}
+---
+
+==== Design Considerations
+**Aspect:** Representation of birthdays +
+**Alternative 1 (current choice):** Display the birthday of the specified contact after the address of the contact +
+**Pros:** It follows the format of the person card +
+**Cons:** It is difficult to recognise the number displayed is the birthday as it is merely represented as an eight digit number +
+
+**Alternative 2:** Display the birthday with "Birthday:" in front +
+**Pros:** Simple and easy to understand +
+**Cons:** Inconsistent with the format in person card
+
+// end::birthday[]
 
 // tag::listtags[]
 === Implementation of List Tags

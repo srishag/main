@@ -26,10 +26,13 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getEmail(), actualCard.getEmail());
         assertEquals(expectedCard.getName(), actualCard.getName());
         assertEquals(expectedCard.getPhone(), actualCard.getPhone());
+        //@@author srishag
         assertEquals(expectedCard.getBirthday(), actualCard.getBirthday());
+        //@@author
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
 
+    //@@author srishag
     /**
      * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
      */
@@ -39,6 +42,7 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getDesc(), actualCard.getDesc());
         assertEquals(expectedCard.getDeadline(), actualCard.getDeadline());
     }
+    //@@author
 
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
@@ -48,12 +52,15 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
         assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
         assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
+        //@@author srishag
         assertEquals(expectedPerson.getBirthday().value, actualCard.getBirthday());
+        //@@author
         assertEquals(expectedPerson.getFacebookAddress().value, actualCard.getFacebookAddress());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
     }
 
+    //@@author srishag
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedTask}.
      */
@@ -62,6 +69,7 @@ public class GuiTestAssert {
         assertEquals(expectedTask.getDesc().value, actualCard.getDesc());
         assertEquals(expectedTask.getDeadline().value, actualCard.getDeadline());
     }
+    //@@author
 
     /**
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
@@ -74,6 +82,15 @@ public class GuiTestAssert {
     }
 
     /**
+     * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
+     * in the correct order.
+     */
+    public static void assertListMatching(PersonListPanelHandle personListPanelHandle, List<ReadOnlyPerson> persons) {
+        assertListMatching(personListPanelHandle, persons.toArray(new ReadOnlyPerson[0]));
+    }
+
+    //@@author srishag
+    /**
      * Asserts that the list in {@code taskListPanelHandle} displays the details of {@code tasks} correctly and
      * in the correct order.
      */
@@ -82,14 +99,7 @@ public class GuiTestAssert {
             assertCardDisplaysTask(tasks[i], taskListPanelHandle.getTaskCardHandle(i));
         }
     }
-
-    /**
-     * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
-     * in the correct order.
-     */
-    public static void assertListMatching(PersonListPanelHandle personListPanelHandle, List<ReadOnlyPerson> persons) {
-        assertListMatching(personListPanelHandle, persons.toArray(new ReadOnlyPerson[0]));
-    }
+    //@@author
 
     /**
      * Asserts the size of the list in {@code personListPanelHandle} equals to {@code size}.

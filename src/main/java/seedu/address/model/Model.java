@@ -21,8 +21,10 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
+    //@@author srishag
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyTask> PREDICATE_SHOW_ALL_TASKS = unused -> true;
+    //@@author
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -36,11 +38,13 @@ public interface Model {
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
+    //@@author srishag
     /** Deletes the given task. */
     void deleteTask(ReadOnlyTask target) throws TaskNotFoundException;
 
     /** Adds the given task */
     void addTask(ReadOnlyTask person) throws DuplicateTaskException;
+    //@@author
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
@@ -52,6 +56,7 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
+    //@@author srishag
     /**
      * Replaces the given task {@code target} with {@code editedTask}.
      *
@@ -61,9 +66,11 @@ public interface Model {
      */
     void updateTask(ReadOnlyTask target, ReadOnlyTask editedPerson)
             throws DuplicateTaskException, TaskNotFoundException;
+    //@@author
 
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
 
+    //@@author srishag
     void sendEmail(Index index, String subject, String body) throws CommandException, GoogleAuthException;
 
     ///** Creates the email to be sent */
@@ -76,6 +83,7 @@ public interface Model {
     ///** Creates message using email */
     //Message createMessageWithEmail(MimeMessage emailContent)
     //        throws MessagingException, IOException;
+    //@@author
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
@@ -85,6 +93,8 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    //@@author srishag
 
     /** Returns an unmodifiable view of the filtered task list */
     ObservableList<ReadOnlyTask> getFilteredTaskList();

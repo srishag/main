@@ -89,6 +89,7 @@ public class AddressBookParserTest {
         listOfAllCommandWordsAndAliases.add(AddCommand.COMMAND_ALIAS);
     }
 
+    //@@author srishag
     @Test
     public void parseCommand_addTask() throws Exception {
         Task task = new TaskBuilder().build();
@@ -106,6 +107,7 @@ public class AddressBookParserTest {
 
         listOfAllCommandWordsAndAliases.add(AddTaskCommand.COMMAND_ALIAS);
     }
+    //@@author
 
     @Test
     public void parseCommand_clear() throws Exception {
@@ -142,6 +144,7 @@ public class AddressBookParserTest {
         listOfAllCommandWordsAndAliases.add(DeleteCommand.COMMAND_ALIAS);
     }
 
+    //@@author srishag
     @Test
     public void parseCommand_deleteTask() throws Exception {
         DeleteTaskCommand command = (DeleteTaskCommand) parser.parseCommand(
@@ -160,6 +163,7 @@ public class AddressBookParserTest {
 
         listOfAllCommandWordsAndAliases.add(DeleteTaskCommand.COMMAND_ALIAS);
     }
+    //@@author
 
     @Test
     public void parseCommand_edit() throws Exception {
@@ -183,6 +187,7 @@ public class AddressBookParserTest {
         listOfAllCommandWordsAndAliases.add(EditCommand.COMMAND_ALIAS);
     }
 
+    //@@author srishag
     @Test
     public void parseCommand_editTask() throws Exception {
         Task task = new TaskBuilder().build();
@@ -204,6 +209,7 @@ public class AddressBookParserTest {
 
         listOfAllCommandWordsAndAliases.add(EditTaskCommand.COMMAND_ALIAS);
     }
+    //@@author
 
     @Test
     public void parseCommand_exit() throws Exception {
@@ -383,6 +389,7 @@ public class AddressBookParserTest {
         listOfAllCommandWordsAndAliases.add(SelectCommand.COMMAND_ALIAS);
     }
 
+    //@@author srishag
     @Test
     public void parseCommand_sendEmail() throws Exception {
         SendEmailCommand command = (SendEmailCommand) parser.parseCommand(SendEmailCommand.COMMAND_WORD
@@ -400,6 +407,7 @@ public class AddressBookParserTest {
 
         listOfAllCommandWordsAndAliases.add(SendEmailCommand.COMMAND_ALIAS);
     }
+    //@@author
 
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {

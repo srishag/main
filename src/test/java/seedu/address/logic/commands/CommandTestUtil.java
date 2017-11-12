@@ -48,8 +48,10 @@ public class CommandTestUtil {
     public static final String VALID_EMAIL_CORNIE = "cornie@example.com";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
+    //@@author srishag
     public static final String VALID_BIRTHDAY_AMY = "04061999";
     public static final String VALID_BIRTHDAY_BOB = "08081984";
+    //@@author
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_GOOGLEID_AMY = "not GoogleContact";
@@ -59,12 +61,14 @@ public class CommandTestUtil {
     public static final String VALID_TAG_UNIQUETAG = "uniquetag";
     public static final String VALID_TAG_UNIQUETAG2 = "uniquetag2";
 
+    //@@author srishag
     public static final String VALID_HEADER_HOMEWORK = "Homework";
     public static final String VALID_HEADER_ASSIGNMENT = "Assignment";
     public static final String VALID_DESC_HOMEWORK = "Page 6 to 9";
     public static final String VALID_DESC_ASSIGNMENT = "Tutorial homework";
     public static final String VALID_DEADLINE_HOMEWORK = "27/11/2017";
     public static final String VALID_DEADLINE_ASSIGNMENT = "05/12/2017";
+    //@@author
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -76,11 +80,14 @@ public class CommandTestUtil {
     public static final String FACEBOOK_ADDRESS_DESC_AMY = " " + PREFIX_FACEBOOKADDRESS + VALID_FACEBOOKADDRESS_AMY;
     public static final String FACEBOOK_ADDRESS_DESC_BOB = " " + PREFIX_FACEBOOKADDRESS + VALID_FACEBOOKADDRESS_BOB;
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
+    //@@author srishag
     public static final String BIRTHDAY_DESC_AMY = " " + PREFIX_BIRTHDAY + VALID_BIRTHDAY_AMY;
     public static final String BIRTHDAY_DESC_BOB = " " + PREFIX_BIRTHDAY + VALID_BIRTHDAY_BOB;
+    //@@author
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
+    //@@author srishag
     public static final String HEADER_DESC_HOMEWORK = " " + PREFIX_HEADER + VALID_HEADER_HOMEWORK;
     public static final String HEADER_DESC_ASSIGNMENT = " " + PREFIX_HEADER + VALID_HEADER_ASSIGNMENT;
     public static final String DESC_DESC_HOMEWORK = " " + PREFIX_DESC + VALID_DESC_HOMEWORK;
@@ -91,6 +98,7 @@ public class CommandTestUtil {
     public static final String INVALID_HEADER_DESC = " " + PREFIX_HEADER; // empty string not allowed for headers
     public static final String INVALID_DESC_DESC = " " + PREFIX_DESC; // empty string not allowed for desc
     public static final String INVALID_DEADLINE_DESC = " " + PREFIX_DEADLINE; // format should be DD/MM/YYYY
+    //@@author
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
@@ -124,6 +132,7 @@ public class CommandTestUtil {
                 .withBirthday(VALID_BIRTHDAY_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 
+    //@@author srishag
     public static final EditTaskCommand.EditTaskDescriptor DESC_HOMEWORK;
     public static final EditTaskCommand.EditTaskDescriptor DESC_ASSIGNMENT;
 
@@ -133,6 +142,7 @@ public class CommandTestUtil {
         DESC_ASSIGNMENT = new EditTaskDescriptorBuilder().withHeader(VALID_HEADER_ASSIGNMENT)
                 .withDesc(VALID_DESC_ASSIGNMENT).withDeadline(VALID_DEADLINE_ASSIGNMENT).build();
     }
+    //@@author
 
     /**
      * Executes the given {@code command}, confirms that <br>
@@ -161,8 +171,10 @@ public class CommandTestUtil {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
         AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
+        //@@author srishag
         List<ReadOnlyPerson> expectedPersonFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
         List<ReadOnlyTask> expectedTaskFilteredList = new ArrayList<>(actualModel.getFilteredTaskList());
+        //@@author
 
         try {
             command.execute();
@@ -198,6 +210,7 @@ public class CommandTestUtil {
         }
     }
 
+    //@@author srishag
     /**
      * Updates {@code model}'s filtered list to show only the first task in the {@code model}'s address book.
      */
