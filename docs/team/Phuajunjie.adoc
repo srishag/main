@@ -229,7 +229,7 @@ A message detailing the result of the command will be displayed to inform the us
 ==== EasyFind
 
 The easyfind feature improves on the find feature. Contact'em now auto updates the results display whenever user inputs a letter with the `find` command word.
-Finds persons whose names contain any of the letters in the command box constantly having the user to input `enter`.
+Find persons whose names contain any of the letters in the command box constantly having the user to input `enter`.
 
 ==== Examples
  * `find Alex` +

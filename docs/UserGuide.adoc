@@ -241,7 +241,7 @@ Only full words will be matched, for example, finding `Han` will not match `Hans
 ==== EasyFind
 
 The easyfind feature improves on the find feature. Contact'em now auto updates the results display whenever user inputs a letter with the `find` command word.
-Finds persons whose names contain any of the letters in the command box constantly having the user to input `enter`.
+Find persons whose names contain any of the letters in the command box constantly having the user to input `enter`.
 
 ==== Examples
  * `find Alex` +
@@ -676,6 +676,9 @@ Alternatively, if the command can be undone, enter `undo` and resolve from there
 *A*: It might take some time for the contacts to show up in google contacts due to server issues.
 You may also switch to the old version of google contacts if the problem persists. However, please switch back to the new version if you wish to import / export / sync again.
 
+*Q*: How do i resolve the “authentication failed. Please login again” error. +
+*A*: Make sure you switch back to the new google contacts page if you are on the old version of google contacts. Then log in again and provide all the required permissions for Contact’em when prompted.
+
 == Quick-Reference Guide
 
 
@@ -766,6 +769,47 @@ Command Words: **help**, **h**
 |**help**
 |**help**
 |-
+
+|Login +
+Command Words: **login**
+|Shows program usage instructions
+|**login**
+|**login**
+|Have to stay on the Google Contacts page to use the following commands : import, sync, export.
+
+
+|Import +
+Command Words: **import**
+|Import contacts from Google Contacts
+|**import**
+|**import**
+|Following parameters in google contact must be present:
+ *name*, *phone*, *address*, *email*
+
+ _Validity of parameter:_ +
+ Phone number : digits +
+ Email Format: example@example.com
+
+
+|Sync +
+Command Words: **sync**
+|Syncs contacts to Google Contacts
+|**sync**
+|**sync**
+|Following parameters in google contact must be present:
+ *name*, *phone*, *address*, *email*
+
+ _Validity of parameter:_ +
+ Phone number : digits +
+ Email Format: example@example.com
+
+|Export +
+Command Words: **export**
+|Export contacts to Google Contacts
+|**export**
+|**export**
+|-
+
 
 |===
 
