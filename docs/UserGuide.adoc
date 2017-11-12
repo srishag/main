@@ -171,7 +171,7 @@ Edits the information of an existing contact. +
 
 ==== The Command
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...`
 
 ==== Examples
 
@@ -671,14 +671,14 @@ Alternatively, if the command can be undone, enter `undo` and resolve from there
 |Add +
 Command Words: **add**, **a**
 |Adds a contact
-|**add** n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...
+|**add** n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [b/BIRTHDAY] [t/TAG]...
 |**add** n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 |Compulsory fields are **name, phone number, email address, and address**
 
 |Edit +
 Command Words: **edit**, **e**
 |Edits the details of a contact
-|**edit** INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+|**edit** INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...`
 |**edit** 2 n/James Lee e/jameslee@example.com
 |Can edit any number of fields (at least 1)
 
