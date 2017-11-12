@@ -13,7 +13,8 @@ public class Messages {
     public static final String LOGIN_MESSAGE = "Please Login";
 
     public static final String MESSAGE_IMPORT_CONTACT = "%1$d contact/s imported!     %2$d contact/s failed to import!";
-    public static final String MESSAGE_IMPORT_STATUS = "Contacts already existed : %1$d     Contacts not in the correct format : %2$d";
+    public static final String MESSAGE_IMPORT_STATUS =
+            "Contacts already existed : %1$d     Contacts not in the correct format : %2$d";
     public static final String MESSAGE_SYNC_CONTACT = "%1$d contact/s Synced!     %2$d contact/s failed to Sync!";
     public static final String MESSAGE_EXPORT_CONTACT = "%1$d contact/s exported!     ";
     public static final String MESSAGE_EXPORT_ERROR = "%1$d contact/s failed to export!";
