@@ -50,8 +50,8 @@ All google contacts imported are tagged with a ‘GoogleContact’ tag to indica
 
 ==== Justification
 
-The main theme of Contact'em is to manage and store contacts.  As the use of Smart phones is becoming more prevalent in the world right now, being able to access contacts on the go has became the priority of many users.
-Hence, Contact'em is now able to be synchronised with google contacts, which can be accessed on most mobile devices.
+The main theme of Contact'em is to manage and store contacts.  As the use of Smart phones is becoming more prevalent in the world right now, being able to access contacts on the go has become the priority of many users.
+Hence, Contact'em is now able to be synchronise with google contacts, which can be accessed on most mobile devices.
 
 ==== Implementation
 
@@ -62,7 +62,7 @@ Hence, Contact'em is now able to be synchronised with google contacts, which can
 
 Contact’em now incorporates and integrates Google Contacts and Gmail which will enhance its usability. Firstly,
 `Login Command` is implemented so that the Contact’em can authenticate with the google servers when the user has successfully logged in.
-The new `GoogleAuthenticator` class is created run the authentication process.
+The new `GoogleAuthenticator` class is created to run the authentication process.
 
 The `Login Command` sequence diagram is as follows:
 
@@ -106,6 +106,7 @@ for each contact: googleContactsList {
 The newPerson(...) method shown in the above code snippet successfully creates a Person object using the attributes from the Google contact and it will be added to the address book. The GoogleID of the contact will also be instantiated within the new Person Object. The Person will also be given a GoogleContact Tag.
 
 `Scenario 2`
+
 The newPerson(...) method fails to create a Person object from the Google contact. The Google contact will fail to import. Reasons for the above mentioned failure includes, +
 1) Google contact might have invalid attributes. Eg: Invalid email format +
 2) Google contact might not have all attributes required to create a new Person object.
@@ -221,7 +222,7 @@ A message detailing the result of the command will be displayed to inform the us
 
 ==== EasyFind
 
-The easyfind feature improves on the find feature. Contact'em now auto updates the display whenever user inputs a letter with the `find` command word.
+The easyfind feature improves on the find feature. Contact'em now auto updates the result display whenever user inputs a letter with the `find` command word.
 Finds persons whose names contain any of the letters in the command box constantly having the user to input `enter`.
 
 ==== Examples
@@ -254,7 +255,7 @@ When the search results displays no results , the letters will not match any con
 ==== Justification
 
 One of the main functionality of Contact'em is to allow users to search for contacts. However, the current search command is extremely inefficient as users have to input entire first names or given names inorder to obtain the contact. Additionally, this search command does not aid the user in the event he has forgotten the exact name when searching for contacts.
-EasyFind solves the above mentioned problems by constantly updating the results display whenever the user inputs a letter.
+EasyFind solves the above mentioned problems by constantly updating the results display whenever the user inputs a letter when searching for a contact.
 
 ==== Implementation
 
@@ -265,11 +266,11 @@ EasyFind solves the above mentioned problems by constantly updating the results 
 
 The EasyFind mechanism is an action driven task, which activates when the user tries to search for a contact by updating the search results whenever the user inputs a letter into the command box.
 
-The mechanism is facilitated by a new command `FindLettersCommand` which will search for contacts matching the sequence of letters in the command box. The command is called every time the user inputs or remove a character from the command box while using the command `Find`.
+The mechanism is facilitated by a new command `FindLettersCommand` which will search for contacts matching the letters in the command box. The command is called every time the user inputs or remove a character from the command box while using the command `Find`.
 
 The key release event of the command box is constantly searching for the term `find` and when the user inputs the mentioned term into the command box, the key release event will begin searching for contacts by passing the letters entered after the term `find` into `FindLettersCommand`.
 
-The application will display the number of contacts that share the same letter sequence as the input. The following images shows how the EasyFind mechanism is activated:
+The application will display the number of contacts that share the same letters as the input. The following images shows how the EasyFind mechanism is activated:
 
 image::EasyFind Mechanism Example .png[width="800"]
 
@@ -296,6 +297,4 @@ _Figure 5.6.1 : Example of usage of EasyFind feature_
 #End of Extract#
 
 ---
-
-=== Other contributions
 
