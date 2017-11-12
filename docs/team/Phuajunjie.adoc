@@ -6,7 +6,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: Contact'em
 Contact’em is a desktop address book application, and the user interacts with it through typing commands into the application.
 
-*Code contributed*: [https://github.com/CS2103AUG2017-T11-B4/main/blob/master/collated/main/PhuaJunJie[Functional code]] [https://github.com/CS2103AUG2017-T11-B4/main/blob/master/collated/test/PhuaJunJie.md[Test code]]
+*Code contributed*: [https://github.com/CS2103AUG2017-T11-B4/main/blob/master/collated/main/PhuaJunJie.md[Functional code]] [https://github.com/CS2103AUG2017-T11-B4/main/blob/master/collated/test/PhuaJunJie.md[Test code]]
 
 === Enhancement Added: Google Contacts implementation
 
@@ -33,6 +33,10 @@ Use `export` to have all your contacts in Contact’em transferred to Google Con
 
 image::exportusage.png[width="800"]
 _Figure 5.14.2 : Example of usage of Export command_
+
+[NOTE]
+Export might take several minutes. Please do not close your application meanwhile even if it becomes unresponsive
+
 
 Enter `sync` to have your contacts in Google Contacts updated to Contact’em. Contacts in Google Contacts takes higher precedence and when sync is used, contacts in Contact’em will be updated to the contacts in Google Contacts.
 
