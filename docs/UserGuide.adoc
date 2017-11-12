@@ -553,17 +553,64 @@ Deadline is an optional field, however if you choose to enter it you must use th
 
 ==== Common Problems
 
-1. Missing required fields +
+* Missing required fields +
 Compulsory fields to be entered are
 `*_header and description._*`
 
-2. Missing/wrong prefixes +
+* Missing/wrong prefixes +
 The right prefixes are needed so the application can decipher the command.
 
-3. Confusing with `add` and `addT` +
+* Confusing with `add` and `addT` +
 The application will prompt you for the wrong format as the prefixes `th/`, `td/` or `tdl/` are not applicable to `add`.
 
 // end::add-task[]
+
+// tag::edit-task[]
+=== Editing tasks : `editT`
+
+Edits the information of an existing task. +
+
+==== The Command
+
+Format: `editT INDEX [th/TASK_HEADER] [td/DESCRIPTION] [tdl/DEADLINE]`
+
+==== Examples
+
+* `editT 1 th/CS2103T Homework` +
+Edits the header of the first task to `CS2103T Homework`.
+* `edit 2 td/Tutorial 3 homework` +
+Edits the description of the second task to `Tutorial 2 homework`.
+
+[NOTE]
+`INDEX` refers to the number on the task to be edited in the displayed list.
+
+[NOTE]
+You can specify any number of fields (in square brackets), but naturally at least one field must be changed for it to be a valid command. Unspecified fields will be unchanged.
+
+[TIP]
+To remove a deadline, simply include the field `tdl/`.
+
+[TIP]
+If user wishes to revert the edit, simply type in the `undo` command **without closing the app**
+
+==== Common Problems
+* Not providing the right prefix/field +
+The field entered must be suitable for the prefix, for example, entering a header with the description field prefix `td/` will not pass.
+
+* Old deadline were unintentionally removed +
+Use the `undo` command to revert changes.
+
+* Not entering the correct `index` +
+Ensure that the `index` entered is correct, or it may cause unintentional changes to another task. +
+
+* Confusing with `edit` and `editT` +
+The application will prompt you for the wrong format as the prefixes `th/`, `td/` or `tdl/` are not applicable to `edit`.
+
+
+[NOTE]
+`Index` is the #currently displayed# number corresponding to the contact, which may differ if the current displayed list has been filtered.
+
+// end::edit-task[]
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
