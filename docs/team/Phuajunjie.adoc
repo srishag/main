@@ -78,7 +78,7 @@ _Figure 3.1.1 : Login command sequence diagram_
 The login page will be loaded in the browser panel after the login command has successfully executed. This is for the user to authenticate with google. Contact’em will then redirect the user to the Google contacts web page after successful authentication.
 
 ==== GoogleContactsBuilder class and GoogleID attribute
-The `GoogleContactsBuilder` class can be instantiated to access the list of contacts from Google and also to obtain the `PeopleService` object needed to modify the contacts in Google. This is done by making use of the methods in the `GoogleAuthenticator` object to obtain the tokens and `PeopleService` from Google.
+The `GoogleContactsBuilder` class can be instantiated to access the list of contacts from Google and also to obtain the `PeopleService` object needed to modify the contacts in Google. This is done by making use of the methods in the `GoogleAuthenticator` object to obtain the access token and `PeopleService` from Google.
 
 The token required for authentication is obtained from the redirect url after logging in. This means that the user must stay on the Google contacts page in the browser panel when instantiating this class (For import / export / sync
 commands). The class diagram for `GoogleContactsBuilder` is shown below.
@@ -109,7 +109,7 @@ for each contact: googleContactsList {
 
 `Scenario 1`
 
-The newPerson(...) method shown in the above code snippet successfully creates a Person object using the attributes from the Google contact and it will be added to the address book. The GoogleID of the contact will also be instantiated within the new Person Object. The Person will also be given a GoogleContact Tag.
+The newPerson(...) method shown in the above code snippet successfully creates a Person object using attributes from the Google contact and it will be added to the address book. The GoogleID of the contact will also be instantiated within the new Person Object. The Person will also be given a GoogleContact Tag.
 
 `Scenario 2`
 
@@ -121,7 +121,7 @@ The newPerson(...) method fails to create a Person object from the Google contac
 A message detailing the result of the command will be displayed to inform the user on the number of contacts imported or the number of contacts along with a string of names of contacts that failed to import.
 
 ==== Export Command
-After successful authentication, the user can next proceed to export contacts from Contact’em into his google account. The command creates a GoogleContactsBuilder object to retrieve peopleService from the server needed to modify/add contacts in Google.
+After successful authentication, the user can next proceed to export contacts from Contact’em into his google account. The command creates a GoogleContactsBuilder object to retrieve peopleService from google which is required to modify/add contacts in Google contacts.
 
 The `Export command` sequence diagram is as follows:
 
@@ -144,7 +144,7 @@ for each contact: addressBookList{
 
 `Scenario 1`
 
-The createGoogleContact method shown in the above code snippet successfully creates a GooglePerson that will be exported to Google contacts. The export command will then update the contact by instantiating its GoogleID attribute retrieved from the newly created Google contact and adding a GoogleContacts Tag to it.
+The createGoogleContact method shown in the above code snippet successfully creates a GooglePerson that will be exported to Google contacts. The export command will then update the contact by instantiating its GoogleID attribute retrieved from the newly created Google contact and adding a GoogleContacts tag to it.
 
 `Scenario 2`
 
@@ -153,14 +153,14 @@ The contact might not be exported to Google due to the failure in connecting to 
 A message detailing the result of the command will be displayed to inform the user on the number of contacts imported or failed to import.
 
 ==== Sync Command
-After successful authentication, the user can proceed to sync contacts in Contact’em. The sync command creates a GoogleContactsBuilder object to retrieve the list of Google contacts from the server. In this case, the contacts in Google contacts takes higher precedence and any changes to them will be updated to the contacts in Contact’em when the user syncs. However, any changes made to the contact in the Contact’em will not be transferred to Google contacts when the user syncs but instead, its attribute will be restored to its original value.
+After successful authentication, the user can proceed to sync contacts in Contact’em. The sync command creates a GoogleContactsBuilder object to retrieve the list of Google contacts from the server. In this case, the contacts in Google contacts takes higher precedence and any changes to them will be updated to the contacts in Contact’em when the user syncs. However, any changes made to the contacts in the Contact’em will not be transferred to Google contacts when the user syncs but instead, its attribute will be restored to its original value.
 
 The `Sync command` sequence diagram is as follows:
 
 image::Sync Command.png[width="800"]
 _Figure 3.1.4.1 : Sync command sequence diagram_
 
-When the command is executed, the list of contacts in Contact’em will be looped through to check if they exists within the list of Google contacts as well. If they are, a Person object based on the Google contact will be created and it will be used to compare with the contact in the address book. This is represented by the code snippet shown below.
+When the command is executed, the list of contacts in Contact’em will be looped through to check if they exists within the list of Google contacts. If they are, a Person object based on the Google contact will be created and it will be used to compare with the contact in the address book. This is represented by the code snippet shown below.
 
 `Pseudo-code snippet:`
 [source,java]
@@ -187,7 +187,7 @@ The attributes of the contact are different from itself in Google contacts. A ne
 
 `Scenario 3`
 
-The format of the Google contact is invalid and hence no new Person is created to compare itself with the contact in Contact’em. The contact in the Contact’em will not be synchronised.
+The format of the Google contact is invalid and hence no new Person is created for comparision with the contact in Contact’em. The contact in the Contact’em will not be synchronised.
 
 `Scenario 4`
 
@@ -198,12 +198,12 @@ A message detailing the result of the command will be displayed to inform the us
 ==== Design Considerations
 
 **Aspect:** Storage of access token. +
-**Alternative 1 (current choice):** The user have to be on the Google contact web page in order to use the following commands : `Import`, `Export`, `Sync`. This is because the token is retrieved from the url every time the user uses the above mentioned commands. +
+**Alternative 1 (current choice):** Users have to be on the Google contact web page in order to use the following commands : `Import`, `Export`, `Sync`. This is because the token is retrieved from the url every time the user uses the above mentioned commands. +
 **Pros:** Users will be able to inspect the contacts within the Google contacts and they will be able to update the contacts if the contacts fail to import or synchronise by referring to the warning messages displayed. +
 **Cons:** This might cause some inconvenience because the users have to re-login to use the above mentioned commands if they have switched pages in the browser panel. +
 **Alternative 2:** Stores the token within the program once the user has logged in. +
 **Pros:** More convenience for user as they do not have to stay on the Google contacts page whenever they want to use the above mentioned commands. +
-**Cons:** In the case whereby some contacts fail to synchronise or import, the user have to re-login anyway to check on the contacts in google. By doing so, the error message produced earlier on will be removed and the user does not have a reference to see which contact is not importing or synchronising. +
+**Cons:** In the case when some contacts fail to synchronise or import, the user have to re-login anyway to check on the contacts in google. By doing so, the error message produced earlier on will be removed and the user does not have a reference to see which contact is not importing or synchronising. +
 
 ---
 
@@ -211,7 +211,7 @@ A message detailing the result of the command will be displayed to inform the us
 **Alternative 1 (current choice):** Google contacts takes higher precedence. Contacts updated in Google contacts will be synchronised to Contact'em. +
 **Pros:** This alternative allow users to update contacts in Google contacts on-the-go which can be synchronised to Contact’em next time they use it. +
 **Cons:** Contacts updated in Contact’em must be manually updated in the Google contacts as well. If not, next time when the user synchronises Contact'em, the changes will be removed. +
-**Alternative 2:** Contact’em takes higher precedence. Contacts updated in Contact’em will be synced to Google contacts. +
+**Alternative 2:** Contact’em takes higher precedence. Contacts updated in Contact’em will be synchronised to Google contacts. +
 **Pros:** This is better for user who uses Contact’em  more often than Google contacts. For some, the contacts in Google contacts might just be an on-the-go reference and most updating is done within Contact’em. +
 **Cons:** Will not be able to update contacts if they are away from the computer.
 
