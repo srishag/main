@@ -465,7 +465,7 @@ Command history is not saved on exit, therefore,
 it will only show the command history from when the application was opened.
 
 // tag::google[]
-=== Google Contacts integration
+=== Google Contacts integration : `login` `import` `export` `sync`
 
 Contact'em is now integrated with the ability to import/ export / sync contacts from google contacts.
 Being able to access contacts from your mobile phones is the quickest way to get things done. Export your contact directly to your android phones through google contacts to have your contacts on the go. Simply synchronize Contact’em whenever you make changes to your Google Contacts and your contacts will be updated.
