@@ -533,17 +533,17 @@ Please ensure you have entered the necessary details for each contact.
 // end::gmail[]
 
 // tag::add-task[]
-=== Adding tasks : `addT`
+=== Adding tasks : `addt`
 
 You can also use Contact'em to add tasks using the Command Line Interface of the application. +
 
 ==== The Command
-Format: `addT th/TASK_HEADER td/DESCRIPTION tdl/DEADLINE`
+Format: `addt th/TASK_HEADER td/DESCRIPTION tdl/DEADLINE`
 
 ==== Usage Examples
-* `addT th/Homework td/Questions 1 to 4 tdl/23112017.` +
+* `addt th/Homework td/Questions 1 to 4 tdl/23112017.` +
 Adds a task with the header `Homework` with a description `Questions 1 to 4` and deadline `23112017`.
-* `addT th/Assignment td/Tutorial homework tdl/12122017` +
+* `addt th/Assignment td/Tutorial homework tdl/12122017` +
 Adds a task with the header `Assignment` with a description `Tutorial homework` and deadline `12122017`.
 
 ==== More Information
@@ -560,25 +560,25 @@ Compulsory fields to be entered are
 * Missing/wrong prefixes +
 The right prefixes are needed so the application can decipher the command.
 
-* Confusing with `add` and `addT` +
+* Confusing with `add` and `addt` +
 The application will prompt you for the wrong format as the prefixes `th/`, `td/` or `tdl/` are not applicable to `add`.
 
 // end::add-task[]
 
 // tag::edit-task[]
-=== Editing tasks : `editT`
+=== Editing tasks : `editt`
 
 Edits the information of an existing task. +
 
 ==== The Command
 
-Format: `editT INDEX [th/TASK_HEADER] [td/DESCRIPTION] [tdl/DEADLINE]`
+Format: `editt INDEX [th/TASK_HEADER] [td/DESCRIPTION] [tdl/DEADLINE]`
 
 ==== Examples
 
-* `editT 1 th/CS2103T Homework` +
+* `editt 1 th/CS2103T Homework` +
 Edits the header of the first task to `CS2103T Homework`.
-* `edit 2 td/Tutorial 3 homework` +
+* `editt 2 td/Tutorial 3 homework` +
 Edits the description of the second task to `Tutorial 2 homework`.
 
 [NOTE]
@@ -603,7 +603,7 @@ Use the `undo` command to revert changes.
 * Not entering the correct `index` +
 Ensure that the `index` entered is correct, or it may cause unintentional changes to another task. +
 
-* Confusing with `edit` and `editT` +
+* Confusing with `edit` and `editt` +
 The application will prompt you for the wrong format as the prefixes `th/`, `td/` or `tdl/` are not applicable to `edit`.
 
 
@@ -613,12 +613,12 @@ The application will prompt you for the wrong format as the prefixes `th/`, `td/
 // end::edit-task[]
 
 // tag::delete-task[]
-=== Deleting a task : `deleteT`
+=== Deleting a task : `deletet`
 
 Deletes the specified task from the address book. +
 
 ==== The Command
-Format: `delete INDEX`
+Format: `deletet INDEX`
 
 [NOTE]
 `INDEX` refers to the number on the task to be edited in the displayed list.
@@ -629,16 +629,16 @@ If wrong task was deleted, **`undo` immediately without exiting the application!
 ==== Examples
 
 * `list` +
-`delete 2` +
+`deletet 2` +
 Deletes the 2nd task in the address book.
-* `delete 1` +
+* `deletet 1` +
 Deletes the 1st task in the address book.
 
 ==== Common Problems
 * Not entering the correct `index` +
 Ensure that the `index` entered is correct, or it may cause unintentional changes to another task. +
 
-* Confusing with `delete` and `deleteT` +
+* Confusing with `delete` and `deletet` +
 The application will prompt you for the wrong format as the prefixes `th/`, `td/` or `tdl/` are not applicable to `delete`.
 
 
@@ -786,25 +786,46 @@ Alternatively, if the command can be undone, enter `undo` and resolve from there
 |===
 |Command |Desecription |Format |Example |Notes
 
-|Add +
+|Add Contact +
 Command Words: **add**, **a**
 |Adds a contact
 |**add** n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [b/BIRTHDAY] [t/TAG]...
 |**add** n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 |Compulsory fields are **name, phone number, email address, and address**
 
-|Edit +
+|Edit Contact +
 Command Words: **edit**, **e**
 |Edits the details of a contact
 |**edit** INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...`
 |**edit** 2 n/James Lee e/jameslee@example.com
 |Can edit any number of fields (at least 1)
 
-|Delete +
+|Delete Contact+
 Command Words: **delete**, **de**
 |Deletes a contact
 |**delete** INDEX
 |**delete** 3
+|Do **NOT** exit the application if you plan on reverting this command with *undo*
+
+|Add Task +
+Command Words: **addt**, **at**
+|Adds a task
+|**addt** th/TASK_HEADER td/DESCRIPTION [tdl/DEADLINE]...
+|**addt** th/Homework td/Questions 1 to 4 td/23112017`
+|Compulsory fields are **task header and description**
+
+|Edit Task +
+Command Words: **editt**, **et**
+|Edits the details of a task
+|**editt** INDEX [th/TASK_HEADER] [td/DESCRIPTION] [tdl/DEADLINE]`
+|**editt** 2 th/Homework assignment td/Graded homework
+|Can edit any number of fields (at least 1)
+
+|Delete Task +
+Command Words: **deletet**, **dt**
+|Deletes a task
+|**deletet** INDEX
+|**deletet** 3
 |Do **NOT** exit the application if you plan on reverting this command with *undo*
 
 |Select +
