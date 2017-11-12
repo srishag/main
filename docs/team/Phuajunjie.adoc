@@ -16,7 +16,7 @@ Contact’em is a desktop address book application, and the user interacts with 
 #Start of Extract [from: User Guide]#
 
 
-The Address book is now integrated with the ability to import/ export / sync contacts from google contacts.
+Contact'em is now integrated with the ability to import/ export / sync contacts from google contacts.
 Being able to access contacts from your mobile phones is the quickest way to get things done. Export your contact directly to your android phones through google contacts to have your contacts on the go. Simply synchronize Contact’em whenever you make changes to your Google Contacts and your contacts will be updated.
 
 Enter `login` to link Contact’em with Google Contacts / Gmail. When the login page is loaded, simply key in your credentials and you will be redirected to google contacts.
