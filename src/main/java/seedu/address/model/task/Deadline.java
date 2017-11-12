@@ -11,8 +11,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Deadline {
 
-    public static final String MESSAGE_DEADLINE_CONSTRAINTS = "Event must have a valid date input\n"
-                    + "Format: DD/MM/YYYY";
+    public static final String MESSAGE_DEADLINE_CONSTRAINTS = "Event must have a valid date or day input\n";
 
     public final String value;
 

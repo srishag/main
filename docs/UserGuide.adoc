@@ -553,15 +553,15 @@ You can also use Contact'em to add tasks using the Command Line Interface of the
 Format: `addt th/TASK_HEADER td/DESCRIPTION tdl/DEADLINE`
 
 ==== Usage Examples
-* `addt th/Homework td/Questions 1 to 4 tdl/23112017.` +
-Adds a task with the header `Homework` with a description `Questions 1 to 4` and deadline `23112017`.
-* `addt th/Assignment td/Tutorial homework tdl/12122017` +
-Adds a task with the header `Assignment` with a description `Tutorial homework` and deadline `12122017`.
+* `addt th/Homework td/Questions 1 to 4 tdl/23/11/2017.` +
+Adds a task with the header `Homework` with a description `Questions 1 to 4` and deadline `23/11/2017`.
+* `addt th/Assignment td/Tutorial homework tdl/today` +
+Adds a task with the header `Assignment` with a description `Tutorial homework` and deadline `today`.
 
 ==== More Information
 You must specify all fields of task headers and description to successfully add tasks to the application.
 
-Deadline is an optional field, however if you choose to enter it you must use the format ddMMyyyy.
+Deadline is an optional field, with no required format. You can add both days and dates with your preferred format here.
 
 ==== Common Problems
 

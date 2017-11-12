@@ -904,23 +904,22 @@ Before modifying the list of tasks inside the address book, the system may throw
 * `TaskNotFoundException`: This exception can be thrown by `editt` and `deletet` command when the an invalid index for a task is provided by the user. The index needs to be within the size of the task list at the current state of the address book.
 * `DuplicateTaskException`: This exception can be thrown by `addt` and `editt` command. The system will first create an `Task` object with the input parameters, compare the object to all tasks residing in the task list and throw this exception if there is a duplicate found.
 
+Editing of task is implemented this way:
+
 [source,java]
 ----
-public static boolean isValidDeadline(String test) {
-    if (test.matches(DEADLINE_VALIDATION_REGEX)) {
-        try {
-            DateFormat df = new SimpleDateFormat(DATE_FORMAT);
-            df.setLenient(false);
-            df.parse(test);
-            return true;
-        } catch (ParseException pe) {
-            return false;
-        }
-    } else if (test.matches("")) {
-        return true;
+    ReadOnlyTask taskToEdit = lastShownList.get(index.getZeroBased());
+    Task editedTask = createEditedTask(taskToEdit, editTaskDescriptor);
+
+    try {
+        model.updateTask(taskToEdit, editedTask);
+    } catch (DuplicateTaskException dee) {
+        throw new CommandException(MESSAGE_DUPLICATE_TASK);
+    } catch (TaskNotFoundException enfe) {
+        throw new AssertionError("The target task cannot be missing");
     }
-    return false;
-}
+    model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+    return new CommandResult(String.format(MESSAGE_EDIT_TASK_SUCCESS, editedTask));
 ----
 
 ==== Task card
