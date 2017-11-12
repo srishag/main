@@ -24,8 +24,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case sensitive.
+ * Imports contacts to from google contacts to addressbook
  */
 public class ImportCommand extends UndoableCommand {
 
