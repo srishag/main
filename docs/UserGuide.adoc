@@ -720,6 +720,13 @@ Command Words: **findtags**, **findtag**, **ft**
 |**findtags** friends colleagues
 |Not case sensitive, but only fully matching words in name will be matched
 
+|Send +
+Command Words: **send**, **sd**
+|Sends e-mail to a contact
+|**send** INDEX [es/EMAIL_SUBJECT] [eb/EMAIL_BODY]
+|**send** 1 es/Meeting for next Monday. eb/Looking forward to next Monday.
+|`//` is used for adding the following text to the next line.
+
 |Clear +
 Command Words: **clear**, **cl**
 |Removes **ALL** contacts from the addressbook
