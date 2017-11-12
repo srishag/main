@@ -240,7 +240,7 @@ Only full words will be matched, for example, finding `Han` will not match `Hans
 // tag::EasyFind[]
 ==== EasyFind
 
-The easyfind feature improves on the find feature. Contact'em now auto updates the  display whenever user inputs a letter with the `find` command word.
+The easyfind feature improves on the find feature. Contact'em now auto updates the results display whenever user inputs a letter with the `find` command word.
 Finds persons whose names contain any of the letters in the command box constantly having the user to input `enter`.
 
 ==== Examples
