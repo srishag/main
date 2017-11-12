@@ -5,7 +5,7 @@ import seedu.address.model.person.NameContainsAlphabetsPredicate;
 
 /**
  * Finds and lists all persons in address book whose name contains any of the characters.\
- * This function works without having the user to hit the "Enter Key"
+ * This function works without having the user to hit the "Enter" key
  * Keyword matching is case insensitive.
  */
 public class FindLettersCommand extends Command {
