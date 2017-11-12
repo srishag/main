@@ -251,7 +251,7 @@ Finds persons whose names contain any of the letters in the command box constant
 * `find Bet Ti Jo` +
 Returns any person having starting alphabets `Betsy`, `Tim`, or `John`
 
-image::EasyFind example.png[width="200"]
+image::EasyFind example.png[width="800"]
 _Figure 5.5.1 : Example of usage of EasyFind feature_
 
 [NOTE]
@@ -475,7 +475,7 @@ Enter `login` to link Contact’em with Google Contacts / Gmail. When the login 
 Enter `import` to have all your Google Contacts transferred to Contact’em.
 
 image::importusage.png[width="800"]
-_Figure 5.14.1 : Example of usage of Sync command_
+_Figure 5.14.1 : Example of usage of Import command_
 
 Use `export` to have all your contacts in Contact’em transferred to Google Contacts.
 
