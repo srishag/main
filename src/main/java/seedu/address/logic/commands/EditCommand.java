@@ -47,7 +47,9 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            //@@author srishag
             + "[" + PREFIX_BIRTHDAY + "BIRTHDAY] "
+            //@@author
             + "[" + PREFIX_FACEBOOKADDRESS + "FACEBOOK ADDRESS] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
@@ -145,7 +147,9 @@ public class EditCommand extends UndoableCommand {
         private Phone phone;
         private Email email;
         private Address address;
+        //@@author srishag
         private Birthday birthday;
+        //@@author
         private FacebookAddress facebookAddress;
         private Set<Tag> tags;
         private GoogleId iD;
@@ -157,7 +161,9 @@ public class EditCommand extends UndoableCommand {
             this.phone = toCopy.phone;
             this.email = toCopy.email;
             this.address = toCopy.address;
+            //@@author srishag
             this.birthday = toCopy.birthday;
+            //@@author
             this.facebookAddress = toCopy.facebookAddress;
             this.tags = toCopy.tags;
             this.iD = toCopy.iD;
@@ -260,7 +266,9 @@ public class EditCommand extends UndoableCommand {
                     && getAddress().equals(e.getAddress())
                     && getTags().equals(e.getTags())
                     && getId().equals(e.getId())
+                    //@@author srishag
                     && getBirthday().equals(e.getBirthday())
+                    //@@author
                     && getFacebookAddress().equals(e.getFacebookAddress())
                     && getTags().equals(e.getTags());
         }

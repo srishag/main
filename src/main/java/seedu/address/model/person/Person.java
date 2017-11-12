@@ -22,7 +22,9 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
+    //@@author srishag
     private ObjectProperty<Birthday> birthday;
+    //@@author
     private ObjectProperty<FacebookAddress> facebookAddress;
 
     private ObjectProperty<UniqueTagList> tags;
@@ -39,7 +41,9 @@ public class Person implements ReadOnlyPerson {
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+        //@@author srishag
         this.birthday = new SimpleObjectProperty<>(birthday);
+        //@@author
         this.facebookAddress = new SimpleObjectProperty<>(facebookAddress);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));

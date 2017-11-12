@@ -67,11 +67,13 @@ public class AddressBookTest {
         addressBook.getPersonList().remove(0);
     }
 
+    //@@author srishag
     @Test
     public void getTaskList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         addressBook.getTaskList().remove(0);
     }
+    //@@author
 
     @Test
     public void getTagList_modifyList_throwsUnsupportedOperationException() {
@@ -84,13 +86,17 @@ public class AddressBookTest {
      */
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<ReadOnlyPerson> persons = FXCollections.observableArrayList();
+        //@@author srishag
         private final ObservableList<ReadOnlyTask> tasks = FXCollections.observableArrayList();
+        //@@author
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
 
         AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends ReadOnlyTask> tasks,
                         Collection<? extends Tag> tags) {
             this.persons.setAll(persons);
+            //@@author srishag
             this.tasks.setAll(tasks);
+            //@@author
             this.tags.setAll(tags);
         }
 
@@ -99,10 +105,12 @@ public class AddressBookTest {
             return persons;
         }
 
+        //@@author srishag
         @Override
         public ObservableList<ReadOnlyTask> getTaskList() {
             return tasks;
         }
+        //@@author
 
         @Override
         public ObservableList<Tag> getTagList() {
