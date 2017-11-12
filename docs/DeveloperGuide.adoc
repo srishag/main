@@ -883,6 +883,53 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::gmail[]
+=== Send email mechanism
+
+The send email mechanism is facilitated by a specific Google account, which the user needs to login to before he can begin using the application to send e-mails.
+
+E-mails can be sent to the e-mail address attached to any contact in the address book.
+
+A snippet of how e-mails are sent is shown below:
+[source,java]
+----
+try {
+    MimeMessage emailToBeSent = ModelManager.createEmail(personToSendEmail,
+            EMAIL_SENDER, emailSubject, emailBody);
+    Gmail gmailService = new GetGmailService().getGmailService();
+    message = ModelManager.sendMessage(gmailService, EMAIL_SENDER, emailToBeSent);
+    } catch (MessagingException | IOException E) {
+        assert false;
+    }
+}
+----
+
+[NOTE]
+Users must login using your e-mail and password to a specific Google account before they can start using this feature.
+If login is unsuccessful, they will be prompted to login again.
+
+[NOTE]
+Requested access by Google must be provided before any e-mails can be sent.
+
+[NOTE]
+Internet connectivity is needed for this feature as the application does not store any e-mail drafts.
+
+[NOTE]
+Send e-mail feature must be used immediately after login as the application does not store any user data. Hence after login is
+successful, it is not possible to use other commands and then use the send e-mail command.
+
+
+==== Design Considerations
+
+**Aspect:** Implementation of send e-mail +
+**Alternative 1:** Save login details to allow more flexibilty.` +
+**Pros:** Easier access to command as users can execute other commands in between login and sending e-mails. +
+**Cons:** Security concerns raised as user data is saved within the application. +
+**Alternative 2 (current choice):** Only allow users to use send command immediately after login.` +
+**Pros:** Safe option as no user details are stored even when the command is used repeatedly. +
+**Cons:** Not user-friendly as it forces users to use features of the application in a certain order.
+// end::gmail[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
