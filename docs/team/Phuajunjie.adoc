@@ -21,6 +21,9 @@ Being able to access contacts from your mobile phones is the quickest way to get
 
 Enter `login` to link Contact’em with Google Contacts / Gmail. When the login page is loaded, simply key in your credentials and you will be redirected to google contacts.
 
+==== The Command
+Format: `login`  `import`  `export`  `sync`
+
 Enter `import` to have all your Google Contacts transferred to Contact’em.
 
 image::importusage.png[width="800"]
@@ -35,13 +38,16 @@ Enter `sync` to have your contacts in Google Contacts updated to Contact’em. C
 
 
 ==== Usage Notes
-When using `import` / `export` / `sync` command, your browser must have google contacts page loaded
+* When using `import` / `export` / `sync` command, your browser must have google contacts page loaded
     If you have switched the page, you will have to login again to use the commands.
 
-If a google contact fails to import or sync, please check the contact to make sure that the parameters are valid.
+* Please refresh the Google contacts page after exporting for the exported contacts to show up. Check FAQ for more information if contacts are still missing.
+
+
+* If a google contact fails to import or sync, please check the contact to make sure that the parameters are valid.
     Please check the reference guide on the validity of the parameters
 
-All google contacts imported are tagged with a ‘GoogleContact’ tag to indicate that they are linked to Google Contacts.
+* All google contacts imported are tagged with a ‘GoogleContact’ tag to indicate that they are linked to Google Contacts.
     Contacts deleted in Google Contacts will not be deleted in Contact’em when synced. It will simply lose its `GoogleContact` tag.
 
 #End of Extract#
@@ -272,7 +278,7 @@ The key release event of the command box is constantly searching for the term `f
 
 The application will display the number of contacts that share the same letters as the input. The following images shows how the EasyFind mechanism is activated:
 
-image::EasyFind Mechanism Example .png[width="800"]
+image::EasyFind example.png[width="800"]
 
 [NOTE]
 After the user inputs `enter`, normal find command will be executed
