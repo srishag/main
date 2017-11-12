@@ -6,7 +6,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: Contact'em
 Contact’em is a desktop address book application, and the user interacts with it through typing commands into the application.
 
-*Code contributed*: [https://github.com/CS2103AUG2017-T11-B4/main/blob/master/collated/main/PhuaJunJie.md] [https://github.com/CS2103AUG2017-T11-B4/main/blob/master/collated/test/PhuaJunJie.md] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-T11-B4/main/blob/master/collated/main/PhuaJunJie[Functional code]] [https://github.com/CS2103AUG2017-T11-B4/main/blob/master/collated/test/PhuaJunJie.md[Test code]]
 
 === Enhancement Added: Google Contacts implementation, EasyFind
 
@@ -24,7 +24,7 @@ include::../UserGuide.adoc[tag=google]
 ==== Justification
 
 The main theme of Contact'em is to easily manage and store contacts.  As the use of Smart phones is becoming more prevalent in the world right now, being able to access contacts on the go has became the priority of many users.
-Hence, by implementing import, export and sync, we now allow users to synchronise contact'em with google contacts, which can be accessed on most mobile devices.
+Hence, Contact'em is now able to be synchronised with google contacts, which can be accessed on most mobile devices.
 
 ==== Implementation
 
@@ -52,7 +52,8 @@ include::../UserGuide.adoc[tag=EasyFind]
 
 ==== Justification
 
-One of the main functionality of Contact'em is to allow users to search for contacts. However, the current search command is extremely inefficient as users have to input entire first names or given names inorder to obtain the contact. Addtionally, this search command does not aid the user in the event he has forgotten the exact name when searching for contacts.
+One of the main functionality of Contact'em is to allow users to search for contacts. However, the current search command is extremely inefficient as users have to input entire first names or given names inorder to obtain the contact. Additionally, this search command does not aid the user in the event he has forgotten the exact name when searching for contacts.
+EasyFind solves the above mentioned problems by constantly updating the results display whenever the user inputs a letter.
 
 ==== Implementation
 
