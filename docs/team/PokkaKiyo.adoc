@@ -194,7 +194,7 @@ As seen from _Figure 3.3.2.1_ above, the entire command consists of 4 main steps
 More detailed explanations and elaborations are given in the subsections below.
 
 image::FindTagsCommandClassDiagram.png[width="800"]
-_Figure 3.3.2.2 : Class Diagram of Find Tags Command
+_Figure 3.3.2.2 : Class Diagram of Find Tags Command_
 
 The figure above is the class diagram of notable classes involved in this command, to aid understanding.
 
