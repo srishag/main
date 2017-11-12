@@ -514,7 +514,10 @@ Sends an e-mail using the e-mail account you used to login to the contact at ind
 and with the body `Wishing you and your family a very Merry Christmas!`
 
 ==== More Information
-You must login to a specific e-mail account before you can start using this feature.
+You must login using your e-mail and password to a specific Google account before you can start using this feature.
+If login is unsuccessful, you will be prompted to login again.
+
+Please ensure you have clicked `Allow` when asked for account permissions by Google.
 
 ==== Common Problems
 * Unable to send an e-mail after using other commands except `login` +
