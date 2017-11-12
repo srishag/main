@@ -322,6 +322,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -339,8 +340,6 @@ import seedu.address.model.task.Task;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
 import seedu.address.testutil.TaskBuilder;
-
-import javafx.collections.ObservableList;
 
 public class AddTaskCommandTest {
 
@@ -563,12 +562,6 @@ public class AddTaskIntegrationTest {
                 String.format(AddTaskCommand.MESSAGE_SUCCESS, validTask), expectedModel);
     }
 
-    /*@Test
-    public void execute_duplicateTask_throwsCommandException() {
-        Task taskInList = new Task(model.getAddressBook().getTaskList().get(0));
-        assertCommandFailure(prepareCommand(taskInList, model), model, AddTaskCommand.MESSAGE_DUPLICATE_TASK);
-    }*/
-
     /**
      * Generates a new {@code AddTaskCommand} which upon execution, adds {@code task} into the {@code model}.
      */
@@ -609,7 +602,6 @@ public class AddTaskIntegrationTest {
 
     public static final String INVALID_HEADER_DESC = " " + PREFIX_HEADER; // empty string not allowed for headers
     public static final String INVALID_DESC_DESC = " " + PREFIX_DESC; // empty string not allowed for desc
-    public static final String INVALID_DEADLINE_DESC = " " + PREFIX_DEADLINE; // format should be DD/MM/YYYY
 ```
 ###### /java/seedu/address/logic/commands/CommandTestUtil.java
 ``` java
@@ -695,19 +687,6 @@ public class DeleteTaskCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
-    /*@Test
-    public void execute_validIndexUnfilteredList_success() throws Exception {
-        ReadOnlyTask taskToDelete = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
-        DeleteTaskCommand deleteTaskCommand = prepareCommand(INDEX_FIRST_TASK);
-
-        String expectedMessage = String.format(DeleteTaskCommand.MESSAGE_DELETE_TASK_SUCCESS, taskToDelete);
-
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deleteTask(taskToDelete);
-
-        assertCommandSuccess(deleteTaskCommand, model, expectedMessage, expectedModel);
-    }*/
-
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredTaskList().size() + 1);
@@ -715,35 +694,6 @@ public class DeleteTaskCommandTest {
 
         assertCommandFailure(deleteTaskCommand, model, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
     }
-
-    /*@Test
-    public void execute_validIndexFilteredList_success() throws Exception {
-        showFirstTaskOnly(model);
-
-        ReadOnlyTask taskToDelete = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
-        DeleteTaskCommand deleteTaskCommand = prepareCommand(INDEX_FIRST_TASK);
-
-        String expectedMessage = String.format(DeleteTaskCommand.MESSAGE_DELETE_TASK_SUCCESS, taskToDelete);
-
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deleteTask(taskToDelete);
-        showNoTask(expectedModel);
-
-        assertCommandSuccess(deleteTaskCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_invalidIndexFilteredList_throwsCommandException() {
-        showFirstTaskOnly(model);
-
-        Index outOfBoundIndex = INDEX_SECOND_TASK;
-        // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
-
-        DeleteTaskCommand deleteTaskCommand = prepareCommand(outOfBoundIndex);
-
-        assertCommandFailure(deleteTaskCommand, model, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-    }*/
 
     @Test
     public void equals() {
@@ -820,96 +770,6 @@ import seedu.address.model.UserPrefs;
 public class EditTaskCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-    /*@Test
-    public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
-        Task editedTask = new TaskBuilder().build();
-        EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder(editedTask).build();
-        EditTaskCommand editTaskCommand = prepareCommand(INDEX_FIRST_TASK, descriptor);
-
-        String expectedMessage = String.format(EditTaskCommand.MESSAGE_EDIT_TASK_SUCCESS, editedTask);
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updateTask(model.getFilteredTaskList().get(0), editedTask);
-
-        assertCommandSuccess(editTaskCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_noFieldSpecifiedUnfilteredList_success() {
-        EditTaskCommand editTaskCommand = prepareCommand(INDEX_FIRST_TASK, new EditTaskDescriptor());
-        ReadOnlyTask editedTask = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
-
-        String expectedMessage = String.format(EditTaskCommand.MESSAGE_EDIT_TASK_SUCCESS, editedTask);
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-
-        assertCommandSuccess(editTaskCommand, model, expectedMessage, expectedModel);
-    }*/
-
-    /*@Test
-    public void execute_filteredList_success() throws Exception {
-        showFirstTaskOnly(model);
-
-        ReadOnlyTask taskInFilteredList = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
-        Task editedTask = new TaskBuilder(taskInFilteredList).withHeader(VALID_HEADER_ASSIGNMENT).build();
-        EditTaskCommand editTaskCommand = prepareCommand(INDEX_FIRST_TASK,
-                new EditTaskDescriptorBuilder().withHeader(VALID_HEADER_ASSIGNMENT).build());
-
-        String expectedMessage = String.format(EditTaskCommand.MESSAGE_EDIT_TASK_SUCCESS, editedTask);
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updateTask(model.getFilteredTaskList().get(0), editedTask);
-
-        assertCommandSuccess(editTaskCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_duplicateTaskUnfilteredList_failure() {
-        Task firstTask = new Task(model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased()));
-        EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder(firstTask).build();
-        EditTaskCommand editTaskCommand = prepareCommand(INDEX_SECOND_TASK, descriptor);
-
-        assertCommandFailure(editTaskCommand, model, EditTaskCommand.MESSAGE_DUPLICATE_TASK);
-    }
-
-    @Test
-    public void execute_duplicateTaskFilteredList_failure() {
-        showFirstTaskOnly(model);
-
-        // edit task in filtered list into a duplicate in address book
-        ReadOnlyTask taskInList = model.getAddressBook().getTaskList().get(INDEX_SECOND_TASK.getZeroBased());
-        EditTaskCommand editTaskCommand = prepareCommand(INDEX_FIRST_TASK,
-                new EditTaskDescriptorBuilder(taskInList).build());
-
-        assertCommandFailure(editTaskCommand, model, EditTaskCommand.MESSAGE_DUPLICATE_TASK);
-    }
-
-    @Test
-    public void execute_invalidTaskIndexUnfilteredList_failure() {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredTaskList().size() + 1);
-        EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withHeader(VALID_HEADER_ASSIGNMENT).build();
-        EditTaskCommand editTaskCommand = prepareCommand(outOfBoundIndex, descriptor);
-
-        assertCommandFailure(editTaskCommand, model, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-    }*/
-
-    /**
-     * Edit filtered list where index is larger than size of filtered list,
-     * but smaller than size of address book
-     */
-    /*@Test
-    public void execute_invalidTaskIndexFilteredList_failure() {
-        showFirstTaskOnly(model);
-        Index outOfBoundIndex = INDEX_SECOND_TASK;
-        // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getTaskList().size());
-
-        EditTaskCommand editTaskCommand = prepareCommand(outOfBoundIndex,
-                new EditTaskDescriptorBuilder().withHeader(VALID_HEADER_ASSIGNMENT).build());
-
-        assertCommandFailure(editTaskCommand, model, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-    }*/
 
     @Test
     public void equals() {
@@ -1368,7 +1228,6 @@ import static seedu.address.logic.commands.CommandTestUtil.DESC_DESC_ASSIGNMENT;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_DESC_HOMEWORK;
 import static seedu.address.logic.commands.CommandTestUtil.HEADER_DESC_ASSIGNMENT;
 import static seedu.address.logic.commands.CommandTestUtil.HEADER_DESC_HOMEWORK;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_DEADLINE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DESC_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_HEADER_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_ASSIGNMENT;
@@ -1388,7 +1247,6 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditTaskCommand;
 import seedu.address.logic.commands.EditTaskCommand.EditTaskDescriptor;
-import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Desc;
 import seedu.address.model.task.Header;
 import seedu.address.testutil.EditTaskDescriptorBuilder;
@@ -1438,8 +1296,8 @@ public class EditTaskCommandParserTest {
 
 
         // invalid deadline followed by valid desc
-        assertParseFailure(parser, "1" + DESC_DESC_HOMEWORK + INVALID_DEADLINE_DESC,
-                Deadline.MESSAGE_DEADLINE_CONSTRAINTS);
+        //assertParseFailure(parser, "1" + DESC_DESC_HOMEWORK + INVALID_DEADLINE_DESC,
+        //        Deadline.MESSAGE_DEADLINE_CONSTRAINTS);
 
         // valid desc followed by invalid desc. The test case for invalid desc followed by valid desc
         // is tested at {@code parse_invalidValueFollowedByValidValue_success()}
@@ -2123,11 +1981,10 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysTask;
 
 import org.junit.Test;
 
+import guitests.guihandles.TaskCardHandle;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
 import seedu.address.testutil.TaskBuilder;
-
-import guitests.guihandles.TaskCardHandle;
 
 public class TaskCardTest extends GuiUnitTest {
 
@@ -2204,14 +2061,12 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertTaskCardEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.model.task.ReadOnlyTask;
-
 import guitests.guihandles.TaskCardHandle;
 import guitests.guihandles.TaskListPanelHandle;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.model.task.ReadOnlyTask;
 
 public class TaskListPanelTest extends GuiUnitTest {
     private static final ObservableList<ReadOnlyTask> TYPICAL_TASKS =
