@@ -612,6 +612,41 @@ The application will prompt you for the wrong format as the prefixes `th/`, `td/
 
 // end::edit-task[]
 
+// tag::delete-task[]
+=== Deleting a task : `deleteT`
+
+Deletes the specified task from the address book. +
+
+==== The Command
+Format: `delete INDEX`
+
+[NOTE]
+`INDEX` refers to the number on the task to be edited in the displayed list.
+
+[WARNING]
+If wrong task was deleted, **`undo` immediately without exiting the application!**
+
+==== Examples
+
+* `list` +
+`delete 2` +
+Deletes the 2nd task in the address book.
+* `delete 1` +
+Deletes the 1st task in the address book.
+
+==== Common Problems
+* Not entering the correct `index` +
+Ensure that the `index` entered is correct, or it may cause unintentional changes to another task. +
+
+* Confusing with `delete` and `deleteT` +
+The application will prompt you for the wrong format as the prefixes `th/`, `td/` or `tdl/` are not applicable to `delete`.
+
+
+[NOTE]
+`Index` is the #currently displayed# number corresponding to the task, which may differ if the current displayed list has been filtered.
+
+// end::delete-task[]
+
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
