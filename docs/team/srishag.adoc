@@ -6,7 +6,8 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: Contact'em
 Contact’em is a desktop address book application, and the user interacts with it through typing commands into the application.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]]
+*Code contributed*: [https://github.com/CS2103AUG2017-T11-B4/main/blob/master/collated/main/srishag.md[Functional code]]
+[https://github.com/CS2103AUG2017-T11-B4/main/blob/master/collated/test/srishag.md[Test code]]
 
 === Enhancement Added: Birthday attribute for Person
 
@@ -19,10 +20,9 @@ not known to the user. It also checks that the date entered is valid.
 
 ==== Implementation
 
----
 #Start of Extract [from: Developer Guide]#
 
-//PR for DG (Birthday) yet to be merged
+include::../DeveloperGuide.adoc/[tag=birthday]
 
 #End of Extract#
 
@@ -46,8 +46,39 @@ include::../UserGuide.adoc[tag=gmail]
 The main intention of this enhancement is to utilise the email attribute added to person and contact them.
 We used the Gmail API as this works well together with the `import`, `sync` and `export` commands.
 
+==== Implementation
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc/[tag=gmail]
+
+#End of Extract#
+
+---
+
+=== Added Tasks feature
+
+This allows Contact'em to be a multi-functional application where users can store the details of people who matter to them and the tasks that
+they need to complete.
+
+The full implementation can be seen throughout the changed Storage, UI and Model classes of the application.
+
+A short snippet for the different commands can be seen below.
+
+include::../DeveloperGuide.adoc[tag=tasks]
 
 === Enhancement Added: Add Task
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=add-task]
+
+#End of Extract#
+
+---
 
 ==== Justification
 
@@ -56,6 +87,17 @@ Here we add the ability to add tasks into a separate list of tasks, each with th
 
 === Enhancement Added: Edit Task
 
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=edit-task]
+
+#End of Extract#
+
+---
+
 ==== Justification
 
 It is common for tasks to change, more or less things to include, different deadlines, etc.
@@ -63,9 +105,23 @@ Editing a task is crucial for any user. Simply deleting and adding it again with
 
 === Enhancement Added: Delete Task
 
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=delete-task]
+
+#End of Extract#
+
+---
+
 ==== Justification
 
 Deleting a task is crucial to indicate a completed, cancelled or even a task passed on to someone else.
 As long as it's off the task list of the user, we want it to be removed from the task list on Contact'em.
 
+=== Other contributions
+
+* Performed acceptance testing in for team T10-B4 and raised the [https://github.com/CS2103AUG2017-T10-B4/main/issues/100[issue]].
 
