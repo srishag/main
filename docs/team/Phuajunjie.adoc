@@ -308,3 +308,7 @@ _Figure 5.6.1 : Example of usage of EasyFind feature_
 
 ---
 
+=== Coming in V2.0
+*Allows users to either sync contacts both ways +
+*Allows multiple deletes +
+*Loading screen while exporting contacts
