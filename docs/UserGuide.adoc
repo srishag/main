@@ -241,7 +241,7 @@ Only full words will be matched, for example, finding `Han` will not match `Hans
 ==== EasyFind
 
 The easyfind feature improves on the find feature. Contact'em now auto updates the results display whenever user inputs a letter with the `find` command word.
-Finds persons whose names contain any of the letters in the command box constantly having the user to input `enter`.
+Find persons whose names contain any of the letters in the command box constantly having the user to input `enter`.
 
 ==== Examples
  * `find Alex` +
@@ -472,6 +472,10 @@ Being able to access contacts from your mobile phones is the quickest way to get
 
 Enter `login` to link Contact’em with Google Contacts / Gmail. When the login page is loaded, simply key in your credentials and you will be redirected to google contacts.
 
+==== The Command
+Format: `login`  `import`  `export`  `sync`
+
+
 Enter `import` to have all your Google Contacts transferred to Contact’em.
 
 image::importusage.png[width="800"]
@@ -486,14 +490,19 @@ Enter `sync` to have your contacts in Google Contacts updated to Contact’em. C
 
 
 ==== Usage Notes
-When using `import` / `export` / `sync` command, your browser must have google contacts page loaded
+* When using `import` / `export` / `sync` command, your browser must have google contacts page loaded
     If you have switched the page, you will have to login again to use the commands.
 
-If a google contact fails to import or sync, please check the contact to make sure that the parameters are valid.
+* Please refresh the Google contacts page after exporting for the exported contacts to show up. Check FAQ for more information if contacts are still missing.
+
+
+* If a google contact fails to import or sync, please check the contact to make sure that the parameters are valid.
     Please check the reference guide on the validity of the parameters
 
-All google contacts imported are tagged with a ‘GoogleContact’ tag to indicate that they are linked to Google Contacts.
+* All google contacts imported are tagged with a ‘GoogleContact’ tag to indicate that they are linked to Google Contacts.
     Contacts deleted in Google Contacts will not be deleted in Contact’em when synced. It will simply lose its `GoogleContact` tag.
+
+
 
 // end::google[]
 
@@ -769,7 +778,6 @@ Option B: Directly connecting the 2 devices
 
 == FAQ
 
-##to be added ##
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
@@ -778,6 +786,16 @@ Refer to Section 3 above for details.
 *Q*: How do I resolve a problem  with _this_ command? +
 *A*: Refer to the `Common Problems` subsection of the corresponding command in the **features** section above (Section 2).
 Alternatively, if the command can be undone, enter `undo` and resolve from there.
+
+*Q*: Why does the Facebook Page not show when I select a contact? +
+*A*: Your device may have a slow or perhaps no connection to the Internet. Alternatively, ensure that the contact’s Facebook Page URL is correct.
+
+*Q*:  Why does my contacts not show in google contacts after i have exported them? +
+*A*: It might take some time for the contacts to show up in google contacts due to server issues.
+You may also switch to the old version of google contacts if the problem persists. However, please switch back to the new version if you wish to import / export / sync again.
+
+*Q*: How do i resolve the “authentication failed. Please login again” error. +
+*A*: Make sure you switch back to the new google contacts page if you are on the old version of google contacts. Then log in again and provide all the required permissions for Contact’em when prompted.
 
 == Quick-Reference Guide
 
@@ -897,6 +915,47 @@ Command Words: **help**, **h**
 |**help**
 |**help**
 |-
+
+|Login +
+Command Words: **login**
+|Shows program usage instructions
+|**login**
+|**login**
+|Have to stay on the Google Contacts page to use the following commands : import, sync, export.
+
+
+|Import +
+Command Words: **import**
+|Import contacts from Google Contacts
+|**import**
+|**import**
+|Following parameters in google contact must be present:
+ *name*, *phone*, *address*, *email*
+
+ _Validity of parameter:_ +
+ Phone number : digits +
+ Email Format: example@example.com
+
+
+|Sync +
+Command Words: **sync**
+|Syncs contacts to Google Contacts
+|**sync**
+|**sync**
+|Following parameters in google contact must be present:
+ *name*, *phone*, *address*, *email*
+
+ _Validity of parameter:_ +
+ Phone number : digits +
+ Email Format: example@example.com
+
+|Export +
+Command Words: **export**
+|Export contacts to Google Contacts
+|**export**
+|**export**
+|-
+
 
 |===
 
