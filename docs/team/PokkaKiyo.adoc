@@ -182,7 +182,7 @@ There must be at least one parameter specified, but the order of parameters ente
 The activity diagram below helps illustrate the process of the command, from user input to execution and updating the Model.
 
 image::findtags-activitydiagram.png[width="200"]
-_Figure 3.3.2.1 : Brief Overview of Command Procedure_
+_Figure 3.3.2.1 : Brief Overview of Find Tags Command Procedure_
 
 As seen from _Figure 3.3.2.1_ above, the entire command consists of 4 main steps:
 
@@ -193,6 +193,10 @@ As seen from _Figure 3.3.2.1_ above, the entire command consists of 4 main steps
 
 More detailed explanations and elaborations are given in the subsections below.
 
+image::FindTagsCommandClassDiagram.png[width="800"]
+_Figure 3.3.2.2 : Class Diagram of Find Tags Command
+
+The figure above is the class diagram of notable classes involved in this command, to aid understanding.
 
 ==== Implementation of Parser
 
@@ -265,10 +269,10 @@ This runs the test method of the _Predicate_, which determines the appropriate c
 
 Finally, this command returns a **CommandResult**, which includes the number of contacts being displayed. This value is displayed on the UI command box for the user’s reference.
 
-image::findtagssequencediagram.png[width="800"]
+image::FindContactsByTagsSequenceDiagram.png[width="800"]
 _Figure 3.3.5.1 : Findtags Sequence Diagram_
 
-Figure 3.3.5.1 above shows the overall sequence diagram and how it works.
+Figure 3.3.5.1 above shows the overall sequence diagram and a brief summary of how it works.
 
 ==== Addendum
 
