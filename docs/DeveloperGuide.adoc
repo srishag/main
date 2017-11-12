@@ -614,7 +614,7 @@ Nevertheless, this improvement is meant to increase user enjoyment and convenien
 
 === Birthdays
 
-Users are able to store birthdays of their contacts by inputting in the format of DDMMYYYY when adding a person, using the prefix `b/`.
+Users are able to store birthdays of their contacts by inputting in the format of ddMMyyyy when adding a person, using the prefix `b/`.
 
 In general, the ability to store a person’s birthday was implemented by adding it to the component of `Person`.
 
