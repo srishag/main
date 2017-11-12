@@ -32,9 +32,7 @@ public interface ReadOnlyTask {
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getDesc())
-                .append(" Header: ")
-                .append(getHeader())
+        builder.append(getHeader())
                 .append(" Desc: ")
                 .append(getDesc())
                 .append(" Deadline: ")

@@ -15,7 +15,7 @@ endif::[]
 By: `CS2103T T11-B4 Team`      Since: `Sep 2017`      Licence: `MIT`
 
 == Product Overview
-Contact'em is a convenient and easy addressbook application, that allows you to both store and retrieve your contacts easily and quickly.
+Contact'em is a convenient and easy addressbook application, that allows you to both store and retrieve your contacts as well as your tasks easily and quickly.
 Compared to other similar applications, Contact'em prides itself on its ease-of-use. Never again will you wish the application was easier to use.
 
 == About
@@ -503,7 +503,7 @@ All google contacts imported are tagged with a ‘GoogleContact’ tag to indica
 You can now use Contact'em to send e-mails to your contacts using the Command Line Interface of the application. +
 
 ==== The Command
-Format: `send INDEX [es/EMAIL SUBJECT] [eb/EMAIL BODY]`
+Format: `send INDEX [es/EMAIL_SUBJECT] [eb/EMAIL_BODY]`
 
 ==== Usage Examples
 * `send 1 es/Meeting for next Monday. eb/Looking forward to next Monday.` +
@@ -531,6 +531,39 @@ Please ensure you have entered the necessary details for each contact.
 [NOTE]
 `Index` is the #currently displayed# number corresponding to the contact, which may differ if the current displayed list has been filtered.
 // end::gmail[]
+
+// tag::add-task[]
+=== Adding tasks : `addT`
+
+You can also use Contact'em to add tasks using the Command Line Interface of the application. +
+
+==== The Command
+Format: `addT th/TASK_HEADER td/DESCRIPTION tdl/DEADLINE`
+
+==== Usage Examples
+* `addT th/Homework td/Questions 1 to 4 tdl/23112017.` +
+Adds a task with the header `Homework` with a description `Questions 1 to 4` and deadline `23112017`.
+* `addT th/Assignment td/Tutorial homework tdl/12122017` +
+Adds a task with the header `Assignment` with a description `Tutorial homework` and deadline `12122017`.
+
+==== More Information
+You must specify all fields of task headers and description to successfully add tasks to the application.
+
+Deadline is an optional field, however if you choose to enter it you must use the format ddMMyyyy.
+
+==== Common Problems
+
+1. Missing required fields +
+Compulsory fields to be entered are
+`*_header and description._*`
+
+2. Missing/wrong prefixes +
+The right prefixes are needed so the application can decipher the command.
+
+3. Confusing with `add` and `addT` +
+The application will prompt you for the wrong format as the prefixes `th/`, `td/` or `tdl/` are not applicable to `add`.
+
+// end::add-task[]
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
