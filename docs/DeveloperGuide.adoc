@@ -402,7 +402,7 @@ _Figure 3.1.4.1 : FindLettersCommand sequence diagram_
 **Cons:** This might confuse the user as the `FindCommand` and `FindLettersCommand` could generate different results. The contact that the user is searching for may be displayed when a partial name is inputted. However, when the user inputs `enter` before typing in the full name, the displayed contact will be removed by the original `FindCommand` +
 **Alternative 2:** Replace `FindCommand` with `FindLettersCommand` +
 **Pros:** The results displayed will not change even after the user has pressed `enter`. It can also help the user to speed up the process of searching for contacts as they user does not have to input the full name +
-**Cons:** Removing the find Command may affect other functions of the address book.
+**Cons:** Removing the find Command may affect other functions of the application.
 // end::EasyFind[]
 
 
