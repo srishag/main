@@ -893,10 +893,7 @@ The `TaskPanel` is incorporated into the address book `MainWindow` to display al
 
 ==== Task methods
 As mentioned earlier, the `Task` class contains three main methods: `addt`, `editt` and `deletet`.
-The execution flow is similar for all three methods on a higher level. We can demonstrate how different levels of components communicate with one another by referring to an example of `addt` command in the following sequence diagram:
-
-//image::AddEventDiagram.PNG[width="800"]
-//_Figure 4.2.1: AddEvent Sequence Diagram_
+The execution flow is similar for all three methods on a higher level.
 
 ==== Exceptions
 When the user input a task command with its parameters, the validity of the command word is checked inside the `AddressBookParser`. Next, the presence of the parameter prefixes is checked inside `AddTaskCommandParser`.
@@ -932,9 +929,6 @@ The `TaskCard` class extends `UiPart<Region>` to represent a distinct part of th
 ===== Design implementation
 When the user starts the `MainApp`, the system calls the `UiManager` to create a new `MainWindow` and fills it with `TaskListPanel` and other components. The displayed events are created by `UniqueTaskList` and the binding of individual UI elements to the `TaskCard` ensures that any changes to the parameter will be displayed in the `TaskListPanel`.
 The sequence diagram below illustrates the interaction between the `TaskCard` and the `UiManager`:
-
-//image::EventCardDiagram.PNG[width="800"]
-//_Figure 4.2.2: EventCard Interaction Sequence Diagram_
 
 ==== Design Considerations
 **Aspect(future enhancement):** How to implement adding/tagging of contacts into a `Task` using a `Person` list parameter +
