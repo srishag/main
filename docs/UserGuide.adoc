@@ -487,7 +487,7 @@ image::exportusage.png[width="800"]
 _Figure 5.14.2 : Example of usage of Export command_
 
 [NOTE]
-Export might take several minutes. Please do not close your application meanwhile
+Export might take several minutes. Please do not close your application meanwhile even if it becomes unresponsive
 
 Enter `sync` to have your contacts in Google Contacts updated to Contact’em. Contacts in Google Contacts takes higher precedence and when sync is used, contacts in Contact’em will be updated to the contacts in Google Contacts.
 
