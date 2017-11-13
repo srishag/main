@@ -43,6 +43,16 @@ Example: edit 1 p/91234567 e/johndoe@example.com
 *Expected Result*: Error message suggesting the correct birthday format. +
 *Result Message*: Person birthday can only be digits, and should be a valid date represented by a 8 digit number with format ddMMyyyy
 
+*Type in*: edit 100 b/28021996 +
+*Expected Result*: Error message suggesting the correct index. +
+*Result Message*: The person index provided is invalid
+
+*Type in*: edit -1 b/28021996 +
+*Expected Result*: Error message suggesting the correct command format as format requires valid index. +
+*Result Message*: Edits the details of the person identified by the index number used in the last person listing. Existing values will be overwritten by the input values.
+Parameters: INDEX (must be a positive integer) [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [f/FACEBOOK ADDRESS] [t/TAG]...
+Example: edit 1 p/91234567 e/johndoe@example.com
+
 === Add Task Command
 
 ==== Description
@@ -78,6 +88,40 @@ Example: addt th/Homework td/Finish page 6 to 9 tdl/08/11/2017
 *Result Message*: Invalid command format!
 addt: Adds a task to the address book. Parameters: th/HEADER td/DESC tdl/DATE
 Example: addt th/Homework td/Finish page 6 to 9 tdl/08/11/2017
+
+=== Edit Task Command
+
+==== Description
+
+This command is used to edit a task's details.
+
+==== Steps To Execute And Expected Results
+
+*Type in*: editt +
+*Expected Result*: Error message suggesting correct command format. +
+*Result message*: Invalid command format!
+editt: Edits the details of the task identified by the index number used in the last task listing. Existing values will be overwritten by the input values.
+Parameters: INDEX (must be a positive integer) [th/HEADER] [td/DESC] [tdl/DEADLINE]
+Example: editt 1th/ homework tdl/31/12/2017
+
+*Type in*: editt 2 th/Shopping for food td/Grocery shopping +
+*Expected Result*: Success message showing the task with the relevant fields edited. +
+*Result message*: Edited Task: Shopping for food Desc: Grocery shopping Deadline: tomorrow
+
+*Type in*: editt 7 td/Project portfolio +
+*Expected Result*: Error message due to containing the same task in the address book. +
+*Result Message*: This task already exists in the address book.
+
+*Type in*: editt 100 tdl/today +
+*Expected Result*: Error message suggesting the correct index. +
+*Result Message*: The task index provided is invalid
+
+*Type in*: edit -1 tdl/today +
+*Expected Result*: Error message suggesting the correct index. +
+*Result Message*: Invalid command format!
+editt: Edits the details of the task identified by the index number used in the last task listing. Existing values will be overwritten by the input values.
+Parameters: INDEX (must be a positive integer) [th/HEADER] [td/DESC] [tdl/DEADLINE]
+Example: editt 1th/ homework tdl/31/12/2017
 
 === List Command
 
