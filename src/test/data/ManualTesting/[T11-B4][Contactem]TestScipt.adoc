@@ -43,6 +43,42 @@ Example: edit 1 p/91234567 e/johndoe@example.com
 *Expected Result*: Error message suggesting the correct birthday format. +
 *Result Message*: Person birthday can only be digits, and should be a valid date represented by a 8 digit number with format ddMMyyyy
 
+=== Add Task Command
+
+==== Description
+
+This command is used to add tasks into the application. The deadline field is currently optional, however the prefix `tdl/` is still required.
+
+==== Steps To Execute And Expected Results
+
+*Type in*: addt th/Buy furniture td/From Ikea Tampines tdl/this weekend +
+*Expected Result*: Success message with task information displayed. +
+*Result Message*: New task added: Buy furniture Desc: From Ikea Tampines Deadline: this weekend
+
+*Type in*: addt th/Buy furniture td/From Ikea Tampines +
+*Expected Result*: Error message suggesting the correct command format. +
+*Result Message*: Invalid command format!
+addt: Adds a task to the address book. Parameters: th/HEADER td/DESC tdl/DATE
+Example: addt th/Homework td/Finish page 6 to 9 tdl/08/11/2017
+
+*Type in*: addt th/Buy furniture +
+*Expected Result*: Error message suggesting the correct command format. +
+*Result Message*: Invalid command format!
+addt: Adds a task to the address book. Parameters: th/HEADER td/DESC tdl/DATE
+Example: addt th/Homework td/Finish page 6 to 9 tdl/08/11/2017
+
+*Type in*: addt td/From Ikea Tampines +
+*Expected Result*: Error message suggesting the correct command format. +
+*Result Message*: Invalid command format!
+addt: Adds a task to the address book. Parameters: th/HEADER td/DESC tdl/DATE
+Example: addt th/Homework td/Finish page 6 to 9 tdl/08/11/2017
+
+*Type in*: addt +
+*Expected Result*: Error message suggesting the correct command format. +
+*Result Message*: Invalid command format!
+addt: Adds a task to the address book. Parameters: th/HEADER td/DESC tdl/DATE
+Example: addt th/Homework td/Finish page 6 to 9 tdl/08/11/2017
+
 === List Command
 
 ==== Description
