@@ -308,3 +308,11 @@ _Figure 5.6.1 : Example of usage of EasyFind feature_
 
 ---
 
+=== Enhancement Proposed: Deleting multiple contacts
+
+==== Justification
+
+Managing contacts is the main focus of our application. Hence, it would be more convenient for the user if they are able to delete multiple contacts at once. Additionally,
+contacts to be deleted can be displayed first before the user inputs enter. This can be implemented using the easy find implementation.
+
+

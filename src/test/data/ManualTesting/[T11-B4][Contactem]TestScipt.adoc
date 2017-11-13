@@ -342,15 +342,15 @@ Note that this command cannot be reversed by the undo command.
 *Expected Result*: Google login page will be loaded in browser panel. +
 *Result Message*: Please Login
 
-*Please login to your google contacts. The following tests are created with the assumption that your google contacts account is empty. +
+*Please login to your google contacts. The following tests are created with the assumption that your google contacts account is empty.* +
 Please disable your 2 step verification to log in. Use this link to disable it "https://myaccount.google.com/security?pli=1#signin" +
 
-You may use this dummy account if you do not have a google account +
+*You may use this dummy account if you do not have a google account* +
 Email : dummy2103@hotmail.com +
 Password : password2103 +
 
 Next, Create a contact in the dummy google contacts. +
-Example Name: Mark, Phone: 92345678, Email: wrong@hotmail.com, Address: Blk 1 simei Avenue*
+*Example Name: Mark, Phone: 92345678, Email: wrong@hotmail.com, Address: Blk 1 simei Avenue*
 
 *Type in*: import +
 *Expected Result*: The contact “Mark” created previously will be imported to Contact'em. +
