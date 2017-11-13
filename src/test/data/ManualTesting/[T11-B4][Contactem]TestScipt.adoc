@@ -1,4 +1,16 @@
 = Contact'em - Test Script
+:imagesDir: images
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
 
 By: `Team T11-B4`      Since: `Aug 2017`      Licence: `MIT`
 
@@ -6,7 +18,82 @@ By: `Team T11-B4`      Since: `Aug 2017`      Licence: `MIT`
 
 === Before You Start Testing
 
-//to be added later
+=== Add Person Command
+
+==== Description
+
+The add command has been slightly modified from the original command given in address book level 4, to support adding of 2 fields, Birthday and Facebook Address (basically a Facebook profile URL).
+
+==== Steps To Execute And Expected Results
+First, test if the original command works.
+Try
+*Type in*: Add n/Will Johnson p/91111111 e/william@johnson.com a/ 123 William Street #12-34
+*Expected result*: Besides the usual contact details, there should be an empty line (due to an empty Birthday field) followed by the default Facebook homepage (https://facebook.com).
+
+After that, *undo* the command to save time.
+(*Type in*: undo)
+You can also try the *redo* command out here. Remember to undo again if you choose to test *redo*!
+(*Type in*: redo)
+
+Next, try the following 4 commands, using an *undo* after each command to speed up testing.
+
+*Type in*: Add n/William Johnson p/91111111 e/william@johnson.com a/ 123 William Street #12-34 b/10101995
+*Expected result*: A new contact with birthday as stated should appear. The Facebook field should be the default Facebook homepage as well.
+
+*Type in*: Add n/William Johnson p/91111111 e/william@johnson.com a/ 123 William Street #12-34
+f/William
+*Expected result*: A new contact with Facebook field _https://facebook.com/William_ should appear. Birthday field should be left as a blank space on the person card.
+
+*Type in*: Add n/William Johnson p/91111111 e/william@johnson.com a/ 123 William Street #12-34 f/facebook.com/William
+*Expected result*: Same as above, with facebook field _ facebook.com/William_ .
+
+*Type in*: Add n/William Johnson p/91111111 e/william@johnson.com a/ 123 William Street #12-34
+b/10101995 f/facebook.com/William
+*Expected result*: A new contact with both birthday field and Facebook field should appear.
+om Address: 123 William Street #12-34 Birthday:  Facebook: https://www.facebook.com/ Tags: !
+
+=== Find Person Command
+
+==== Description
+
+The find command is now enhanced with the easy find functionality. Contact’em now updates the results display every time the user inputs a letter.
+
+First, test if the original command works. Ignore the results that might show up.
+
+==== Steps To Execute And Expected Results
+*[NOTE] Dont input enter unless advised to.*
+
+*Type in*: find a +
+*Expected Result*:  Contact "Alex Yeoh" and "Alanis Otis" will be displayed +
+*Result message*: 2 persons found!
+
+*Type in*: find ale +
+*Expected Result*:  Contact "Alex Yeoh" will be displayed +
+*Result Message*: 1 persons found!
+
+*Type in*: find alea +
+*Expected Result*:  No Contact displayed +
+*Result Message*: no results
+
+*Type in*: find alex [ENTER HERE] +
+*Expected Result*:  Contact "Alex Yeoh" will be displayed +
+*Result Message*: 1 persons listed!
+
+=== Delete Person Command
+
+==== Description
+
+This command is used to delete contacts in Contact'em
+
+==== Steps To Execute And Expected Results
+
+*Type in*: delete 1 +
+*Expected Result*:  Contact "Alex Yeoh" will be deleted +
+*Result message*: Deleted Person: Alex Yeoh Phone: 87438807 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Birthday: 03041987 Facebook: https://www.facebook.com/Alex Tags: [friends]
+
+*Type in*: undo +
+*Expected Result*:  Contact "Alex Yeoh" will be restored +
+*Result message*: Undo success!
 
 === Edit Person Command
 
@@ -147,6 +234,25 @@ This command is used to open the User Guide for users to refer to.
 *Expected Result*: Help window pops up. +
 *Result Message*: Opened help window.
 
+=== Select Command
+
+==== Description
+
+The select command is mostly unchanged from the original address book. However, instead of opening a Google search of the contact’s name, the browser component instead opens the Facebook URL of the contact. Do note you have to be connected to the Internet for this to work.
+
+==== Steps To Execute And Expected Results
+
+*Type in*: Select 3 +
+*Expected result*: Check that the Browser opens up the correct page as specified in the person card, and that the selected person card changes color.
+If it does not open up immediately, please give it some time, this usually happens on the first time the browser is opened.
+
+Also, note that since these test data are randomly generated, they will not all point to an actual Facebook Profile. If this is the case, it will point to a Facebook Search (or prompt you to log in to do the search). This is intended, as it is up to the onus of the user to maintain the correct Facebook Address.
+Therefore, select 3 is used as it coincidentally points to an actual Facebook URL, correct as of this 13/11/1
+
+You can also try to enter other indexes for the parameter of the Select command.
+Next, you may optionally try to click on the contact, and see if the browser still opens up to the Facebook URL of the contact, although since this is a CLI-app, this step may be omitted.
+
+
 === Clear Command
 
 ==== Description
@@ -162,6 +268,104 @@ This command is used to clear the data in the address book.
 *Type in*: undo +
 *Expected Result*: The person list and task list is restored to its previous form. +
 *Result Message*: Undo success!
+
+=== List All Tags Command
+
+==== Description
+The command for listing all the tags in the application is listtags. Alternatively, try lt as well, which is the shortcut alias. Note that only tags which are currently attached to at least one contact is shown.
+
+==== Steps To Execute And Expected Results
+
+*Type in*: listtags
+*Type in*: lt
+*Expected result*: In the result box (under the command line), it should show which tags are currently in the application, in alphabetical order.
+
+To further test the functionality, try:
+*Type in*: Add n/William Johnson p/91111111 e/william@johnson.com a/ 123 William Street #12-34 b/10101995 t/UniqueTag
+*Type in*: listtags
+*Expected result*: This should display the new [UniqueTag].
+
+Next,
+*Type in*: undo or >>delete [Index of above contact]
+*Type in*: listtags
+*Expected result*: The [UniqueTag] should no longer be shown.
+
+Note that this command cannot be reversed by the undo command.
+
+=== Finding Contacts by Tags
+
+==== Description
+
+The command keyword for this feature is findtags, findtag, or ft.
+
+==== Steps To Execute And Expected Results
+
+Try the following command:
+*Type in*: findtags friends
+*Expected result*: This should display all contacts that have the friends (or friend) tag. Should also show, in the result box, the number of contacts being displayed.
+
+
+Now, try the singular form of the word.
+*Type in*: findtags friend
+*Expected result*: The results should be the same as above, as the application searches for both singular and plural form of the word.
+
+Note that this is done by adding the letter ‘S’ or removing the letter ‘S’ from the keyword, so if you try findtags family it will attempt to find familys as well instead of family. This is a known limitation of the command, but it is still implemented this way to reduce complexity and performance impact while bringing about some quality-of-life improvement for the user.
+
+Next, test the exclusion, as follows: (note the dash ‘-‘ before colleagues)
+*Type in*: findtags friends -colleagues
+*Expected result*: Only friends that do not have the colleague tag are shown.
+
+Finally, try: (note the dash ‘-‘ before friends).
+*Type in*: findtags -friends
+*Expected result*: All contacts in the application, except those with the friends tags, are shown.
+
+Note that this command cannot be reversed by the undo command.
+
+=== Google Contacts Commands
+
+==== Description
+Set-up :
+*[Important] please follow the following steps closely to fully test the google integration feature.*
+
+==== Steps To Execute And Expected Results
+
+
+*Type in*: login +
+*Expected Result*: google login page will be loaded in browser panel.
+*Result Message*: Please Login
+
+Please use this dummy google account for testing +
+email : Phuajunjie@hotmail.com +
+password : 90670238 +
+Next, Create a contact in the dummy google contacts. +
+Example Name: Mark, Phone: 92345678, Email: wrong@hotmail.com, Address: Blk 1 simei Avenue*
+
+*Type in*: import +
+*Expected Result*: The contact “Mark” created previously will be imported to Contact'em.
+*Result Message*: 1 contact/s imported!     0 contact/s failed to import!
+
+*Edit “Mark” email address to correct@hotmail.com in Google Contacts*
+
+*Type in*: sync +
+*Expected Result*: The email address of contact “Mark” will be updated in Contact'em.
+*Result Message*: 1 contact/s Synced!     0 contact/s failed to Sync!
+
+*Remove “Mark” email address in Google Contacts (Leave it blank)*
+
+*Type in*: sync +
+*Expected Result*: Contact “Mark” will not be updated in Contact'em due to missing attributes.
+*Result Message*: 0 contact/s Synced!     1 contact/s failed to Sync!
+                  Please check the format of the following google contacts : Mark!
+
+*[Important] The next command may take several minutes to run. Do not stop the application even if it becomes unresponsive. Contact’em will inform you that all contacts has been exported.*
+
+*Type in*: export +
+*Expected Result*: Contacts in Contact'em will be exported.
+*Result Message*: 20 contact/s exported!     All contacts can be now found in google contact
+
+*Type in*: login +
+*Expected Result*: To refresh the google contacts page so that the contacts exported will be shown
+
 
 === ExitCommand
 
