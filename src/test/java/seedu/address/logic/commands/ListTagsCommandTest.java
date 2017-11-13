@@ -1,7 +1,6 @@
 //@@author PokkaKiyo
 package seedu.address.logic.commands;
 
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_UNIQUETAG;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_UNIQUETAG2;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_UPPERCASE;
@@ -79,8 +78,8 @@ public class ListTagsCommandTest {
     public void execute_upperCaseAndLowerCaseTags_showsCorrectOrder() throws DuplicatePersonException {
         model.addPerson(DAVID);
         expectedModel.addPerson(DAVID);
-        String newExpectedMessage = expectedMessage + " [" + VALID_TAG_UNIQUETAG + "]" +
-                " [" + VALID_TAG_UPPERCASE + "]";
+        String newExpectedMessage = expectedMessage + " [" + VALID_TAG_UNIQUETAG + "]"
+                + " [" + VALID_TAG_UPPERCASE + "]";
         assertCommandSuccess(listTagsCommand, model, newExpectedMessage, expectedModel);
     }
 
