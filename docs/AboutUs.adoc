@@ -21,7 +21,7 @@ Role: Developer
 
 === Tan Wei Jie
 image::pokkakiyo.jpg[width="150", align="left"]
-{empty} [https://github.com/pokkakiyo[github]]
+{empty} [https://github.com/pokkakiyo[github]] [<<PokkaKiyo#, portfolio>>]
 
 Role: Documentation, code quality, in charge of Model.
 
