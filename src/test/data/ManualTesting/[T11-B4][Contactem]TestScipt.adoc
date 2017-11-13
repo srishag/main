@@ -4,10 +4,11 @@ By: `Team T11-B4`      Since: `Aug 2017`      Licence: `MIT`
 
 ---
 
-== Before You Start Testing
+=== Before You Start Testing
 
+//to be added later
 
-== Edit Person Command
+=== Edit Person Command
 
 ==== Description
 
@@ -62,8 +63,8 @@ This command is used to open the User Guide for users to refer to.
 
 ==== Steps To Execute And Expected Results
 
-*Type in*: help
-*Expected Result*: Help window pops up.
+*Type in*: help +
+*Expected Result*: Help window pops up. +
 *Result Message*: Opened help window.
 
 === Clear Command
@@ -78,8 +79,8 @@ This command is used to clear the data in the address book.
 *Expected Result*: All persons and tasks are cleared. +
 *Result Message*: Address book has been cleared!
 
-*Type in*: undo
-*Expected Result*: The person list and task list is restored to its previous form.
+*Type in*: undo +
+*Expected Result*: The person list and task list is restored to its previous form. +
 *Result Message*: Undo success!
 
 === ExitCommand
