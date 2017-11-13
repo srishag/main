@@ -60,8 +60,6 @@ Next, try the following 4 commands, using an *undo* after each command to speed 
 
 The find command is now enhanced with the easy find functionality. Contact’em now updates the results display every time the user inputs a letter.
 
-First, test if the original command works. Ignore the results that might show up.
-
 ==== Steps To Execute And Expected Results
 *[NOTE] Dont input enter unless advised to.*
 
@@ -335,19 +333,22 @@ Note that this command cannot be reversed by the undo command.
 === Google Contacts Commands
 
 ==== Description
-Set-up :
 *[Important] please follow the following steps closely to fully test the google integration feature.*
 
 ==== Steps To Execute And Expected Results
 
 
 *Type in*: login +
-*Expected Result*: google login page will be loaded in browser panel. +
+*Expected Result*: Google login page will be loaded in browser panel. +
 *Result Message*: Please Login
 
-Please use this dummy google account for testing +
-email : Phuajunjie@hotmail.com +
-password : 90670238 +
+*Please login to your google contacts. The following tests are created with the assumption that your google contacts account is empty. +
+Please disable your 2 step verification to log in. Use this link to disable it "https://myaccount.google.com/security?pli=1#signin" +
+
+You may use this dummy account if you do not have a google account +
+Email : dummy2103@hotmail.com +
+Password : password2103 +
+
 Next, Create a contact in the dummy google contacts. +
 Example Name: Mark, Phone: 92345678, Email: wrong@hotmail.com, Address: Blk 1 simei Avenue*
 
@@ -388,4 +389,3 @@ This command is used to exit the program
 
 *Type in*: exit +
 *Expected Result*: The application closes.
-
