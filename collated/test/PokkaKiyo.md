@@ -120,12 +120,15 @@ public class FindPersonsWithTagsCommandTest {
 ``` java
 package seedu.address.logic.commands;
 
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_UNIQUETAG;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_UNIQUETAG2;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_UPPERCASE;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.CORNIE;
 import static seedu.address.testutil.TypicalPersons.CORNIE_NEW_NON_UNIQUE_TAG;
 import static seedu.address.testutil.TypicalPersons.CORNIE_NEW_UNIQUE_TAG;
+import static seedu.address.testutil.TypicalPersons.DAVID;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
@@ -188,6 +191,15 @@ public class ListTagsCommandTest {
         expectedModel.addPerson(CORNIE);
         String newExpectedMessage = expectedMessage + " [" + VALID_TAG_UNIQUETAG + "]";
 
+        assertCommandSuccess(listTagsCommand, model, newExpectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_upperCaseAndLowerCaseTags_showsCorrectOrder() throws DuplicatePersonException {
+        model.addPerson(DAVID);
+        expectedModel.addPerson(DAVID);
+        String newExpectedMessage = expectedMessage + " [" + VALID_TAG_UNIQUETAG + "]" +
+                " [" + VALID_TAG_UPPERCASE + "]";
         assertCommandSuccess(listTagsCommand, model, newExpectedMessage, expectedModel);
     }
 
