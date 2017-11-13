@@ -9,7 +9,7 @@ Compared to other typical  address book applications, Contact'em is designed to 
 variety of ways such as Facebook Messenger and Gmail.
 
 This Portfolio showcases the implementations of enhancements I have added and proposed for the project, shown
-through extracts from the project User Guide and Developer Guide. Links to Functional and Test codes are provided below:
+through extracts from the project User Guide and Developer Guide. Links to Functional and Test codes are provided below.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T11-B4/main/blob/master/collated/main/PokkaKiyo.md[Functional code]][https://github.com/CS2103AUG2017-T11-B4/main/blob/master/collated/test/PokkaKiyo.md[Test code]]
 
@@ -23,7 +23,10 @@ through extracts from the project User Guide and Developer Guide. Links to Funct
 === Locating persons by tag name: `findtags`
 `SINCE V1.2`
 
-Finds persons who have tags matching any of the given keywords. +
+Finds persons who have tags matching any of the given keywords. The command keyword is `findtags` +
+
+[TIP]
+You can substitute the command keyword `findtags` with `findtag` or `ft`.
 
 ==== The Command
 Format: `findtags KEYWORD [MORE_KEYWORDS]` +
@@ -47,30 +50,18 @@ _Figure 5.6.3c : Application displays all contacts tagged as friends_
 
 The figures above demonstrate an example of how this command is used.
 
-[TIP]
-You can substitute the command `findtags` with `findtag` or `ft`.
-
-[NOTE]
-The search is **not** case-sensitive.
-
 [NOTE]
 The order of the keywords does not matter.
 
-[NOTE]
-Only full words will be matched. For example, `fri` will **not** match `friends`.
 
-[NOTE]
-Contact with at least one of the specified tag keywords will be displayed.
-
-==== Note on singular and plural tenses
-The search will attempt to be more lenient with singular and plural tenses.
-
+==== Note on Singular and Plural Keywords
+To make it more convenient for you to search for contacts through their tags, this search function will attempt to be more lenient with singular and plural tenses.
 For example: +
 
 * `friend` will return contacts with either tag `friend` or `friends`. +
 * `colleagues` will return contacts with either tag `colleague` or `colleagues`.
 
-However, this may not always be correct for words where plural and singular differs not only by a single letter 's'.
+However, this will not work for words where plural and singular differs not only by a single letter 's'.
 Searching by tag `family` will attempt to find contacts with tags `family` and `familyS` instead of `families`.
 
 ==== Specifying Exclusions
@@ -96,7 +87,7 @@ In this case, the application will show **all** contacts who are #NOT# tagged co
 
 ==== Justification
 
-The main theme of Contact'em is to be able to easily find/filter the contacts in the application.
+One of the main themes of Contact'em is to be able to easily find/filter the contacts in the application.
 This feature allows users to easily search for contacts in big numbers by locating them according to their tags.
 
 ==== Implementation
@@ -111,7 +102,7 @@ The application allows users to find contacts based on their tags. The command w
 
 ==== User Inputs and Expected Actions/Results
 
-In general, there are three ways users will use this command. Some pseudo-code is provided for each of these 3 scenarios to aid understanding.
+There are three ways to use this command. Some pseudo-code is provided for each of these 3 scenarios to aid understanding.
 
 **Scenario 1**
 
@@ -133,7 +124,7 @@ return false;
 
 **Scenario 2**
 
-In the second scenario, the user only specifies tags to **exclude**. To specify a tag to exclude, user includes a hyphen -  before the keyword to be excluded. In this case, the program should return all contacts that do not have any of these tags to be excluded.
+In the second scenario, the user only specifies tags to **exclude**. To specify a tag to exclude, user includes a hyphen "-"  before the keyword to be excluded. In this case, the program should return all contacts that do not have any of these tags to be excluded.
 
 Note that this includes contacts with no tags.
 
@@ -184,12 +175,24 @@ There must be at least one parameter specified, but the order of parameters ente
 
 ==== Brief Overview of Command Procedure
 
-The activity diagram below helps illustrate the process of the command, from user input to execution and updating the Model.
+3 diagrams are provided below to help illustrate a big picture view of the command.
+
+===== Class Diagram:
+
+image::FindTagsCommandClassDiagram.png[width="800"]
+_Figure 3.3.2.1 : Class Diagram of Find Tags Command_
+
+Firstly, _Figure 3.3.2.1_ above is the class diagram of this command, which should
+provide a basic understanding of the classes involved.
+
+
+===== Activity Diagram:
 
 image::findtags-activitydiagram.png[width="200"]
-_Figure 3.3.2.1 : Brief Overview of Find Tags Command Procedure_
+_Figure 3.3.2.2 : Brief Overview of Find Tags Command Procedure_
 
-As seen from _Figure 3.3.2.1_ above, the entire command consists of 4 main steps:
+Secondly, _Figure 3.3.2.2_ above is the activity diagram of the command.
+As you can see, the entire command consists of 4 main steps:
 
 1) The parameters are parsed and deciphered. +
 2) Using the deciphered information from step 1, the Predicate and Command are constructed. +
@@ -198,10 +201,12 @@ As seen from _Figure 3.3.2.1_ above, the entire command consists of 4 main steps
 
 More detailed explanations and elaborations are given in the subsections below.
 
-image::FindTagsCommandClassDiagram.png[width="800"]
-_Figure 3.3.2.2 : Class Diagram of Find Tags Command_
+===== Sequence Diagram:
+image::FindContactsByTagsSequenceDiagram.png[width="800"]
+_Figure 3.3.2.3 : Findtags Sequence Diagram_
 
-The figure above is the class diagram of notable classes involved in this command, to aid understanding.
+Last but not least, _Figure 3.3.2.3_ above shows the overall sequence diagram, to give a more detailed look into the steps taken
+by the program to run the command.
 
 ==== Implementation of Parser
 
@@ -242,7 +247,7 @@ Within this test method, the following steps occur, for each contact in the curr
 image::findtags-pathdiagram.png[width="800"]
 _Figure 3.3.4.1 : Findtags Predicate Activity Diagram_
 
-Firstly, all of the person’s tags, if any, are appended to a String **allTagNames**. For example, if a contact has tags "friends" and "colleagues", the resulting String is "friends colleagues".
+As seem from _Figure 3.3.4.1_, firstly, all of the person’s tags, if any, are appended to a String **allTagNames**. For example, if a contact has tags "friends" and "colleagues", the resulting String is "friends colleagues".
 
 Then, the comparison is made between **allTagNames** and the 2 lists generated in constructor, to return the appropriate Boolean value. Below is the code snippet used in the comparison. Note that this is not the only way to implement this comparison.
 
@@ -270,14 +275,11 @@ After the command parser returns the command to **AddressbookParser** and then t
 
 In this **execute()** method, the current model invokes its **updateFilteredPersonList** method, with the command _Predicate_ as described above as its parameter.
 
-This runs the test method of the _Predicate_, which determines the appropriate contacts to filter. This causes the model to update accordingly and filters the contacts displayed in the UI.
+This runs the **test()** method of the _Predicate_, which determines the appropriate contacts to filter. This causes the model to update accordingly and filters the contacts displayed in the UI.
 
 Finally, this command returns a **CommandResult**, which includes the number of contacts being displayed. This value is displayed on the UI command box for the user’s reference.
 
-image::FindContactsByTagsSequenceDiagram.png[width="800"]
-_Figure 3.3.5.1 : Findtags Sequence Diagram_
 
-Last but not least, Figure 3.3.5.1 above shows the overall sequence diagram and a final summary of how it works.
 
 ==== Addendum
 
@@ -292,7 +294,7 @@ As a result, it does not account for words where singular and plural forms diffe
 
 It is therefore recommended that future developers improve this method, perhaps by implementing a proper dictionary or library for this method, after weighing the costs and benefits. Alternatively, this idea could be further improved or refined on with a Lookup Table to save file storage space.
 
-Nevertheless, this improvement is meant to increase user enjoyment and convenience. The bonus of organising and spelling tags in an organised manner is still on the user. To that end,  if the case arises that, based on user feedback, this improvement does more harm than good, it is recommended that this feature be removed or made optional. Although, this is not something that the current developers foresee will occur based on how people in general spell their tags.
+Nevertheless, this improvement is meant to increase user enjoyment and convenience. The onus of organising and spelling tags in an organised manner is still on the user. To that end,  if the case arises that, based on user feedback, this improvement does more harm than good, it is recommended that this feature be removed or made optional. However, this is not something that the current developers foresee will occur based on observation of how people in general spell their tags.
 
 
 ==== Design Considerations
