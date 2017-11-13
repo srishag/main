@@ -18,6 +18,10 @@ By: `Team T11-B4`      Since: `Aug 2017`      Licence: `MIT`
 
 === Before You Start Testing
 
+Before testing, you need ensure that you have the test data ([T11-B4][Contactem]SampleData.xml).
+
+Place Contactem.jar in an empty folder. Open Contactem.jar.
+
 === Add Person Command
 
 ==== Description
@@ -88,11 +92,11 @@ This command is used to delete contacts in Contact'em
 ==== Steps To Execute And Expected Results
 
 *Type in*: delete 1 +
-*Expected Result*:  Contact "Alex Yeoh" will be deleted +
+*Expected Result*:  Success message displayed with "Alex Yeoh" in person list deleted. +
 *Result message*: Deleted Person: Alex Yeoh Phone: 87438807 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Birthday: 03041987 Facebook: https://www.facebook.com/Alex Tags: [friends]
 
 *Type in*: undo +
-*Expected Result*:  Contact "Alex Yeoh" will be restored +
+*Expected Result*:  Deleted contact "Alex Yeoh" will be restored +
 *Result message*: Undo success!
 
 === Edit Person Command
@@ -105,7 +109,7 @@ This command is used to edit a contact's information.
 
 *Type in*: edit +
 *Expected Result*: Error message suggesting correct command format. +
-*Result message*: Invalid command format!
+*Result message*: Invalid command format! +
 edit: Edits the details of the person identified by the index number used in the last person listing. Existing values will be overwritten by the input values.
 Parameters: INDEX (must be a positive integer) [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [f/FACEBOOK ADDRESS] [t/TAG]...
 Example: edit 1 p/91234567 e/johndoe@example.com
@@ -136,7 +140,8 @@ Example: edit 1 p/91234567 e/johndoe@example.com
 
 *Type in*: edit -1 b/28021996 +
 *Expected Result*: Error message suggesting the correct command format as format requires valid index. +
-*Result Message*: Edits the details of the person identified by the index number used in the last person listing. Existing values will be overwritten by the input values.
+*Result Message*: Invalid command format! +
+edit: Edits the details of the person identified by the index number used in the last person listing. Existing values will be overwritten by the input values.
 Parameters: INDEX (must be a positive integer) [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [f/FACEBOOK ADDRESS] [t/TAG]...
 Example: edit 1 p/91234567 e/johndoe@example.com
 
@@ -154,25 +159,25 @@ This command is used to add tasks into the application. The deadline field is cu
 
 *Type in*: addt th/Buy furniture td/From Ikea Tampines +
 *Expected Result*: Error message suggesting the correct command format. +
-*Result Message*: Invalid command format!
+*Result Message*: Invalid command format! +
 addt: Adds a task to the address book. Parameters: th/HEADER td/DESC tdl/DATE
 Example: addt th/Homework td/Finish page 6 to 9 tdl/08/11/2017
 
 *Type in*: addt th/Buy furniture +
 *Expected Result*: Error message suggesting the correct command format. +
-*Result Message*: Invalid command format!
+*Result Message*: Invalid command format! +
 addt: Adds a task to the address book. Parameters: th/HEADER td/DESC tdl/DATE
 Example: addt th/Homework td/Finish page 6 to 9 tdl/08/11/2017
 
 *Type in*: addt td/From Ikea Tampines +
 *Expected Result*: Error message suggesting the correct command format. +
-*Result Message*: Invalid command format!
+*Result Message*: Invalid command format! +
 addt: Adds a task to the address book. Parameters: th/HEADER td/DESC tdl/DATE
 Example: addt th/Homework td/Finish page 6 to 9 tdl/08/11/2017
 
 *Type in*: addt +
 *Expected Result*: Error message suggesting the correct command format. +
-*Result Message*: Invalid command format!
+*Result Message*: Invalid command format! +
 addt: Adds a task to the address book. Parameters: th/HEADER td/DESC tdl/DATE
 Example: addt th/Homework td/Finish page 6 to 9 tdl/08/11/2017
 
@@ -186,7 +191,7 @@ This command is used to edit a task's details.
 
 *Type in*: editt +
 *Expected Result*: Error message suggesting correct command format. +
-*Result message*: Invalid command format!
+*Result message*: Invalid command format! +
 editt: Edits the details of the task identified by the index number used in the last task listing. Existing values will be overwritten by the input values.
 Parameters: INDEX (must be a positive integer) [th/HEADER] [td/DESC] [tdl/DEADLINE]
 Example: editt 1th/ homework tdl/31/12/2017
@@ -205,10 +210,26 @@ Example: editt 1th/ homework tdl/31/12/2017
 
 *Type in*: edit -1 tdl/today +
 *Expected Result*: Error message suggesting the correct index. +
-*Result Message*: Invalid command format!
+*Result Message*: Invalid command format! +
 editt: Edits the details of the task identified by the index number used in the last task listing. Existing values will be overwritten by the input values.
 Parameters: INDEX (must be a positive integer) [th/HEADER] [td/DESC] [tdl/DEADLINE]
 Example: editt 1th/ homework tdl/31/12/2017
+
+=== Delete Task Command
+
+==== Description
+
+This command is used to delete tasks in Contact'em
+
+==== Steps To Execute And Expected Results
+
+*Type in*: deletet 1 +
+*Expected Result*:  Success message with first task "Submission" deleted. +
+*Result message*: Deleted task: Submission Desc: Project portfolio Deadline: today
+
+*Type in*: undo +
+*Expected Result*:  Task "Submission" will be restored +
+*Result message*: Undo success!
 
 === List Command
 
@@ -257,11 +278,11 @@ Note that if you try to click on the contacts instead of typing, the result mess
 
 Now, try some out of bound numbers, for example: +
 *Type in*: select 100 +
-*Expected Result*: No action taken as the index is out of bounds.
+*Expected Result*: No action taken as the index is out of bounds. +
 *Result Message*: The person index provided is invalid
 
 *Type in*: select 0 +
-*Expected Result*: No action taken as the index is out of bounds.
+*Expected Result*: No action taken as the index is out of bounds. +
 *Result Message*: +
 Invalid command format! +
 select: Selects the person identified by the index number used in the last person listing. +
@@ -397,7 +418,27 @@ Next, Create a contact in the dummy google contacts. +
 *Type in*: login +
 *Expected Result*: To refresh the google contacts page so that the contacts exported will be shown
 
-=== ExitCommand
+=== History Command
+
+==== Description
+
+This command is used to show the history of commands executed since the start of the launch of the application.
+
+==== Steps To Execute And Expected Results
+
+*Type in*: history +
+*Expected Result*: List of executed commands is shown.
+*Result Message*:
+Entered commands (from most recent to earliest):
+redo
+undo
+editt 1 th/Submission of Homework
+editt 1 Submission
+history
+undo
+deletet 1
+
+=== Exit Command
 
 ==== Description
 
