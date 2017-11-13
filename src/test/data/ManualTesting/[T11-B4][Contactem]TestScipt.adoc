@@ -1,0 +1,43 @@
+= Contact'em - Test Script
+
+By: `Team T11-B4`      Since: `Aug 2017`      Licence: `MIT`
+
+---
+
+== Before You Start Testing
+
+
+== Edit Person Command
+
+==== Description
+
+This command is used to edit a contact's information.
+
+==== Steps To Execute And Expected Results
+
+*Type in*: edit +
+*Expected Result*: Error message suggesting correct command format. +
+*Result message*: Invalid command format!
+edit: Edits the details of the person identified by the index number used in the last person listing. Existing values will be overwritten by the input values.
+Parameters: INDEX (must be a positive integer) [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [f/FACEBOOK ADDRESS] [t/TAG]...
+Example: edit 1 p/91234567 e/johndoe@example.com
+
+*Type in*: edit 2 p/98009898 b/28041991 +
+*Expected Result*: Success message showing the person with the relevant fields edited. +
+*Result message*: Edited Person: Bernice Yu Phone: 98009898 Email: berniceyu@example.com Address: Blk 30 Lorong 3 Serangoon Gardens, #07-18 Birthday: 28041991 Facebook: https://www.facebook.com/BerniceYu Tags: [colleagues][friends]
+
+*Type in*: edit 8 n/Alex Yeoh p/87438807 a/Blk 30 Geylang Street 29, #06-40 e/alexyeoh@example.com b/03041987 f/https://www.facebook.com/Alex +
+*Expected Result*: Error message due to containing the same person in the address book. +
+*Result Message*: This person already exists in the address book.
+
+*Type in*: edit 4 p/abc +
+*Expected Result*: Error message suggesting the correct phone format. +
+*Result Message*: Phone numbers can only contain numbers, and should be at least 3 digits long
+
+*Type in*: edit 6 e/emailexample.com +
+*Expected Result*: Error message suggesting the correct email format. +
+*Result Message*: Person emails should be 2 alphanumeric/period strings separated by '@'
+
+*Type in*: edit 1 b/29021997 +
+*Expected Result*: Error message suggesting the correct birthday format. +
+*Result Message*: Person birthday can only be digits, and should be a valid date represented by a 8 digit number with format ddMMyyyy
