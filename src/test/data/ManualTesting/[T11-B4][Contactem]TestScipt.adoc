@@ -109,7 +109,7 @@ This command is used to edit a contact's information.
 
 *Type in*: edit +
 *Expected Result*: Error message suggesting correct command format. +
-*Result message*: Invalid command format!
+*Result message*: Invalid command format! +
 edit: Edits the details of the person identified by the index number used in the last person listing. Existing values will be overwritten by the input values.
 Parameters: INDEX (must be a positive integer) [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [f/FACEBOOK ADDRESS] [t/TAG]...
 Example: edit 1 p/91234567 e/johndoe@example.com
@@ -140,7 +140,8 @@ Example: edit 1 p/91234567 e/johndoe@example.com
 
 *Type in*: edit -1 b/28021996 +
 *Expected Result*: Error message suggesting the correct command format as format requires valid index. +
-*Result Message*: Edits the details of the person identified by the index number used in the last person listing. Existing values will be overwritten by the input values.
+*Result Message*: Invalid command format! +
+edit: Edits the details of the person identified by the index number used in the last person listing. Existing values will be overwritten by the input values.
 Parameters: INDEX (must be a positive integer) [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [f/FACEBOOK ADDRESS] [t/TAG]...
 Example: edit 1 p/91234567 e/johndoe@example.com
 
@@ -158,25 +159,25 @@ This command is used to add tasks into the application. The deadline field is cu
 
 *Type in*: addt th/Buy furniture td/From Ikea Tampines +
 *Expected Result*: Error message suggesting the correct command format. +
-*Result Message*: Invalid command format!
+*Result Message*: Invalid command format! +
 addt: Adds a task to the address book. Parameters: th/HEADER td/DESC tdl/DATE
 Example: addt th/Homework td/Finish page 6 to 9 tdl/08/11/2017
 
 *Type in*: addt th/Buy furniture +
 *Expected Result*: Error message suggesting the correct command format. +
-*Result Message*: Invalid command format!
+*Result Message*: Invalid command format! +
 addt: Adds a task to the address book. Parameters: th/HEADER td/DESC tdl/DATE
 Example: addt th/Homework td/Finish page 6 to 9 tdl/08/11/2017
 
 *Type in*: addt td/From Ikea Tampines +
 *Expected Result*: Error message suggesting the correct command format. +
-*Result Message*: Invalid command format!
+*Result Message*: Invalid command format! +
 addt: Adds a task to the address book. Parameters: th/HEADER td/DESC tdl/DATE
 Example: addt th/Homework td/Finish page 6 to 9 tdl/08/11/2017
 
 *Type in*: addt +
 *Expected Result*: Error message suggesting the correct command format. +
-*Result Message*: Invalid command format!
+*Result Message*: Invalid command format! +
 addt: Adds a task to the address book. Parameters: th/HEADER td/DESC tdl/DATE
 Example: addt th/Homework td/Finish page 6 to 9 tdl/08/11/2017
 
@@ -190,7 +191,7 @@ This command is used to edit a task's details.
 
 *Type in*: editt +
 *Expected Result*: Error message suggesting correct command format. +
-*Result message*: Invalid command format!
+*Result message*: Invalid command format! +
 editt: Edits the details of the task identified by the index number used in the last task listing. Existing values will be overwritten by the input values.
 Parameters: INDEX (must be a positive integer) [th/HEADER] [td/DESC] [tdl/DEADLINE]
 Example: editt 1th/ homework tdl/31/12/2017
@@ -209,7 +210,7 @@ Example: editt 1th/ homework tdl/31/12/2017
 
 *Type in*: edit -1 tdl/today +
 *Expected Result*: Error message suggesting the correct index. +
-*Result Message*: Invalid command format!
+*Result Message*: Invalid command format! +
 editt: Edits the details of the task identified by the index number used in the last task listing. Existing values will be overwritten by the input values.
 Parameters: INDEX (must be a positive integer) [th/HEADER] [td/DESC] [tdl/DEADLINE]
 Example: editt 1th/ homework tdl/31/12/2017
@@ -277,11 +278,11 @@ Note that if you try to click on the contacts instead of typing, the result mess
 
 Now, try some out of bound numbers, for example: +
 *Type in*: select 100 +
-*Expected Result*: No action taken as the index is out of bounds.
+*Expected Result*: No action taken as the index is out of bounds. +
 *Result Message*: The person index provided is invalid
 
 *Type in*: select 0 +
-*Expected Result*: No action taken as the index is out of bounds.
+*Expected Result*: No action taken as the index is out of bounds. +
 *Result Message*: +
 Invalid command format! +
 select: Selects the person identified by the index number used in the last person listing. +
