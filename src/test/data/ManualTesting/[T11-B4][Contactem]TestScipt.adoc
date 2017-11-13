@@ -68,3 +68,4 @@ This command is used to exit the program
 
 *Type in*: exit +
 *Expected Result*: The application closes.
+
