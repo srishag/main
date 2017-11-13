@@ -62,10 +62,6 @@ public class PersonContainsTagsPredicateTest {
 
     @Test
     public void test_personDoesNotHaveTagsContainingKeywordsToInclude_returnsFalse() {
-        // Zero keywords
-        //PersonContainsTagsPredicate predicate = new PersonContainsTagsPredicate(Collections.emptyList());
-        //assertFalse(predicate.test(new PersonBuilder().withTags("whateverTag").build()));
-
         // Non-matching keyword
         PersonContainsTagsPredicate predicate = new PersonContainsTagsPredicate(Arrays.asList("roommate"));
         assertFalse(predicate.test(new PersonBuilder().withTags("schoolmate", "classmate").build()));

@@ -270,10 +270,13 @@ When the search results displays no results , the letters will not match any con
 
 
 // tag::findtags[]
-=== Locating persons by tag name: `findtags`
+=== Finding Contacts by Tag : `findtags`
 `SINCE V1.2`
 
-Finds persons who have tags matching any of the given keywords. +
+Finds contacts who have tags matching any of the given keywords. The command keyword is `findtags` +
+
+[TIP]
+You can substitute the command keyword `findtags` with `findtag` or `ft`.
 
 ==== The Command
 Format: `findtags KEYWORD [MORE_KEYWORDS]` +
@@ -295,36 +298,21 @@ _Figure 5.6.3b : Entering command to find all contacted tagged as friends_
 image::findtags-after.png[width="200"]
 _Figure 5.6.3c : Application displays all contacts tagged as friends_
 
-The figures above demonstrate an example of how this command is used.
+The figures above demonstrate an example of how this command is used, with respect to the first example.
 
-[TIP]
-You can substitute the command `findtags` with `findtag` or `ft`.
 
-[NOTE]
-The search is **not** case-sensitive.
-
-[NOTE]
-The order of the keywords does not matter.
-
-[NOTE]
-Only full words will be matched. For example, `fri` will **not** match `friends`.
-
-[NOTE]
-Contact with at least one of the specified tag keywords will be displayed.
-
-==== Note on singular and plural tenses
-The search will attempt to be more lenient with singular and plural tenses.
-
+==== Note on Singular and Plural Keywords
+To make it more convenient for you to search for contacts through their tags, this search function will attempt to be more lenient with singular and plural tenses.
 For example: +
 
 * `friend` will return contacts with either tag `friend` or `friends`. +
 * `colleagues` will return contacts with either tag `colleague` or `colleagues`.
 
-However, this may not always be correct for words where plural and singular differs not only by a single letter 's'.
+However, this will not work for words where plural and singular differs not only by a single letter 's'.
 Searching by tag `family` will attempt to find contacts with tags `family` and `familyS` instead of `families`.
 
 ==== Specifying Exclusions
-`since v1.4`
+`SINCE V1.4`
 
 You can now specify tags to be excluded in this command, by simply adding a dash ('-') before keywords specified for exclusion.
 This feature will help you better manage your contacts.
@@ -339,19 +327,20 @@ Specifying only tags to exclude +
 Example 2:
 `findtags` #-colleagues# +
 In this case, the application will show **all** contacts who are #NOT# tagged colleagues, regardless of other tags.
+
 // end::findtags[]
 
 // tag::listtags[]
 === List tags : `listtags` +
-`since v1.3`
+`SINCE V1.3`
 
-Lists all existing tags in the App +
+Lists all existing tags in Contact'em. +
 
 [TIP]
 Listing all tags is designed to help you choose which tags to specify when using `findtags`.
 
 ==== The Command
-Format: `listtags`
+Format: `listtags` +
 
 // end::listtags[]
 
@@ -641,9 +630,9 @@ If wrong task was deleted, **`undo` immediately without exiting the application!
 ==== Examples
 
 * `list` +
-`delete 2` +
+`deletet 2` +
 Deletes the 2nd task in the address book.
-* `delete 1` +
+* `deletet 1` +
 Deletes the 1st task in the address book.
 
 ==== Common Problems
@@ -752,6 +741,15 @@ Alternatively, you can exit by clicking on the RED X at the top right of the App
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
+
+=== Adding Profile Picture to Contacts
+`Coming in V2.0`
+
+To help you identify your contacts, in Version 2.0 of Contact'em, you will be able to attach pictures to each of your contacts.
+All that is required is a link to the image on the Internet.
+
+==== The Command
+Format: `addPicture INDEX IMAGE_URL` +
 
 == Transferring of Data to Another Device
 Do you wish to transfer the data stored in Contact'em on one device to another?

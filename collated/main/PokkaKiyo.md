@@ -131,7 +131,7 @@ public class ListTagsCommand extends Command {
     }
 
     private void sortTagNamesAlphabetically(ArrayList<String> listOfAllTagNames) {
-        Collections.sort(listOfAllTagNames);
+        Collections.sort(listOfAllTagNames, String.CASE_INSENSITIVE_ORDER);
     }
 
     /**

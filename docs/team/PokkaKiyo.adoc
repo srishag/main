@@ -20,10 +20,10 @@ through extracts from the project User Guide and Developer Guide. Links to Funct
 ---
 #Start of Extract [from: User Guide]#
 
-=== Locating persons by tag name: `findtags`
+=== Finding Contacts by Tag : `findtags`
 `SINCE V1.2`
 
-Finds persons who have tags matching any of the given keywords. The command keyword is `findtags` +
+Finds contacts who have tags matching any of the given keywords. The command keyword is `findtags` +
 
 [TIP]
 You can substitute the command keyword `findtags` with `findtag` or `ft`.
@@ -48,10 +48,7 @@ _Figure 5.6.3b : Entering command to find all contacted tagged as friends_
 image::findtags-after.png[width="200"]
 _Figure 5.6.3c : Application displays all contacts tagged as friends_
 
-The figures above demonstrate an example of how this command is used.
-
-[NOTE]
-The order of the keywords does not matter.
+The figures above demonstrate an example of how this command is used, with respect to the first example.
 
 
 ==== Note on Singular and Plural Keywords
@@ -96,7 +93,7 @@ This feature allows users to easily search for contacts in big numbers by locati
 
 #Start of Extract [from: Developer Guide]#
 
-=== Finding contacts by tags
+=== Finding Contacts by Tags
 
 The application allows users to find contacts based on their tags. The command word is `findtags`, and the alternatives are `findtag` and `ft`. The following subsections explain how the program is supposed to function given this command, and how it is implemented.
 
@@ -353,7 +350,7 @@ Format: `listtags` +
 
 ==== Justification
 
-The main intention of this enhancement is to supplement the find by tags function as described above.
+The main intention of this enhancement is to supplement the find contacts by tags function as described above.
 For users with large numbers of tags, it may be difficult to remember what tags are saved in the application.
 This enhancement allows users to easily refer to the tags that they have saved in the application, enhancing ease of use and quality of life.
 
@@ -428,6 +425,7 @@ function of this enhancement is to complement the find tags feature.
 ---
 #Start of Extract [from: User Guide]#
 
+=== Adding Profile Picture to Contacts
 `Coming in V2.0`
 
 To help you identify your contacts, in Version 2.0 of Contact'em, you will be able to attach pictures to each of your contacts.
