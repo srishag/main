@@ -41,3 +41,30 @@ Example: edit 1 p/91234567 e/johndoe@example.com
 *Type in*: edit 1 b/29021997 +
 *Expected Result*: Error message suggesting the correct birthday format. +
 *Result Message*: Person birthday can only be digits, and should be a valid date represented by a 8 digit number with format ddMMyyyy
+
+=== Clear Command
+
+==== Description
+
+This command is used to clear the data in the address book.
+
+==== Steps To Execute And Expected Results
+
+*Type in*: clear +
+*Expected Result*: All persons and tasks are cleared. +
+*Result Message*: Address book has been cleared!
+
+*Type in*: undo
+*Expected Result*: The person list and task list is restored to its previous form.
+*Result Message*: Undo success!
+
+=== ExitCommand
+
+==== Description
+
+This command is used to exit the program
+
+==== Steps To Execute And Expected Results
+
+*Type in*: exit +
+*Expected Result*: The application closes.
