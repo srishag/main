@@ -65,26 +65,6 @@ public class LoadLoginEvent extends BaseEvent {
 ```
 ###### \java\seedu\address\commons\GoogleAuthenticator.java
 ``` java
-package seedu.address.commons;
-
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-
-import com.google.api.client.googleapis.auth.oauth2.GoogleBrowserClientRequestUrl;
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
-import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.services.people.v1.PeopleService;
-import com.google.api.services.people.v1.model.ListConnectionsResponse;
-import com.google.api.services.people.v1.model.Person;
-
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.GetRedirectUrlEvent;
-import seedu.address.logic.commands.exceptions.GoogleAuthException;
-
 /**
  * This class contains methods of the google Auth Api. For authentication after login.
  */
@@ -125,15 +105,32 @@ public class GoogleAuthenticator {
      */
     public String getToken() throws GoogleAuthException {
         String token;
+        boolean indexToken;
         try {
             GetRedirectUrlEvent event = new GetRedirectUrlEvent();
             EventsCenter.getInstance().post(event);
             String url = event.getReDirectUrl();
-            token = url.substring(url.indexOf("token=") + 6, url.indexOf("&"));
+            indexToken = checkValidTokenIndex(url.indexOf("token="));
+            if (indexToken) {
+                token = url.substring(url.indexOf("token=") + 6, url.indexOf("&"));
+            } else {
+                throw new StringIndexOutOfBoundsException();
+            }
         } catch (StringIndexOutOfBoundsException | NullPointerException e) {
             throw new GoogleAuthException("Authentication Failed. Please login again.");
         }
         return token;
+    }
+
+    /**
+     * Checks if google login is valid
+     * @returns true if valid (i.e. index is not -1) or false if not valid(i.e. index is -1)
+     */
+    public boolean checkValidTokenIndex(int index) {
+        if (index == -1) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -247,7 +244,7 @@ public class GoogleContactsBuilder {
      *       containsWordIgnoreCase("ABc def", "Ac") == false //not a full word match
      *       </pre>
      * @param sentence cannot be null
-     * @param word cannot be null, cannot be empty, must be a single word
+     * @param word cannot be null, cannot be empty
      */
     public static boolean containsAlphabetIgnoreCase(String sentence, String word) {
         requireNonNull(sentence);
@@ -264,35 +261,6 @@ public class GoogleContactsBuilder {
         }
         return false;
     }
-
-    /**
-     * Returns a detailed message of the t, including the stack trace.
-     */
-    public static String getDetails(Throwable t) {
-        requireNonNull(t);
-        StringWriter sw = new StringWriter();
-        t.printStackTrace(new PrintWriter(sw));
-        return t.getMessage() + "\n" + sw.toString();
-    }
-
-    /**
-     * Returns true if {@code s} represents a non-zero unsigned integer
-     * e.g. 1, 2, 3, ..., {@code Integer.MAX_VALUE} <br>
-     * Will return false for any other non-null string input
-     * e.g. empty string, "-1", "0", "+1", and " 2 " (untrimmed), "3 0" (contains whitespace), "1 a" (contains letters)
-     * @throws NullPointerException if {@code s} is null.
-     */
-    public static boolean isNonZeroUnsignedInteger(String s) {
-        requireNonNull(s);
-
-        try {
-            int value = Integer.parseInt(s);
-            return value > 0 && !s.startsWith("+"); // "+1" is successfully parsed by Integer#parseInt(String)
-        } catch (NumberFormatException nfe) {
-            return false;
-        }
-    }
-}
 ```
 ###### \java\seedu\address\logic\commands\exceptions\GoogleAuthException.java
 ``` java
@@ -334,8 +302,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case sensitive.
+ * Exports contacts in addressbook to google contacts
  */
 public class ExportCommand extends Command {
 
@@ -346,10 +313,6 @@ public class ExportCommand extends Command {
             + "process\n"
             + "Parameters: KEYWORD\n"
             + "Example: " + COMMAND_WORD;
-    private String commandMessage = "";
-
-    private int contactsExportedCount = 0;
-    private int errorExportCount = 0;
 
     private GoogleContactsBuilder builder;
 
@@ -374,6 +337,8 @@ public class ExportCommand extends Command {
 
     @Override
     public CommandResult execute() throws GoogleAuthException, CommandException {
+        int contactsExportedCount = 0;
+        int errorExportCount = 0;
         List<ReadOnlyPerson> addressBookList = model.getAddressBook().getPersonList();
         Person googleContact;
 
@@ -395,7 +360,7 @@ public class ExportCommand extends Command {
                 }
             }
         }
-        commandMessage = setCommandMessage(contactsExportedCount, errorExportCount);
+        String commandMessage = setCommandMessage(contactsExportedCount, errorExportCount);
         return new CommandResult(commandMessage);
     }
 
@@ -434,7 +399,6 @@ public class ExportCommand extends Command {
         }
         tags.add(tag);
 
-
         return new seedu.address.model.person.Person(contact.getName(), contact.getPhone(),
                 contact.getEmail(), contact.getAddress(), contact.getBirthday(),
                 contact.getFacebookAddress(), tags, id);
@@ -445,7 +409,7 @@ public class ExportCommand extends Command {
      */
     public String setCommandMessage(int contactsExportedCount, int errorExportCount) {
 
-        commandMessage = String.format(Messages.MESSAGE_EXPORT_CONTACT, contactsExportedCount);
+        String commandMessage = String.format(Messages.MESSAGE_EXPORT_CONTACT, contactsExportedCount);
         if (errorExportCount == 0) {
             commandMessage += "All contacts can be now found in google contact";
         } else {
@@ -455,7 +419,7 @@ public class ExportCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\FindAlphabetCommand.java
+###### \java\seedu\address\logic\commands\FindLettersCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -463,10 +427,10 @@ import seedu.address.model.person.NameContainsAlphabetsPredicate;
 
 /**
  * Finds and lists all persons in address book whose name contains any of the characters.\
- * This function works without having the user to hit the "Enter Key"
+ * This function works without having the user to hit the "Enter" key
  * Keyword matching is case insensitive.
  */
-public class FindAlphabetCommand extends Command {
+public class FindLettersCommand extends Command {
 
     public static final String COMMAND_WORD = "Sfind";
 
@@ -476,7 +440,7 @@ public class FindAlphabetCommand extends Command {
 
     private final NameContainsAlphabetsPredicate predicate;
 
-    public FindAlphabetCommand(NameContainsAlphabetsPredicate predicate) {
+    public FindLettersCommand(NameContainsAlphabetsPredicate predicate) {
         this.predicate = predicate;
     }
 
@@ -488,8 +452,8 @@ public class FindAlphabetCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof FindAlphabetCommand // instanceof handles nulls
-                && this.predicate.equals(((FindAlphabetCommand) other).predicate)); // state check
+                || (other instanceof FindLettersCommand // instanceof handles nulls
+                && this.predicate.equals(((FindLettersCommand) other).predicate)); // state check
     }
 }
 ```
@@ -520,8 +484,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case sensitive.
+ * Imports contacts to from google contacts to addressbook
  */
 public class ImportCommand extends UndoableCommand {
 
@@ -534,12 +497,6 @@ public class ImportCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD;
 
     private List<Person> googleContactsList;
-
-
-    private String commandMessage = "";
-    private String namesNotImported = "";
-    private int contactsImportedCount = 0;
-    private int errorImportsCount = 0;
 
     /**
      * Constructor for ImportCommand (Gets the Google Contact List after successful authentication)
@@ -565,6 +522,11 @@ public class ImportCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
+        String commandMessage;
+        String namesNotImported = "";
+        int contactsImportedCount = 0;
+        int errorImportsCount = 0;
+
         List<ReadOnlyPerson> addressBookList = model.getAddressBook().getPersonList();
 
         if (this.googleContactsList == null) {
@@ -584,7 +546,7 @@ public class ImportCommand extends UndoableCommand {
         }
 
         commandMessage = setCommandMessage(namesNotImported, contactsImportedCount, errorImportsCount,
-                googleContactsList.size());
+                googleContactsList.size(), namesNotImported);
         return new CommandResult(commandMessage);
     }
 
@@ -622,16 +584,17 @@ public class ImportCommand extends UndoableCommand {
     /**
      * Creates a detailed message on the status of the import
      */
-    public String setCommandMessage(String notImported, int contactsImported, int errorImports, int size) {
+    public String setCommandMessage(String notImported, int contactsImported, int errorImports, int size,
+                                    String namesNotImported) {
         int existedContacts = size - contactsImported - errorImports;
         String commandMessage;
         commandMessage = String.format(Messages.MESSAGE_IMPORT_CONTACT, contactsImported,
                 size - contactsImported) + "\n";
 
         if (size > contactsImported) {
-            commandMessage += "Contacts already existed : " + String.valueOf(existedContacts)
-                    + "     Contacts not in the correct format : " + String.valueOf(errorImports) + "\n";
+            commandMessage += String.format(Messages.MESSAGE_IMPORT_STATUS, existedContacts, errorImports) + "\n";
         }
+
         if (errorImports > 0) {
             commandMessage += "Please check the format of the following google contacts : "
                     + notImported.substring(0, namesNotImported.length() - 2);
@@ -651,8 +614,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.events.ui.LoadLoginEvent;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case sensitive.
+ * For loading the authentication/login page
  */
 public class LoginCommand extends Command {
 
@@ -860,7 +822,7 @@ public class SyncCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\FindAlphabetCommandParser.java
+###### \java\seedu\address\logic\parser\FindLettersCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -868,30 +830,30 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 
 import java.util.Arrays;
 
-import seedu.address.logic.commands.FindAlphabetCommand;
+import seedu.address.logic.commands.FindLettersCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsAlphabetsPredicate;
 
 /**
  * Parses input arguments and creates a new FindCommand object
  */
-public class FindAlphabetCommandParser implements Parser<FindAlphabetCommand> {
+public class FindLettersCommandParser implements Parser<FindLettersCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the FindAlphabetCommand
-     * and returns an FindAlphabetCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the FindLettersCommand
+     * and returns an FindLettersCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public FindAlphabetCommand parse(String args) throws ParseException {
+    public FindLettersCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindAlphabetCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindLettersCommand.MESSAGE_USAGE));
         }
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
 
-        return new FindAlphabetCommand(new NameContainsAlphabetsPredicate(Arrays.asList(nameKeywords)));
+        return new FindLettersCommand(new NameContainsAlphabetsPredicate(Arrays.asList(nameKeywords)));
     }
 
 }

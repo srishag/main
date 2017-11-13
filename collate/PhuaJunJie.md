@@ -105,15 +105,32 @@ public class GoogleAuthenticator {
      */
     public String getToken() throws GoogleAuthException {
         String token;
+        boolean indexToken;
         try {
             GetRedirectUrlEvent event = new GetRedirectUrlEvent();
             EventsCenter.getInstance().post(event);
             String url = event.getReDirectUrl();
-            token = url.substring(url.indexOf("token=") + 6, url.indexOf("&"));
+            indexToken = checkValidTokenIndex(url.indexOf("token="));
+            if (indexToken) {
+                token = url.substring(url.indexOf("token=") + 6, url.indexOf("&"));
+            } else {
+                throw new StringIndexOutOfBoundsException();
+            }
         } catch (StringIndexOutOfBoundsException | NullPointerException e) {
             throw new GoogleAuthException("Authentication Failed. Please login again.");
         }
         return token;
+    }
+
+    /**
+     * Checks if google login is valid
+     * @returns true if valid (i.e. index is not -1) or false if not valid(i.e. index is -1)
+     */
+    public boolean checkValidTokenIndex(int index) {
+        if (index == -1) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -285,8 +302,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case sensitive.
+ * Exports contacts in addressbook to google contacts
  */
 public class ExportCommand extends Command {
 
@@ -297,10 +313,6 @@ public class ExportCommand extends Command {
             + "process\n"
             + "Parameters: KEYWORD\n"
             + "Example: " + COMMAND_WORD;
-    private String commandMessage = "";
-
-    private int contactsExportedCount = 0;
-    private int errorExportCount = 0;
 
     private GoogleContactsBuilder builder;
 
@@ -325,6 +337,8 @@ public class ExportCommand extends Command {
 
     @Override
     public CommandResult execute() throws GoogleAuthException, CommandException {
+        int contactsExportedCount = 0;
+        int errorExportCount = 0;
         List<ReadOnlyPerson> addressBookList = model.getAddressBook().getPersonList();
         Person googleContact;
 
@@ -346,7 +360,7 @@ public class ExportCommand extends Command {
                 }
             }
         }
-        commandMessage = setCommandMessage(contactsExportedCount, errorExportCount);
+        String commandMessage = setCommandMessage(contactsExportedCount, errorExportCount);
         return new CommandResult(commandMessage);
     }
 
@@ -385,7 +399,6 @@ public class ExportCommand extends Command {
         }
         tags.add(tag);
 
-
         return new seedu.address.model.person.Person(contact.getName(), contact.getPhone(),
                 contact.getEmail(), contact.getAddress(), contact.getBirthday(),
                 contact.getFacebookAddress(), tags, id);
@@ -396,7 +409,7 @@ public class ExportCommand extends Command {
      */
     public String setCommandMessage(int contactsExportedCount, int errorExportCount) {
 
-        commandMessage = String.format(Messages.MESSAGE_EXPORT_CONTACT, contactsExportedCount);
+        String commandMessage = String.format(Messages.MESSAGE_EXPORT_CONTACT, contactsExportedCount);
         if (errorExportCount == 0) {
             commandMessage += "All contacts can be now found in google contact";
         } else {
@@ -406,7 +419,7 @@ public class ExportCommand extends Command {
     }
 }
 ```
-###### \main\java\seedu\address\logic\commands\FindAlphabetCommand.java
+###### \main\java\seedu\address\logic\commands\FindLettersCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -414,10 +427,10 @@ import seedu.address.model.person.NameContainsAlphabetsPredicate;
 
 /**
  * Finds and lists all persons in address book whose name contains any of the characters.\
- * This function works without having the user to hit the "Enter Key"
+ * This function works without having the user to hit the "Enter" key
  * Keyword matching is case insensitive.
  */
-public class FindAlphabetCommand extends Command {
+public class FindLettersCommand extends Command {
 
     public static final String COMMAND_WORD = "Sfind";
 
@@ -427,7 +440,7 @@ public class FindAlphabetCommand extends Command {
 
     private final NameContainsAlphabetsPredicate predicate;
 
-    public FindAlphabetCommand(NameContainsAlphabetsPredicate predicate) {
+    public FindLettersCommand(NameContainsAlphabetsPredicate predicate) {
         this.predicate = predicate;
     }
 
@@ -439,8 +452,8 @@ public class FindAlphabetCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof FindAlphabetCommand // instanceof handles nulls
-                && this.predicate.equals(((FindAlphabetCommand) other).predicate)); // state check
+                || (other instanceof FindLettersCommand // instanceof handles nulls
+                && this.predicate.equals(((FindLettersCommand) other).predicate)); // state check
     }
 }
 ```
@@ -471,8 +484,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case sensitive.
+ * Imports contacts to from google contacts to addressbook
  */
 public class ImportCommand extends UndoableCommand {
 
@@ -485,12 +497,6 @@ public class ImportCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD;
 
     private List<Person> googleContactsList;
-
-
-    private String commandMessage = "";
-    private String namesNotImported = "";
-    private int contactsImportedCount = 0;
-    private int errorImportsCount = 0;
 
     /**
      * Constructor for ImportCommand (Gets the Google Contact List after successful authentication)
@@ -516,6 +522,11 @@ public class ImportCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
+        String commandMessage;
+        String namesNotImported = "";
+        int contactsImportedCount = 0;
+        int errorImportsCount = 0;
+
         List<ReadOnlyPerson> addressBookList = model.getAddressBook().getPersonList();
 
         if (this.googleContactsList == null) {
@@ -535,7 +546,7 @@ public class ImportCommand extends UndoableCommand {
         }
 
         commandMessage = setCommandMessage(namesNotImported, contactsImportedCount, errorImportsCount,
-                googleContactsList.size());
+                googleContactsList.size(), namesNotImported);
         return new CommandResult(commandMessage);
     }
 
@@ -573,16 +584,17 @@ public class ImportCommand extends UndoableCommand {
     /**
      * Creates a detailed message on the status of the import
      */
-    public String setCommandMessage(String notImported, int contactsImported, int errorImports, int size) {
+    public String setCommandMessage(String notImported, int contactsImported, int errorImports, int size,
+                                    String namesNotImported) {
         int existedContacts = size - contactsImported - errorImports;
         String commandMessage;
         commandMessage = String.format(Messages.MESSAGE_IMPORT_CONTACT, contactsImported,
                 size - contactsImported) + "\n";
 
         if (size > contactsImported) {
-            commandMessage += "Contacts already existed : " + String.valueOf(existedContacts)
-                    + "     Contacts not in the correct format : " + String.valueOf(errorImports) + "\n";
+            commandMessage += String.format(Messages.MESSAGE_IMPORT_STATUS, existedContacts, errorImports) + "\n";
         }
+
         if (errorImports > 0) {
             commandMessage += "Please check the format of the following google contacts : "
                     + notImported.substring(0, namesNotImported.length() - 2);
@@ -602,8 +614,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.events.ui.LoadLoginEvent;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case sensitive.
+ * For loading the authentication/login page
  */
 public class LoginCommand extends Command {
 
@@ -811,7 +822,7 @@ public class SyncCommand extends UndoableCommand {
     }
 }
 ```
-###### \main\java\seedu\address\logic\parser\FindAlphabetCommandParser.java
+###### \main\java\seedu\address\logic\parser\FindLettersCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -819,30 +830,30 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 
 import java.util.Arrays;
 
-import seedu.address.logic.commands.FindAlphabetCommand;
+import seedu.address.logic.commands.FindLettersCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsAlphabetsPredicate;
 
 /**
  * Parses input arguments and creates a new FindCommand object
  */
-public class FindAlphabetCommandParser implements Parser<FindAlphabetCommand> {
+public class FindLettersCommandParser implements Parser<FindLettersCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the FindAlphabetCommand
-     * and returns an FindAlphabetCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the FindLettersCommand
+     * and returns an FindLettersCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public FindAlphabetCommand parse(String args) throws ParseException {
+    public FindLettersCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindAlphabetCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindLettersCommand.MESSAGE_USAGE));
         }
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
 
-        return new FindAlphabetCommand(new NameContainsAlphabetsPredicate(Arrays.asList(nameKeywords)));
+        return new FindLettersCommand(new NameContainsAlphabetsPredicate(Arrays.asList(nameKeywords)));
     }
 
 }
@@ -1174,7 +1185,7 @@ public class ExportCommandTest {
     }
 }
 ```
-###### \test\java\seedu\address\logic\commands\FindAlphabetCommandTest.java
+###### \test\java\seedu\address\logic\commands\FindLettersCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -1203,9 +1214,9 @@ import seedu.address.model.person.NameContainsAlphabetsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
- * Contains integration tests (interaction with the Model) for {@code FindAlphabetCommand}.
+ * Contains integration tests (interaction with the Model) for {@code FindLettersCommand}.
  */
-public class FindAlphabetCommandTest {
+public class FindLettersCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
@@ -1215,14 +1226,14 @@ public class FindAlphabetCommandTest {
         NameContainsAlphabetsPredicate secondPredicate =
                 new NameContainsAlphabetsPredicate(Collections.singletonList("second"));
 
-        FindAlphabetCommand findFirstCommand = new FindAlphabetCommand(firstPredicate);
-        FindAlphabetCommand findSecondCommand = new FindAlphabetCommand(secondPredicate);
+        FindLettersCommand findFirstCommand = new FindLettersCommand(firstPredicate);
+        FindLettersCommand findSecondCommand = new FindLettersCommand(secondPredicate);
 
         // same object -> returns true
         assertTrue(findFirstCommand.equals(findFirstCommand));
 
         // same values -> returns true
-        FindAlphabetCommand findFirstCommandCopy = new FindAlphabetCommand(firstPredicate);
+        FindLettersCommand findFirstCommandCopy = new FindLettersCommand(firstPredicate);
         assertTrue(findFirstCommand.equals(findFirstCommandCopy));
 
         // different types -> returns false
@@ -1238,30 +1249,30 @@ public class FindAlphabetCommandTest {
     @Test
     public void executeZeroAlphabetsNoPersonFound() {
         String expectedMessage = String.format(MESSAGE_NO_ALPHABET_LISTED_OVERVIEW);
-        FindAlphabetCommand command = prepareCommand(" ");
+        FindLettersCommand command = prepareCommand(" ");
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
     //Test when user inputs partial names
     @Test
     public void executeMultipleAlphabetsMultiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_ALPHABET_LISTED_OVERVIEW, 2);
-        FindAlphabetCommand command = prepareCommand("Ku");
+        FindLettersCommand command = prepareCommand("Ku");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, FIONA));
     }
     //Test when user inputs full names
     @Test
     public void executeMultipleKeywordsMultiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_ALPHABET_LISTED_OVERVIEW, 3);
-        FindAlphabetCommand command = prepareCommand("Kurz Elle Kunz");
+        FindLettersCommand command = prepareCommand("Kurz Elle Kunz");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
 
     /**
      * Parses {@code userInput} into a {@code FindCommand}.
      */
-    private FindAlphabetCommand prepareCommand(String userInput) {
-        FindAlphabetCommand command =
-                new FindAlphabetCommand(new NameContainsAlphabetsPredicate(Arrays.asList(userInput.split("\\s+"))));
+    private FindLettersCommand prepareCommand(String userInput) {
+        FindLettersCommand command =
+                new FindLettersCommand(new NameContainsAlphabetsPredicate(Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -1271,7 +1282,7 @@ public class FindAlphabetCommandTest {
      *     - the command feedback is equal to {@code expectedMessage}<br>
      *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
      */
-    private void assertCommandSuccess(FindAlphabetCommand command, String expectedMessage,
+    private void assertCommandSuccess(FindLettersCommand command, String expectedMessage,
                                       List<ReadOnlyPerson> expectedList) {
         CommandResult commandResult = command.execute();
 
@@ -1298,6 +1309,7 @@ import org.junit.rules.ExpectedException;
 
 import com.google.api.services.people.v1.model.Person;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -1348,7 +1360,7 @@ public class ImportCommandTest {
 
         Model modelstub = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         modelstub.addPerson(TypicalGoogleContactsList.FREEDYADDRESSBOOK);
-        String expectedMessage = "1 contact/s imported!     0 contact/s failed to import!" + "\n";
+        String expectedMessage = String.format(Messages.MESSAGE_IMPORT_CONTACT, 1, 0) + "\n";
 
         assertCommandSuccess(command, expectedMessage, modelstub);
     }
@@ -1361,8 +1373,8 @@ public class ImportCommandTest {
         googleList.add(TypicalGoogleContactsList.MAYGOOGLE);
         ImportCommand command = prepareCommand(googleList, this.model);
 
-        String expectedMessage = "0 contact/s imported!     1 contact/s failed to import!" + "\n"
-                + "Contacts already existed : 0     Contacts not in the correct format : 1" + "\n"
+        String expectedMessage = String.format(Messages.MESSAGE_IMPORT_CONTACT, 0, 1) + "\n"
+                + String.format(Messages.MESSAGE_IMPORT_STATUS, 0, 1) + "\n"
                 + "Please check the format of the following google contacts :  May";
 
         assertCommandFailure(command, expectedMessage, this.model);
@@ -1377,8 +1389,8 @@ public class ImportCommandTest {
         googleList.add(TypicalGoogleContactsList.FREDDYGOOGLE);
         ImportCommand command = prepareCommand(googleList, model);
 
-        String expectedMessage = "0 contact/s imported!     1 contact/s failed to import!" + "\n"
-                + "Contacts already existed : 1     Contacts not in the correct format : 0" + "\n";
+        String expectedMessage = String.format(Messages.MESSAGE_IMPORT_CONTACT, 0, 1) + "\n"
+                + String.format(Messages.MESSAGE_IMPORT_STATUS, 1, 0) + "\n";
 
         assertCommandFailure(command, expectedMessage, model);
     }
@@ -1430,6 +1442,7 @@ import org.junit.rules.ExpectedException;
 
 import com.google.api.services.people.v1.model.Person;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -1461,7 +1474,7 @@ public class SyncCommandTest {
     @Test
     public void execute_require_login() throws Exception {
         thrown.expect(GoogleAuthException.class);
-        new ImportCommand();
+        new SyncCommand();
     }
 
     /**
@@ -1475,7 +1488,7 @@ public class SyncCommandTest {
 
         Model modelStub = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         modelStub.addPerson(TypicalGoogleContactsList.FREDDYSYNADDRESSBOOK);
-        String expectedMessage = "1 contact/s Synced!     0 contact/s failed to Sync!";
+        String expectedMessage = String.format(Messages.MESSAGE_SYNC_CONTACT, 1, 0);
 
         assertCommandSuccess(command, expectedMessage, modelStub);
     }
@@ -1490,7 +1503,7 @@ public class SyncCommandTest {
         googleList.add(TypicalGoogleContactsList.MAYGOOGLE);
         SyncCommand command = prepareCommand(googleList, model);
 
-        String expectedMessage = "0 contact/s Synced!     1 contact/s failed to Sync!" + "\n"
+        String expectedMessage = String.format(Messages.MESSAGE_SYNC_CONTACT, 0, 1) + "\n"
                 + "Please check the format of the following google contacts : May";
 
         assertCommandFailure(command, expectedMessage, model);
@@ -1505,7 +1518,7 @@ public class SyncCommandTest {
         googleList.add(TypicalGoogleContactsList.FREDDYGOOGLE);
         SyncCommand command = prepareCommand(googleList, model);
 
-        String expectedMessage = "0 contact/s Synced!     0 contact/s failed to Sync!";
+        String expectedMessage = String.format(Messages.MESSAGE_SYNC_CONTACT, 0, 0);
         assertCommandFailure(command, expectedMessage, model);
     }
 
@@ -1518,10 +1531,9 @@ public class SyncCommandTest {
         model.addPerson(TypicalGoogleContactsList.FREEDYADDRESSBOOK);
         SyncCommand command = prepareCommand(googleList, model);
 
-
-        String expectedMessage = "1 contact/s Synced!     0 contact/s failed to Sync!";
         Model modelStub = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         modelStub.addPerson(TypicalGoogleContactsList.FREEDYNOTGOOGLEADDRESSBOOK);
+        String expectedMessage = String.format(Messages.MESSAGE_SYNC_CONTACT, 1, 0);
 
         assertCommandFailure(command, expectedMessage, modelStub);
     }
@@ -1556,7 +1568,7 @@ public class SyncCommandTest {
     }
 }
 ```
-###### \test\java\seedu\address\logic\parser\FindAlphabetCommandParserTest.java
+###### \test\java\seedu\address\logic\parser\FindLettersCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -1568,24 +1580,24 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.FindAlphabetCommand;
+import seedu.address.logic.commands.FindLettersCommand;
 import seedu.address.model.person.NameContainsAlphabetsPredicate;
 
-public class FindAlphabetCommandParserTest {
+public class FindLettersCommandParserTest {
 
-    private FindAlphabetCommandParser parser = new FindAlphabetCommandParser();
+    private FindLettersCommandParser parser = new FindLettersCommandParser();
 
     @Test
     public void parse_emptyArg_throwsParseException() {
         assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                FindAlphabetCommand.MESSAGE_USAGE));
+                FindLettersCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_validArgs_returnsFindCommand() {
         // no leading and trailing whitespaces
-        FindAlphabetCommand expectedFindCommand =
-                new FindAlphabetCommand(new NameContainsAlphabetsPredicate(Arrays.asList("Fiona", "Amelia")));
+        FindLettersCommand expectedFindCommand = new FindLettersCommand(new
+                NameContainsAlphabetsPredicate(Arrays.asList("Fiona", "Amelia")));
         assertParseSuccess(parser, "Fiona Amelia", expectedFindCommand);
 
         // multiple whitespaces between keywords

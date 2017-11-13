@@ -24,8 +24,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case sensitive.
+ * Exports contacts in addressbook to google contacts
  */
 public class ExportCommand extends Command {
 
@@ -36,10 +35,6 @@ public class ExportCommand extends Command {
             + "process\n"
             + "Parameters: KEYWORD\n"
             + "Example: " + COMMAND_WORD;
-    private String commandMessage = "";
-
-    private int contactsExportedCount = 0;
-    private int errorExportCount = 0;
 
     private GoogleContactsBuilder builder;
 
@@ -64,6 +59,8 @@ public class ExportCommand extends Command {
 
     @Override
     public CommandResult execute() throws GoogleAuthException, CommandException {
+        int contactsExportedCount = 0;
+        int errorExportCount = 0;
         List<ReadOnlyPerson> addressBookList = model.getAddressBook().getPersonList();
         Person googleContact;
 
@@ -85,7 +82,7 @@ public class ExportCommand extends Command {
                 }
             }
         }
-        commandMessage = setCommandMessage(contactsExportedCount, errorExportCount);
+        String commandMessage = setCommandMessage(contactsExportedCount, errorExportCount);
         return new CommandResult(commandMessage);
     }
 
@@ -124,7 +121,6 @@ public class ExportCommand extends Command {
         }
         tags.add(tag);
 
-
         return new seedu.address.model.person.Person(contact.getName(), contact.getPhone(),
                 contact.getEmail(), contact.getAddress(), contact.getBirthday(),
                 contact.getFacebookAddress(), tags, id);
@@ -135,7 +131,7 @@ public class ExportCommand extends Command {
      */
     public String setCommandMessage(int contactsExportedCount, int errorExportCount) {
 
-        commandMessage = String.format(Messages.MESSAGE_EXPORT_CONTACT, contactsExportedCount);
+        String commandMessage = String.format(Messages.MESSAGE_EXPORT_CONTACT, contactsExportedCount);
         if (errorExportCount == 0) {
             commandMessage += "All contacts can be now found in google contact";
         } else {

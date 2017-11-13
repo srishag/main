@@ -25,19 +25,6 @@ public class DeleteTaskCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
-    /*@Test
-    public void execute_validIndexUnfilteredList_success() throws Exception {
-        ReadOnlyTask taskToDelete = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
-        DeleteTaskCommand deleteTaskCommand = prepareCommand(INDEX_FIRST_TASK);
-
-        String expectedMessage = String.format(DeleteTaskCommand.MESSAGE_DELETE_TASK_SUCCESS, taskToDelete);
-
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deleteTask(taskToDelete);
-
-        assertCommandSuccess(deleteTaskCommand, model, expectedMessage, expectedModel);
-    }*/
-
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredTaskList().size() + 1);
@@ -45,35 +32,6 @@ public class DeleteTaskCommandTest {
 
         assertCommandFailure(deleteTaskCommand, model, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
     }
-
-    /*@Test
-    public void execute_validIndexFilteredList_success() throws Exception {
-        showFirstTaskOnly(model);
-
-        ReadOnlyTask taskToDelete = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
-        DeleteTaskCommand deleteTaskCommand = prepareCommand(INDEX_FIRST_TASK);
-
-        String expectedMessage = String.format(DeleteTaskCommand.MESSAGE_DELETE_TASK_SUCCESS, taskToDelete);
-
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deleteTask(taskToDelete);
-        showNoTask(expectedModel);
-
-        assertCommandSuccess(deleteTaskCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_invalidIndexFilteredList_throwsCommandException() {
-        showFirstTaskOnly(model);
-
-        Index outOfBoundIndex = INDEX_SECOND_TASK;
-        // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
-
-        DeleteTaskCommand deleteTaskCommand = prepareCommand(outOfBoundIndex);
-
-        assertCommandFailure(deleteTaskCommand, model, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-    }*/
 
     @Test
     public void equals() {
