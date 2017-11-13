@@ -67,12 +67,6 @@ public class FindPersonsWithTagsCommandTest {
         assertFalse(findFirstCommand.equals(findSecondCommand));
     }
 
-    //    @Test
-    //    public void execute_zeroKeywords_noPersonFound() {
-    //        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-    //        FindPersonsWithTagsCommand command = prepareCommand(" ");
-    //        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
-    //    }
 
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
@@ -467,10 +461,6 @@ public class PersonContainsTagsPredicateTest {
 
     @Test
     public void test_personDoesNotHaveTagsContainingKeywordsToInclude_returnsFalse() {
-        // Zero keywords
-        //PersonContainsTagsPredicate predicate = new PersonContainsTagsPredicate(Collections.emptyList());
-        //assertFalse(predicate.test(new PersonBuilder().withTags("whateverTag").build()));
-
         // Non-matching keyword
         PersonContainsTagsPredicate predicate = new PersonContainsTagsPredicate(Arrays.asList("roommate"));
         assertFalse(predicate.test(new PersonBuilder().withTags("schoolmate", "classmate").build()));
