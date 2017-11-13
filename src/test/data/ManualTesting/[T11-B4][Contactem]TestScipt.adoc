@@ -334,9 +334,13 @@ Set-up :
 *Expected Result*: google login page will be loaded in browser panel. +
 *Result Message*: Please Login
 
-Please use this dummy google account for testing +
-email : Phuajunjie@hotmail.com +
-password : 90670238 +
+*Please login to your google contacts. The following tests are created with the assumption that your google contacts account is empty. +
+Please disable your 2 step verification to log in. Use this link to disable it "https://myaccount.google.com/security?pli=1#signin" +
+
+You may use this dummy account if you dont have a google account +
+Email : dummy2103@hotmail.com +
+Password : password2103 +
+
 Next, Create a contact in the dummy google contacts. +
 Example Name: Mark, Phone: 92345678, Email: wrong@hotmail.com, Address: Blk 1 simei Avenue*
 
