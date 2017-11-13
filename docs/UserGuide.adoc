@@ -641,9 +641,9 @@ If wrong task was deleted, **`undo` immediately without exiting the application!
 ==== Examples
 
 * `list` +
-`deletet 2` +
+`delete 2` +
 Deletes the 2nd task in the address book.
-* `deletet 1` +
+* `delete 1` +
 Deletes the 1st task in the address book.
 
 ==== Common Problems
