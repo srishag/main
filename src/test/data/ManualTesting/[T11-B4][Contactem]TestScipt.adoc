@@ -242,16 +242,35 @@ The select command is mostly unchanged from the original address book. However, 
 
 ==== Steps To Execute And Expected Results
 
-*Type in*: Select 3 +
-*Expected result*: Check that the Browser opens up the correct page as specified in the person card, and that the selected person card changes color.
-If it does not open up immediately, please give it some time, this usually happens on the first time the browser is opened.
+*Type in*: select 3 +
+*Expected Result*: Check that the Browser opens up the correct page as specified in the person card, and that the selected person card changes color.
+If it does not open up immediately, please give it some time, this usually happens on the first time the browser is opened. +
+*Result Message*: Selected Person: 3
+
 
 Also, note that since these test data are randomly generated, they will not all point to an actual Facebook Profile. If this is the case, it will point to a Facebook Search (or prompt you to log in to do the search). This is intended, as it is up to the onus of the user to maintain the correct Facebook Address.
-Therefore, select 3 is used as it coincidentally points to an actual Facebook URL, correct as of this 13/11/1
+Therefore, select 3 is used as it coincidentally points to an actual Facebook URL, correct as of time of writing.
 
 You can also try to enter other indexes for the parameter of the Select command.
-Next, you may optionally try to click on the contact, and see if the browser still opens up to the Facebook URL of the contact, although since this is a CLI-app, this step may be omitted.
+Next, you may optionally try to click on the contact, and see if the browser still opens up to the Facebook URL of the contact, although since this is a CLI-app, this step may be omitted. +
+Note that if you try to click on the contacts instead of typing, the result message will NOT change.
 
+Now, try some out of bound numbers, for example: +
+*Type in*: select 100 +
+*Expected Result*: No action taken as the index is out of bounds.
+*Result Message*: The person index provided is invalid
+
+*Type in*: select 0 +
+*Expected Result*: No action taken as the index is out of bounds.
+*Result Message*: +
+Invalid command format! +
+select: Selects the person identified by the index number used in the last person listing. +
+Parameters: INDEX (must be a positive integer) +
+Example: select 1 +
+
+*Type in*: select -1 +
+*Expected Result*: No action taken as the index is out of bounds.
+*Result Message*: As above.
 
 === Clear Command
 
@@ -285,7 +304,7 @@ and/or +
 To further test the functionality, try: +
 *Type in*: add n/William Johnson p/91111111 e/william@johnson.com a/ 123 William Street #12-34 b/10101995 t/uniquetag +
 *Type in*: listtags +
-*Expected result*: This should display the new [tniquetag]. +
+*Expected result*: This should display the new [uniquetag]. +
 *Result Message*: You have the following tags: [classmates] [colleagues] [family] [friends] [neighbours] [schoolmates] [uniquetag]
 
 Next,
