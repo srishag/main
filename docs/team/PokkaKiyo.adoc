@@ -423,8 +423,30 @@ function of this enhancement is to complement the find tags feature.
 ---
 === Enhancement Proposed: Adding a Profile Picture to Contacts
 
+==== External behavior
 
-{Explain similar to the Undo/Redo feature above.}
+---
+#Start of Extract [from: User Guide]#
+
+`Coming in V2.0`
+
+To help you identify your contacts, in Version 2.0 of Contact'em, you will be able to attach pictures to each of your contacts.
+All that is required is a link to the image on the Internet.
+
+==== The Command
+Format: `addPicture INDEX IMAGE_URL` +
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Since we are considering the fact that users might have a large number of contacts, being able to attach a profile picture
+to the contacts will help the user with identifying the contact. +
+This is highly synergistic and can be used in conjunction with the Facebook Profile.
+
+---
 
 === Other contributions
 
