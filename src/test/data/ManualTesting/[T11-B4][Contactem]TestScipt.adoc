@@ -18,6 +18,10 @@ By: `Team T11-B4`      Since: `Aug 2017`      Licence: `MIT`
 
 === Before You Start Testing
 
+Before testing, you need ensure that you have the test data ([T11-B4][Contactem]SampleData.xml).
+
+Place Contactem.jar in an empty folder. Open Contactem.jar.
+
 === Add Person Command
 
 ==== Description
@@ -88,11 +92,11 @@ This command is used to delete contacts in Contact'em
 ==== Steps To Execute And Expected Results
 
 *Type in*: delete 1 +
-*Expected Result*:  Contact "Alex Yeoh" will be deleted +
+*Expected Result*:  Success message displayed with "Alex Yeoh" in person list deleted. +
 *Result message*: Deleted Person: Alex Yeoh Phone: 87438807 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Birthday: 03041987 Facebook: https://www.facebook.com/Alex Tags: [friends]
 
 *Type in*: undo +
-*Expected Result*:  Contact "Alex Yeoh" will be restored +
+*Expected Result*:  Deleted contact "Alex Yeoh" will be restored +
 *Result message*: Undo success!
 
 === Edit Person Command
@@ -209,6 +213,22 @@ Example: editt 1th/ homework tdl/31/12/2017
 editt: Edits the details of the task identified by the index number used in the last task listing. Existing values will be overwritten by the input values.
 Parameters: INDEX (must be a positive integer) [th/HEADER] [td/DESC] [tdl/DEADLINE]
 Example: editt 1th/ homework tdl/31/12/2017
+
+=== Delete Task Command
+
+==== Description
+
+This command is used to delete tasks in Contact'em
+
+==== Steps To Execute And Expected Results
+
+*Type in*: deletet 1 +
+*Expected Result*:  Success message with first task "Submission" deleted. +
+*Result message*: Deleted task: Submission Desc: Project portfolio Deadline: today
+
+*Type in*: undo +
+*Expected Result*:  Task "Submission" will be restored +
+*Result message*: Undo success!
 
 === List Command
 
@@ -397,7 +417,27 @@ Next, Create a contact in the dummy google contacts. +
 *Type in*: login +
 *Expected Result*: To refresh the google contacts page so that the contacts exported will be shown
 
-=== ExitCommand
+=== History Command
+
+==== Description
+
+This command is used to show the history of commands executed since the start of the launch of the application.
+
+==== Steps To Execute And Expected Results
+
+*Type in*: history +
+*Expected Result*: List of executed commands is shown.
+*Result Message*:
+Entered commands (from most recent to earliest):
+redo
+undo
+editt 1 th/Submission of Homework
+editt 1 Submission
+history
+undo
+deletet 1
+
+=== Exit Command
 
 ==== Description
 
