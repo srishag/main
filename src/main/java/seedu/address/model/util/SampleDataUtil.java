@@ -129,9 +129,14 @@ public class SampleDataUtil {
     public static Task[] getSampleTasks() {
         try {
             return new Task[]{
+                new Task(new Header("Submission"), new Desc("Project portfolio"), new Deadline("today")),
+                new Task(new Header("Shopping"), new Desc("Buy groceries"), new Deadline("tomorrow")),
+                new Task(new Header("Chores"), new Desc("Washing clothes"), new Deadline("tomorrow, 5 pm")),
+                new Task(new Header("Project"), new Desc("Finish Verilog code"), new Deadline("13/12/2017")),
+                new Task(new Header("Vacation plans"), new Desc("Plan for holiday"), new Deadline("tomorrow")),
                 new Task(new Header("Homework"), new Desc("Page 6 to 9"), new Deadline("21/11/2017")),
-                new Task(new Header("Assignment"), new Desc("Tutorial homework"), new Deadline("17/12/2017")),
-                new Task(new Header("Project"), new Desc("Finish Verilog code"), new Deadline("13/12/2017"))
+                new Task(new Header("Submission"), new Desc("Project report"), new Deadline("today")),
+                new Task(new Header("Assignment"), new Desc("Tutorial homework"), new Deadline("17/12/2017"))
             };
         } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);
