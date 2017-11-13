@@ -376,8 +376,7 @@ Next, Create a contact in the dummy google contacts. +
 *Result Message*: 20 contact/s exported!     All contacts can be now found in google contact
 
 *Type in*: login +
-*Expected Result*: To refresh the google contacts page so that the contacts exported will be shown 
-
+*Expected Result*: To refresh the google contacts page so that the contacts exported will be shown
 
 === ExitCommand
 
