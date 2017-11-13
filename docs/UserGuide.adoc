@@ -15,11 +15,18 @@ endif::[]
 By: `CS2103T T11-B4 Team`      Since: `Sep 2017`      Licence: `MIT`
 
 == Product Overview
-Contact'em is a convenient and easy addressbook application, that allows you to both store and retrieve your contacts as well as your tasks easily and quickly.
-Compared to other similar applications, Contact'em prides itself on its ease-of-use. Never again will you wish the application was easier to use.
+Contact’em is a convenient and easy address book application, that allows you to both store and retrieve your contacts easily and quickly. This desktop application uses a command line interface, that is, most of the commands are entered through the keyboard.
+
+The target audience of this application is anyone who requires an application to help keep track of the details of their contacts, especially those with extensive number of contacts and/or want to keep track of many details of their contacts in an organized manner.
+
+Compared to other similar applications, Contact’em prides itself on its ease-of-use.
 
 == About
-##to be added##
+This user guide is meant to walk users through the many different commands Contact’em can perform for the user, and gives a few examples for selected commands so users can better understand their usage.
+
+While Contact’em is designed to be intuitive for all users, we suggest new users take a look at this guide so that they can better enjoy using this application.
+
+A quick-reference guide is included near the end of this document (Section 9 - Page 41), for users to easily refer to the application commands.
 
 == Key Features
 
