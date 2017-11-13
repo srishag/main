@@ -5,8 +5,8 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 == Project: Contact'em
 Contact’em is a desktop address book application, and the user interacts with it through typing commands into the application.
-Compared to other typical  address book applications, Contact'em is designed to allow users to easily find their contacts and _contact them_ through a
-variety of ways such as Facebook Messenger and Gmail.
+The main function of Contact'em is to allow users to easily store and retrieve contacts and their details, while also providing some
+ways for users to connect with these contacts, such as through Facebook Messenger and Gmail.
 
 This Portfolio showcases the implementations of enhancements I have added and proposed for the project, shown
 through extracts from the project User Guide and Developer Guide. Links to Functional and Test codes are provided below.
@@ -48,7 +48,7 @@ _Figure 5.6.3b : Entering command to find all contacted tagged as friends_
 image::findtags-after.png[width="200"]
 _Figure 5.6.3c : Application displays all contacts tagged as friends_
 
-The figures above demonstrate an example of how this command is used, with respect to the first example.
+The set of figures above demonstrate an example of how this command is used, with respect to the first example.
 
 
 ==== Note on Singular and Plural Keywords
@@ -85,7 +85,7 @@ In this case, the application will show **all** contacts who are #NOT# tagged co
 ==== Justification
 
 One of the main themes of Contact'em is to be able to easily find/filter the contacts in the application.
-This feature allows users to easily search for contacts in big numbers by locating them according to their tags.
+This feature allows users to easily search for contacts in big numbers by filtering them according to their tags.
 
 ==== Implementation
 
@@ -442,7 +442,7 @@ Format: `addPicture INDEX IMAGE_URL` +
 
 Since we are considering the fact that users might have a large number of contacts, being able to attach a profile picture
 to the contacts will help the user with identifying the contact. +
-This is highly synergistic and can be used in conjunction with the Facebook Profile.
+This is highly synergistic and can be used in conjunction with our integration of a Facebook Profile for each contact.
 
 ---
 
