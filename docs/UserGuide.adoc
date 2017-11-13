@@ -742,6 +742,15 @@ Alternatively, you can exit by clicking on the RED X at the top right of the App
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+=== Adding Profile Picture to Contacts
+`Coming in V2.0`
+
+To help you identify your contacts, in Version 2.0 of Contact'em, you will be able to attach pictures to each of your contacts.
+All that is required is a link to the image on the Internet.
+
+==== The Command
+Format: `addPicture INDEX IMAGE_URL` +
+
 == Transferring of Data to Another Device
 Do you wish to transfer the data stored in Contact'em on one device to another?
 For example, you may wish to use Contact'em on device B with the data currently stored on device A.

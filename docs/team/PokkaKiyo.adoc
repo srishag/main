@@ -425,6 +425,7 @@ function of this enhancement is to complement the find tags feature.
 ---
 #Start of Extract [from: User Guide]#
 
+=== Adding Profile Picture to Contacts
 `Coming in V2.0`
 
 To help you identify your contacts, in Version 2.0 of Contact'em, you will be able to attach pictures to each of your contacts.
