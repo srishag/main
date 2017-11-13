@@ -182,7 +182,7 @@ There must be at least one parameter specified, but the order of parameters ente
 The activity diagram below helps illustrate the process of the command, from user input to execution and updating the Model.
 
 image::findtags-activitydiagram.png[width="200"]
-_Figure 3.3.2.1 : Brief Overview of Command Procedure_
+_Figure 3.3.2.1 : Brief Overview of Find Tags Command Procedure_
 
 As seen from _Figure 3.3.2.1_ above, the entire command consists of 4 main steps:
 
@@ -193,6 +193,10 @@ As seen from _Figure 3.3.2.1_ above, the entire command consists of 4 main steps
 
 More detailed explanations and elaborations are given in the subsections below.
 
+image::FindTagsCommandClassDiagram.png[width="800"]
+_Figure 3.3.2.2 : Class Diagram of Find Tags Command_
+
+The figure above is the class diagram of notable classes involved in this command, to aid understanding.
 
 ==== Implementation of Parser
 
@@ -211,7 +215,7 @@ As the diagram above shows, the keywords are split by the spaces in between each
 The array of keywords is then passed into the parser’s private method, **getImprovedList()**, to retrieve a more comprehensive list of tags in addition to the original list of keywords.
 
 [NOTE]
-The details of **getImprovedList** is not crucially important to the functionality of the parser, and is thus omitted here, but included in the addendum in Section 3.3.6.
+The details of **getImprovedList** are not crucially important to the functionality of the parser, and is thus omitted here, but included in the addendum in Section 3.3.6.
 
 After obtaining the improved list, the parser constructs the command _Predicate_ (details in Section 3.3.4), and the _Command_ itself (details in the Section 3.3.5). Then it returns the _Command_ to **AddressbookParser** and then the **LogicManager** for execution.
 
@@ -265,10 +269,10 @@ This runs the test method of the _Predicate_, which determines the appropriate c
 
 Finally, this command returns a **CommandResult**, which includes the number of contacts being displayed. This value is displayed on the UI command box for the user’s reference.
 
-image::findtagssequencediagram.png[width="800"]
+image::FindContactsByTagsSequenceDiagram.png[width="800"]
 _Figure 3.3.5.1 : Findtags Sequence Diagram_
 
-Figure 3.3.5.1 above shows the overall sequence diagram and how it works.
+Last but not least, Figure 3.3.5.1 above shows the overall sequence diagram and a final summary of how it works.
 
 ==== Addendum
 
