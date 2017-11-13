@@ -4,10 +4,11 @@ By: `Team T11-B4`      Since: `Aug 2017`      Licence: `MIT`
 
 ---
 
-== Before You Start Testing
+=== Before You Start Testing
 
+//to be added later
 
-== Edit Person Command
+=== Edit Person Command
 
 ==== Description
 
@@ -42,6 +43,98 @@ Example: edit 1 p/91234567 e/johndoe@example.com
 *Expected Result*: Error message suggesting the correct birthday format. +
 *Result Message*: Person birthday can only be digits, and should be a valid date represented by a 8 digit number with format ddMMyyyy
 
+*Type in*: edit 100 b/28021996 +
+*Expected Result*: Error message suggesting the correct index. +
+*Result Message*: The person index provided is invalid
+
+*Type in*: edit -1 b/28021996 +
+*Expected Result*: Error message suggesting the correct command format as format requires valid index. +
+*Result Message*: Edits the details of the person identified by the index number used in the last person listing. Existing values will be overwritten by the input values.
+Parameters: INDEX (must be a positive integer) [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [f/FACEBOOK ADDRESS] [t/TAG]...
+Example: edit 1 p/91234567 e/johndoe@example.com
+
+=== Add Task Command
+
+==== Description
+
+This command is used to add tasks into the application. The deadline field is currently optional, however the prefix `tdl/` is still required.
+
+==== Steps To Execute And Expected Results
+
+*Type in*: addt th/Buy furniture td/From Ikea Tampines tdl/this weekend +
+*Expected Result*: Success message with task information displayed. +
+*Result Message*: New task added: Buy furniture Desc: From Ikea Tampines Deadline: this weekend
+
+*Type in*: addt th/Buy furniture td/From Ikea Tampines +
+*Expected Result*: Error message suggesting the correct command format. +
+*Result Message*: Invalid command format!
+addt: Adds a task to the address book. Parameters: th/HEADER td/DESC tdl/DATE
+Example: addt th/Homework td/Finish page 6 to 9 tdl/08/11/2017
+
+*Type in*: addt th/Buy furniture +
+*Expected Result*: Error message suggesting the correct command format. +
+*Result Message*: Invalid command format!
+addt: Adds a task to the address book. Parameters: th/HEADER td/DESC tdl/DATE
+Example: addt th/Homework td/Finish page 6 to 9 tdl/08/11/2017
+
+*Type in*: addt td/From Ikea Tampines +
+*Expected Result*: Error message suggesting the correct command format. +
+*Result Message*: Invalid command format!
+addt: Adds a task to the address book. Parameters: th/HEADER td/DESC tdl/DATE
+Example: addt th/Homework td/Finish page 6 to 9 tdl/08/11/2017
+
+*Type in*: addt +
+*Expected Result*: Error message suggesting the correct command format. +
+*Result Message*: Invalid command format!
+addt: Adds a task to the address book. Parameters: th/HEADER td/DESC tdl/DATE
+Example: addt th/Homework td/Finish page 6 to 9 tdl/08/11/2017
+
+=== Edit Task Command
+
+==== Description
+
+This command is used to edit a task's details.
+
+==== Steps To Execute And Expected Results
+
+*Type in*: editt +
+*Expected Result*: Error message suggesting correct command format. +
+*Result message*: Invalid command format!
+editt: Edits the details of the task identified by the index number used in the last task listing. Existing values will be overwritten by the input values.
+Parameters: INDEX (must be a positive integer) [th/HEADER] [td/DESC] [tdl/DEADLINE]
+Example: editt 1th/ homework tdl/31/12/2017
+
+*Type in*: editt 2 th/Shopping for food td/Grocery shopping +
+*Expected Result*: Success message showing the task with the relevant fields edited. +
+*Result message*: Edited Task: Shopping for food Desc: Grocery shopping Deadline: tomorrow
+
+*Type in*: editt 7 td/Project portfolio +
+*Expected Result*: Error message due to containing the same task in the address book. +
+*Result Message*: This task already exists in the address book.
+
+*Type in*: editt 100 tdl/today +
+*Expected Result*: Error message suggesting the correct index. +
+*Result Message*: The task index provided is invalid
+
+*Type in*: edit -1 tdl/today +
+*Expected Result*: Error message suggesting the correct index. +
+*Result Message*: Invalid command format!
+editt: Edits the details of the task identified by the index number used in the last task listing. Existing values will be overwritten by the input values.
+Parameters: INDEX (must be a positive integer) [th/HEADER] [td/DESC] [tdl/DEADLINE]
+Example: editt 1th/ homework tdl/31/12/2017
+
+=== List Command
+
+==== Description
+
+This command is used to list all contacts in the address book.
+
+==== Steps To Execute And Expected Results
+
+*Type in*: list +
+*Expected Result*: All contacts in address book listed. +
+*Result Message*: Listed all persons
+
 === Help Command
 
 ==== Description
@@ -50,8 +143,8 @@ This command is used to open the User Guide for users to refer to.
 
 ==== Steps To Execute And Expected Results
 
-*Type in*: help
-*Expected Result*: Help window pops up.
+*Type in*: help +
+*Expected Result*: Help window pops up. +
 *Result Message*: Opened help window.
 
 === Clear Command
@@ -66,8 +159,8 @@ This command is used to clear the data in the address book.
 *Expected Result*: All persons and tasks are cleared. +
 *Result Message*: Address book has been cleared!
 
-*Type in*: undo
-*Expected Result*: The person list and task list is restored to its previous form.
+*Type in*: undo +
+*Expected Result*: The person list and task list is restored to its previous form. +
 *Result Message*: Undo success!
 
 === ExitCommand
