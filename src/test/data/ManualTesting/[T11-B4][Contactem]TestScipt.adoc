@@ -42,6 +42,18 @@ Example: edit 1 p/91234567 e/johndoe@example.com
 *Expected Result*: Error message suggesting the correct birthday format. +
 *Result Message*: Person birthday can only be digits, and should be a valid date represented by a 8 digit number with format ddMMyyyy
 
+=== Help Command
+
+==== Description
+
+This command is used to open the User Guide for users to refer to.
+
+==== Steps To Execute And Expected Results
+
+*Type in*: help
+*Expected Result*: Help window pops up.
+*Result Message*: Opened help window.
+
 === Clear Command
 
 ==== Description
