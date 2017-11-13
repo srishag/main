@@ -339,13 +339,14 @@ Nevertheless, this improvement is meant to increase user enjoyment and convenien
 === List tags : `listtags` +
 `SINCE V1.3`
 
-Lists all existing tags in the App +
+Lists all existing tags in Contact'em. +
 
 [TIP]
 Listing all tags is designed to help you choose which tags to specify when using `findtags`.
 
 ==== The Command
-Format: `listtags`
+Format: `listtags` +
+
 #End of Extract#
 
 ---
@@ -420,6 +421,10 @@ function of this enhancement is to complement the find tags feature.
 #End of Extract#
 
 ---
+=== Enhancement Proposed: Adding a Profile Picture to Contacts
+
+
+{Explain similar to the Undo/Redo feature above.}
 
 === Other contributions
 
