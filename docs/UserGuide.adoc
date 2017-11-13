@@ -797,7 +797,7 @@ Alternatively, if the command can be undone, enter `undo` and resolve from there
 *A*: It might take some time for the contacts to show up in google contacts due to server issues.
 You may also switch to the old version of google contacts if the problem persists. However, please switch back to the new version if you wish to import / export / sync again.
 
-*Q*: How do i resolve the “authentication failed. Please login again” error. +
+*Q*: How do i resolve the “authentication failed. Please login again” error? +
 *A*: Make sure you switch back to the new google contacts page if you are on the old version of google contacts. Then log in again and provide all the required permissions for Contact’em when prompted.
 
 == Quick-Reference Guide
