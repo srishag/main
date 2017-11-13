@@ -5,6 +5,11 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 == Project: Contact'em
 Contact’em is a desktop address book application, and the user interacts with it through typing commands into the application.
+Compared to other typical  address book applications, Contact'em is designed to allow users to easily find their contacts and _contact them_ through a
+variety of ways such as Facebook Messenger and Gmail.
+
+This Portfolio showcases the implementations of enhancements I have added and proposed for the project, shown
+through extracts from the project User Guide and Developer Guide. Links to Functional and Test codes are provided below:
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T11-B4/main/blob/master/collated/main/PokkaKiyo.md[Functional code]][https://github.com/CS2103AUG2017-T11-B4/main/blob/master/collated/test/PokkaKiyo.md[Test code]]
 
