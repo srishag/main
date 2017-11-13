@@ -37,17 +37,17 @@ You can also try the *redo* command out here. Remember to undo again if you choo
 
 Next, try the following 4 commands, using an *undo* after each command to speed up testing.
 
-*Type in*: Add n/William Johnson p/91111111 e/william@johnson.com a/ 123 William Street #12-34 b/10101995
+*Type in*: Add n/William Johnson p/91111111 e/william@johnson.com a/ 123 William Street #12-34 b/10101995 +
 *Expected result*: A new contact with birthday as stated should appear. The Facebook field should be the default Facebook homepage as well.
 
 *Type in*: Add n/William Johnson p/91111111 e/william@johnson.com a/ 123 William Street #12-34
-f/William
+f/William +
 *Expected result*: A new contact with Facebook field _https://facebook.com/William_ should appear. Birthday field should be left as a blank space on the person card.
 
-*Type in*: Add n/William Johnson p/91111111 e/william@johnson.com a/ 123 William Street #12-34 f/facebook.com/William
+*Type in*: Add n/William Johnson p/91111111 e/william@johnson.com a/ 123 William Street #12-34 f/facebook.com/William +
 *Expected result*: Same as above, with facebook field _ facebook.com/William_ .
 
-*Type in*: Add n/William Johnson p/91111111 e/william@johnson.com a/ 123 William Street #12-34
+*Type in*: Add n/William Johnson p/91111111 e/william@johnson.com a/ 123 William Street #12-34 +
 b/10101995 f/facebook.com/William
 *Expected result*: A new contact with both birthday field and Facebook field should appear.
 om Address: 123 William Street #12-34 Birthday:  Facebook: https://www.facebook.com/ Tags: !
@@ -185,18 +185,18 @@ The command for listing all the tags in the application is listtags. Alternative
 
 ==== Steps To Execute And Expected Results
 
-*Type in*: listtags
-*Type in*: lt
+*Type in*: listtags +
+*Type in*: lt +
 *Expected result*: In the result box (under the command line), it should show which tags are currently in the application, in alphabetical order.
 
-To further test the functionality, try:
-*Type in*: Add n/William Johnson p/91111111 e/william@johnson.com a/ 123 William Street #12-34 b/10101995 t/UniqueTag
-*Type in*: listtags
-*Expected result*: This should display the new [UniqueTag].
+To further test the functionality, try: +
+*Type in*: Add n/William Johnson p/91111111 e/william@johnson.com a/ 123 William Street #12-34 b/10101995 t/UniqueTag +
+*Type in*: listtags +
+*Expected result*: This should display the new [UniqueTag]. +
 
 Next,
-*Type in*: undo or >>delete [Index of above contact]
-*Type in*: listtags
+*Type in*: undo or >>delete [Index of above contact] +
+*Type in*: listtags +
 *Expected result*: The [UniqueTag] should no longer be shown.
 
 Note that this command cannot be reversed by the undo command.
@@ -209,23 +209,23 @@ The command keyword for this feature is findtags, findtag, or ft.
 
 ==== Steps To Execute And Expected Results
 
-Try the following command:
-*Type in*: findtags friends
+Try the following command: +
+*Type in*: findtags friends +
 *Expected result*: This should display all contacts that have the friends (or friend) tag. Should also show, in the result box, the number of contacts being displayed.
 
 
-Now, try the singular form of the word.
-*Type in*: findtags friend
+Now, try the singular form of the word. +
+*Type in*: findtags friend +
 *Expected result*: The results should be the same as above, as the application searches for both singular and plural form of the word.
 
 Note that this is done by adding the letter ‘S’ or removing the letter ‘S’ from the keyword, so if you try findtags family it will attempt to find familys as well instead of family. This is a known limitation of the command, but it is still implemented this way to reduce complexity and performance impact while bringing about some quality-of-life improvement for the user.
 
-Next, test the exclusion, as follows: (note the dash ‘-‘ before colleagues)
-*Type in*: findtags friends -colleagues
-*Expected result*: Only friends that do not have the colleague tag are shown.
+Next, test the exclusion, as follows: (note the dash ‘-‘ before colleagues) +
+*Type in*: findtags friends -colleagues +
+*Expected result*: Only friends that do not have the colleague tag are shown. +
 
-Finally, try: (note the dash ‘-‘ before friends).
-*Type in*: findtags -friends
+Finally, try: (note the dash ‘-‘ before friends). +
+*Type in*: findtags -friends +
 *Expected result*: All contacts in the application, except those with the friends tags, are shown.
 
 Note that this command cannot be reversed by the undo command.
@@ -240,7 +240,7 @@ Set-up :
 
 
 *Type in*: login +
-*Expected Result*: google login page will be loaded in browser panel.
+*Expected Result*: google login page will be loaded in browser panel. +
 *Result Message*: Please Login
 
 Please use this dummy google account for testing +
@@ -250,30 +250,30 @@ Next, Create a contact in the dummy google contacts. +
 Example Name: Mark, Phone: 92345678, Email: wrong@hotmail.com, Address: Blk 1 simei Avenue*
 
 *Type in*: import +
-*Expected Result*: The contact “Mark” created previously will be imported to Contact'em.
+*Expected Result*: The contact “Mark” created previously will be imported to Contact'em. +
 *Result Message*: 1 contact/s imported!     0 contact/s failed to import!
 
 *Edit “Mark” email address to correct@hotmail.com in Google Contacts*
 
 *Type in*: sync +
-*Expected Result*: The email address of contact “Mark” will be updated in Contact'em.
+*Expected Result*: The email address of contact “Mark” will be updated in Contact'em. +
 *Result Message*: 1 contact/s Synced!     0 contact/s failed to Sync!
 
 *Remove “Mark” email address in Google Contacts (Leave it blank)*
 
 *Type in*: sync +
-*Expected Result*: Contact “Mark” will not be updated in Contact'em due to missing attributes.
+*Expected Result*: Contact “Mark” will not be updated in Contact'em due to missing attributes. +
 *Result Message*: 0 contact/s Synced!     1 contact/s failed to Sync!
-                  Please check the format of the following google contacts : Mark!
+                  Please check the format of the following google contacts : Mark
 
 *[Important] The next command may take several minutes to run. Do not stop the application even if it becomes unresponsive. Contact’em will inform you that all contacts has been exported.*
 
 *Type in*: export +
-*Expected Result*: Contacts in Contact'em will be exported.
+*Expected Result*: Contacts in Contact'em will be exported. +
 *Result Message*: 20 contact/s exported!     All contacts can be now found in google contact
 
 *Type in*: login +
-*Expected Result*: To refresh the google contacts page so that the contacts exported will be shown
+*Expected Result*: To refresh the google contacts page so that the contacts exported will be shown 
 
 
 === ExitCommand
